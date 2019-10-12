@@ -36,7 +36,6 @@ public class CommonFilter implements Filter {
      *  ** init()과 destroy()는 한번만 실행 된다.
      */
     public CommonFilter() {
-        System.out.println("CommonFilter 작동!");
     }
 
 	/**

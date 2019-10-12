@@ -27,7 +27,7 @@ public class EncryptFilter implements Filter {
      * Default constructor. 
      */
     public EncryptFilter() {
-        System.out.println("EncryptFilter 작동!");
+        
     }
 
 	/**
