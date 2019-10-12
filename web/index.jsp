@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<script type="text/javascript">
+		/* location.href = 페이지 이동 */
+		location.href= "<%=request.getContextPath()%>/views/common/menubar.jsp";
+	</script>
 </body>
 </html>
