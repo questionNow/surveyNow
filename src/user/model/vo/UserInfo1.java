@@ -14,14 +14,14 @@ public class UserInfo1 implements Serializable{
 	private String userName;
 	private int age;
 	private String address;
-	private int phone;
+	private String phone;
 	private String email;
 	private int userType;
 	private String status;
 	public UserInfo1() {
 	
 	}
-	public UserInfo1(String userId, String userPwd, String userName, int age, String address, int phone, String email,
+	public UserInfo1(String userId, String userPwd, String userName, int age, String address, String phone, String email,
 			int userType, String status) {
 		super();
 		this.userId = userId;
@@ -64,10 +64,10 @@ public class UserInfo1 implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public String getEmail() {
