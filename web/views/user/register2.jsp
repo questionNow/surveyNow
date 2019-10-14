@@ -78,11 +78,12 @@ body{
 .interest{
 	margin-left : 80px;
 }
-#successRegister{
+#successRegister, #backBtn{
 	cursor : pointer;
 	padding : 9px 20px;
-	width : 54.5%;
+	width : 27%;
 }
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
@@ -263,6 +264,7 @@ body{
 			<label for = pet> 애완동물 </label>			
 			</div><br><br>
 		<div class = complete>
+			<input type = button value = "뒤로가기" id = backBtn onclick = "beforeBtn();">
 			<input type = submit value = "패널 정보 등록 완료" id = successRegister onclick = "complete();"> 
 		</div>
 		</div> <br><br>
@@ -272,6 +274,10 @@ body{
 	<script type="text/javascript">
 		function complete(){
 			alert("회원가입 성공 화면으로 가기");
+		}
+		
+		function beforeBtn(){
+			location = 'register1.jsp';
 		}
 	</script>
 	

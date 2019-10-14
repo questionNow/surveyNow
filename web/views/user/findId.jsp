@@ -256,7 +256,7 @@ input[type = button]{
 			alert("회원 정보를 다시 입력해주세요");   // <- 나중에 if 문으로 기능 추가  성공 or 실패 
 		}
 		function beforeFind(){
-			location = '../common/loginmain.jsp';  // <- 이전 단계 
+			location = '../common/menubarUser.jsp';  // <- 이전 단계 
 		}
 		$(document).ready(function(){
 		    // 이메일 선택

@@ -127,10 +127,10 @@ input[type = password]{
 	padding : 9px 20px;
 }
 #detailAddress{
-width : 33%;
+width : 30%;
 }
 #extraAddress{
-width : 20.5%;
+width : 23.5%;
 }
 #nextMain{
 	width : 26.7%;
@@ -150,7 +150,7 @@ width : 20.5%;
 	<font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
 </div> <br clear="both">
 	
-	<form> <br>
+	<form action = "register2.jsp" method = post> <br>
 	<div class = title>
 		<div class = register>
 			회원가입
@@ -266,35 +266,35 @@ width : 20.5%;
 			<input type = text id = address1 name = address1 placeholder = "도로명 주소">
 			<input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
 			<span id= guide style = "color:#999; display:none"> </span>
+			<!-- <input type = text id = jibunAddress name = jibunAddress placeholder = "지번주소"> -->
 			<input type = text id = detailAddress name = detailAddress placeholder = "상세 주소를 입력하세요">
 			<input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
 		</div> <br><br>
 		<div class = join>
 			<button id = nextRegister value = "가입 2단계 진행" onclick = "nextRegister();"> 가입 2단계 진행 </button><br><br>
 			<input type = reset value = "다시쓰기" id = clear1>
-			<input type = button id = nextMain value = "메인화면" onclick = "location='loginmain.jsp'">
+			<input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
 		</div>
 		
 	</div>
 	</form>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript">
 		function overlap(){
 			alert("중복확인 기능 넣기");
-		}
-		function nextRegister(){
-			location='../register/register2.jsp';
-		}
-		
+		}		
 		function receive(){
 			alert("인증번호 받기 기능 넣기");
 		}
-		
 		function confirm(){
 			alert("인증번호 확인 기능 넣기");
 		}
-
+		/* function nextRegister(){
+			location = '../register/register2.jsp';
+		} */
+		
+		// 이메일 선택
 		$(document).ready(function(){
-	    // 이메일 선택
 	    $("#email3").change(function(){
 	    	$("#email3 option:selected").each(function(){
 	    	// 직접 입력
@@ -311,11 +311,8 @@ width : 20.5%;
 	            	});
 	            });
 	       	}); 
-	</script>
 	
-	<!-- 여기서부터 -->
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
+	// 여기서부터 -> 
 	function searchAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -323,30 +320,30 @@ width : 20.5%;
 
                 // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var roadAddress = data.roadAddress; // 도로명 주소 변수
-                var extraRoadAddress = ''; // 참고 항목 변수
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
 
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                    extraRoadAddress += data.bname;
+                    extraRoadAddr += data.bname;
                 }
                 // 건물명이 있고, 공동주택일 경우 추가한다.
                 if(data.buildingName !== '' && data.apartment === 'Y'){
-                   extraRoadAddress += (extraRoadAddress !== '' ? ', ' + data.buildingName : data.buildingName);
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                 if(extraRoadAddr !== ''){
-                    extraRoadAddress = ' (' + extraRoadAddress + ')';
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("postCode").value = data.zonecode;
-                document.getElementById("address1").value = roadAddress;
-                document.getElementById("extraAddress").value = data.jibunAddress;
+                document.getElementById("address1").value = roadAddr;
+        
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-                if(roadAddress !== ''){
-                    document.getElementById("extraAddress").value = extraRoadAddress;
+                if(roadAddr !== ''){
+                    document.getElementById("extraAddress").value = extraRoadAddr;
                 } else {
                     document.getElementById("extraAddress").value = '';
                 }
@@ -355,12 +352,8 @@ width : 20.5%;
                 
                 // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
                 if(data.autoRoadAddress) {
-                    var expRoadAddress = data.autoRoadAddress + extraRoadAddress;
-                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddress + ')';
-                    guideTextBox.style.display = 'block';
-                } else if(data.autoJibunAddress){
-                	var expJibunAddress = data.autoJibunAddress;
-                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddress + ')';
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                     guideTextBox.style.display = 'block';
                 } else {
                     guideTextBox.innerHTML = '';
