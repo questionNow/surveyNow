@@ -1,5 +1,5 @@
 package qna.model.dao;
 
-public class qndDao {
+public class QndDao {
 
 }

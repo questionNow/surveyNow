@@ -1,5 +1,5 @@
 package qna.model.service;
 
-public class qndService {
+public class QndService {
 
 }
