@@ -18,11 +18,14 @@ public class Survey implements Serializable {
 	private int sCount;
 	private String sStatus;
 	private String sTarget;
+	private int qCount;
+
 	public Survey() {
-	
+
 	}
+
 	public Survey(int sNum, String sType, String sTitle, Date sStartDate, Date sEndDate, int sCount, String sStatus,
-			String sTarget) {
+			String sTarget, int qCount) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
@@ -32,65 +35,92 @@ public class Survey implements Serializable {
 		this.sCount = sCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
+		this.qCount = qCount;
 	}
+
 	public int getsNum() {
 		return sNum;
 	}
+
 	public void setsNum(int sNum) {
 		this.sNum = sNum;
 	}
+
 	public String getsType() {
 		return sType;
 	}
+
 	public void setsType(String sType) {
 		this.sType = sType;
 	}
+
 	public String getsTitle() {
 		return sTitle;
 	}
+
 	public void setsTitle(String sTitle) {
 		this.sTitle = sTitle;
 	}
+
 	public Date getsStartDate() {
 		return sStartDate;
 	}
+
 	public void setsStartDate(Date sStartDate) {
 		this.sStartDate = sStartDate;
 	}
+
 	public Date getsEndDate() {
 		return sEndDate;
 	}
+
 	public void setsEndDate(Date sEndDate) {
 		this.sEndDate = sEndDate;
 	}
+
 	public int getsCount() {
 		return sCount;
 	}
+
 	public void setsCount(int sCount) {
 		this.sCount = sCount;
 	}
+
 	public String getsStatus() {
 		return sStatus;
 	}
+
 	public void setsStatus(String sStatus) {
 		this.sStatus = sStatus;
 	}
+
 	public String getsTarget() {
 		return sTarget;
 	}
+
 	public void setsTarget(String sTarget) {
 		this.sTarget = sTarget;
 	}
+
+	public int getqCount() {
+		return qCount;
+	}
+
+	public void setqCount(int qCount) {
+		this.qCount = qCount;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public String toString() {
 		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sStartDate=" + sStartDate
 				+ ", sEndDate=" + sEndDate + ", sCount=" + sCount + ", sStatus=" + sStatus + ", sTarget=" + sTarget
-				+ "]";
+				+ ", qCount=" + qCount + "]";
 	}
-	
+
 	
 	
 }

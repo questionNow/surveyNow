@@ -9,7 +9,7 @@
 <body>
 <script type="text/javascript">
 		/* location.href = 페이지 이동 */
-		location.href= "<%=request.getContextPath()%>/views/common/menubar.jsp";
+		location.href= "<%=request.getContextPath()%>/views/common/menubarUser.jsp";
 	</script>
 </body>
 </html>

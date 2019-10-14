@@ -41,7 +41,7 @@
 		height: 100%;
 		margin: 0;
 		
-		background:url('<%=request.getContextPath()%>/images/city1.PNG') repeat; 
+		background:url('') repeat; 
 		
 		background-size:cover;
 		
@@ -163,9 +163,9 @@
 	left: 0;
 	} /* Free space to top specialy for menu */
 	
-	#navigation {
+/* 	#navigation {
 	position: fixed;
-	}
+	} */
 	
 	#navigation, #menu_div {
 	width: 100%;
@@ -419,7 +419,7 @@
 			/* border:1px solid lightgray; */
 			width:300px; 
 			height:auto;
-			padding:5px;  	
+			padding : 5px;  	
 			/* display:none; */ 
 			/* display:blick; */
 			display:none;
@@ -478,7 +478,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 align = "center">Welcome JSP World!</h1>
+	<h1 align = "center">설문 NOW!</h1>
 															<%-- action="<%=request.getContextPath()%>/login.me" 
 																: 입력 정보를 @WebServlet("/login.me") 으로 보냄
 																: method="post" 방식으로
@@ -566,15 +566,6 @@
 	<!-- 메뉴 만들기 -->
 	<br clear="both"> <!-- 이전 float:right; float속성을 제거해주자(이후 나올 태그들은 float속성이 안먹게 -->
 	<br>
-<!-- 	<div class="wrap">
-		<div class="nav">
-			<div class="menu" onclick="goHome();">HOME</div>
-			<div class="menu" onclick="goNotice();">공지사항</div>
-			<div class="menu" onclick="goBoard();">게시판</div>
-			<div class="menu" onclick="goThumbnail();">사진게시판</div>
-		</div>
-	</div> -->
-
 	
 	<script>
 		function goHome(){
@@ -639,15 +630,8 @@
 						</li> <!-- Level 1 END -->
 						<!-- END Home Item -->
 						
-						<li><a href="#" onclick="goNotice();">공지사항</a></li>
-						
-						<!-- END Portfolio Item -->
-						
-						<li><a href="#" onclick="goBoard();">게시판</a></li>
+						<li><a href="#" onclick="goNotice();">공지사항 / 이벤트</a></li>
 
-						<!-- END Blog Item -->
-						
-						<li><a href="#" onclick="goThumbnail();">사진게시판</a></li>
 						<li><a href="#">마이페이지</a>
 							<ul>
 								<li><a href="#">개인정보 수정</a></li>
@@ -655,26 +639,20 @@
 								<li><a href="#">포인트 관리</a></li>
 							</ul>
 						</li>
-						<li><a href="#">설문관리</a>
+						<li><a href="../survey/survey.jsp">설문 관리</a>
 							<ul>
-								<li><a href="#">설문 만들기</a></li>
-								<li><a href="#">작성된 설문</a></li>
-								<li><a href="#">진행중인 설문</a></li>
-								<li><a href="#">완료된 설문</a></li>
-								<li><a href="#">결제 설문</a></li>
+								<li><a href="../survey/makeSurvey.jsp">설문 만들기</a></li>
+								<li><a href="../survey/survey.jsp">작성된 설문</a></li>
+								<li><a href="../survey/ingSurvey.jsp">진행중인 설문</a></li>
+								<li><a href="../survey/finishedSurvey.jsp">완료된 설문</a></li>
+								<li><a href="../survey/deletedSurvey.jsp">삭제한 설문</a></li>
+								<li><a href="../survey/purchaseSurvey.jsp">설문 결제하기</a></li>
 							</ul>						
 						</li>
-						<li><a href="#">회원관리</a>
+						<li><a href="#">포인트 관리</a>
 							<ul>
-								<li><a href="#">회원 조회</a></li>
-								<li><a href="#">패널 랭킹</a></li>
-								<li><a href="#">경고 회원 관리</a></li>
-							</ul>						
-						</li>	
-						<li><a href="#">상품관리</a>
-							<ul>
-								<li><a href="#">상품 등록</a></li>
-								<li><a href="#">상품 관리</a></li>
+								<li><a href="#">포인트 사용하기</a></li>
+								<li><a href="#">포인트 내역</a></li>
 							</ul>						
 						</li>	
 						<li><a href="#">고객센터</a></li>	
@@ -737,81 +715,60 @@
 					<div class="nav">
 						<div class="menu" >설문관리</div>
 							<ul class="contents">
-								<li id="asd" class="lowMenu">
+								<li id="asd" class="lowMenu" onclick = "goMakeSurvey();">
 									설문 만들기
 								</li>
-								<li id="asd1" class="lowMenu">
+								
+								<li id="asd1" class="lowMenu" onclick ="goSurvey();">
 									작성된 설문
 								</li>
-								<li id="asd2" class="lowMenu">
+								<li id="asd2" class="lowMenu" onclick = "goIngSurvey();">
 									진행중인 설문
 								</li>
-								<li id="asd3" class="lowMenu">
+								<li id="asd3" class="lowMenu" onclick = "goFinishedSurvey();">
 									완료된 설문
 								</li>
-								<li id="asd4" class="lowMenu">
-									결제 설문
+								<li id="asd4" class="lowMenu" onclick = "goDeletedSurvey();">
+									삭제한 설문
 								</li>
+								<li id="asd5" class="lowMenu" onclick = "goPurchaseSurvey();">
+									설문 결제하기
+								</li>
+								<script type="text/javascript">
+								function goMakeSurvey(){
+									location.href = "../survey/makeSurvey.jsp"
+								}
+								function goSurvey(){
+									location.href = "../survey/survey.jsp"
+								}
+								function goIngSurvey(){
+									location.href = "../survey/ingSurvey.jsp"
+								}
+								function goFinishedSurvey(){
+									location.href = "../survey/finishedSurvey.jsp"
+								}
+								function goDeletedSurvey(){
+									location.href = "../survey/deletedSurvey.jsp"
+								}
+								function goPurchaseSurvey(){
+									location.href = "../survey/purchaseSurvey.jsp"
+								}
+								</script>
 							</ul>
 					</div>
+					
 					<div class="nav">
-						<div class="menu" >회원관리</div>
+						<div class="menu">포인트 관리</div>
 							<ul class="contents">
 								<li id="asd" class="lowMenu">
-									회원 조회
+									포인트 사용하기
 								</li>
 								<li id="asd1" class="lowMenu">
-									패널 랭킹
-								</li>
-								<li id="asd2" class="lowMenu">
-									경고 회원 관리
-								</li>
-							</ul>
-					</div>
-					<div class="nav">
-						<div class="menu">상품관리</div>
-							<ul class="contents">
-								<li id="asd" class="lowMenu">
-									상품 등록
-								</li>
-								<li id="asd1" class="lowMenu">
-									상품관리
+									포인트 내역
 								</li>
 							</ul>
 					</div>
 				</div>
-
-		<!-- 		<div class="sideMenu">첫 번째 메뉴</div>
-					<ul class="contents">
-						<li id="asd">
-							하위메뉴
-						</li>
-						<li id="asd1">
-							하위메뉴1
-						</li>
-						<li id="asd2">
-							하위메뉴2
-						</li>
-					</ul>
-				<div class="sideMenu">두 번째 메뉴</div>
-					<ul class="contents">
-						<li id="asd">
-							하위메뉴
-						</li>
-						<li id="asd1">
-							하위메뉴1
-						</li>
-						<li id="asd2">
-							하위메뉴2
-						</li>
-					</ul>
-				<div class="sideMenu">세 번째 메뉴</div>
-				<p class="contents">내용</p>
-				<div class="sideMenu">네 번째 메뉴</div>
-				<p class="contents">내용</p>
-				<div class="sideMenu">다섯 번째 메뉴</div>
-				<p class="contents">내용</p> -->
-				
 				
 		</aside>
 		
@@ -856,33 +813,6 @@
 <!-- 	<div>	
 		<h3>	회사 소개 및 지도 API 끌어오기	</h3>
 	</div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </body>

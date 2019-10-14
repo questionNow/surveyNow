@@ -32,30 +32,30 @@
 </style>
 </head>
 <body>
-	<%@ include file = "surveySideBar.jsp" %>
-	
 
-</head>
 <body>
+<%@ include file = "surveySideBar.jsp" %>
 <div class="row">
 
   <div class="right" style="background-color:#ddd;">
     <h2>진행중인 설문</h2>
-    <p>진행중인 설문을 확인 해보세요</p>
+    <p>진행중인 설문을 확인 해보세요.</p>
     	<div id = "surveyList">
-    		<table id = "surveyListTable" style = "text-align : center" cellpadding="0" cellspacing="0">
+    		<table id = "surveyListTable" style = "text-align : Center" cellpadding="0" cellspacing="0">
     			<tr>
     				<th width = "550px">제목</th>
+    				<th width = "200px">패널 수</th>
     				<th width = "100px">문항 수</th>
     				<th width = "150px">작성일</th>
-    				<th width = "100px">삭제일</th>
-    				<th width = "100px">삭제 예정일</th>
+    				<th width = "100px">응답자 수</th>
+    				<th width = "100px">분석</th>
+    				<th width = "100px">종료</th>
     			</tr>
     			<tr>
 
     			</tr>
     			
-    		</table>   	
+    		</table>      	
     	</div>       
   </div>
 </div>
