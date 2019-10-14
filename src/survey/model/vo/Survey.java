@@ -16,16 +16,18 @@ public class Survey implements Serializable {
 	private Date sStartDate;
 	private Date sEndDate;
 	private int sCount;
+	private int aCount;
 	private String sStatus;
 	private String sTarget;
 	private int qCount;
+	private String sCode;
 
 	public Survey() {
 
 	}
 
-	public Survey(int sNum, String sType, String sTitle, Date sStartDate, Date sEndDate, int sCount, String sStatus,
-			String sTarget, int qCount) {
+	public Survey(int sNum, String sType, String sTitle, Date sStartDate, Date sEndDate, int sCount, int aCount,
+			String sStatus, String sTarget, int qCount, String sCode) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
@@ -33,9 +35,11 @@ public class Survey implements Serializable {
 		this.sStartDate = sStartDate;
 		this.sEndDate = sEndDate;
 		this.sCount = sCount;
+		this.aCount = aCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
 		this.qCount = qCount;
+		this.sCode = sCode;
 	}
 
 	public int getsNum() {
@@ -86,6 +90,14 @@ public class Survey implements Serializable {
 		this.sCount = sCount;
 	}
 
+	public int getaCount() {
+		return aCount;
+	}
+
+	public void setaCount(int aCount) {
+		this.aCount = aCount;
+	}
+
 	public String getsStatus() {
 		return sStatus;
 	}
@@ -110,6 +122,14 @@ public class Survey implements Serializable {
 		this.qCount = qCount;
 	}
 
+	public String getsCode() {
+		return sCode;
+	}
+
+	public void setsCode(String sCode) {
+		this.sCode = sCode;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -117,10 +137,8 @@ public class Survey implements Serializable {
 	@Override
 	public String toString() {
 		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sStartDate=" + sStartDate
-				+ ", sEndDate=" + sEndDate + ", sCount=" + sCount + ", sStatus=" + sStatus + ", sTarget=" + sTarget
-				+ ", qCount=" + qCount + "]";
+				+ ", sEndDate=" + sEndDate + ", sCount=" + sCount + ", aCount=" + aCount + ", sStatus=" + sStatus
+				+ ", sTarget=" + sTarget + ", qCount=" + qCount + ", sCode=" + sCode + "]";
 	}
-
-	
 	
 }
