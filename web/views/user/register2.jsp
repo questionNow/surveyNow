@@ -91,7 +91,7 @@ body{
 <body>
 <div id="register">
 <div id="logo1">
-<img src="<%=request.getContextPath() %>/images/semiLogo.png" class=nowlogo></div>
+<img src="<%=request.getContextPath() %>/image/semiLogo.png" class=nowlogo></div>
 <div id="logo2">
 <font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
 </div> <br clear="both">
