@@ -139,7 +139,7 @@
 		<div class = "wrap">
 			<div class = "nav">
 				<div class = "menu" onclick = "goSurvey();">설문</div>
-				<div class = "menu" onclick = "goPurchase();">구매하기</div>
+				<div class = "menu" onclick = "goPurchase();">포인트 사용</div>
 				<div class = "menu" onclick = "goNotice();">공지사항 / 이벤트</div>
 				<div class = "menu" onclick = "goQna();">고객센터</div>
 			</div>

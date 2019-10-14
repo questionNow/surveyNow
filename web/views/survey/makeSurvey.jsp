@@ -37,8 +37,8 @@ th h3:hover {
 		<div class="right" style="background-color: #ddd;">
 			<h2>설문 만들기</h2>
 			<button id = "pick">+객관식</button>
-			<button>+주관식</button>
-			<button>+순위</button>
+			<button id = "write">+주관식</button>
+			<button id = "rank">+순위</button>
 			<br>
 			<div id="surveyCreate">			
 				<table id="surveyListTable" style="text-align: Center" width=85%
@@ -64,6 +64,7 @@ th h3:hover {
 	<script type="text/javascript">
 		$count = 1;
 		
+		// 객관식 버튼 - 객관식 문제 추가
 		$("#pick").click(function(){
 			$.ajax({
 				success : function(){
@@ -76,6 +77,7 @@ th h3:hover {
 					var $subjectTd = $("<td><input type = 'text' colspan = '4' size = '50' placeholder ='질문을 입력하세요.'></td>")
 					var $deleteTr = $("<td><button onclick = 'deleteTr();'>X</button>");
 					
+					
 					$tr.append($noTd);
 					$tr.append($titleTd);
 					$tr.append($subjectTd);
@@ -87,6 +89,34 @@ th h3:hover {
 				}
 			})
 		});
+		
+		// 주관식 버튼 - 주관식 문제 추가
+		$("#write").click(function(){
+			$.ajax({
+				success : function(){					
+					$tableBody = $("#surveyListTable");
+					var $tr = $("<tr id="+ $count +">");
+					var $noTd = $("<td>").text($count);
+					var $titleTd = $("<td>").text("제목");
+					var $subjectTd = $("<td><input type = 'text' colspan = '4' size = '50' placeholder ='질문을 입력하세요.'></td>")
+					var $deleteTr = $("<td><button onclick = 'deleteTr();'>X</button>");
+					
+					var $select = $("<td colspan = 4>).text('객관식 문항 추가')");
+					
+					
+					$tr.append($noTd);
+					$tr.append($titleTd);
+					$tr.append($subjectTd);
+					$tr.append($deleteTr);
+					
+					$tableBody.append($tr);
+					
+					$count += 1;
+				}
+			})
+		});
+		
+		
 			function deleteTr(){
 				$.ajax({
 					
