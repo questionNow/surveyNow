@@ -10,7 +10,7 @@
 <title> 회원가입 성공 화면 </title>
 <style>
 body{
-	background : url("<%=request.getContextPath()%>/images/successRegister.jpg")
+	background : url("<%=request.getContextPath()%>/image/successRegister.jpg")
 	no-repeat;
 	width : 500px;
 }
