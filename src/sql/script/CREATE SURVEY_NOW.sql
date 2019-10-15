@@ -1,4 +1,3 @@
-DROP TABLE USER_INFO2;
 DROP TABLE POINT;
 DROP TABLE COMMENTS;
 DROP TABLE SURVEY_QUESTION_ANSWER;
@@ -12,26 +11,20 @@ DROP TABLE QUESTION;
 DROP TABLE USER_INFO1;
 -- user 테이블 생성
 CREATE TABLE user_info1(
-	 userId VARCHAR(20) NOT NULL,
-	 userPwd VARCHAR(255) NOT NULL,
-	 userName VARCHAR(20) NOT NULL,
-	 age NUMBER(5),
-	 gender VARCHAR(6),
-	 email 	VARCHAR(50),
-	 phone 	VARCHAR(11),
-	 address VARCHAR(100),
-     recommend_id VARCHAR(20),
-	 surveyCount NUMBER(100) DEFAULT '0',
-	 visitCount NUMBER(100) DEFAULT '0',
-	 userType NUMBER(1) DEFAULT '2',
-	 status VARCHAR(1) DEFAULT 'N',
-     CONSTRAINT user_info_pk PRIMARY KEY (userId)
-);
-
--- 회원가입 2단계 
-CREATE TABLE user_info2(
-    userId VARCHAR(20) NOT NULL,
-    final_education VARCHAR(50),
+	userId VARCHAR(20) NOT NULL,
+	userPwd VARCHAR(255) NOT NULL,
+	userName VARCHAR(20) NOT NULL,
+	age NUMBER(5),
+	gender VARCHAR(6),
+	email 	VARCHAR(50),
+	phone 	VARCHAR(11),
+	address VARCHAR(100),
+    recommend_id VARCHAR(20),
+	surveyCount NUMBER(38) DEFAULT '0',
+	visitCount NUMBER(38) DEFAULT '0',
+	userType NUMBER(1) DEFAULT '2',
+	status VARCHAR(1) DEFAULT 'N',
+	final_education VARCHAR(50),
     job VARCHAR(20),
     income VARCHAR(50),
     living_type VARCHAR(10),
@@ -40,8 +33,8 @@ CREATE TABLE user_info2(
     marital_status VARCHAR(10),
     living_with VARCHAR(15),
     army_go VARCHAR(10),
-    interest VARCHAR(300),
-     CONSTRAINT user_info_fk FOREIGN KEY (userId) REFERENCES user_info1(userId) 
+    interest VARCHAR(300)
+     CONSTRAINT user_info_pk PRIMARY KEY (userId)
 );
 
 -- 공지사항 및 이벤트 테이블

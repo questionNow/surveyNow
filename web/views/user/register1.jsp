@@ -77,15 +77,6 @@ input[type = password]{
 #id {
 	width : 43.5%;
 }
-#birty {
-	width : 17.6%;
-}
-#birty1 {
-	width : 17.7%;
-	border-radius : 10px;
-	border : 1px solid #ccc;
-	padding : .7em;
-}
 #gender{
 	width : 53.8%;
 	border-radius : 10px;
@@ -140,6 +131,51 @@ width : 23.5%;
 	padding : 9px 20px;
 	width : 53.8%;
 }
+.question {
+	margin-left : 450px;
+	font-size : larger;
+}
+#finalEdu{
+	width : 46.7%;
+	border-radius : 10px;
+	border : 1px solid #ccc;
+	padding : .7em;
+}
+#job{
+	width : 46.7%;
+	border-radius : 10px;
+	border : 1px solid #ccc;
+	margin-left : 39.5px;
+	padding : .7em;
+}
+#income{
+	width : 46.6%;
+	border-radius : 10px;
+	border : 1px solid #ccc;
+	margin-left : 12.5px;
+	padding : .7em;
+}
+#home1, #home2, #family1{
+	width : 46.7%;
+	border-radius : 10px;
+	border : 1px solid #ccc;
+	padding : .7em;
+}
+#religion, #marry, #soldier{
+	width : 46.7%;
+	border-radius : 10px;
+	border : 1px solid #ccc;
+	margin-left : 39px;
+	padding : .7em;
+}
+.interest{
+	margin-left : 80px;
+}
+#successRegister, #backBtn{
+	cursor : pointer;
+	padding : 9px 20px;
+	width : 27%;
+}
 </style>
 </head>
 <body>
@@ -150,8 +186,8 @@ width : 23.5%;
 	<font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
 </div> <br clear="both">
 	
-	<form action = "register2.jsp" method = post> <br>
-	<div class = title>
+	<form action = "<%=request.getContextPath()%>/register.user" method = post> <br>
+	<div class = title1>
 		<div class = register>
 			회원가입
 		</div> <br>
@@ -173,58 +209,9 @@ width : 23.5%;
 			<input type = text id = name name = name placeholder = "이름을 입력하세요" maxlength = 5> 
 		</div> <br>
 		<div class = join>
-			<label for = birty> 생년월일 </label> <br>
-			<input type = text id = birty name = "birth_yy" maxlength = 4 placeholder = "년 (4글자)">
-			<select id = birty1 name = "birth_mm">
-				<option value = ""> 월 </option>
-				<option value = 01> 01 </option>
-				<option value = 02> 02 </option>
-				<option value = 03> 03 </option>
-				<option value = 04> 04 </option>
-				<option value = 05> 05 </option>
-				<option value = 06> 06 </option>
-				<option value = 07> 07 </option>
-				<option value = 08> 08 </option>
-				<option value = 09> 09 </option>
-				<option value = 10> 10 </option>
-				<option value = 11> 11 </option>
-				<option value = 12> 12 </option>
-			</select> 
-			<select id = birty1 name = "birth_dd">
-				<option value = ""> 일 </option>
-				<option value = 01> 01 </option>
-				<option value = 02> 02 </option>
-				<option value = 03> 03 </option>
-				<option value = 04> 04 </option>
-				<option value = 05> 05 </option>
-				<option value = 06> 06 </option>
-				<option value = 07> 07 </option>
-				<option value = 08> 08 </option>
-				<option value = 09> 09 </option>
-				<option value = 10> 10 </option>
-				<option value = 11> 11 </option>
-				<option value = 12> 12 </option>
-				<option value = 13> 13 </option>
-				<option value = 14> 14 </option>
-				<option value = 15> 15 </option>
-				<option value = 16> 16 </option>
-				<option value = 17> 17 </option>
-				<option value = 18> 18 </option>
-				<option value = 19> 19 </option>
-				<option value = 20> 20 </option>
-				<option value = 21> 21 </option>
-				<option value = 22> 22 </option>
-				<option value = 23> 23 </option>
-				<option value = 24> 24 </option>
-				<option value = 25> 25 </option>
-				<option value = 26> 26 </option>
-				<option value = 27> 27 </option>
-				<option value = 28> 28 </option>
-				<option value = 29> 29 </option>
-				<option value = 30> 30 </option>
-				<option value = 31> 31 </option>
-			</select>
-		</div> <br>
+			<label> 나이 </label> <br>
+			<input type = text id = age name = age maxlength = 4 placeholder = "나이를 입력하세요">
+		</div><br>
 		<div class = join>
 			<label> 성별 </label> <br>
 			<select id = gender name = gender>
@@ -269,13 +256,187 @@ width : 23.5%;
 			<!-- <input type = text id = jibunAddress name = jibunAddress placeholder = "지번주소"> -->
 			<input type = text id = detailAddress name = detailAddress placeholder = "상세 주소를 입력하세요">
 			<input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
-		</div> <br><br>
+		</div> <br>
 		<div class = join>
-			<button id = nextRegister value = "가입 2단계 진행" onclick = "nextRegister();"> 가입 2단계 진행 </button><br><br>
+			<label> 추천인 </label> <br>
+			<input type = text id = recommend name = recommend placeholder = "추천인이 있으면 입력하세요">
+		</div> <br>
+		<div class = join>
+			<button id = nextRegister value = "hide/show" onclick = "nextRegister();"> 가입 2단계 진행 </button><br><br>
 			<input type = reset value = "다시쓰기" id = clear1>
 			<input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
 		</div>
+	</div>
+	<div class = title2>
+		<div class = register>
+			패널 정보 등록
+		</div> <br>
+		<div class = question>
+			<label for = 1> 최종학력 </label>
+			<select id = finalEdu name = finalEdu>
+				<option value = "" selected = ""> 최종학력을 선택하세요 </option>
+				<option value = "초등학교"> 초등학교 졸업 </option>
+				<option value = "중학교"> 중학교 졸업 </option>
+				<option value = "고등학교"> 고등학교 졸업 </option>
+				<option value = "전문대"> 2·3년제 대학교 졸업 </option>
+				<option value = "4년제"> 4년제 대학교 졸업 </option>
+				<option value = "석사"> 석사학위 취득 </option>
+				<option value = "박사"> 박사학위 취득 </option>
+			</select>
+		</div> <br>
+
 		
+		<div class = question>
+			<label for = 2> 직업 </label>
+			<select id = job name = job>
+				<option value = "" selected = ""> 직업을 선택하세요 </option>
+				<option value = "무직"> 무직 </option>
+				<option value = "학생"> 학생 </option>
+				<option value = "자영업"> 자영업 </option>
+				<option value = "사무직"> 사무직 </option>
+				<option value = "판매/서비스직"> 판매/서비스직 </option>
+				<option value = "생산/기술직"> 생산/기술직 </option>
+				<option value = "전문/예술직"> 전문/예술직 </option>
+				<option value = "경영/관리직"> 경영/관리직 </option>
+				<option value = "농/어/축산업"> 농/어/축산업 </option>
+				<option value = "기타"> 기타 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 3> 월 소득 </label>
+			<select id = income name = income>
+				<option value = "" selected = ""> 월 평균 개인 소득을 선택하세요 </option>
+				<option value = "200만원 이하"> 200만원 이하 </option>
+				<option value = "400만원 이하"> 400만원 이하 </option>
+				<option value = "600만원 이하"> 600만원 이하 </option>
+				<option value = "600만원 이상"> 600만원 이상 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 4> 주거형태 </label>
+			<select id = home1 name = home1>
+				<option value = "" selected = ""> 주거 형태를 선택하세요 </option>
+				<option value = "월세"> 월세 </option>
+				<option value = "전세"> 전세 </option>
+				<option value = "자가"> 자가 </option>
+				<option value = "기타"> 기타 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 5> 주택유형 </label>
+			<select id = home2 name = home2>
+				<option value = "" selected = ""> 주택 유형을 선택하세요 </option>
+				<option value = "단독 주택"> 단독 주택 </option>
+				<option value = "다세대 주택"> 다세대 주택 </option>
+				<option value = "아파트"> 아파트 </option>
+				<option value = "기타"> 기타 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 6> 종교 </label>
+			<select id = religion name = religion>
+				<option value = "" selected = ""> 종교를 선택하세요 </option>
+				<option value = "무교"> 무교 </option>
+				<option value = "기독교"> 기독교 </option>
+				<option value = "불교"> 불교 </option>
+				<option value = "천주교"> 천주교 </option>
+				<option value = "기타"> 기타 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 7> 혼인 </label>
+			<select id = marry name = marry>
+				<option value = "" selected = ""> 혼인여부를 선택하세요 </option>
+				<option value = "미혼"> 미혼 </option>
+				<option value = "기혼"> 기혼 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 8> 동거가족 </label>
+			<select id = family1 name = family1>
+				<option value = "" selected = ""> 동거 가족을 선택하세요 </option>
+				<option value = "0"> 0명 </option>
+				<option value = "1"> 1명 </option>
+				<option value = "2"> 2명 </option>
+				<option value = "3"> 3명 </option>
+				<option value = "4"> 4명 </option>
+				<option value = "5"> 5명 </option>
+				<option value = "6"> 6명 이상 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 9> 병역 </label>
+			<select id = soldier name = soldier>
+				<option value = "" selected = ""> 병역여부를 선택하세요 </option>
+				<option value = "미필"> 미필 </option>
+				<option value = "군필"> 군필 </option>
+				<option value = "면제"> 면제 </option>
+			</select>
+		</div> <br>
+		
+		<div class = question>
+			<label for = 9> 관심분야 </label> <br>
+			<div class = interest>
+			<input type = checkbox id = sports name = interest value = 스포츠>
+			<label for = sports> 스포츠 </label>
+			
+			<input type = checkbox id = food name = interest value = 음식>
+			<label for = food> 음식 </label>
+			
+			<input type = checkbox id = trip name = interest value = 여행>
+			<label for = trip> 여행 </label>
+			
+			<input type = checkbox id = game name = interest value = 게임>
+			<label for = game> 게임 </label>
+			
+			<input type = checkbox id = science name = interest value = 과학>
+			<label for = science> 과학 </label>
+
+			<input type = checkbox id = fashion name = interest value = 패션>
+			<label for = fashion> 패션/쇼핑 </label>			
+			<br>			
+			<input type = checkbox id = it name = interest value = IT>
+			<label for = it> IT </label>
+
+			<input type = checkbox id = car name = interest value = 자동차>
+			<label for = car> 자동차 </label>
+			
+			<input type = checkbox id = society name = interest value = 사회이슈>
+			<label for = society> 사회이슈 </label>
+			
+			<input type = checkbox id = celebrity name = interest value = 연예인>
+			<label for = celebrity> 연예인 </label>
+
+			<input type = checkbox id = childrenEdu name = interest value = 육아>
+			<label for = childrenEdu> 육아 </label>
+			
+			<input type = checkbox id = hire name = interest value = 취업>
+			<label for = hire> 취업 </label>
+			<br>
+			<input type = checkbox id = education name = interest value = 교육>
+			<label for = education> 교육 </label>
+			
+			<input type = checkbox id = family name = family value = 가족>
+			<label for = family> 가족 </label>
+			
+			<input type = checkbox id = cultural name = interest value = 문화생활>
+			<label for = cultural> 문화생활 </label>
+
+			<input type = checkbox id = pet name = interest value = 애견>
+			<label for = pet> 애완동물 </label>			
+			</div><br><br>
+		<div class = complete>
+			<input type = button value = "뒤로가기" id = backBtn onclick = "beforeBtn();">
+			<input type = submit value = "패널 정보 등록 완료" id = successRegister onclick = "complete();"> 
+		</div>
+		</div> <br><br>
 	</div>
 	</form>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -289,11 +450,20 @@ width : 23.5%;
 		function confirm(){
 			alert("인증번호 확인 기능 넣기");
 		}
-		/* function nextRegister(){
-			location = '../register/register2.jsp';
-		} */
 		
-		// 이메일 선택
+		// 여기서부터 ->
+		$(document).ready(function(){
+			$(".title1").show();  // <- 회원가입 첫번째 창 보여주기
+			$(".title2").hide();  // <- 회원가입 두번째 창 숨기기
+			$("#nextRegister").click(function(){  // <- nextRegister 버튼 클릭 시
+				$(".title1").hide();  // <- 클릭 시 회원가입 첫번째 창 숨기기
+				$(".title2").show();  // <- 클릭 시 회원가입 두번째 창 보여주기
+				return false;
+			});
+		}); // <- 여기까지 div  show/hide
+		
+		
+		// 여기서부터 ->
 		$(document).ready(function(){
 	    $("#email3").change(function(){
 	    	$("#email3 option:selected").each(function(){
@@ -310,7 +480,7 @@ width : 23.5%;
 	       	}
 	            	});
 	            });
-	       	}); 
+	       	});   // <- 여기까지 이메일 선택
 	
 	// 여기서부터 -> 
 	function searchAddress() {
@@ -360,10 +530,17 @@ width : 23.5%;
                     guideTextBox.style.display = 'none';
                 }
             }
-        }).open();
-    }
-	</script>
-	<!-- 여기까지 주소 찾기 기능 -->
+        }).open();   // <- 여기까지 주소넣기 
+    }  
 	
+	// 여기서부터 register2 함수들
+	function complete(){   // <- RegisterServlet 으로 
+		alert("회원가입 성공 화면으로 만들고, 홈 버튼 눌러서 로그인 메인화면으로 가게 하기");
+	}
+	
+	function beforeBtn(){
+		location = 'register1.jsp';
+	}
+	</script>
 </body>
 </html>
