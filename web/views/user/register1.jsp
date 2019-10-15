@@ -83,9 +83,6 @@ input[type = password]{
 	border : 1px solid #ccc;
 	padding : .7em;
 }
-.golbang{
-	font-size : 1.7em; 
-}
 #email1, #email2{
 	width : 17.1%;
 }
@@ -191,22 +188,22 @@ width : 23.5%;
 		<div class = register>
 			회원가입
 		</div> <br>
-		<div class = join>
+			<div class = join>
 			<label for = id> 아이디 </label> <br>
-			<input type = text id = id name = id placeholder = "아이디를 입력하세요" maxlength = 8>
+			<input type = text id = id name = userId placeholder = "아이디를 입력하세요" maxlength = 8>
 			<input type = button value = 중복확인 onclick = "overlap();">  
 		</div> <br>
 		<div class = join>
 			<label for = pw1> 비밀번호 </label> <br>
-			<input type = password id = pw1 name = pw1 placeholder = "비밀번호를 입력하세요" maxlength = 8>
+			<input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 8>
 		</div> <br>
 		<div class = join>
 			<label for = pw2> 비밀번호 확인 </label> <br>
-			<input type = password id = pw2 name = pw2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 8>
+			<input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 8>
 		</div> <br>
 		<div class = join>
 			<label for = name> 이름 </label> <br>
-			<input type = text id = name name = name placeholder = "이름을 입력하세요" maxlength = 5> 
+			<input type = text id = name name = userName placeholder = "이름을 입력하세요" maxlength = 5> 
 		</div> <br>
 		<div class = join>
 			<label> 나이 </label> <br>
@@ -223,17 +220,16 @@ width : 23.5%;
 		<div class = join>
 			<label> 이메일 </label> <br>
 			<input type = text id = email1 name = email1 maxlength = 20> 
-			<label class = golbang> @ </label>
-			<input type = text id = email2 name = email2 maxlength = 15>
-			<select	id = email3 name = email3 >
+			<input type = text id = email2 name = email3 maxlength = 15>
+			<select	id = email3 name = email2>
 				<option> 이메일을 선택하세요 </option>
-				<option value = "naver.com"> naver.com </option>
-				<option value = "daum.net"> daum.net </option>
-				<option value = "gmail.com"> gmail.com </option>
-				<option value = "nate.com"> nate.com </option>
+				<option value = "@naver.com"> @naver.com </option>
+				<option value = "@daum.net"> @daum.net </option>
+				<option value = "@gmail.com"> @gmail.com </option>
+				<option value = "@nate.com"> @nate.com </option>
 				<option value = self> 직접 입력 </option>
 			</select> <br><br>
-			<input type = text id = confirmNum maxlength = 5 placeholder = "인증번호 입력">
+			<input type = text id = confirmNum maxlength = 10 placeholder = "인증번호 입력">
 			<input type = button value = "인증번호받기" onclick = "receive();">
 			<input type = button value = "인증번호확인" onclick = "confirm();">
 		</div> <br>
@@ -245,7 +241,7 @@ width : 23.5%;
 				<option value = "SKT"> SKT </option>
 				<option value = "LG"> LG </option>
 			</select>
-			<input type = text id = phoneNum name = phoneNum maxlength = 11 placeholder = "(-) 빼고 입력해주세요">
+			<input type = text id = phoneNum name = phone maxlength = 11 placeholder = "(-) 빼고 입력해주세요">
 		</div> <br>
 		<div class = join>
 			<label> 주소 </label> <br>
@@ -254,12 +250,12 @@ width : 23.5%;
 			<input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
 			<span id= guide style = "color:#999; display:none"> </span>
 			<!-- <input type = text id = jibunAddress name = jibunAddress placeholder = "지번주소"> -->
-			<input type = text id = detailAddress name = detailAddress placeholder = "상세 주소를 입력하세요">
+			<input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요">
 			<input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
 		</div> <br>
 		<div class = join>
 			<label> 추천인 </label> <br>
-			<input type = text id = recommend name = recommend placeholder = "추천인이 있으면 입력하세요">
+			<input type = text id = recommend name = recommendId placeholder = "추천인이 있으면 입력하세요">
 		</div> <br>
 		<div class = join>
 			<button id = nextRegister value = "hide/show" onclick = "nextRegister();"> 가입 2단계 진행 </button><br><br>
@@ -273,15 +269,15 @@ width : 23.5%;
 		</div> <br>
 		<div class = question>
 			<label for = 1> 최종학력 </label>
-			<select id = finalEdu name = finalEdu>
+			<select id = finalEdu name = finalEducation>
 				<option value = "" selected = ""> 최종학력을 선택하세요 </option>
-				<option value = "초등학교"> 초등학교 졸업 </option>
-				<option value = "중학교"> 중학교 졸업 </option>
-				<option value = "고등학교"> 고등학교 졸업 </option>
-				<option value = "전문대"> 2·3년제 대학교 졸업 </option>
-				<option value = "4년제"> 4년제 대학교 졸업 </option>
-				<option value = "석사"> 석사학위 취득 </option>
-				<option value = "박사"> 박사학위 취득 </option>
+				<option value = "초등학교 졸업"> 초등학교 졸업 </option>
+				<option value = "중학교 졸업"> 중학교 졸업 </option>
+				<option value = "고등학교 졸업"> 고등학교 졸업 </option>
+				<option value = "2·3년제 대학교 졸업"> 2·3년제 대학교 졸업 </option>
+				<option value = "4년제 대학교 졸업"> 4년제 대학교 졸업 </option>
+				<option value = "석사학위 취득"> 석사학위 취득 </option>
+				<option value = "박사학위 취득"> 박사학위 취득 </option>
 			</select>
 		</div> <br>
 
@@ -316,7 +312,7 @@ width : 23.5%;
 		
 		<div class = question>
 			<label for = 4> 주거형태 </label>
-			<select id = home1 name = home1>
+			<select id = home1 name = livingType>
 				<option value = "" selected = ""> 주거 형태를 선택하세요 </option>
 				<option value = "월세"> 월세 </option>
 				<option value = "전세"> 전세 </option>
@@ -327,7 +323,7 @@ width : 23.5%;
 		
 		<div class = question>
 			<label for = 5> 주택유형 </label>
-			<select id = home2 name = home2>
+			<select id = home2 name = houseType>
 				<option value = "" selected = ""> 주택 유형을 선택하세요 </option>
 				<option value = "단독 주택"> 단독 주택 </option>
 				<option value = "다세대 주택"> 다세대 주택 </option>
@@ -350,7 +346,7 @@ width : 23.5%;
 		
 		<div class = question>
 			<label for = 7> 혼인 </label>
-			<select id = marry name = marry>
+			<select id = marry name = maritalStatus>
 				<option value = "" selected = ""> 혼인여부를 선택하세요 </option>
 				<option value = "미혼"> 미혼 </option>
 				<option value = "기혼"> 기혼 </option>
@@ -359,21 +355,21 @@ width : 23.5%;
 		
 		<div class = question>
 			<label for = 8> 동거가족 </label>
-			<select id = family1 name = family1>
+			<select id = family1 name = livingWith>
 				<option value = "" selected = ""> 동거 가족을 선택하세요 </option>
-				<option value = "0"> 0명 </option>
-				<option value = "1"> 1명 </option>
-				<option value = "2"> 2명 </option>
-				<option value = "3"> 3명 </option>
-				<option value = "4"> 4명 </option>
-				<option value = "5"> 5명 </option>
-				<option value = "6"> 6명 이상 </option>
+				<option value = "0명"> 0명 </option>
+				<option value = "1명"> 1명 </option>
+				<option value = "2명"> 2명 </option>
+				<option value = "3명"> 3명 </option>
+				<option value = "4명"> 4명 </option>
+				<option value = "5명"> 5명 </option>
+				<option value = "6명 이상"> 6명 이상 </option>
 			</select>
 		</div> <br>
 		
 		<div class = question>
 			<label for = 9> 병역 </label>
-			<select id = soldier name = soldier>
+			<select id = soldier name = armyGo>
 				<option value = "" selected = ""> 병역여부를 선택하세요 </option>
 				<option value = "미필"> 미필 </option>
 				<option value = "군필"> 군필 </option>
@@ -423,7 +419,7 @@ width : 23.5%;
 			<input type = checkbox id = education name = interest value = 교육>
 			<label for = education> 교육 </label>
 			
-			<input type = checkbox id = family name = family value = 가족>
+			<input type = checkbox id = family name = interest value = 가족>
 			<label for = family> 가족 </label>
 			
 			<input type = checkbox id = cultural name = interest value = 문화생활>
