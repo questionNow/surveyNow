@@ -16,6 +16,7 @@ public class UserService {
 	public UserService() {}
 	
 	public int registerUser(UserInfo userInfo) {
+		
 		Connection conn = getConnection();
 		int result = new UserDao().registerUser(conn, userInfo);
 		

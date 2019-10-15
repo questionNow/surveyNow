@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email1") + request.getParameter("email2");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address1") + request.getParameter(" " + "address2");
+		String address = request.getParameter("address1") + " " +request.getParameter("address2");
 		String recommendId = request.getParameter("recommendId");
 		String finalEducation = request.getParameter("finalEducation");
 		String job = request.getParameter("job");
@@ -74,15 +74,15 @@ public class RegisterServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0) {
-			page = "views/register/successRegister.jsp";
-			request.setAttribute("msg", "회원 가입 성공");
+			page = "views/user/successRegister.jsp";
+			
 		} else {
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 가입 실패");
 		}
-		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);		
+		
 	}
 
 	/**

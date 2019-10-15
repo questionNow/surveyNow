@@ -1,30 +1,19 @@
 package user.model.dao;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import static common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
 import user.model.vo.UserInfo;
-
-import static common.JDBCTemplate.*;
 public class UserDao {
 
 	private Properties prop = new Properties();
 	
 	public UserDao() {
-		String fileName = UserDao.class.getResource("/sql/user/user-query.properties").getPath();
-		
-		try {
-			prop.load(new FileReader(fileName));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	
 	}
 	
 	public int registerUser(Connection conn, UserInfo userInfo) {
@@ -32,7 +21,7 @@ public class UserDao {
 		int result = 0;
 		System.out.println(userInfo);
 		try {
-			pst = conn.prepareStatement("INSERT INTO USER_INFO1 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			pst = conn.prepareStatement("INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
@@ -60,6 +49,7 @@ public class UserDao {
 		} finally {
 			close(pst);
 		}
+		System.out.println(result);
 		return result;
 	}
 
