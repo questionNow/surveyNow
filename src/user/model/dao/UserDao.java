@@ -1,20 +1,21 @@
 package user.model.dao;
 
-import static common.JDBCTemplate.close;
-
-import java.sql.Connection;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
 import user.model.vo.UserInfo;
+
+import static common.JDBCTemplate.*;
 public class UserDao {
 
 	private Properties prop = new Properties();
 	
-	public UserDao() {
-	
-	}
+	public UserDao() {}
 	
 	public int registerUser(Connection conn, UserInfo userInfo) {
 		PreparedStatement pst = null;
@@ -49,7 +50,31 @@ public class UserDao {
 		} finally {
 			close(pst);
 		}
-		System.out.println(result);
+		return result;
+	}
+
+	public int idCheck(Connection conn, String userId) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		int result = 0;
+		
+		try {
+			pst = conn.prepareStatement("SELECT COUNT(*) FROM USER_INFO WHERE USERID=?");
+			pst.setString(1, userId);
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		System.out.println("dao 검사" + result);
 		return result;
 	}
 

@@ -16,7 +16,6 @@ public class UserService {
 	public UserService() {}
 	
 	public int registerUser(UserInfo userInfo) {
-		
 		Connection conn = getConnection();
 		int result = new UserDao().registerUser(conn, userInfo);
 		
@@ -25,6 +24,14 @@ public class UserService {
 		} else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+
+	public int idCheck(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDao().idCheck(conn, userId);
+		System.out.println("Service 검사" + result);
 		close(conn);
 		return result;
 	}
