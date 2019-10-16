@@ -67,8 +67,8 @@ public class RegisterServlet extends HttpServlet {
 		System.out.println("관심분야 잘 나오나 test " + interest);
 		
 		UserInfo userInfo = new UserInfo(userId, userPwd, userName, age, gender, email, phone, address, recommendId,
-				                         finalEducation, job, income, livingType, houseType, religion, maritalStatus,
-				                         livingWith, armyGo, interest);
+                finalEducation, job, income, livingType, houseType, religion, maritalStatus,
+                livingWith, armyGo, interest);
 		
 		int result = new UserService().registerUser(userInfo);
 		
