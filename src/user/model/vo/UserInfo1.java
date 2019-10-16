@@ -34,6 +34,14 @@ public class UserInfo1 implements Serializable{
 		this.userType = userType;
 		this.status = status;
 	}
+	
+	public UserInfo1(String userId, String userPwd) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+
+	}	
+	
 	public String getUserId() {
 		return userId;
 	}

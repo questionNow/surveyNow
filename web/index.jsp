@@ -7,9 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-<script type="text/javascript">
-		/* location.href = 페이지 이동 */
-		location.href= "<%=request.getContextPath()%>/views/common/menubar.jsp";
+	<%-- <%@ include file = "views/common/menubar.js %> --%>
+	
+	<!-- 페이지 이동 -->
+	<%-- <%=request.getContextPath()%> : 기본 디폴드 폴더 --%>
+	<script>	
+		<%-- location.href="<%=request.getContextPath()%>/views/common/menubar.jsp"; --%>
+		<%-- location.href="<%=request.getContextPath()%>/mainNow(n).jsp"; --%>
+		location.href="<%=request.getContextPath()%>/views/common/loginPage.jsp";
 	</script>
+	
 </body>
 </html>
