@@ -3,7 +3,7 @@ package survey.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Survey implements Serializable {
+public class Survey implements Serializable{
 
 	/**
 	 * 
@@ -13,167 +13,116 @@ public class Survey implements Serializable {
 	private int sNum;
 	private String sType;
 	private String sTitle;
-	private String sUserId;
-	private Date sCreateDate;
-	private Date sStartDate;
 	private Date sEndDate;
-	private int surveyCount;
+	private Date sStartDate;
+	private int sCount;
 	private int sPoint;
-	private int responseCount;
+	private int aCount;
 	private String sStatus;
 	private String sTarget;
-	private int questionCount;
-	private String sCode;
-
+	private Date sCreateDate;
+	private String sUserId;
 	public Survey() {
 
 	}
-
-	public Survey(int sNum, String sType, String sTitle, String sUserId, Date sCreateDate, Date sStartDate,
-			Date sEndDate, int surveyCount, int sPoint, int responseCount, String sStatus, String sTarget,
-			int questionCount, String sCode) {
+	public Survey(int sNum, String sType, String sTitle, Date sEndDate, Date sStartDate, int sCount, int sPoint,
+			int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
 		this.sTitle = sTitle;
-		this.sUserId = sUserId;
-		this.sCreateDate = sCreateDate;
-		this.sStartDate = sStartDate;
 		this.sEndDate = sEndDate;
-		this.surveyCount = surveyCount;
+		this.sStartDate = sStartDate;
+		this.sCount = sCount;
 		this.sPoint = sPoint;
-		this.responseCount = responseCount;
+		this.aCount = aCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
-		this.questionCount = questionCount;
-		this.sCode = sCode;
+		this.sCreateDate = sCreateDate;
+		this.sUserId = sUserId;
 	}
-
 	public int getsNum() {
 		return sNum;
 	}
-
 	public void setsNum(int sNum) {
 		this.sNum = sNum;
 	}
-
 	public String getsType() {
 		return sType;
 	}
-
 	public void setsType(String sType) {
 		this.sType = sType;
 	}
-
 	public String getsTitle() {
 		return sTitle;
 	}
-
 	public void setsTitle(String sTitle) {
 		this.sTitle = sTitle;
 	}
-
-	public String getsUserId() {
-		return sUserId;
-	}
-
-	public void setsUserId(String sUserId) {
-		this.sUserId = sUserId;
-	}
-
-	public Date getsCreateDate() {
-		return sCreateDate;
-	}
-
-	public void setsCreateDate(Date sCreateDate) {
-		this.sCreateDate = sCreateDate;
-	}
-
-	public Date getsStartDate() {
-		return sStartDate;
-	}
-
-	public void setsStartDate(Date sStartDate) {
-		this.sStartDate = sStartDate;
-	}
-
 	public Date getsEndDate() {
 		return sEndDate;
 	}
-
 	public void setsEndDate(Date sEndDate) {
 		this.sEndDate = sEndDate;
 	}
-
-	public int getSurveyCount() {
-		return surveyCount;
+	public Date getsStartDate() {
+		return sStartDate;
 	}
-
-	public void setSurveyCount(int surveyCount) {
-		this.surveyCount = surveyCount;
+	public void setsStartDate(Date sStartDate) {
+		this.sStartDate = sStartDate;
 	}
-
+	public int getsCount() {
+		return sCount;
+	}
+	public void setsCount(int sCount) {
+		this.sCount = sCount;
+	}
 	public int getsPoint() {
 		return sPoint;
 	}
-
 	public void setsPoint(int sPoint) {
 		this.sPoint = sPoint;
 	}
-
-	public int getResponseCount() {
-		return responseCount;
+	public int getaCount() {
+		return aCount;
 	}
-
-	public void setResponseCount(int responseCount) {
-		this.responseCount = responseCount;
+	public void setaCount(int aCount) {
+		this.aCount = aCount;
 	}
-
 	public String getsStatus() {
 		return sStatus;
 	}
-
 	public void setsStatus(String sStatus) {
 		this.sStatus = sStatus;
 	}
-
 	public String getsTarget() {
 		return sTarget;
 	}
-
 	public void setsTarget(String sTarget) {
 		this.sTarget = sTarget;
 	}
-
-	public int getQuestionCount() {
-		return questionCount;
+	public Date getsCreateDate() {
+		return sCreateDate;
 	}
-
-	public void setQuestionCount(int questionCount) {
-		this.questionCount = questionCount;
+	public void setsCreateDate(Date sCreateDate) {
+		this.sCreateDate = sCreateDate;
 	}
-
-	public String getsCode() {
-		return sCode;
+	public String getsUserId() {
+		return sUserId;
 	}
-
-	public void setsCode(String sCode) {
-		this.sCode = sCode;
+	public void setsUserId(String sUserId) {
+		this.sUserId = sUserId;
 	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
-		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sUserId=" + sUserId
-				+ ", sCreateDate=" + sCreateDate + ", sStartDate=" + sStartDate + ", sEndDate=" + sEndDate
-				+ ", surveyCount=" + surveyCount + ", sPoint=" + sPoint + ", responseCount=" + responseCount
-				+ ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", questionCount=" + questionCount + ", sCode="
-				+ sCode + "]";
+		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sEndDate=" + sEndDate
+				+ ", sStartDate=" + sStartDate + ", sCount=" + sCount + ", sPoint=" + sPoint + ", aCount=" + aCount
+				+ ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", sCreateDate=" + sCreateDate + ", sUserId="
+				+ sUserId + "]";
 	}
-	
-	
-	
+
+
 }

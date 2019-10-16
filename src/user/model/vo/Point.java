@@ -10,24 +10,27 @@ public class Point implements Serializable{
 	 */
 	private static final long serialVersionUID = 6199829392680905870L;
 
+	private int pNum;
 	private String userId;
 	private int point;
-	private String plusPoint;
-	private Date plusePointDate;
-	private String minusPoing;
-	private Date minusPointDate;
+	private Date pDate;
+	private String pContent;
 	public Point() {
-		super();
+	
 	}
-	public Point(String userId, int point, String plusPoint, Date plusePointDate, String minusPoing,
-			Date minusPointDate) {
+	public Point(int pNum, String userId, int point, Date pDate, String pContent) {
 		super();
+		this.pNum = pNum;
 		this.userId = userId;
 		this.point = point;
-		this.plusPoint = plusPoint;
-		this.plusePointDate = plusePointDate;
-		this.minusPoing = minusPoing;
-		this.minusPointDate = minusPointDate;
+		this.pDate = pDate;
+		this.pContent = pContent;
+	}
+	public int getpNum() {
+		return pNum;
+	}
+	public void setpNum(int pNum) {
+		this.pNum = pNum;
 	}
 	public String getUserId() {
 		return userId;
@@ -41,37 +44,27 @@ public class Point implements Serializable{
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public String getPlusPoint() {
-		return plusPoint;
+	public Date getpDate() {
+		return pDate;
 	}
-	public void setPlusPoint(String plusPoint) {
-		this.plusPoint = plusPoint;
+	public void setpDate(Date pDate) {
+		this.pDate = pDate;
 	}
-	public Date getPlusePointDate() {
-		return plusePointDate;
+	public String getpContent() {
+		return pContent;
 	}
-	public void setPlusePointDate(Date plusePointDate) {
-		this.plusePointDate = plusePointDate;
-	}
-	public String getMinusPoing() {
-		return minusPoing;
-	}
-	public void setMinusPoing(String minusPoing) {
-		this.minusPoing = minusPoing;
-	}
-	public Date getMinusPointDate() {
-		return minusPointDate;
-	}
-	public void setMinusPointDate(Date minusPointDate) {
-		this.minusPointDate = minusPointDate;
+	public void setpContent(String pContent) {
+		this.pContent = pContent;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "Point [userId=" + userId + ", point=" + point + ", plusPoint=" + plusPoint + ", plusePointDate="
-				+ plusePointDate + ", minusPoing=" + minusPoing + ", minusPointDate=" + minusPointDate + "]";
+		return "Point [pNum=" + pNum + ", userId=" + userId + ", point=" + point + ", pDate=" + pDate + ", pContent="
+				+ pContent + "]";
 	}
+	
+	
 	
 }

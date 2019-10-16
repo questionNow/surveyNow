@@ -1,6 +1,7 @@
 package user.model.vo;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class UserInfo implements Serializable{
 
@@ -32,13 +33,14 @@ public class UserInfo implements Serializable{
 	private String livingWith;
 	private String armyGo;
 	private String interest;
-	
-	public UserInfo() {}
+	private Date pwdDate;
+	public UserInfo() {
 
+	}
 	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, int surveyCount, int visitCount, int userType, String status,
 			String finalEducation, String job, String income, String livingType, String houseType, String religion,
-			String maritalStatus, String livingWith, String armyGo, String interest) {
+			String maritalStatus, String livingWith, String armyGo, String interest, Date pwdDate) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -63,222 +65,155 @@ public class UserInfo implements Serializable{
 		this.livingWith = livingWith;
 		this.armyGo = armyGo;
 		this.interest = interest;
+		this.pwdDate = pwdDate;
 	}
-	
-	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
-			String address, String recommendId, String finalEducation, String job, String income, String livingType,
-			String houseType, String religion, String maritalStatus, String livingWith, String armyGo,
-			String interest) {
-		super();
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
-		this.age = age;
-		this.gender = gender;
-		this.email = email;
-		this.phone = phone;
-		this.address = address;
-		this.recommendId = recommendId;
-		this.finalEducation = finalEducation;
-		this.job = job;
-		this.income = income;
-		this.livingType = livingType;
-		this.houseType = houseType;
-		this.religion = religion;
-		this.maritalStatus = maritalStatus;
-		this.livingWith = livingWith;
-		this.armyGo = armyGo;
-		this.interest = interest;
-	}
-	
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
 	public String getUserPwd() {
 		return userPwd;
 	}
-
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
 	}
-
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public int getAge() {
 		return age;
 	}
-
 	public void setAge(int age) {
 		this.age = age;
 	}
-
 	public String getGender() {
 		return gender;
 	}
-
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getPhone() {
 		return phone;
 	}
-
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public String getRecommendId() {
 		return recommendId;
 	}
-
 	public void setRecommendId(String recommendId) {
 		this.recommendId = recommendId;
 	}
-
 	public int getSurveyCount() {
 		return surveyCount;
 	}
-
 	public void setSurveyCount(int surveyCount) {
 		this.surveyCount = surveyCount;
 	}
-
 	public int getVisitCount() {
 		return visitCount;
 	}
-
 	public void setVisitCount(int visitCount) {
 		this.visitCount = visitCount;
 	}
-
 	public int getUserType() {
 		return userType;
 	}
-
 	public void setUserType(int userType) {
 		this.userType = userType;
 	}
-
 	public String getStatus() {
 		return status;
 	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
 	public String getFinalEducation() {
 		return finalEducation;
 	}
-
 	public void setFinalEducation(String finalEducation) {
 		this.finalEducation = finalEducation;
 	}
-
 	public String getJob() {
 		return job;
 	}
-
 	public void setJob(String job) {
 		this.job = job;
 	}
-
 	public String getIncome() {
 		return income;
 	}
-
 	public void setIncome(String income) {
 		this.income = income;
 	}
-
 	public String getLivingType() {
 		return livingType;
 	}
-
 	public void setLivingType(String livingType) {
 		this.livingType = livingType;
 	}
-
 	public String getHouseType() {
 		return houseType;
 	}
-
 	public void setHouseType(String houseType) {
 		this.houseType = houseType;
 	}
-
 	public String getReligion() {
 		return religion;
 	}
-
 	public void setReligion(String religion) {
 		this.religion = religion;
 	}
-
 	public String getMaritalStatus() {
 		return maritalStatus;
 	}
-
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-
 	public String getLivingWith() {
 		return livingWith;
 	}
-
 	public void setLivingWith(String livingWith) {
 		this.livingWith = livingWith;
 	}
-
 	public String getArmyGo() {
 		return armyGo;
 	}
-
 	public void setArmyGo(String armyGo) {
 		this.armyGo = armyGo;
 	}
-
 	public String getInterest() {
 		return interest;
 	}
-
 	public void setInterest(String interest) {
 		this.interest = interest;
 	}
-
+	public Date getPwdDate() {
+		return pwdDate;
+	}
+	public void setPwdDate(Date pwdDate) {
+		this.pwdDate = pwdDate;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
 		return "UserInfo [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", age=" + age
@@ -287,11 +222,6 @@ public class UserInfo implements Serializable{
 				+ ", userType=" + userType + ", status=" + status + ", finalEducation=" + finalEducation + ", job="
 				+ job + ", income=" + income + ", livingType=" + livingType + ", houseType=" + houseType + ", religion="
 				+ religion + ", maritalStatus=" + maritalStatus + ", livingWith=" + livingWith + ", armyGo=" + armyGo
-				+ ", interest=" + interest + "]";
+				+ ", interest=" + interest + ", pwdDate=" + pwdDate + "]";
 	}
-
-	
-	
-	
-	
 }

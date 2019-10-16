@@ -8,22 +8,19 @@ public class Question implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -3951460177739763598L;
-
 	private int qNum;
 	private int sNum;
-	private int answerCount;
-	private String qTitle;
 	private String qType;
+	private String qTitle;
 	public Question() {
 	
 	}
-	public Question(int qNum, int sNum, int answerCount, String qTitle, String qType) {
+	public Question(int qNum, int sNum, String qType, String qTitle) {
 		super();
 		this.qNum = qNum;
 		this.sNum = sNum;
-		this.answerCount = answerCount;
-		this.qTitle = qTitle;
 		this.qType = qType;
+		this.qTitle = qTitle;
 	}
 	public int getqNum() {
 		return qNum;
@@ -37,11 +34,11 @@ public class Question implements Serializable{
 	public void setsNum(int sNum) {
 		this.sNum = sNum;
 	}
-	public int getAnswerCount() {
-		return answerCount;
+	public String getqType() {
+		return qType;
 	}
-	public void setAnswerCount(int answerCount) {
-		this.answerCount = answerCount;
+	public void setqType(String qType) {
+		this.qType = qType;
 	}
 	public String getqTitle() {
 		return qTitle;
@@ -49,19 +46,12 @@ public class Question implements Serializable{
 	public void setqTitle(String qTitle) {
 		this.qTitle = qTitle;
 	}
-	public String getqType() {
-		return qType;
-	}
-	public void setqType(String qType) {
-		this.qType = qType;
-	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "Question [qNum=" + qNum + ", sNum=" + sNum + ", answerCount=" + answerCount + ", qTitle=" + qTitle
-				+ ", qType=" + qType + "]";
+		return "Question [qNum=" + qNum + ", sNum=" + sNum + ", qType=" + qType + ", qTitle=" + qTitle + "]";
 	}
 	
 	
