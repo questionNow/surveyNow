@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SurveyMakeServlet
  */
-@WebServlet("/serveyMake.sv")
+@WebServlet("/surveyMake.sv")
 public class SurveyMakeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,10 +26,11 @@ public class SurveyMakeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String snum = request.getParameter("sNum");
-		String userId = "admin";
+		String sNum = request.getParameter("sNum"); 
+		String sTitle = request.getParameter("sTitle");
 		
-		
+		System.out.println(sNum);
+		System.out.println(sTitle);
 		
 	}
 

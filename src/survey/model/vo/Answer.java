@@ -10,34 +10,52 @@ public class Answer implements Serializable{
 	private static final long serialVersionUID = 7387474610944826874L;
 
 	private int aNum;
-	private String answer;
+	private int qNum;
+	private String aContent; 
 	
 	public Answer() {
-		super();
+	
 	}
-	public Answer(int aNum, String answer) {
+
+	public Answer(int aNum, int qNum, String aContent) {
 		super();
 		this.aNum = aNum;
-		this.answer = answer;
+		this.qNum = qNum;
+		this.aContent = aContent;
 	}
+
 	public int getaNum() {
 		return aNum;
 	}
+
 	public void setaNum(int aNum) {
 		this.aNum = aNum;
 	}
-	public String getAnswer() {
-		return answer;
+
+	public int getqNum() {
+		return qNum;
 	}
-	public void setAnswer(String answer) {
-		this.answer = answer;
+
+	public void setqNum(int qNum) {
+		this.qNum = qNum;
 	}
+
+	public String getaContent() {
+		return aContent;
+	}
+
+	public void setaContent(String aContent) {
+		this.aContent = aContent;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	@Override
 	public String toString() {
-		return "Answer [aNum=" + aNum + ", answer=" + answer + "]";
+		return "Answer [aNum=" + aNum + ", qNum=" + qNum + ", aContent=" + aContent + "]";
 	}
+	
 	
 }

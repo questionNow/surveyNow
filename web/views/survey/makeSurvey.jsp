@@ -47,22 +47,24 @@ th h3:hover {
 		<div class="right" style="background-color: #ddd;">
 			<h2>설문 만들기</h2>
 			<div id="surveyType">
-				<button id="pick" onclick="addQuestion()">+객관식</button>
-				<button id="write">+주관식</button>
+				<button id="pick" onclick="addQuestion()" >+객관식</button>
+				<button id="write" onclick = "check()">+주관식</button>
 				<button id="rank">+순위</button>
 			</div>
-			<form>
+			<form action = "<%=request.getContextPath()%>/surveyMake.sv">
 				<div id="survey">
 
 					<h2>
 						설문 제목<input type="button" id="reset" onclick="resetSurvey();"
 							style="float: right" value="초기화">
 					</h2>
-					<input type="hidden" value="1"><input type="text"
-						placeholder="설문 제목을 입력하세요">
+					<input name = "sNum" type="hidden" value="1">
+					<input type="text" name = "sTitle" placeholder="설문 제목을 입력하세요">
 					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
 				</div>
 
+				<br><br><br>
+				<button>저장</button>
 			</form>
 		</div>
 	</div>
@@ -74,15 +76,14 @@ th h3:hover {
 			$("#survey")
 					.append(
 							"<div id='question"+qCount+"'><input type = hidden value = '객관식'>객관식 질문<input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목<input type='button' value='항목 추가' onclick='addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요'></div>")
-							/* <div id='answer'><h4>항목 <input name='aContent' type='text' placeholder='항목을 입력하세요'><input	type='button' value='삭제' onclick='removeH4();'style='float: right'></h4>	</div> */
+
 		}
 		var aCount = 0;
 		function addAnswer(num) {
 			aCount++;
 			$("#question"+num)
 					.append(
-							"<div id='answer"+aCount+"'><h4>항목 <input id= 'answer' name = 'aContent' type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></h4></div>");
-			console.log($("#answer"));
+							"<div id='answer"+aCount+"'><h4>항목 <input class = 'answer' id= 'answer' name = 'aContent' type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></h4></div>");
 		}
 		function resetSurvey() {
 			qCount =0;
@@ -94,10 +95,16 @@ th h3:hover {
 			$("#question" + num).remove();
 		}
 		function removeAnswer(num){
-			console.log(num);
 			$("#answer"+num).remove();
+		}
+		
+		function check(){
+			var list = $(".answer");
+			console.log(list);
+			console.log(list[0].text);
 		}
 	</script>
 
+	
 </body>
 </html>

@@ -13,32 +13,39 @@ public class Survey implements Serializable {
 	private int sNum;
 	private String sType;
 	private String sTitle;
+	private String sUserId;
+	private Date sCreateDate;
 	private Date sStartDate;
 	private Date sEndDate;
-	private int sCount;
-	private int aCount;
+	private int surveyCount;
+	private int sPoint;
+	private int responseCount;
 	private String sStatus;
 	private String sTarget;
-	private int qCount;
+	private int questionCount;
 	private String sCode;
 
 	public Survey() {
 
 	}
 
-	public Survey(int sNum, String sType, String sTitle, Date sStartDate, Date sEndDate, int sCount, int aCount,
-			String sStatus, String sTarget, int qCount, String sCode) {
+	public Survey(int sNum, String sType, String sTitle, String sUserId, Date sCreateDate, Date sStartDate,
+			Date sEndDate, int surveyCount, int sPoint, int responseCount, String sStatus, String sTarget,
+			int questionCount, String sCode) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
 		this.sTitle = sTitle;
+		this.sUserId = sUserId;
+		this.sCreateDate = sCreateDate;
 		this.sStartDate = sStartDate;
 		this.sEndDate = sEndDate;
-		this.sCount = sCount;
-		this.aCount = aCount;
+		this.surveyCount = surveyCount;
+		this.sPoint = sPoint;
+		this.responseCount = responseCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
-		this.qCount = qCount;
+		this.questionCount = questionCount;
 		this.sCode = sCode;
 	}
 
@@ -66,6 +73,22 @@ public class Survey implements Serializable {
 		this.sTitle = sTitle;
 	}
 
+	public String getsUserId() {
+		return sUserId;
+	}
+
+	public void setsUserId(String sUserId) {
+		this.sUserId = sUserId;
+	}
+
+	public Date getsCreateDate() {
+		return sCreateDate;
+	}
+
+	public void setsCreateDate(Date sCreateDate) {
+		this.sCreateDate = sCreateDate;
+	}
+
 	public Date getsStartDate() {
 		return sStartDate;
 	}
@@ -82,20 +105,28 @@ public class Survey implements Serializable {
 		this.sEndDate = sEndDate;
 	}
 
-	public int getsCount() {
-		return sCount;
+	public int getSurveyCount() {
+		return surveyCount;
 	}
 
-	public void setsCount(int sCount) {
-		this.sCount = sCount;
+	public void setSurveyCount(int surveyCount) {
+		this.surveyCount = surveyCount;
 	}
 
-	public int getaCount() {
-		return aCount;
+	public int getsPoint() {
+		return sPoint;
 	}
 
-	public void setaCount(int aCount) {
-		this.aCount = aCount;
+	public void setsPoint(int sPoint) {
+		this.sPoint = sPoint;
+	}
+
+	public int getResponseCount() {
+		return responseCount;
+	}
+
+	public void setResponseCount(int responseCount) {
+		this.responseCount = responseCount;
 	}
 
 	public String getsStatus() {
@@ -114,12 +145,12 @@ public class Survey implements Serializable {
 		this.sTarget = sTarget;
 	}
 
-	public int getqCount() {
-		return qCount;
+	public int getQuestionCount() {
+		return questionCount;
 	}
 
-	public void setqCount(int qCount) {
-		this.qCount = qCount;
+	public void setQuestionCount(int questionCount) {
+		this.questionCount = questionCount;
 	}
 
 	public String getsCode() {
@@ -136,9 +167,13 @@ public class Survey implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sStartDate=" + sStartDate
-				+ ", sEndDate=" + sEndDate + ", sCount=" + sCount + ", aCount=" + aCount + ", sStatus=" + sStatus
-				+ ", sTarget=" + sTarget + ", qCount=" + qCount + ", sCode=" + sCode + "]";
+		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sUserId=" + sUserId
+				+ ", sCreateDate=" + sCreateDate + ", sStartDate=" + sStartDate + ", sEndDate=" + sEndDate
+				+ ", surveyCount=" + surveyCount + ", sPoint=" + sPoint + ", responseCount=" + responseCount
+				+ ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", questionCount=" + questionCount + ", sCode="
+				+ sCode + "]";
 	}
+	
+	
 	
 }
