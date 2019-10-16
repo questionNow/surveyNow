@@ -106,6 +106,10 @@
 
 	/* body { min-height:100vh; } */
 
+	/* body {background: url(image/logoinImage.jpg) repeat-x center top;} */
+
+	/* body{background-image: url(../image/logoinImage.jpg);} */
+
 </style>
 
 </head>

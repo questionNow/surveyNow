@@ -138,7 +138,8 @@
         
         
         
-        .header {height: 327px;}
+/*         .header {height: 327px;} */
+        .header {height: 327px;} 
         .header .header_menu {text-align: right;}
         .header .header_menu a {color: #fff; padding: 8px 0 6px 10px; display: inline-block; transition: color 0.3s ease; font-family: 'Abel', sans-serif;}
         .header .header_menu a:hover {color: #ccc;}
@@ -220,10 +221,10 @@
         }
         
         /* 전체 메뉴 */
-        .nav {overflow: hidden; padding: 25px 0; display: none;}
+        .nav {overflow: hidden; padding: 25px 0; display: none; }
         .nav > div {float: left; width: 200px; /* width: 40%; */}
         .nav > div:last-child {width: 20%;}
-        .nav > div ol {overflow: hidden;}
+        .nav > div ol {overflow: hidden; }
         .nav > div li {float: left; width: 50%; position: relative; padding-left: 8px; /* box-sizing: border-box; */}
         .nav > div:last-child li {width: 100%;}
         .nav > div li a {position: relative;}
@@ -271,7 +272,7 @@
          .title .btn:hover {
             box-shadow: 
                 0 0 0 3px rgba(75,154,191,0.9) inset,
-                0 0 0 100px rgba(0,0,0,0.1) inset;
+                0 0 0 600px rgba(0,0,0,0.1) inset;
         }
         
         /* 컨텐츠 영역 */
@@ -656,11 +657,11 @@
 
 		.menuHeader:hover{
             box-shadow: inset 180px 0 0 0 rgba(36,130,174,0.7); 
-            color: #fff; 
+            color: #fff;  
            	background: rgba(36,130,174,0.9);
             box-shadow: none;
 		}
-        
+
 /*          main { min-height:100vh; } */
         
         

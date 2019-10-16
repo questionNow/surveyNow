@@ -33,9 +33,7 @@
 /* 	html {
 		height: 100%;
 	} */
-	
-	
-	
+
 	* {
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;

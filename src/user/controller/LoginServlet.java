@@ -71,7 +71,17 @@ public class LoginServlet extends HttpServlet {
 			 //session.setMaxInactiveInterval(10); // 초단위로 session객체 유지시간 설정
 			 
 			 //response.sendRedirect("index.jsp"); //Servlet에서 페이지 넘김 : response.sendRedirect();
+			 
+			 
+//			 if() {
+//				여기에 로그인 구분 줘야한다. (화면 따로 하려면) 
+//					관리자 or 회원	? 
+//			 }
+			 
 			 view = request.getRequestDispatcher("views/common/mainNow(n).jsp");
+			 
+			 
+			 
 		 }else {//실패할 경우
 			 request.setAttribute("msg", "로그인 실패");
 			 // request는 호출이 끝난 경우 데이터가 사라진다.??

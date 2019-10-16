@@ -36,20 +36,21 @@
 	
 	
 	
-	* {
+/* 	* {
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
-		/* z-index:2;	/* 배치 순서 정하기 */ */
-	}
+	} */
  
-	body{
+	html{
 		height: 100%;
 		margin: 0;
+		/* background-size:cover; */
+/* 		margin-left:auto;
+		margin-right:auto; */
+		<%-- background:url('<%=request.getContextPath()%>/image/logoinImage.jpg') repeat; --%>
+
 		
-		<%-- background:url('<%=request.getContextPath()%>/images/city1.PNG') repeat;  --%>
-		
-		background-size:cover;
 		
 		/* cover : 화면 전체꽉차게 */  
 	}

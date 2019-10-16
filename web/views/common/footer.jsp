@@ -70,7 +70,7 @@ position: absolute;
 		    width:100%;
 		    height:70px;   
 		    background:#ccc;
-        		}
+        }
         .footer li {position: relative; display: inline; padding: 0 7px 0 10px; white-space: nowrap;}
         .footer li:before {content: ''; width: 1px; height: 12px; background-color: #dbdbdb; position: absolute; left: 0; top: 2px;}
         .footer li:first-child:before {width: 0;}
