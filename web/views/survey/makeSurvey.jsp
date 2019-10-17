@@ -5,14 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style>
 /* Create a column layout with Flexbox */
 
 /* Right column (page content) */
 .right {
-	  width : 80%;
-	  padding: 15px;
-	  display : inline-block;
+	width: 85%;
+	padding: 15px;
+	display: inline-block;
 }
 
 #surveyList * {
@@ -29,100 +32,79 @@
 th h3:hover {
 	cursor: pointer;
 }
+
+
+#survey>div {
+	border: 1px solid red;
+}
+
+
 </style>
 </head>
 <body>
-	<%@ include file="surveySideBar.jsp"%>
+	<%-- <%@ include file="surveySideBar.jsp"%> --%>
 	<div class="row">
 		<div class="right" style="background-color: #ddd;">
 			<h2>설문 만들기</h2>
-			<button id = "pick">+객관식</button>
-			<button id = "write">+주관식</button>
-			<button id = "rank">+순위</button>
-			<br>
-			<div id="surveyCreate">			
-				<table id="surveyListTable" style="text-align: Center" width=85%
-					cellpadding="0" cellspacing="0">
-						
-					<tr>
-						<td colspan="7"><br>
-						<br></td>
-					</tr>
-					<tr>
-						<td colspan ="2"><h2>설문 제목</h2></td>
-						<td colspan="5"><input type="text" size="80"
-							placeholder="설문 제목을 입력하세요"></td>
-					</tr>
-					<tr>
-						<td colspan="7">설문에 질문을 추가하시려면 상단의 질문 종류를 클릭 해주세요.</td>
-					</tr>
-				</table>
+			<div id="surveyType">
+				<button id="pick" onclick="addQuestion()" >+객관식</button>
+				<button id="write" onclick = "check()">+주관식</button>
+				<button id="rank">+순위</button>
 			</div>
+			<form action = "<%=request.getContextPath()%>/surveyMake.sv">
+				<div id="survey">
+
+					<h2>
+						설문 제목<input type="button" id="reset" onclick="resetSurvey();"
+							style="float: right" value="초기화">
+					</h2>
+					<input name = "sNum" type="hidden" value="1">
+					<input type="text" name = "sTitle" placeholder="설문 제목을 입력하세요">
+					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
+				</div>
+
+				<br><br><br>
+				<button>저장</button>
+			</form>
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		$count = 1;
+		var qCount = 0;
+		function addQuestion() {
+			qCount++;
+			$("#survey")
+					.append(
+							"<div id='question"+qCount+"'><input type = hidden value = '객관식'>객관식 질문<input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목<input type='button' value='항목 추가' onclick='addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요'></div>")
+
+		}
+		var aCount = 0;
+		function addAnswer(num) {
+			aCount++;
+			$("#question"+num)
+					.append(
+							"<div id='answer"+aCount+"'><h4>항목 <input class = 'answer' id= 'answer' name = 'aContent' type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></h4></div>");
+		}
+		function resetSurvey() {
+			qCount =0;
+			aCount =0;
+			$("#survey div").remove();
+		}
 		
-		// 객관식 버튼 - 객관식 문제 추가
-		$("#pick").click(function(){
-			$.ajax({
-				success : function(){
-					$tableBody = $("#surveyListTable");
-					
-					
-					var $tr = $("<tr id="+ $count +">");
-					var $noTd = $("<td>").text($count);
-					var $titleTd = $("<td>").text("제목");
-					var $subjectTd = $("<td><input type = 'text' colspan = '4' size = '50' placeholder ='질문을 입력하세요.'></td>")
-					var $deleteTr = $("<td><button onclick = 'deleteTr();'>X</button>");
-					
-					
-					$tr.append($noTd);
-					$tr.append($titleTd);
-					$tr.append($subjectTd);
-					$tr.append($deleteTr);
-					
-					$tableBody.append($tr);
-					
-					$count += 1;
-				}
-			})
-		});
+		function deleteQuestion(num){
+			$("#question" + num).remove();
+		}
+		function removeAnswer(num){
+			$("#answer"+num).remove();
+		}
 		
-		// 주관식 버튼 - 주관식 문제 추가
-		$("#write").click(function(){
-			$.ajax({
-				success : function(){					
-					$tableBody = $("#surveyListTable");
-					var $tr = $("<tr id="+ $count +">");
-					var $noTd = $("<td>").text($count);
-					var $titleTd = $("<td>").text("제목");
-					var $subjectTd = $("<td><input type = 'text' colspan = '4' size = '50' placeholder ='질문을 입력하세요.'></td>")
-					var $deleteTr = $("<td><button onclick = 'deleteTr();'>X</button>");
-					
-					var $select = $("<td colspan = 4>).text('객관식 문항 추가')");
-					
-					
-					$tr.append($noTd);
-					$tr.append($titleTd);
-					$tr.append($subjectTd);
-					$tr.append($deleteTr);
-					
-					$tableBody.append($tr);
-					
-					$count += 1;
-				}
-			})
-		});
-		
-		
-			function deleteTr(){
-				$.ajax({
-					
-				})
-			}
+		function check(){
+			var list = $(".answer");
+			console.log(list);
+			console.log(list[0].text);
+		}
 	</script>
 
+	
 </body>
 </html>

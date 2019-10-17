@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="user.model.vo.UserInfo1"%>
+	pageEncoding="UTF-8" import="user.model.vo.UserInfo"%>
     <!-- pageEncoding="UTF-8" import="member.model.vo.Member"%> -->
         
      
 <%
 	/* LoginServlet.java에서 설정한 세션 정보 사용하기 */
-	UserInfo1 loginUser = (UserInfo1)session.getAttribute("loginUser");
+	UserInfo loginUser = (UserInfo)session.getAttribute("loginUser");
 	// session의 attribute로써 객체를 끄집어 내면 무조건 Object형이므로 다운캐스팅 해주어야 한다.ㅗ
 	// Member 에러나는데 import 해주면된다.
 	// Type mismatch: cannot convert from Object to Member 에러 : 자료형이 object형이라 다운캐스팅 해줘야한다.

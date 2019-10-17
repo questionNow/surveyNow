@@ -590,7 +590,7 @@
     </style>
 
 </head>
-<%@ include file="../common/mainNow(n).jsp" %>
+<%@ include file="../common/menubar.jsp" %>
 <body>
 
 
@@ -711,8 +711,8 @@
                     //col4 -->
                     
                     <article class="column col5">
-                        <h4 class="col_tit">Filter Effect</h4>
-						<p class="col_desc">CSS3에서는 Background-blend-mode, mix-blend-mode, filter와 같이 포토샵에 다루는 효과들이 있습니다.</p>
+                        <h4 class="col_tit">이미지 를 넣어야함</h4>
+						<p class="col_desc">여기에 이미지 클릭하면 해당 설문으로 가면 좋을거 같은데 ?</p>
 						<!-- lightbox -->
 						<div class="lightbox square clearfix">
 							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>blur</em></a>
@@ -732,7 +732,7 @@
                     
                     <article class="column col6">
 						<h4 class="col_tit">Video</h4>
-						<p class="col_desc">영상을 보여주는 영역입니다.</p>
+						<p class="col_desc">필요 할라나 모르겠지만????</p>
 						<!-- video -->
 						<!-- <video autoplay="autoplay" controls="controls" loop="loop">
 							<source src="img/video.mp4" type="video/mp4">
@@ -765,8 +765,8 @@
                     <!-- //col7 -->
                     
                     <article class="column col8">
-                        <h4 class="col_tit">Effect2</h4>
-						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
+                        <h4 class="col_tit">우와~~ 머지가 머지?</h4>
+						<p class="col_desc">마우스 올리면 신기방기됨</p>
 						<!-- side2 -->
 						<div class="side2">
                             <figure class="front">
@@ -787,8 +787,8 @@
                     <!-- //col8 -->
                     
                     <article class="column col9">
-                        <h4 class="col_tit">Effect3</h4>
-						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
+                        <h4 class="col_tit">들락 날락 함</h4>
+						<p class="col_desc">마우스 올리면 신기방기됨</p>
 						<!-- side3 -->
 						<div class="side3">
                             <figure>

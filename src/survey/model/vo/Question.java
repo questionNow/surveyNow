@@ -1,4 +1,4 @@
-package qna.model.vo;
+package survey.model.vo;
 
 import java.io.Serializable;
 
@@ -7,19 +7,20 @@ public class Question implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4065952314766433572L;
-
+	private static final long serialVersionUID = -3951460177739763598L;
 	private int qNum;
-	private String qTitle;
+	private int sNum;
 	private String qType;
+	private String qTitle;
 	public Question() {
-		super();
+	
 	}
-	public Question(int qNum, String qTitle, String qType) {
+	public Question(int qNum, int sNum, String qType, String qTitle) {
 		super();
 		this.qNum = qNum;
-		this.qTitle = qTitle;
+		this.sNum = sNum;
 		this.qType = qType;
+		this.qTitle = qTitle;
 	}
 	public int getqNum() {
 		return qNum;
@@ -27,11 +28,11 @@ public class Question implements Serializable{
 	public void setqNum(int qNum) {
 		this.qNum = qNum;
 	}
-	public String getqTitle() {
-		return qTitle;
+	public int getsNum() {
+		return sNum;
 	}
-	public void setqTitle(String qTitle) {
-		this.qTitle = qTitle;
+	public void setsNum(int sNum) {
+		this.sNum = sNum;
 	}
 	public String getqType() {
 		return qType;
@@ -39,12 +40,18 @@ public class Question implements Serializable{
 	public void setqType(String qType) {
 		this.qType = qType;
 	}
+	public String getqTitle() {
+		return qTitle;
+	}
+	public void setqTitle(String qTitle) {
+		this.qTitle = qTitle;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "Question [qNum=" + qNum + ", qTitle=" + qTitle + ", qType=" + qType + "]";
+		return "Question [qNum=" + qNum + ", sNum=" + sNum + ", qType=" + qType + ", qTitle=" + qTitle + "]";
 	}
 	
 	

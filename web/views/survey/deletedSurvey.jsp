@@ -40,10 +40,10 @@
 <div class="row">
 
   <div class="right" style="background-color:#ddd;">
-    <h2>삭제한 설문함</h2>
-    <p>내가 삭제한 설문들을 확인 해보세요</p>
+    <h2>진행중인 설문</h2>
+    <p>진행중인 설문을 확인 해보세요</p>
     	<div id = "surveyList">
-    		<table id = "surveyListTable" style = "text-align : Center" cellpadding="0" cellspacing="0">
+    		<table id = "surveyListTable" style = "text-align : center" cellpadding="0" cellspacing="0">
     			<tr>
     				<th width = "550px">제목</th>
     				<th width = "100px">문항 수</th>
@@ -60,16 +60,6 @@
   </div>
 </div>
 	
-	
-	<script type="text/javascript">
-	function goSurvey(){
-		locaion.href ="survey.jsp";
-	}
-	
-	
-	
-		
-	</script>
-	
+
 </body>
 </html>

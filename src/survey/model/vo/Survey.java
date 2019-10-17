@@ -3,7 +3,7 @@ package survey.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class Survey implements Serializable {
+public class Survey implements Serializable{
 
 	/**
 	 * 
@@ -13,25 +13,33 @@ public class Survey implements Serializable {
 	private int sNum;
 	private String sType;
 	private String sTitle;
-	private Date sStartDate;
 	private Date sEndDate;
+	private Date sStartDate;
 	private int sCount;
+	private int sPoint;
+	private int aCount;
 	private String sStatus;
 	private String sTarget;
+	private Date sCreateDate;
+	private String sUserId;
 	public Survey() {
-	
+
 	}
-	public Survey(int sNum, String sType, String sTitle, Date sStartDate, Date sEndDate, int sCount, String sStatus,
-			String sTarget) {
+	public Survey(int sNum, String sType, String sTitle, Date sEndDate, Date sStartDate, int sCount, int sPoint,
+			int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
 		this.sTitle = sTitle;
-		this.sStartDate = sStartDate;
 		this.sEndDate = sEndDate;
+		this.sStartDate = sStartDate;
 		this.sCount = sCount;
+		this.sPoint = sPoint;
+		this.aCount = aCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
+		this.sCreateDate = sCreateDate;
+		this.sUserId = sUserId;
 	}
 	public int getsNum() {
 		return sNum;
@@ -51,23 +59,35 @@ public class Survey implements Serializable {
 	public void setsTitle(String sTitle) {
 		this.sTitle = sTitle;
 	}
-	public Date getsStartDate() {
-		return sStartDate;
-	}
-	public void setsStartDate(Date sStartDate) {
-		this.sStartDate = sStartDate;
-	}
 	public Date getsEndDate() {
 		return sEndDate;
 	}
 	public void setsEndDate(Date sEndDate) {
 		this.sEndDate = sEndDate;
 	}
+	public Date getsStartDate() {
+		return sStartDate;
+	}
+	public void setsStartDate(Date sStartDate) {
+		this.sStartDate = sStartDate;
+	}
 	public int getsCount() {
 		return sCount;
 	}
 	public void setsCount(int sCount) {
 		this.sCount = sCount;
+	}
+	public int getsPoint() {
+		return sPoint;
+	}
+	public void setsPoint(int sPoint) {
+		this.sPoint = sPoint;
+	}
+	public int getaCount() {
+		return aCount;
+	}
+	public void setaCount(int aCount) {
+		this.aCount = aCount;
 	}
 	public String getsStatus() {
 		return sStatus;
@@ -81,16 +101,28 @@ public class Survey implements Serializable {
 	public void setsTarget(String sTarget) {
 		this.sTarget = sTarget;
 	}
+	public Date getsCreateDate() {
+		return sCreateDate;
+	}
+	public void setsCreateDate(Date sCreateDate) {
+		this.sCreateDate = sCreateDate;
+	}
+	public String getsUserId() {
+		return sUserId;
+	}
+	public void setsUserId(String sUserId) {
+		this.sUserId = sUserId;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sStartDate=" + sStartDate
-				+ ", sEndDate=" + sEndDate + ", sCount=" + sCount + ", sStatus=" + sStatus + ", sTarget=" + sTarget
-				+ "]";
+		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sEndDate=" + sEndDate
+				+ ", sStartDate=" + sStartDate + ", sCount=" + sCount + ", sPoint=" + sPoint + ", aCount=" + aCount
+				+ ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", sCreateDate=" + sCreateDate + ", sUserId="
+				+ sUserId + "]";
 	}
-	
-	
-	
+
+
 }

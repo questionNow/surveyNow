@@ -55,7 +55,7 @@ body {
 </style>
 </head>
 <body>
-	<%@ include file = "../common/menubar.jsp" %>
+	<%@ include file = "../common/menubarUser.jsp" %>
 
 <h2>설문!!!</h2>
 <p>설문을 작성하고 배포 해보세요 :)</p>
@@ -66,10 +66,12 @@ body {
 			<h2>설문</h2>
 
 			<ul id="myMenu">
-				<li><a href="survey.jsp">내 설문함</a></li>
 				<li><a href="makeSurvey.jsp">설문 만들기</a></li>
-				<li><a href="deletedSurvey.jsp">휴지통</a></li>
-				<li><a href="purchaseSurvey.jsp">결제하기</a></li>
+				<li><a href="survey.jsp">작성된 설문</a></li>
+				<li><a href="ingSurvey.jsp">진행중인 설문</a></li>
+				<li><a href="finishedSurvey.jsp">완료된 설문</a></li>
+				<li><a href="deletedSurvey.jsp">삭제한 설문</a></li>
+				<li><a href="purchaseSurvey.jsp">설문 결제하기</a></li>
 				<li></li>
 				<li></li>
 				<li style="text-align: center"><button>사용설명서</button></li>

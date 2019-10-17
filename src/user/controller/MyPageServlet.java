@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.model.service.UserService;
-import user.model.vo.UserInfo1;
+import user.model.vo.UserInfo;
 
 /**
  * Servlet implementation class MyPageServlet
@@ -32,15 +32,19 @@ public class MyPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 회원정보 조회용 컨트롤러
-System.out.println("mypage.me");
+
 		//쿼리 스트림 값을 가져올 때는 인코딩 필요 없음
 		String userId = request.getParameter("userId");
 		
-		UserInfo1 user = new UserService().selectMember(userId);
+		UserInfo user = new UserService().selectMember(userId);
 		
 		RequestDispatcher view = null;
+		
+		System.out.println("mypage.me");		
+		
 		if(user != null) {
 			view = request.getRequestDispatcher("views/user/memberView.jsp");
+			
 			request.setAttribute("user", user);
 		}else {
 			view = request.getRequestDispatcher("views/user/errorPage.jsp");

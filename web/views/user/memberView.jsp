@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="user.model.vo.UserInfo1" %>
+    pageEncoding="UTF-8" import="user.model.vo.UserInfo" %>
     
 <%
-	UserInfo1 m = (UserInfo1)request.getAttribute("user");
+	UserInfo m = (UserInfo)request.getAttribute("user");
 
 	// Member m = (Member)session.getAttribute("loginUser");
 	// session 값으로 로그인 정보 가져와도 된다.
@@ -13,12 +13,12 @@
 	String userName = m.getUserName();
 	int	   userAge	= m.getAge();
 	String address	= m.getAddress();
-	int    phone	= m.getPhone();
+	String    phone	= m.getPhone();
 	String email	= m.getEmail();
 	int    userType	= m.getUserType();
 	
 	
-/* 	user = new UserInfo1(rs.getString("USER_ID"),
+/* 	user = new UserInfo(rs.getString("USER_ID"),
             rs.getString("USER_PWD"),
             rs.getString("USER_NAME"),
             rs.getInt("AGE"),
@@ -116,7 +116,7 @@
 <body>
 
 <!-- 메인화면에 보이게 -->
-<%@ include file="../common/mainNow(n).jsp" %>
+<%@ include file="../common/menubar.jsp" %> 
 
 	<section class="outer" id="contents">
 <%-- 	잘 나오뉘?

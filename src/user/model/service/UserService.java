@@ -2,10 +2,14 @@ package user.model.service;
 
 import static common.JDBCTemplate.*;
 
-import java.sql.Connection;
+import java.sql.*;
 
 import user.model.dao.UserDao;
-import user.model.vo.UserInfo1;
+import user.model.vo.UserInfo;
+
+
+import java.sql.Connection;
+
   
 public class UserService {
 	
@@ -19,25 +23,47 @@ public class UserService {
 	 
 	
 	//SDB 로그인 
-	public UserInfo1 loginUser(UserInfo1 user) {
+	public UserInfo loginUser(UserInfo user) {
 		Connection conn = getConnection();
 
-		UserInfo1 loginUser = new UserDao().loginUser(conn,user);
+		UserInfo loginUser = new UserDao().loginUser(conn,user);
 		
 		close(conn);
 		
 		return loginUser;
 	}
 	
-	
-	public UserInfo1 selectMember(String userId) {
+	// SDB -TEST_정보수정 되는지 확인용
+	public UserInfo selectMember(String userId) {
 		Connection conn = getConnection();
 		
-		UserInfo1 user = new UserDao().selectUser(conn,userId);
+		UserInfo user = new UserDao().selectUser(conn,userId);
 		
 		close(conn);
 		
 		return user;
 	}
+
 	
+	public int registerUser(UserInfo userInfo) {
+		Connection conn = getConnection();
+		int result = new UserDao().registerUser(conn, userInfo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public int idCheck(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDao().idCheck(conn, userId);
+		System.out.println("Service 검사" + result);
+		close(conn);
+		return result;
+	}
+
 }
