@@ -14,7 +14,7 @@ import static common.JDBCTemplate.*;
 
 import user.model.vo.UserInfo;
 
-
+ 
 public class UserDao {
 	private Properties prop = new Properties();
 	

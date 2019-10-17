@@ -18,7 +18,7 @@ import user.model.vo.UserInfo;
 @WebServlet("/mypage.me")
 public class MyPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+        
     /**
      * @see HttpServlet#HttpServlet()
      */

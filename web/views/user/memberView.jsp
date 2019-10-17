@@ -7,7 +7,7 @@
 	// Member m = (Member)session.getAttribute("loginUser");
 	// session 값으로 로그인 정보 가져와도 된다.
 	// update,delete 시에는 request로 사용해야한다. 수정 이전값을 불러와서 오류가 난다.
-	
+	 
 	String userId 	= m.getUserId();
 	String userPwd 	= m.getUserPwd();
 	String userName = m.getUserName();
@@ -116,7 +116,7 @@
 <body>
 
 <!-- 메인화면에 보이게 -->
-<%@ include file="../common/menubar.jsp" %> 
+<%@ include file="../common/menubar2.jsp" %> 
 
 	<section class="outer" id="contents">
 <%-- 	잘 나오뉘?

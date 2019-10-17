@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="user.model.vo.UserInfo"%>
     <!-- pageEncoding="UTF-8" import="member.model.vo.Member"%> -->
         
-     
+      
 <%
 	/* LoginServlet.java에서 설정한 세션 정보 사용하기 */
 	UserInfo loginUser = (UserInfo)session.getAttribute("loginUser");

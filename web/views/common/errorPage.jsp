@@ -4,7 +4,7 @@
 <%
 	String msg = (String)request.getAttribute("msg");
 %>
-    
+     
 <!DOCTYPE html>
 <html>
 <head>
