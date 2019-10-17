@@ -1,67 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="user.model.vo.UserInfo1"%>
-    
-<%
-	UserInfo1 loginUser = (UserInfo1)session.getAttribute("loginUser");
-%>
-    
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-    <meta name="author" content="webstoryboy">
-    <meta name="description" content="반응형 사이트 따라하기">
-    <meta name="keywords" content="반응형사이트, 웹퍼블리셔, 웹접근성, HTML5, webstoryboy, webs">
-    <title>반응형 사이트 만들기 : 사이드 이펙트3</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 
-    <!-- style -->
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" href="css/slick.css">
-    <link rel="stylesheet" href="css/lightgallery.css">
-
-    <!-- Facebook meta tags -->
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="반응형 사이트 만들기(title)" />
-    <meta property="og:url" content="http://richclub8.dothome.co.kr/responsive/html5/index.html" />
-    <meta property="og:image" content="http://richclub8.dothome.co.kr/assets/ico/icon.png" />
-    <meta property="og:site_name" content="반응형 사이트 만들기(site_name)" />
-    <meta property="og:description" content="반응형 사이트 따라하기(description)" />
-
-    <!-- twitter meta tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@webstoryboy" />
-    <meta name="twitter:title" content="반응형 사이트 만들기(title)" />
-    <meta name="twitter:description" content="반응형 사이트 만들기(description)." />
-    <meta property="twitter:image" content="http://richclub8.dothome.co.kr/assets/ico/icon.png" />
-
-    <!-- 파비콘 -->
-    <link rel="shortcut icon" href="icon/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" href="icon/favicon-152.png">
-    <link rel="icon" href="path/to/favicon.png">
-    <link rel="icon" href="icon/favicon-16.png" sizes="16x16"> 
-    <link rel="icon" href="icon/favicon-32.png" sizes="32x32"> 
-    <link rel="icon" href="icon/favicon-48.png" sizes="48x48"> 
-    <link rel="icon" href="icon/favicon-64.png" sizes="64x64"> 
-    <link rel="icon" href="icon/favicon-128.png" sizes="128x128">
-
-    <!-- 웹 폰트 -->
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-
-    <!-- HTLM5shiv ie6~8 -->
-    <!--[if lt IE 9]> 
-        <script src="js/html5shiv.min.js"></script>
-        <script type="text/javascript">
-            alert("현재 당신이 보는 브라우저는 지원하지 않습니다. 최신 브라우저로 업데이트해주세요!");
-        </script>
-    <![endif]-->
-    <style>
+   <style>
         /* reset */
         /* 여백 초기화 */
         body,div,ul,li,dl,dd,dt,ol,h1,h2,h3,h4,h5,h6,input,fieldset,legend,p,select,table,th,td,tr,textarea,button,form,figure,figcaption{margin:0;padding:0;}
@@ -108,22 +53,21 @@
         .mt40 {margin-top: 40px !important;}
         .mt45 {margin-top: 45px !important;}
         .mt50 {margin-top: 50px !important;}
-
+     
         /* style */
         /* 레이아웃 */
-        body {background: url(image/header_bg.jpg) repeat-x center top;}
+        /* body {background: url(../../image/header_bg.jpg) repeat-x center top;} */
         #header {  }
         #nav {background-color: #f6fdff;}
         #title {background-color: #eaf7fd;}
-        #contents .container {border-right: 1px solid #dbdbdb; border-left: 1px solid #dbdbdb;}
+        #contents .container {border-right: 1px solid #dbdbdb; border-left: 1px solid #dbdbdb; 
+        						z-index:1;}
         #cont_left {float: left; width: 250px;}
         #cont_center {
             overflow: hidden; 
             margin-right: 250px; 
             min-height: 1300px; 
-            /* border-right: 1px solid #dbdbdb; 
-            	오른쪽 메뉴는 메인 페이지에만 보여줄거다.
-            */ 
+            border-right: 1px solid #dbdbdb;
             border-left: 1px solid #dbdbdb;
         }
         #cont_right {position: absolute; right: 0; top: 0px; width: 250px;}
@@ -133,13 +77,7 @@
         .container {position: relative; width: 1200px; margin: 0 auto; /* background: rgba(0,0,0,0.3) */}
 
         /* 헤더 */
-        
-        #userHeader{display: inline-block; } 
-        
-        
-        
-/*         .header {height: 327px;} */
-        .header {height: 327px;} 
+        .header {height: 327px;}
         .header .header_menu {text-align: right;}
         .header .header_menu a {color: #fff; padding: 8px 0 6px 10px; display: inline-block; transition: color 0.3s ease; font-family: 'Abel', sans-serif;}
         .header .header_menu a:hover {color: #ccc;}
@@ -157,8 +95,8 @@
         }
         .header .header_tit h1:hover {
             box-shadow: 
-                inset -12em 0 0 0 #257FAC, 
-                inset 12em 0 0 0 #257FAC;
+                inset -9em 0 0 0 #257FAC, 
+                inset 9em 0 0 0 #257FAC;
         }
         .header .header_tit a {
             font-size: 16px; 
@@ -221,11 +159,11 @@
         }
         
         /* 전체 메뉴 */
-        .nav {overflow: hidden; padding: 25px 0; display: none; }
-        .nav > div {float: left; width: 200px; /* width: 40%; */}
+        .nav {overflow: hidden; padding: 25px 0; display: none;}
+        .nav > div {float: left; width: 40%;}
         .nav > div:last-child {width: 20%;}
-        .nav > div ol {overflow: hidden; }
-        .nav > div li {float: left; width: 50%; position: relative; padding-left: 8px; /* box-sizing: border-box; */}
+        .nav > div ol {overflow: hidden;}
+        .nav > div li {float: left; width: 50%; position: relative; padding-left: 8px; box-sizing: border-box;}
         .nav > div:last-child li {width: 100%;}
         .nav > div li a {position: relative;}
         .nav > div li:before {
@@ -254,7 +192,6 @@
         }
         .nav > div li:hover a:after {width: 100%;}
         
-   
         /* 타이틀 */
         .title {position: relative; text-align: center; }
         .title h2 {font-family: 'Nanum Brush Script', cursive; font-size: 39px; color: #0093bd; padding: 5px 0;}
@@ -269,10 +206,10 @@
             border-radius: 50%;
             transition: all 0.3s ease;
         }
-         .title .btn:hover {
+        .title .btn:hover {
             box-shadow: 
                 0 0 0 3px rgba(75,154,191,0.9) inset,
-                0 0 0 600px rgba(0,0,0,0.1) inset;
+                0 0 0 100px rgba(0,0,0,0.1) inset;
         }
         
         /* 컨텐츠 영역 */
@@ -373,7 +310,7 @@
         .blog2 .img-retina {
             background-image: url(image/blog3_@1.jpg);
             background-size: cover;
-        } 
+        }
         @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
                only screen and (min-device-pixel-ratio: 1.5),
                only screen and (min-resolution: 1.5dppx) {
@@ -646,253 +583,33 @@
             .square a {width: 100%; margin-left:0; margin-right: 0;}
         }
         
-        
-	/* 메뉴 상단 고정  */
-		.jbFixed { 
-			width:100%;
-			position: fixed;
-			z-index:1000;
-			top: 0px;
-		}
-		.menuHeader:hover{
-            box-shadow: inset 180px 0 0 0 rgba(36,130,174,0.7); 
-            color: #fff;  
-           	background: rgba(36,130,174,0.9);
-            box-shadow: none;
-		}
-		
-		#cont_left{
-				
-		}
-		
-
-/* 		body{
-		width:100%;
-		z-index:999;
-		} */
-
-/*          main { min-height:100vh; } */
-        
+        /* .test{
+        	z-index:1;
+        } */
         
     </style>
+
 </head>
+<%@ include file="../common/mainNow(n).jsp" %>
 <body>
 
-    <header id="header">
-        <div class="container">
-            <div class="row">
-                <div class="header">
-                    <div class="header_menu">
-                    
-<!--                         <a href="http://websedu.tistory.com/">Blog</a>
-                        <a href="https://www.facebook.com/webstoryboys">facebook</a>
-                        <a href="http://richclub8.dothome.co.kr/webstandard/web/index.html">Webstandard</a> -->
 
-					  	<%if(loginUser != null) {%>
-					  			<div class="userHeader">
-									<label><%=loginUser.getUserName() %> 하이? </label>   
-					   				<a id="myPage" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
-									<a id="logoutBtn" onclick="logout()">로그아웃</a>                    
-								</div>     
-						<%} else{%>
-<%-- 							  	<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" onsubmit="return validate()" method="post">                       --%>
-								<!-- <div class="userHeader"> -->              
-									<label> 로그인 이름 </label>   
-										<a id="myPage"  onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
-										<a id="logoutBtn" onclick="logout()">로그아웃</a>
-								<!-- </div> -->     
-<!-- 								</form> -->
-					    <%} %>      
-		
-<%-- 	<%if(loginUser == null) {%>
-		<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
-		onsubmit="return validate()" method="post"> <!-- validate() 을 실행하고 난뒤의 반환값(return) -->
-			<table>
-				<tr>
-					<td><label>ID : </label></td>
-					<td><input type="text" name="userId" id = "userId"></td>
-				</tr>
-				<tr>
-					<td><label>PWD : </label></td>
-					<td><input type="password" name="userPwd" id = "userPwd"></td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<input type="checkbox" name="saveId" id = "saveId">&nbsp;
-						<label for="saveId">아이디 저장</label>
-					</td>
-				</tr>
-			</table>
-			
-			<div class="btns" align="center">
-				<div id="memberJoinBtn" onclick = "memberJoin();">회원가입</div>
-				<div id="loginBtn"><input type="submit" value="로그인"></div>
-			</div>
-			
-		</form>
-	<%} else{%> --%>
-		<!-- <div id ="userInfo"> -->
-			<%-- <label><%=loginUser.getUserName() %>님의 방문을 환영합니다.</label> --%>
-			<!-- <div class="btns" align="right"> -->
-											<!-- request.getContextPath() 동일한 의미 : /jspProject/
-												/jspProject/ : Context루트명 -->
-											<!-- 쿼리스트링 방식 : /jspProject/mypage.me?userId=loginUser.getUserId() 
-												- ? 이후를 쿼리스트링 이라 한다.
-												- 어떤이름?어떤값
-												- mypage.me : 클래스파일을 의미 classes 밑에 MyPageServlet.class 자동으로 찾아감
-											-->
-											<!-- @조사필요 쿼리스트림 방식-->
-				<%--<div id="myPage"  onclick="location.href='/jspProject/mypage.me?userId=<%=loginUser.getUserId()%>'" >정보수정</div>--%>
-				<!-- <div id="logoutBtn" onclick="logout()">로그아웃</div> -->
-			<!-- </div> -->
-		<!-- </div> -->
-<%-- 	<%} %> --%>
-                      
-              
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                    <!-- //header_menu -->
-                    <div class="header_tit">
-                        <h1>여기에 이미지 슬라이드를 넣어야 될거같은데</h1><br>
-                        <a href="http://www.iei.or.kr">kh 정보 교육원</a>
-                    </div>
-                    <!-- //header_tit -->
-                    <div class="header_icon">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-html5" aria-hidden="true"></i><span>HTML5</span></a></li>
-                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i><span>GitHub</span></a></li>
-                            <li><a href="#" class="facebook"><i class="fa fa-facebook-square" aria-hidden="true"></i><span>Fackbook</span></a></li>
-                            <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i><span>twitter</span></a></li>
-                        </ul>
-                    </div>
-                    <!-- //header_icon -->
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- //nav -->
-    
-	<article id="title" class="jbMenu">
-		<div class="container">
-			<div class="title">
-				<h2>"설문 NOW"</h2>
-				<a href="#" class="btn"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
-			</div>
-		</div>
-	
-    
-    
-    <nav id="nav" ><!-- class="jbMenu" --> 
-		<div class="container">
-			<div class="row">
-				<div class="nav">
-					<h2 class="ir_su">전체 메뉴</h2>
-					<div>
-			            <!-- <h3>마이메뉴</h3> -->
-			            <a href="#" ><h3 class="menuHeader" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">마이메뉴</h3> </a>
-			            
-			            <ol>
-			                <li><a href="#">HTML 태그(Tag)</a></li>
-			                <li><a href="#">블록 요소/인라인 요소</a></li>
-			                <li><a href="#">DTD 선언</a></li>
-			                <li><a href="#">언어 속성 설정</a></li>
-			                <li><a href="#">HTML &lt;title&gt;</a></li>
-			                <li><a href="#">HTML &lt;meta&gt;</a></li>
-			            </ol>
-			        </div>
-			        <div>
-			            <a href="#" ><h3 class="menuHeader">설문</h3> </a>
-			            <ol>
-			                <li><a href="#">가나다</a></li>
-			                <li><a href="#">라마바</a></li>
-			                <li><a href="#">사아자</a></li>
-			                <li><a href="#">차카타</a></li>
-			                <li><a href="#">파하</a></li>
-			            </ol>
-			        </div>
-			        <div>
-			            <a href="#" ><h3 class="menuHeader">공지사항</h3> </a>
-			            <ol>
-			                <li><a href="#">가나다</a></li>
-			                <li><a href="#">라마바</a></li>
-			                <li><a href="#">사아자</a></li>
-			                <li><a href="#">차카타</a></li>
-			                <li><a href="#">파하</a></li>
-			            </ol>
-			        </div>
-			        <div>
-			            <a href="#" ><h3 class="menuHeader">추가 1</h3> </a>
-			            <ol>
-			                <li><a href="#">가나다</a></li>
-			                <li><a href="#">라마바</a></li>
-			                <li><a href="#">사아자</a></li>
-			                <li><a href="#">차카타</a></li>
-			                <li><a href="#">파하</a></li>
-			            </ol>
-			        </div>
-			        
-			        <div>
-			            <a href="#" ><h3 class="menuHeader">추가 2</h3> </a>
-			            <ol>
-			                <li><a href="#">가나다</a></li>
-			                <li><a href="#">라마바</a></li>
-			                <li><a href="#">사아자</a></li>
-			                <li><a href="#">차카타</a></li>
-			                <li><a href="#">파하</a></li>
-			            </ol>
-			        </div>
-			        
-				</div>
-			</div>
-		</div>
-	</nav>
-	</article>
-	<!-- //nav -->
-<!--    
-    <article id="title" class="jbMenu">
-		<div class="container">
-			<div class="title">
-				<h2>"설문 NOW"</h2>
-				<a href="#" class="btn"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
-			</div>
-		</div>
-	</article> -->
-	<!-- //title -->
-   
-    <main>
-        <section id="contents">
+
+
+ <main>
+<!--         <section id="contents" class="test"> -->
             <div class="container">
+ <!--            
 				<h2 class="ir_su">반응형 사이트 컨텐츠</h2>
                 <section id="cont_left">
                     <h3 class="ir_su">메뉴 및 게시판 컨텐츠 영역</h3>
                     <article class="column col1">
                         <h4 class="col_tit">Menu</h4>
-<!-- .col_desc : 메뉴 설명 모두 주석 -->
-						<!-- <p class="col_desc">Box-shadow를 이용한 마우스 오버 효과 메뉴입니다.</p> -->
-						<!-- 메뉴 -->
+						<p class="col_desc">Box-shadow를 이용한 마우스 오버 효과 메뉴입니다.</p>
+						메뉴
 						<div class="menu">
 							<ul>
-								<li><a href="#" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
+								<li><a href="#">Cafe <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 								<li><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 								<li><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 								<li><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
@@ -900,14 +617,14 @@
 								<li><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
-						<!--//메뉴 -->
+						//메뉴
                     </article>
-                    <!-- //col1 -->
+                    //col1
                     
                     <article class="column col2">
 						<h4 class="col_tit">Notice</h4>
-						<!-- <p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p> -->
-						<!-- 게시판 -->
+						<p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p>
+						게시판
 						<div class="notice1">
 							<h5>Notice1</h5>
 							<ul>
@@ -918,8 +635,8 @@
 							</ul>
 							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 						</div>
-						<!--//게시판 -->
-						<!-- 게시판2 -->
+						//게시판
+						게시판2
 						<div class="notice2 mt15">
 							<h5>Notice2</h5>
 							<ul>
@@ -930,81 +647,75 @@
 							</ul>
 							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 						</div>
-						<!--//게시판2 -->
+						//게시판2
 					</article>
-					<!-- //col2 -->
+					//col2
                     
                     <article class="column col3">
 						<h4 class="col_tit">Blog</h4>
-						<!-- <p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p> -->
-						<!-- blog -->
+						<p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p>
+						blog
 						<div class="blog1">
 							<h5 class="ir_su">Image1</h5>
 							<figure>
-                                <img src="image/blog4_@1.jpg" class="img-normal" alt="normal image">
-                                <img src="image/blog4_@2.jpg" class="img-retina" alt="retina image">
+                                <img src="../../image/blog4_@1.jpg" class="img-normal" alt="normal image">
+                                <img src="../../image/blog4_@2.jpg" class="img-retina" alt="retina image">
                                 <figcaption>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</figcaption>
 							</figure>
 						</div>
-						<!--//blog -->
-						<!-- blog2 -->
+						//blog
+						blog2
 						<div class="blog2 mt15">
 							<div class="img-retina">
 							    <h5>Image2</h5>
 							</div>
                             <p>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</p>
 						</div>
-						<!--//blog2 -->
+						//blog2
 					</article>
-					<!-- //col3 -->
+					//col3
                 </section>
+                //cont_left
+                 -->
+                <section id="cont_center">
                 
-
                 
-                <!-- //cont_left -->
                 
-<!--                 <section id="cont_center"> -->
-
-                
-<!--
-                    <h3 class="ir_su">반응형 사이트 가운데 컨텐츠</h3>
-                    
-                     <article class="column col4">
+<!--                     <h3 class="ir_su">반응형 사이트 가운데 컨텐츠</h3>
+                    <article class="column col4">
                         <h4 class="col_tit">Slick Slider</h4>
 						<p class="col_desc">slick.js를 이용한 이미지 슬라이드 효과입니다.</p>
 						이미지 슬라이드
 						<div class="slider">
 							<div>
                                 <figure>
-                                    <img src="image/slider001.jpg" alt="이미지1">
+                                    <img src="../../image/slider001.jpg" alt="이미지1">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
 				            </div>
 							<div>
                                 <figure>
-                                    <img src="image/slider001.jpg" alt="이미지2">
+                                    <img src="../../image/slider001.jpg" alt="이미지2">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
 				            </div>
 				            <div>
                                 <figure>
-                                    <img src="image/slider001.jpg" alt="이미지3">
+                                    <img src="../../image/slider001.jpg" alt="이미지3">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
 				            </div>
 						</div>
 						//이미지 슬라이드
-                    </article> -->
+                    </article>
+                    //col4 -->
                     
-                    
-                    <!-- //col4 --> 
-                    
-                    <!-- <article class="column col5"> -->
-<!--                         <h4 class="col_tit">Filter Effect</h4>
+                    <article class="column col5">
+                        <h4 class="col_tit">Filter Effect</h4>
 						<p class="col_desc">CSS3에서는 Background-blend-mode, mix-blend-mode, filter와 같이 포토샵에 다루는 효과들이 있습니다.</p>
-						lightbox
+						<!-- lightbox -->
 						<div class="lightbox square clearfix">
-							<a href="image/light01_s.jpg"><img src="image/light01.jpg" alt="이미지"><em>blur</em></a>
+							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>blur</em></a>
 							<a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>brightness</em></a>
 							<a href="image/light03_s.jpg"><img src="image/light03.jpg" alt="이미지"><em>contrast</em></a>
 							<a href="image/light04_s.jpg"><img src="image/light04.jpg" alt="이미지"><em>grayscale</em></a>
@@ -1014,47 +725,49 @@
 							<a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>saturate</em></a>
 							<a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>sepia</em></a>
 							<a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>Mix</em></a>
-						</div> -->
+						</div>
 						<!--//lightbox -->
-                    <!-- </article> -->
+                    </article>
                     <!-- //col5 -->
                     
-        <!--             <article class="column col6">
- 						<h4 class="col_tit">Video</h4>
+                    <article class="column col6">
+						<h4 class="col_tit">Video</h4>
 						<p class="col_desc">영상을 보여주는 영역입니다.</p>
-						video
-						<video autoplay="autoplay" controls="controls" loop="loop">
+						<!-- video -->
+						<!-- <video autoplay="autoplay" controls="controls" loop="loop">
 							<source src="img/video.mp4" type="video/mp4">
-						</video>
+						</video> -->
 						<div class="video">
 							<iframe src="https://www.youtube.com/embed/tHy498wdPaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div> 
-					</article> -->
+						</div>
+						<!--//video -->
+					</article>
 					<!-- //col6 -->
-<!--                 </section> -->
+                </section>
                 <!-- //cont_center -->
-                <!-- <section id="cont_right">
-                    <h3 class="ir_su">반응형 사이트 오른쪽 컨텐츠</h3>
+                <section id="cont_right" >
+                
+<!--                     <h3 class="ir_su">반응형 사이트 오른쪽 컨텐츠</h3>
                     <article class="column col7">
                         <h4 class="col_tit">Effect1</h4>
 						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
 						side1
 						<div class="side1">
                             <figure class="front">
-                                <img src="image/side1.jpg" alt="이미지2">
+                                <img src="../../image/side1.jpg" alt="이미지2">
                             </figure>
                             <div class="back">
                                 <i class="fa fa-heart fa-4x" aria-hidden="true"></i>
                             </div>
                         </div>
                         side1//
-                    </article>
-                    //col7
+                    </article> -->
+                    <!-- //col7 -->
                     
                     <article class="column col8">
                         <h4 class="col_tit">Effect2</h4>
 						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
-						side2
+						<!-- side2 -->
 						<div class="side2">
                             <figure class="front">
                                 <img src="image/side2.jpg" alt="이미지2">
@@ -1069,14 +782,14 @@
                                 </figcaption>
                             </figure>
                         </div>
-                        side2//
+                        <!-- side2//-->
                     </article>
-                    //col8
+                    <!-- //col8 -->
                     
                     <article class="column col9">
                         <h4 class="col_tit">Effect3</h4>
 						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
-						side3
+						<!-- side3 -->
 						<div class="side3">
                             <figure>
                                 <img src="image/side3.jpg" alt="이미지3">
@@ -1085,151 +798,22 @@
                                 </figcaption>
                             </figure>
                         </div>
-                        side3//
+                        <!-- side3//-->
                     </article>
-                    //col9
-                </section> -->
+                    <!-- //col9 -->
+                </section>
                 <!-- //cont_right -->
             </div>
-        </section>
+        <!-- </section> --> 	
         <!-- //contents -->
-
     </main>
 
-<!--     <footer id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="footer">
-                    <ul>
-                        <li><a href="#">사이트 도움말</a></li>
-                        <li><a href="#">사이트 이용약관</a></li>
-                        <li><a href="#">사이트 운영원칙</a></li>
-                        <li><a href="#"><strong>개인정보취급방침</strong></a></li>
-                        <li><a href="#">책임의 한계와 법적고지</a></li>
-                        <li><a href="#">게시중단요청서비스</a></li>
-                        <li><a href="#">고객센터</a></li>
-                    </ul>
-                    <address>
-                        Copyright &copy;
-                        <a href="http://webstoryboy.co.kr"><strong>webstoryboy</strong></a>
-                        All Rights Reserved.
-                    </address>
-                </div>
-            </div>
-        </div>
-    </footer> -->
-    <!-- //footer -->
-    
+
     <!-- JavaScript Libraries -->
-    <script src="js/jquery.min_1.12.4.js"></script>
-    <script src="js/modernizr-custom.js"></script>
+<!--     <script src="../js/jquery.min_1.12.4.js"></script>
+    <script src="../js/modernizr-custom.js"></script>
     <script src="js/slick.min.js"></script>
-    <script src="js/lightgallery.min.js"></script>
-    
-    
-<!--STR  메뉴상단 고정  script ----------------------------------------------------------------------->
-	<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script>
-      $( document ).ready( function() {
-        var jbOffset = $( '.jbMenu' ).offset();
-        
-        $( window ).scroll( function() {
-          if ( $( document ).scrollTop() > jbOffset.top ) {
-            $( '.jbMenu' ).addClass( 'jbFixed' );
-          }
-          else {
-            $( '.jbMenu' ).removeClass( 'jbFixed' );
-          }
-        });
-      } );
-    </script>
-<!--END  메뉴상단 고정  script ----------------------------------------------------------------------->
-    
-<!--STR 화면 onclick 이벤트 ------------------------------------------------------------------------>
-	<script>
-		// 게시판 작업 시작(공지사항 관련된 작업이 끝나면)
-		function goBoard(){
-			location.href="<%=request.getContextPath()%>/list.bo"
-			//BoardListServlet.java 만들기
-		}
-		
-		// logout() 함수 작성하기
-		function logout(){
-			location.href = '<%=request.getContextPath()%>/logout.me';
-			
-			// LogoutServlet 만들기~ 꼬꼬씽~
-		}
-	</script>
-<!--END 화면 onclick 이벤트 ------------------------------------------------------------------------>
- 
- 
-    
-    <script>
-        //접기/펼치기
-        $(".btn").click(function(e){
-            e.preventDefault();
-            $(".nav").slideToggle();
-            $(".btn").toggleClass("open");
-            //var btn = $(".btn").find(">i").attr("class");
-            //alert(btn);
-
-            if($(".btn").hasClass("open")){
-                //open이 있을 때
-                $(".btn").find(">i").attr("class","fa fa-angle-up");
-            } else {
-                //open이 없을 때
-                $(".btn").find(">i").attr("class","fa fa-angle-down");
-            }
-        });
-        
-        $(window).resize(function(){
-            var wWidth = $(window).width();
-            if(wWidth > 600){
-                $(".nav").removeAttr("style");
-            }
-        });
-        
-        //라이트 박스
-        $(".lightbox").lightGallery({
-            thumbnail: true,
-            autoplay: true,
-            pause: 3000,
-            progressBar: true
-        }); 
-
-        //이미지 슬라이더
-        $(".slider").slick({
-			dots: true,
-			autoplay: true,
-			autoplaySpeed: 3000,
-			arrows: true,
-			responsive: [
-			    {
-				    breakpoint: 768,
-				    settings: {
-				        autoplay: false,
-			      	}
-			    }
-			]
-		});
-         
-        //sns 공유하기
-        $(".facebook").click(function(e){
-            e.preventDefault();
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' +encodeURIComponent(document.URL)+'&t='+encodeURIComponent(document.title), 'facebooksharedialog', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600'); 
-        });
-        $(".twitter").click(function(e){
-            e.preventDefault();
-            window.open('https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20' +encodeURIComponent(document.URL)+'%20-%20'+encodeURIComponent(document.title), 'twittersharedialog', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
-        });
-    </script>
-
-<!-- 화면 맨아래 보이게 -->
-<%@ include file="../common/footer.jsp" %>
+    <script src="js/lightgallery.min.js"></script> -->
 
 </body>
-
-
-
-
 </html>

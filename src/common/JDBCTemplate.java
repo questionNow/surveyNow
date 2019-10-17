@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class JDBCTemplate {
+public class JDBCTemplate { 
 	public static Connection getConnection() {
 		Connection conn = null;
 		Properties prop = new Properties();

@@ -78,10 +78,10 @@ public class LoginServlet extends HttpServlet {
 //					관리자 or 회원	? 
 //			 }
 			 
-			 view = request.getRequestDispatcher("views/common/mainNow(n).jsp");
+			/* view = request.getRequestDispatcher("views/common/mainNow(n).jsp"); */
+			 view = request.getRequestDispatcher("views/common/mainLoing.jsp");
 			 
-			 
-			 
+			  
 		 }else {//실패할 경우
 			 request.setAttribute("msg", "로그인 실패");
 			 // request는 호출이 끝난 경우 데이터가 사라진다.??

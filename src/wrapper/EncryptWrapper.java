@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 public class EncryptWrapper extends HttpServletRequestWrapper{
-
+ 
 	// 부모 클래스인 HttpServletRequestWrapper에는 기본생성자가 없기 때문에
 	// 반드시 명시적으로 매개변수 있는 생성자를 작성해 주어야 한다.
 	public EncryptWrapper(HttpServletRequest request) {

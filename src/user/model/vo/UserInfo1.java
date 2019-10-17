@@ -1,5 +1,5 @@
 package user.model.vo;
-
+ 
 import java.io.Serializable;
 
 public class UserInfo1 implements Serializable{
@@ -8,7 +8,7 @@ public class UserInfo1 implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6386768255607523091L;
-
+  
 	private String userId;
 	private String userPwd;
 	private String userName;
