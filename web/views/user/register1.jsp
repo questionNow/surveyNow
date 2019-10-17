@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title> 회원가입 창 </title>
 <style>
-#register {
+#register { 
 	width: 700px;
 	margin-left: auto;
 	margin-right: auto;
