@@ -24,6 +24,7 @@ public class UserDao {
 		try {
 			pst = conn.prepareStatement("INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
 			
+			
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
 			pst.setString(3, userInfo.getUserName());
@@ -45,6 +46,7 @@ public class UserDao {
 			pst.setString(19, userInfo.getInterest());
 			
 			result = pst.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
