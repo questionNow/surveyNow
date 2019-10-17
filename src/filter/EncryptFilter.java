@@ -18,9 +18,9 @@ import wrapper.EncryptWrapper;
  */
 
 
-@WebFilter(filterName = "encrypt",
+@WebFilter(
 			//urlPatterns = "*.me")
-			servletNames = {"InsertMemberServlet", "LoginServlet"})
+			)
 public class EncryptFilter implements Filter {
 
     /**

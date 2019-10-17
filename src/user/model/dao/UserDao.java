@@ -14,15 +14,14 @@ import static common.JDBCTemplate.*;
 
 import user.model.vo.UserInfo;
 
- 
 public class UserDao {
 	private Properties prop = new Properties();
-	
+
 	public UserDao() {
 		// 기본생성자는 항상 member-query.properties 값을 불러올 수 있도록
 		// 기본 생성자 안에서 properties 파일을 불러오는 작업을 하자
 		String fileName = UserDao.class.getResource("/sql/user/user-query.properties").getPath();
-		
+
 		try {
 			prop.load(new FileReader(fileName));
 		} catch (FileNotFoundException e) {
@@ -30,134 +29,100 @@ public class UserDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	//SDB 로그인
+
+	// SDB 로그인
 	public UserInfo loginUser(Connection conn, UserInfo user) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		UserInfo loginUser = null;
-		
+
 		String query = prop.getProperty("loginMember");
-		
+
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERPWD=? AND STATUS='Y'");
-			
+			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERPWD=? AND STATUS='N'");
+
 			pstmt.setString(1, user.getUserId());
-//			pstmt.setString(2, user.getUserPwd());
-			
+			pstmt.setString(2, user.getUserPwd());
+
 //			pstmt.setString(1, "admin");
-			pstmt.setString(2, "1234");
-			
-System.out.println("암호화 처리되서 넘어감 : 수동입력");
-System.out.println("1 : " + user.getUserId());
-System.out.println("2 : " + user.getUserPwd());
-			
+//			pstmt.setString(2, "1234");
+
+			System.out.println("암호화 처리되서 넘어감 : 수동입력");
+			System.out.println("1 : " + user.getUserId());
+			System.out.println("2 : " + user.getUserPwd());
+
 			rs = pstmt.executeQuery();
-			
+
 			// resultSet의 결과가 있으면 ...
-			if(rs.next()) {
-				loginUser = new UserInfo(rs.getString("USERID"),
-			               rs.getString("USERPWD"),
-			               rs.getString("USERNAME"),
-			               rs.getInt("AGE"),
-			               rs.getString("GENDER"),
-			               rs.getString("EMAIL"),
-			               rs.getString("PHONE"),
-			               rs.getString("ADDRESS"),
-			               rs.getString("RECOMMEND_ID"),
-			               rs.getInt("SURVEYCOUNT"),
-			               rs.getInt("VISITCOUNT"),
-			               rs.getInt("USERTYPE"),
-			               rs.getString("STATUS"),
-			               rs.getString("FINAL_EDUCATION"),
-			               rs.getString("JOB"),
-			               rs.getString("INCOME"),
-			               rs.getString("LIVING_TYPE"),
-			               rs.getString("HOUSE_TYPE"),
-			               rs.getString("RELIGION"),
-			               rs.getString("MARITAL_STATUS"),
-			               rs.getString("LIVING_WITH"),
-			               rs.getString("ARMY_GO"),
-			               rs.getString("INTEREST"),
-			               rs.getDate("PWDDATE")
-						   );
-				
+			if (rs.next()) {
+				loginUser = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
+						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
+						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
+						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
+						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
+						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
+						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
+						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
+
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rs);
 			close(pstmt);
 		}
-		
-		return loginUser;	// loginUser : vo객체 리턴
-		//다시 Service로 가자!!
+
+		return loginUser; // loginUser : vo객체 리턴
+		// 다시 Service로 가자!!
 	}
-	
+
 	public UserInfo selectUser(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		UserInfo user = null;
-		
+
 		try {
-			
+
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=?");
 			pstmt.setString(1, userId);
 //			pstmt.setString(1, "admin");
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			// resultSet의 결과가 있으면 ...
-			if(rs.next()) {
-				user = new UserInfo(rs.getString("USERID"),
-			               rs.getString("USERPWD"),
-			               rs.getString("USERNAME"),
-			               rs.getInt("AGE"),
-			               rs.getString("GENDER"),
-			               rs.getString("EMAIL"),
-			               rs.getString("PHONE"),
-			               rs.getString("ADDRESS"),
-			               rs.getString("RECOMMEND_ID"),
-			               rs.getInt("SURVEYCOUNT"),
-			               rs.getInt("VISITCOUNT"),
-			               rs.getInt("USERTYPE"),
-			               rs.getString("STATUS"),
-			               rs.getString("FINAL_EDUCATION"),
-			               rs.getString("JOB"),
-			               rs.getString("INCOME"),
-			               rs.getString("LIVING_TYPE"),
-			               rs.getString("HOUSE_TYPE"),
-			               rs.getString("RELIGION"),
-			               rs.getString("MARITAL_STATUS"),
-			               rs.getString("LIVING_WITH"),
-			               rs.getString("ARMY_GO"),
-			               rs.getString("INTEREST"),
-			               rs.getDate("PWDDATE")
-						   );
+			if (rs.next()) {
+				user = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
+						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
+						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
+						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
+						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
+						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
+						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
+						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
 			close(rs);
 		}
-		
+
 		return user;
 	}
 
-	
 	public int registerUser(Connection conn, UserInfo userInfo) {
 		PreparedStatement pst = null;
 		int result = 0;
 		System.out.println(userInfo);
 		try {
-			pst = conn.prepareStatement("INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
-			
+			pst = conn.prepareStatement(
+					"INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
 			pst.setString(3, userInfo.getUserName());
@@ -177,7 +142,7 @@ System.out.println("2 : " + user.getUserPwd());
 			pst.setString(17, userInfo.getLivingWith());
 			pst.setString(18, userInfo.getArmyGo());
 			pst.setString(19, userInfo.getInterest());
-			
+
 			result = pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -190,19 +155,19 @@ System.out.println("2 : " + user.getUserPwd());
 	public int idCheck(Connection conn, String userId) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		int result = 0;
-		
+
 		try {
 			pst = conn.prepareStatement("SELECT COUNT(*) FROM USER_INFO WHERE USERID=?");
 			pst.setString(1, userId);
 			rs = pst.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			close(rs);

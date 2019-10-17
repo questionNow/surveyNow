@@ -588,7 +588,7 @@
 		
 		// 회원가입용 함수 memberJoin() 함수 작성하기
 		function memberJoin(){
-			location.href="<%=request.getContextPath()%>/views/member/memberJoinForm.jsp";
+			location.href="../user/register1.jsp";
 		}
 		
 	</script>
