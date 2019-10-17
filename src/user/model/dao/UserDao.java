@@ -120,9 +120,9 @@ public class UserDao {
 		int result = 0;
 		System.out.println(userInfo);
 		try {
-			pst = conn.prepareStatement(
-					"INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
-
+			pst = conn.prepareStatement("INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+			
+			
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
 			pst.setString(3, userInfo.getUserName());
@@ -142,8 +142,9 @@ public class UserDao {
 			pst.setString(17, userInfo.getLivingWith());
 			pst.setString(18, userInfo.getArmyGo());
 			pst.setString(19, userInfo.getInterest());
-
+			
 			result = pst.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -155,19 +156,19 @@ public class UserDao {
 	public int idCheck(Connection conn, String userId) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-
+		
 		int result = 0;
-
+		
 		try {
 			pst = conn.prepareStatement("SELECT COUNT(*) FROM USER_INFO WHERE USERID=?");
 			pst.setString(1, userId);
 			rs = pst.executeQuery();
-
-			if (rs.next()) {
+			
+			if(rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-
+			
 			e.printStackTrace();
 		} finally {
 			close(rs);

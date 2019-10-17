@@ -4,9 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-</script>
 <title> 회원가입 창 </title>
 <style>
 #register {
@@ -84,10 +81,10 @@ input[type = password]{
 	padding : .7em;
 }
 #email1, #email2{
-	width : 17.1%;
+	width : 17.9%;
 }
 #email3{
-	width : 15%;
+	width : 17%;
 	border-radius : 10px;
 	border : 1px solid #ccc;
 	padding : .7em;
@@ -123,7 +120,7 @@ width : 23.5%;
 #nextMain{
 	width : 26.7%;
 }
-#nextRegister{
+#nextRegister, #checkForm{
 	cursor : pointer;
 	padding : 9px 20px;
 	width : 53.8%;
@@ -174,6 +171,8 @@ width : 23.5%;
 	width : 27%;
 }
 </style>
+<script language = "javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
 </head>
 <body>
 <div id="register">
@@ -183,31 +182,34 @@ width : 23.5%;
 	<font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
 </div> <br clear="both">
 	
-	<form action = "<%=request.getContextPath()%>/register.user" method = post> <br>
+	<form onsubmit = "return checkCondition();" id = registerForm name = registerForm action = "<%=request.getContextPath()%>/register.user" method = post> <br>
+	<!-- <form onsubmit = "return checkCondition1();" id = registerForm1 name = registerForm1 action = "#registerForm2" method = post> <br> --> 
 	<div class = title1>
 		<div class = register>
 			회원가입
 		</div> <br>
-			<div class = join>
+		<div class = join>
 			<label for = id> 아이디 </label> <br>
-			<input type = text id = id name = userId placeholder = "아이디를 입력하세요" maxlength = 8>
-			<input type = button value = 중복확인 onclick = "overlap();">  
+			<input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+			<input type = button value = 중복확인 id = idChk> <br>
+			<label id = resultId> </label>
 		</div> <br>
 		<div class = join>
 			<label for = pw1> 비밀번호 </label> <br>
-			<input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 8>
+			<input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 style = "ime-mode:inactive" required>
 		</div> <br>
 		<div class = join>
 			<label for = pw2> 비밀번호 확인 </label> <br>
-			<input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 8>
+			<input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20 style = "ime-mode:inactive" required> <br>
+			<label id = resultPw> </label>
 		</div> <br>
 		<div class = join>
 			<label for = name> 이름 </label> <br>
-			<input type = text id = name name = userName placeholder = "이름을 입력하세요" maxlength = 5> 
+			<input type = text id = name name = userName placeholder = "이름을 입력하세요" maxlength = 5 onkeyup = "this.value=this.value.replace(/[^가-힣]/g,'');" required> 
 		</div> <br>
 		<div class = join>
 			<label> 나이 </label> <br>
-			<input type = text id = age name = age maxlength = 4 placeholder = "나이를 입력하세요">
+			<input type = text id = age name = age maxlength = 3 placeholder = "나이를 입력하세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');" required>
 		</div><br>
 		<div class = join>
 			<label> 성별 </label> <br>
@@ -219,50 +221,50 @@ width : 23.5%;
 		</div> <br>
 		<div class = join>
 			<label> 이메일 </label> <br>
-			<input type = text id = email1 name = email1 maxlength = 20> 
-			<input type = text id = email2 name = email3 maxlength = 15>
+			<input type = text id = email1 name = email1 maxlength = 20 placeholder = "이메일을 입력하세요" onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');"> 
+			<input type = text id = email2 name = email3 maxlength = 15 placeholder = "이메일을 선택하세요" disabled>
 			<select	id = email3 name = email2>
 				<option> 이메일을 선택하세요 </option>
 				<option value = "@naver.com"> @naver.com </option>
 				<option value = "@daum.net"> @daum.net </option>
 				<option value = "@gmail.com"> @gmail.com </option>
 				<option value = "@nate.com"> @nate.com </option>
-				<option value = self> 직접 입력 </option>
-			</select> <br><br>
-			<input type = text id = confirmNum maxlength = 10 placeholder = "인증번호 입력">
+			</select>
+			<!-- <input type = text id = confirmNum name = confirmNum maxlength = 10 placeholder = "인증번호 입력">
 			<input type = button value = "인증번호받기" onclick = "receive();">
-			<input type = button value = "인증번호확인" onclick = "confirm();">
+			<input type = button value = "인증번호확인" onclick = "confirm();"> 
+			나중에 시간 남을때 인증번호 구현 -->
 		</div> <br>
 		<div class = join>
 			<label> 핸드폰번호 </label> <br>
 			<select id = tongsin name = tongsin>
-				<option> 통신사를 선택하세요 </option>
+				<option value = ""> 통신사를 선택하세요 </option>
 				<option value = "KT"> KT </option>
 				<option value = "SKT"> SKT </option>
 				<option value = "LG"> LG </option>
 			</select>
-			<input type = text id = phoneNum name = phone maxlength = 11 placeholder = "(-) 빼고 입력해주세요">
+			<input type = text id = phoneNum name = phone maxlength = 11 placeholder = "(-) 빼고 입력해주세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');">
 		</div> <br>
 		<div class = join>
 			<label> 주소 </label> <br>
-			<input type = text id = postCode name = postCode placeholder = "우편번호">
+			<input type = text id = postCode name = postCode placeholder = "우편번호" disabled>
 			<input type = text id = address1 name = address1 placeholder = "도로명 주소">
 			<input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
 			<span id= guide style = "color:#999; display:none"> </span>
-			<!-- <input type = text id = jibunAddress name = jibunAddress placeholder = "지번주소"> -->
 			<input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요">
-			<input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
+			<input type = text id = extraAddress name = extraAddress placeholder = "참고주소" disabled>
 		</div> <br>
 		<div class = join>
 			<label> 추천인 </label> <br>
 			<input type = text id = recommend name = recommendId placeholder = "추천인이 있으면 입력하세요">
 		</div> <br>
 		<div class = join>
-			<button id = nextRegister value = "hide/show" onclick = "nextRegister();"> 가입 2단계 진행 </button><br><br>
+			<div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div>
+			<div id = secondClick> <input type = button id = nextRegister value = "가입 2단계 진행"></div> <br>
 			<input type = reset value = "다시쓰기" id = clear1>
 			<input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
-		</div>
-	</div>
+		</div> </div>
+	<%-- <form onsubmit = "return checkCondition2();" id = registerForm2 name = registerForm2 action = "<%=request.getContextPath()%>/register.user" method = post> <br> --%>
 	<div class = title2>
 		<div class = register>
 			패널 정보 등록
@@ -270,7 +272,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 1> 최종학력 </label>
 			<select id = finalEdu name = finalEducation>
-				<option value = "" selected = ""> 최종학력을 선택하세요 </option>
+				<option value = ""> 최종학력을 선택하세요 </option>
 				<option value = "초등학교 졸업"> 초등학교 졸업 </option>
 				<option value = "중학교 졸업"> 중학교 졸업 </option>
 				<option value = "고등학교 졸업"> 고등학교 졸업 </option>
@@ -285,7 +287,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 2> 직업 </label>
 			<select id = job name = job>
-				<option value = "" selected = ""> 직업을 선택하세요 </option>
+				<option value = ""> 직업을 선택하세요 </option>
 				<option value = "무직"> 무직 </option>
 				<option value = "학생"> 학생 </option>
 				<option value = "자영업"> 자영업 </option>
@@ -302,7 +304,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 3> 월 소득 </label>
 			<select id = income name = income>
-				<option value = "" selected = ""> 월 평균 개인 소득을 선택하세요 </option>
+				<option value = ""> 월 평균 개인 소득을 선택하세요 </option>
 				<option value = "200만원 이하"> 200만원 이하 </option>
 				<option value = "400만원 이하"> 400만원 이하 </option>
 				<option value = "600만원 이하"> 600만원 이하 </option>
@@ -313,7 +315,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 4> 주거형태 </label>
 			<select id = home1 name = livingType>
-				<option value = "" selected = ""> 주거 형태를 선택하세요 </option>
+				<option value = ""> 주거 형태를 선택하세요 </option>
 				<option value = "월세"> 월세 </option>
 				<option value = "전세"> 전세 </option>
 				<option value = "자가"> 자가 </option>
@@ -324,7 +326,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 5> 주택유형 </label>
 			<select id = home2 name = houseType>
-				<option value = "" selected = ""> 주택 유형을 선택하세요 </option>
+				<option value = ""> 주택 유형을 선택하세요 </option>
 				<option value = "단독 주택"> 단독 주택 </option>
 				<option value = "다세대 주택"> 다세대 주택 </option>
 				<option value = "아파트"> 아파트 </option>
@@ -335,7 +337,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 6> 종교 </label>
 			<select id = religion name = religion>
-				<option value = "" selected = ""> 종교를 선택하세요 </option>
+				<option value = ""> 종교를 선택하세요 </option>
 				<option value = "무교"> 무교 </option>
 				<option value = "기독교"> 기독교 </option>
 				<option value = "불교"> 불교 </option>
@@ -347,7 +349,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 7> 혼인 </label>
 			<select id = marry name = maritalStatus>
-				<option value = "" selected = ""> 혼인여부를 선택하세요 </option>
+				<option value = ""> 혼인여부를 선택하세요 </option>
 				<option value = "미혼"> 미혼 </option>
 				<option value = "기혼"> 기혼 </option>
 			</select>
@@ -356,7 +358,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 8> 동거가족 </label>
 			<select id = family1 name = livingWith>
-				<option value = "" selected = ""> 동거 가족을 선택하세요 </option>
+				<option value = ""> 동거 가족을 선택하세요 </option>
 				<option value = "0명"> 0명 </option>
 				<option value = "1명"> 1명 </option>
 				<option value = "2명"> 2명 </option>
@@ -370,7 +372,7 @@ width : 23.5%;
 		<div class = question>
 			<label for = 9> 병역 </label>
 			<select id = soldier name = armyGo>
-				<option value = "" selected = ""> 병역여부를 선택하세요 </option>
+				<option value = ""> 병역여부를 선택하세요 </option>
 				<option value = "미필"> 미필 </option>
 				<option value = "군필"> 군필 </option>
 				<option value = "면제"> 면제 </option>
@@ -430,41 +432,262 @@ width : 23.5%;
 			</div><br><br>
 		<div class = complete>
 			<input type = button value = "뒤로가기" id = backBtn onclick = "beforeBtn();">
-			<input type = submit value = "패널 정보 등록 완료" id = successRegister onclick = "complete();"> 
+			<input type = submit value = "패널 정보 등록 완료" id = successRegister> 
 		</div>
 		</div> <br><br>
 	</div>
 	</form>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script type="text/javascript">
-		function overlap(){
-			alert("중복확인 기능 넣기");
-		}		
-		function receive(){
-			alert("인증번호 받기 기능 넣기");
+	<script language = "javascript">
+	
+		// 여기서부터 아이디 중복체크
+		$(function(){
+			var isUsable = false;
+			$("#idChk").click(function(){
+				var userId = $("input[name = 'userId']");
+			
+				if(!userId || userId.val().length < 4){
+					alert("아이디는 최소 4자리 이상 입력해주세요");
+					userId.focus();
+				} else {
+					$.ajax({
+						url:"<%=request.getContextPath()%>/idCheck.ck",
+						type:"post",
+						data:{userId:userId.val()},
+						success:function(data){
+							if(data == "fail"){
+								alert("사용 불가능 아이디 입니다.");
+								userId.focus();
+							} else {
+								alert("사용 가능 아이디 입니다.");
+								isUsable = true;
+							}
+						},
+						error:function(data){
+							console.log("코드 다시 확인해봐야함ㅠㅠ");
+						}
+					});
+				}	
+		});
+		});
+		// 여기까지 아이디 중복체크
+		
+		// -> 여기서부터 비밀번호 유효성 검사 및 일치 확인			
+		$(function(){
+			var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
+			var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+			$("#pw1").change(function(){
+				if(!checkPwd.test($("#pw1").val())){
+					$("#resultPw").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
+					$("#pw1").val("");
+					$("#pw1").focus();
+				}	
+			});
+			
+			$("#pw2").change(function(){
+			 if($('#pw1').val() != $(this).val()){
+				$("#resultPw").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+				$("#pw2").val("");
+				$(this).focus();
+			 } else {
+				 $("#resultPw").html("비밀번호가 일치 합니다.").css("color", "navy");
+			 }
+			});
+			
+			$("#id").change(function(){
+				if(!checkId.test($("#id").val())){
+					$("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
+					$("#id").val("");
+					$("#id").focus();
+				}
+			});
+		});
+		// <- 여기까지 비밀번호 유효성 검사 및 일치 확인
+		
+		// -> 이메일 인증은 일단 스킵
+		/* function receive(){
+			var certNum = Math.floor(Math.random() * 100000) + 1000;
+			alert("인증번호 : " + certNum);
 		}
 		function confirm(){
-			alert("인증번호 확인 기능 넣기");
-		}
+			alert("인증번호 이메일 구현해야하뮤ㅠㅠㅠㅠ");
+		} */ // <- 이메일 인증은 일단 스킵
 		
-		// 여기서부터 ->
+		
+		
+	//	----------- 여기서부터 가입 1단계 유효성 검사 (input 태그에 기본적으로 안써지게 그냥 막아놈)
+		//   						ex) 아이디에 특수문자 안들어가게 강제적으로 막았음 
 		$(document).ready(function(){
-			$(".title1").show();  // <- 회원가입 첫번째 창 보여주기
-			$(".title2").hide();  // <- 회원가입 두번째 창 숨기기
-			$("#nextRegister").click(function(){  // <- nextRegister 버튼 클릭 시
-				$(".title1").hide();  // <- 클릭 시 회원가입 첫번째 창 숨기기
-				$(".title2").show();  // <- 클릭 시 회원가입 두번째 창 보여주기
+			$("#secondClick").hide();
+		$("#checkForm").click(function(){
+			
+		var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
+		var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+		var checkPhone = /^(?=.*?[0-9]).{11,}$/;
+		
+			if($("#id").val() == ""){
+				alert("아이디를 입력해주세요");
+				$("#id").focus();
 				return false;
+			}
+			if(!checkId.test($("#id").val())){
+				alert("아이디는 4글자 이상입니다.");
+				$("#id").val("");
+				$("#id").focus();
+				return false;
+			}
+			if($("#pw1").val() == ""){
+				alert("비밀번호를 입력해주세요");
+				$("#pw1").focus();
+				return false;
+			}
+			if ($("#id").val() == ($("#pw1").val())) {
+		      	alert("비밀번호가 ID와 똑같습니다!");
+		      	$("#pw1").val("");
+		      	$("#pw1").focus();
+		      	return false;
+		    }
+			if(!checkPwd.test($("#pw1").val())){
+				alert("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.");
+				$("#pw1").val("");
+				$("#pw1").focus();
+				return false;
+			}	
+		 	if($("#name").val() == ""){
+				alert("이름 입력해주세요");
+				$("#name").focus();
+				return false;
+			}
+			if($("#age").val() == ""){
+				alert("나이 입력해주세요");
+				$("#age").focus();
+				return false;
+			}
+			if($("#gender").val() == ""){
+				alert("성별을 선택해주세요");
+				$("#gender").focus();
+				return false;
+			}
+			if($("#email1").val() == ""){
+				alert("이메일을 입력해주세요");
+				$("#email1").focus();
+				return false;
+			}
+			if($("#email2").val() == ""){
+				alert("이메일을 선택해주세요");
+				$("#email3").focus();
+				return false;
+			}
+			if($("#tongsin").val() == ""){
+				alert("통신사를 선택해주세요");
+				$("#tongsin").focus();
+				return false;
+			}
+			if($("#phoneNum").val() == ""){
+				alert("핸드폰번호를 입력해주세요");
+				$("#phoneNum").focus();
+				return false;
+			}
+			if(!checkPhone.test($("#phoneNum").val())){
+				alert("핸드폰번호를 제대로 써주세요.");
+				$("#phoneNum").val("");
+				$("#phoneNum").focus();
+				return false;
+			}
+			if($("#postCode").val() == "" || $("#address1").val() == "" || $("#extraAddress").val() == ""){
+				alert("주소검색을 해주세요");
+				$("#postCode").focus();
+				return false;
+			}
+			if($("#detailAddress").val() == ""){
+				alert("상세주소를 입력해주세요");
+				$("#detailAddress").focus();
+				return false;
+			}
+			 $("#firstClick").hide();
+			 $("#secondClick").show();
+			 return true; 
 			});
-		}); // <- 여기까지 div  show/hide
+		});    // ---------  여기까지 가입1단계 유효성 검사 
 		
-		
+		// --------------여기서부터 패널등록 빈칸 검사
+		function checkCondition(){
+			var interestCheck = false;
+			
+			if($("#finalEdu").val() == ""){
+				alert("최종학력을 선택해주세요");
+				$("#finalEdu").focus();
+				return false;
+			}
+			if($("#job").val() == ""){
+				alert("직업을 선택해주세요");
+				$("#job").focus();
+				return false;
+			}
+			if($("#income").val() == ""){
+				alert("월 소득을 선택해주세요");
+				$("#income").focus();
+				return false;
+			}
+			if($("#home1").val() == ""){
+				alert("주거형태를 선택해주세요");
+				$("#home1").focus();
+				return false;
+			}
+			if($("#home2").val() == ""){
+				alert("주택유형을 선택해주세요");
+				$("#home2").focus();
+				return false;
+			}
+			if($("#religion").val() == ""){
+				alert("종교를 선택해주세요");
+				$("#religion").focus();
+				return false;
+			}
+			if($("#marry").val() == ""){
+				alert("혼인여부를 선택해주세요");
+				$("#marry").focus();
+				return false;
+			}
+			if($("#family1").val() == ""){
+				alert("동거가족 수를 선택해주세요");
+				$("#family1").focus();
+				return false;
+			}
+			if($("#soldier").val() == ""){
+				alert("병역여부를 선택해주세요");
+				$("#soldier").focus();
+				return false;
+			}
+		    for(var i = 0; i < $("[name='interest']").length;i++){
+		        if($("input:checkbox[name='interest']").eq(i).is(":checked") == true) {
+		            interestCheck = true;
+		           	break;
+		            }
+		        }
+		 		if(!interestCheck){
+		            alert("하나이상 관심분야를 체크해 주세요");
+		            return false;
+		        }
+		 	return true;
+		}		
+	// ----------------------------여기까지 패널 등록 빈칸 검사 끝
+	
+		$(document).ready(function(){
+			$(".title2").hide();  // <- 회원가입 두번째 창 숨기기		 	
+		$("#nextRegister").click(function(){
+		//	alert("test");
+			$(".title1").hide();  // <- 클릭 시 회원가입 첫번째 창 숨기기
+			$(".title2").show();  // <- 클릭 시 회원가입 두번째 창 보여주기
+			});
+		});
+	
 		// 여기서부터 ->
 		$(document).ready(function(){
 	    $("#email3").change(function(){
 	    	$("#email3 option:selected").each(function(){
 	    	// 직접 입력
-	      	if($(this).val()=="self"){
+	    	if($(this).val()=="self"){
 	       		$("#email2").val("");
 	       		$("#email2").attr("disabled", false);
 	       	} else if($(this).val()=="select") {
@@ -476,10 +699,9 @@ width : 23.5%;
 	       	}
 	            	});
 	            });
-	       	});   // <- 여기까지 이메일 선택
+	       	});    // <- 여기까지 이메일 선택
 	
 	// 여기서부터 -> 
-	       	
 	function searchAddress() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -530,14 +752,13 @@ width : 23.5%;
         }).open();   // <- 여기까지 주소넣기 
     }  
 	
-	// 여기서부터 register2 함수들
-	function complete(){   // <- RegisterServlet 으로 
-		alert("회원가입 성공 화면으로 만들고, 홈 버튼 눌러서 로그인 메인화면으로 가게 하기");
-	}
+
 	
+	// 여기서부터 register2 함수들
 	function beforeBtn(){
 		location = 'register1.jsp';
 	}
 	</script>
+	
 </body>
 </html>
