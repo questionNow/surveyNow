@@ -2,8 +2,6 @@ package survey.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,22 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
-import oracle.net.aso.e;
-import survey.model.vo.*;
+import survey.model.service.SurveyService;
+import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class AddQuestionServlet
+ * Servlet implementation class DeletedSurveyList
  */
-@WebServlet("/addQuestion.sv")
-public class AddQuestionServlet extends HttpServlet {
+@WebServlet("/surveyDeletedList.sv")
+public class DeletedSurveyListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddQuestionServlet() {
+    public DeletedSurveyListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,24 +31,12 @@ public class AddQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String userId = request.getParameter("userId");
+
+		ArrayList<Survey> sList = new SurveyService().selectDeletedSurvey(userId);
 		
-		// 설문의 질문 수 받아오기
-		int qNum = Integer.valueOf(request.getParameter("qNum"));
-		qNum++;	// 질문 갯수 ++
-		
-		// 설문 - 질문에 보기 수 받아오기
-		int aNum = Integer.valueOf(request.getParameter("aNum"));
-		aNum++;	// 보기 갯수 ++
-		
-		HashMap m = new HashMap();
-		m.put("survey", qNum);
-		m.put("question", aNum);
-		
-		response.setContentType("application/json");
-		new Gson().toJson(m,response.getWriter());
-		
-		
-	
+		request.setAttribute("sList", sList);
+		request.getRequestDispatcher("views/survey/deletedSurvey.jsp").forward(request, response);
 	}
 
 	/**

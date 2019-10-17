@@ -25,8 +25,10 @@ public class Survey implements Serializable{
 	public Survey() {
 
 	}
+	
+	
 	public Survey(int sNum, String sType, String sTitle, Date sEndDate, Date sStartDate, int sCount, int sPoint,
-			int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId) {
+			int aCount, String sStatus, String sTarget, Date sCreateDate) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
@@ -39,8 +41,9 @@ public class Survey implements Serializable{
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
 		this.sCreateDate = sCreateDate;
-		this.sUserId = sUserId;
 	}
+
+
 	public int getsNum() {
 		return sNum;
 	}

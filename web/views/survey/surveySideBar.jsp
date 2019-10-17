@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% 
+	String userId = "promote7";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,10 +70,10 @@ body {
 
 			<ul id="myMenu">
 				<li><a href="makeSurvey.jsp">설문 만들기</a></li>
-				<li><a href="survey.jsp">작성된 설문</a></li>
+				<li><a href="<%= request.getContextPath()%>/surveyHoldList.sv?userId=<%=userId%>">작성된 설문</a></li>
 				<li><a href="ingSurvey.jsp">진행중인 설문</a></li>
 				<li><a href="finishedSurvey.jsp">완료된 설문</a></li>
-				<li><a href="deletedSurvey.jsp">삭제한 설문</a></li>
+				<li><a href="<%= request.getContextPath()%>/surveyDeletedList.sv?userId=<%=userId%>">삭제한 설문</a></li>
 				<li><a href="purchaseSurvey.jsp">설문 결제하기</a></li>
 				<li></li>
 				<li></li>
