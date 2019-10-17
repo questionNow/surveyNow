@@ -42,6 +42,12 @@ public class UserInfo implements Serializable{
 
 	
 	
+	public UserInfo(String userId, String userPwd) {
+		super();
+		this.userId = userId;
+		this.userPwd = userPwd;
+	}
+
 	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, String finalEducation, String job, String income, String livingType,
 			String houseType, String religion, String maritalStatus, String livingWith, String armyGo, String interest) {
@@ -67,7 +73,7 @@ public class UserInfo implements Serializable{
 		this.interest = interest;
 	}
 	
-	UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
+	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, int surveyCount, int visitCount, int userType, String status,
 			String finalEducation, String job, String income, String livingType, String houseType, String religion,
 			String maritalStatus, String livingWith, String armyGo, String interest, Date pwdDate) {
@@ -98,6 +104,10 @@ public class UserInfo implements Serializable{
 		this.pwdDate = pwdDate;
 		
 	}
+
+
+
+
 	public String getUserId() {
 		return userId;
 	}

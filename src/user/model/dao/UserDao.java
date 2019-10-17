@@ -58,15 +58,30 @@ public class UserDao {
 
 			// resultSet의 결과가 있으면 ...
 			if (rs.next()) {
-				loginUser = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
-						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
-						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
-						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
-						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
-						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
-						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
-
+				loginUser = new UserInfo(rs.getString("USERID"),
+										rs.getString("USERPWD"),
+										rs.getString("USERNAME"),
+										rs.getInt("AGE"),
+										rs.getString("GENDER"),
+										rs.getString("EMAIL"),
+										rs.getString("PHONE"),
+										rs.getString("ADDRESS"),
+										rs.getString("RECOMMEND_ID"),
+										rs.getInt("SURVEYCOUNT"),
+										rs.getInt("VISITCOUNT"),
+										rs.getInt("USERTYPE"),
+										rs.getString("STATUS"),
+										rs.getString("FINAL_EDUCATION"),
+										rs.getString("JOB"),
+										rs.getString("INCOME"),
+										rs.getString("LIVING_TYPE"),
+										rs.getString("HOUSE_TYPE"),
+										rs.getString("RELIGION"),
+										rs.getString("MARITAL_STATUS"),
+										rs.getString("LIVING_WITH"),
+										rs.getString("ARMY_GO"),
+										rs.getString("INTEREST"),
+										rs.getDate("PWDDATE"));
 			}
 
 		} catch (SQLException e) {
@@ -118,11 +133,10 @@ public class UserDao {
 	public int registerUser(Connection conn, UserInfo userInfo) {
 		PreparedStatement pst = null;
 		int result = 0;
-		System.out.println(userInfo);
 		try {
-			pst = conn.prepareStatement("INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
-			
-			
+			pst = conn.prepareStatement(
+					"INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
 			pst.setString(3, userInfo.getUserName());
@@ -142,9 +156,9 @@ public class UserDao {
 			pst.setString(17, userInfo.getLivingWith());
 			pst.setString(18, userInfo.getArmyGo());
 			pst.setString(19, userInfo.getInterest());
-			
+
 			result = pst.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -156,19 +170,19 @@ public class UserDao {
 	public int idCheck(Connection conn, String userId) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		int result = 0;
-		
+
 		try {
 			pst = conn.prepareStatement("SELECT COUNT(*) FROM USER_INFO WHERE USERID=?");
 			pst.setString(1, userId);
 			rs = pst.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				result = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			close(rs);
