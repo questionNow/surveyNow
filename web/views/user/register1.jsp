@@ -501,6 +501,8 @@ width : 23.5%;
                $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
                $("#id").val("");
                $("#id").focus();
+            } else {
+               $("#resultId").html("중복확인을 눌러주세요").css("color","navy");
             }
          });
       });

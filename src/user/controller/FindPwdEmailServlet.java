@@ -13,16 +13,16 @@ import user.model.service.UserService;
 import user.model.vo.UserInfo;
 
 /**
- * Servlet implementation class FindIdServlet
+ * Servlet implementation class FindPwdEmailServlet
  */
-@WebServlet("/findIdPhone.find")
-public class FindIdPhoneServlet extends HttpServlet {
+@WebServlet("/findPwdEmail.find")
+public class FindPwdEmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindIdPhoneServlet() {
+    public FindPwdEmailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,33 +33,30 @@ public class FindIdPhoneServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
+		String userId = request.getParameter("userId");
 		String userName = request.getParameter("userName");
-		String phone = request.getParameter("phone");
+		String email = request.getParameter("email1") + request.getParameter("email2");
 		
-		System.out.println("servlet 첫번째 emailtest : " + phone);
-		
-		UserInfo findData = new UserInfo();  
+		UserInfo findData = new UserInfo();
+		findData.setUserId(userId);
 		findData.setUserName(userName);
-		findData.setPhone(phone);
-		UserInfo findId = new UserService().findIdPhone(findData);
-		System.out.println("servlet 첫번째 id test : " + findId.getUserId());
+		findData.setEmail(email);
+		
+		UserInfo findPwd = new UserService().findPwdEmail(findData);
 		
 		response.setContentType("text/html;charset=utf-8");
 		RequestDispatcher view = null;
 		
-		if(findId.getUserId() != null) {
-			System.out.println("아이디는 : " + findId.getUserId() + "입니다.");
-			view = request.getRequestDispatcher("views/user/successId.jsp");
-			request.setAttribute("UserInfo", findId);
+		if(findPwd.getUserPwd() != null) {
+			System.out.println(findPwd.getUserPwd());
+			view = request.getRequestDispatcher("views/user/successPwd.jsp");
+			request.setAttribute("UserInfo", findPwd);
 		} else {
 			System.out.println("없는 회원 정보");
 			view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			request.setAttribute("msg", "입력하신 정보에 맞는 아이디가 없습니다.");
-		}	      
-	    view.forward(request, response);     
-		
-		
-		
+			request.setAttribute("msg", "입력하신 정보에 맞는 비밀번호를 찾을 수 없습니다.");
+		}
+		view.forward(request, response);
 	}
 
 	/**

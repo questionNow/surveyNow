@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+    
+<%-- import = "user.model.vo.UserInfo" --%>
+
+<%-- <%
+	UserInfo userInfo = (UserInfo)request.getAttribute("UserInfo");
+
+	String userId = userInfo.getUserId();
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,20 +51,27 @@ body{
 	text-align : center; 
 }
 
-#findPwd{
+#successPwd{
 	text-align : center;
 	color : #FF8C19;
 }
-
-#successPwd{
-	text-align : center;
+#changePwd{
+	padding : 1.5% 35%; 
 }
-
+input[type = password]{
+   width : 460px;
+   display : inline-block;
+   border : 1px solid #ccc;
+   border-radius : 10px;
+   box-sizing : border-box;
+   padding : 12px 20px;
+}
 #successBtn{
+	width : 225px;
 	cursor : pointer;
 	background : rightgray;
 	border-radius : 20px;
-	font-size : 15px;
+	font-size : 16px;
 	padding : 15px 20px;
 }
 #successBtn:hover{
@@ -71,38 +86,35 @@ body{
 	<img src="<%=request.getContextPath() %>/image/semiLogo.png" class=nowlogo></div>
 	<div id="logo2">
 	<font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
-</div> <br clear="both">
-	<br>
-	<br>
-	<div id = findPwd>
-		<h2> 비밀번호 찾기 </h2>
-	</div>
+</div> <br clear="both"><br>
+	
 	<div id = successPwd>
-		<h4> 비밀번호 재설정 하기  </h4>
+		<h2> 비밀번호 재설정하기 </h2>
 	</div>
+	
+	<form>
 	<div id = changePwd>
-	<form align = center>
-		<table align = center>
-			<tr>
-				<td id = title align = center> 비밀번호 </td>
-				<td><input type = password name = password1 maxlength=20 onchange = "pwSame();"></td>
-				<td> 여기에는 뭘 넣을까 </td>
-			</tr> <tr></tr><tr></tr><tr></tr>
-			<tr>
-				<td id = title align = center> 비밀번호 일치 </td>
-				<td> <input type = password name = password2 maxlength = 20 onchange = "pwSame();"> </td>
-				<td> 일치 불일치 </td>
-			</tr>
-		</table> <br>
+		<div class = pwd>
+			<label for = changePwd> 비밀번호 </label> <br>
+			<input type = password name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 required>
+			<br><br>
+			<label> 비밀번호 확인 </label> <br>
+			<input type = password name = userPwd1 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20>
+		</div> <br><br>
+		
 		<button onclick = "changeBtn();" id = successBtn> 변경하기 </button>
-		<button onclick = "login();" id = successBtn> 로그인 </button>
-	</form>
+		<input type = button value = "로그인" onclick = "login();" id = successBtn>
 	</div>
+	</form>
 	
 	<script type="text/javascript">
 		function changeBtn(){
 			alert("새로운 비밀번호로 로그인하세요");
 		}
+		function login(){
+			location = "../common/loginPage.jsp";
+		}
+		
 	</script>
 </body>
 </html>

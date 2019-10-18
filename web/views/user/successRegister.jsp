@@ -21,9 +21,7 @@ body{
 #success{
    color : black;
 }
-body{
-   position : fixed;
-}
+
 </style>
 </head>
 <body>

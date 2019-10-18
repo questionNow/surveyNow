@@ -85,4 +85,20 @@ public class UserService {
 		close(conn);
 		return findId;
 	}
+	// SeoJaeWoong 비밀번호 찾기(이메일)
+	public UserInfo findPwdEmail(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findPwd = new UserDao().findPwdEmail(conn, findData);
+		System.out.println("서비스쪽 : " + findPwd);
+		close(conn);
+		return findPwd;
+	}
+	// SeoJaeWonng 비밀번호 찾기(핸드폰)
+	public UserInfo findPwdPhone(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findPwd = new UserDao().findPwdPhone(conn, findData);
+		System.out.println("서비스쪽 : " + findPwd);
+		close(conn);
+		return findPwd;
+	}
 }

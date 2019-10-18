@@ -199,7 +199,7 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		
-		UserInfo findId = new UserInfo(); // <- 기본생성자로생성  findId 에 아무값도 안들어감
+		UserInfo findId = new UserInfo(); // <- 기본생성자로생성 findId 에 null 값 들어간 상태
 		
 		try {
 			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERNAME =? AND PHONE =?");
@@ -248,5 +248,60 @@ public class UserDao {
 		}
 		System.out.println("다오쪽 : " + findId);
 		return findId;
+	}
+	// SeoJaeWoong 비밀번호 찾기(이메일)
+	public UserInfo findPwdEmail(Connection conn, UserInfo findData) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		UserInfo findPwd = new UserInfo();
+		try {
+			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERNAME=? AND EMAIL=?");
+			
+			pst.setString(1, findData.getUserId());
+			pst.setString(2, findData.getUserName());
+			pst.setString(3, findData.getEmail());
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				findPwd.setUserPwd(rs.getString("userPwd"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		System.out.println("다오쪽 : " + findPwd);
+		return findPwd;
+	}
+	// SeoJaeWoong 비밀번호 찾기(핸드폰)
+	public UserInfo findPwdPhone(Connection conn, UserInfo findData) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		UserInfo findPwd = new UserInfo();
+		
+		try {
+			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERNAME=? AND PHONE=?");
+			
+			pst.setString(1, findData.getUserId());
+			pst.setString(2, findData.getUserName());
+			pst.setString(3, findData.getPhone());
+			
+			rs = pst.executeQuery();
+					
+			if(rs.next()) {
+				findPwd.setUserPwd(rs.getString("userPwd"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		System.out.println("다오쪽 : " + findPwd);
+		return findPwd;
 	}
 }
