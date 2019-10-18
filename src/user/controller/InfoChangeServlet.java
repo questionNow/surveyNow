@@ -13,16 +13,16 @@ import user.model.service.UserService;
 import user.model.vo.UserInfo;
 
 /**
- * Servlet implementation class MyPageServlet
- */ 
-@WebServlet("/mypage.me")
-public class MyPageServlet extends HttpServlet {
+ * Servlet implementation class MyPageUpdateServlet
+ */
+@WebServlet("/mypageupdate.mu")
+public class InfoChangeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-        
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyPageServlet() {
+    public InfoChangeServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,22 +31,17 @@ public class MyPageServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     
-    // 마이페이지 !
+    // 마이페이지 개인정보 수정
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-
-		//쿼리 스트림 값을 가져올 때는 인코딩 필요 없음
 		String userId = request.getParameter("userId");
 		
-		UserInfo user = new UserService().selectMember(userId);
+		UserInfo user = new UserService().InfoChange(userId);
 		
 		RequestDispatcher view = null;
-		
 				
 		
-		// 마이페이지로 이동
 		if(user != null) {
-			view = request.getRequestDispatcher("views/mypage/MyPageMain.jsp");
+			view = request.getRequestDispatcher("views/mypage/UserUpdateView.jsp");
 			
 			request.setAttribute("user", user);
 		}else {
@@ -57,6 +52,7 @@ public class MyPageServlet extends HttpServlet {
 		view.forward(request, response);
 		
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

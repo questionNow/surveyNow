@@ -66,4 +66,14 @@ public class UserService {
 		return result;
 	}
 
+	// 마이페이지 정보수정 
+	public UserInfo InfoChange(String userId) {
+		Connection conn = getConnection();
+		UserInfo user = new UserDao().InfoChange(conn, userId);
+		
+		close(conn);
+		
+		return user;
+	}
+
 }
