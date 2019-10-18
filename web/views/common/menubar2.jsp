@@ -258,6 +258,7 @@
         /* 타이틀 */
         .title {position: relative; text-align: center; }
         .title h2 {font-family: 'Nanum Brush Script', cursive; font-size: 39px; color: #0093bd; padding: 5px 0;}
+        
         .title .btn {
             position: absolute; right: 0; top: 5px;
             width: 60px; 
@@ -269,7 +270,29 @@
             border-radius: 50%;
             transition: all 0.3s ease;
         }
-         .title .btn:hover {
+        
+        .btn2 {
+            position: absolute; 
+            /* right: 0; */ 
+            left:0;
+            top: 5px;
+            width: 60px; 
+            height: 60px; 
+            line-height: 60px; 
+            background: #3192bf; 
+            color: #fff;
+            font-size: 35px; 
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            /* display: none; */
+        }
+        .title .btn2 :hover {
+            box-shadow: 
+                0 0 0 3px rgba(75,154,191,0.9) inset,
+                0 0 0 600px rgba(0,0,0,0.1) inset;
+        }
+                       
+         .title .btn :hover {
             box-shadow: 
                 0 0 0 3px rgba(75,154,191,0.9) inset,
                 0 0 0 600px rgba(0,0,0,0.1) inset;
@@ -649,6 +672,13 @@
         }
         
         
+
+
+
+
+
+
+
 	/* 메뉴 상단 고정  */
 		.jbFixed { 
 			width:100%;
@@ -662,10 +692,21 @@
            	background: rgba(36,130,174,0.9);
             box-shadow: none;
 		}
-		
+		 .lowMenu{	
+			font-size: 13px; 
+			text-transform: uppercase; 
+			color: #878787; 
+			right: -20px;
+			padding: 5px; 
+			display: block;  
+			transition: box-shadow 0.34s ease, background 0.34s ease;
+			width:190px;
+		}		
 		 .lowMenu:hover{	
-			color:white;
-			font-wight:bold; 
+			box-shadow: inset 180px 0 0 0 rgba(233, 161, 13, 0.8);
+			color: #fff; 
+			/* background: rgba(36,130,174,0.9); */
+			background: rgba(233, 161, 13, 0.9);
 			cursor:pointer;
 		}
 		
@@ -674,7 +715,7 @@
 		}
 		
 		.menuTest{
-/* 				background:black;
+/* 			background:black;
 			color:white;
 			text-align:center; */
 			vertical-align:middle;
@@ -691,18 +732,13 @@
 		 .contentsTest{
 			/* border:1px solid lightgray; */
 			width:300px; 
-			height:200px;  	
+			height:100%;  	
 			/* display:none; */ 
 			/* display:blick; */
 			display:none;
 			color:orangered;
 		}
 
-
-/* 		body{
-		width:100%;
-		z-index:999;
-		} */
 
 /*          main { min-height:100vh; } */
         
@@ -723,7 +759,8 @@
 
 					  	<%if(loginUser != null) {%>
 					  			<div class="userHeader">
-									<label><%=loginUser.getUserName() %> 하이? </label>   
+									<label><%=loginUser.getUserName() %> 하이? </label>  
+<!-- 작업중 -->
 					   				<a id="myPage" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
 									<a id="logoutBtn" onclick="logout()">로그아웃</a>                    
 								</div>     
@@ -826,8 +863,10 @@
     <!-- //nav -->
     
 	<article id="title" class="jbMenu">
+			<a href="#" class="btn"></a>
 		<div class="container">
 			<div class="title">
+				<a href="#" class="btn2"  onclick="location.href='/surveyNow/login.me?userId=<%=loginUser.getUserId()%>'"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
 				<h2>"설문 NOW"</h2>
 				<a href="#" class="btn"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
 			</div>
@@ -936,63 +975,65 @@
 					</div>	 --%>			
 
  
-	 			<div class="menu">
-					<li class="menuTest"><a href="#" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
-						<ul class="contentsTest">
-							<li id="asd" class="lowMenu">
+	 			<div class="menu"> 
+					<li class="menuTest" value="3"><a href="#">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
+						<ul class="contentsTest" >
+							<li id="asd" class="lowMenu" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">
 								개인정보 수정
 							</li>
 							<li id="asd1" class="lowMenu">
 								설문 관리
 							</li>
 						</ul>
-						<li class="menuTest"><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							<ul class="contentsTest">
-								<li id="asd" class="lowMenu">
-									설문 만들기
-								</li>
-								<li id="asd1" class="lowMenu">
-									작성된 설문
-								</li>
-							</ul>
-						<li class="menuTest"><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							<ul class="contentsTest">
-								<li id="asd" class="lowMenu">
-									회원 조회
-								</li>
-								<li id="asd1" class="lowMenu">
-									패널 랭킹
-								</li>
-							</ul>
-						<li class="menuTest"><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							<ul class="contentsTest">
-								<li id="asd" class="lowMenu">
-									상품 등록
-								</li>
-								<li id="asd1" class="lowMenu">
-									상품관리
-								</li>
-							</ul>
+						
+					<li class="menuTest" value="0"><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest" >
+							<li id="asd" class="lowMenu">
+								설문 만들기
+							</li>
+							<li id="asd1" class="lowMenu">
+								작성된 설문
+							</li>
+						</ul>
+						
+					<li class="menuTest" value="0"><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest" >
+							<li id="asd" class="lowMenu">
+								회원 조회
+							</li>
+							<li id="asd1" class="lowMenu">
+								패널 랭킹
+							</li>
+						</ul>
+					<li class="menuTest"><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest">
+							<li id="asd" class="lowMenu">
+								상품 등록
+							</li>
+							<li id="asd1" class="lowMenu">
+								상품관리
+							</li>
+						</ul>
 							
-						<li class="menuTest"><a href="#">CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							<ul class="contentsTest">
-								<li id="asd" class="lowMenu">
-									상품 등록
-								</li>
-								<li id="asd1" class="lowMenu">
-									상품관리
-								</li>
-							</ul>
+					<li class="menuTest" value="0"><a href="#">CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest">
+							<li id="asd" class="lowMenu">
+								상품 등록
+							</li>
+							<li id="asd1" class="lowMenu">
+								상품관리
+							</li>
+						</ul>
 							
-						<li class="menuTest"><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							<ul class="contentsTest">
-								<li id="asd" class="lowMenu">
-									상품 등록
-								</li>
-								<li id="asd1" class="lowMenu">
-									상품관리
-								</li>
-							</ul>	
+					<li class="menuTest" value="0"><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest">
+							<li id="asd" class="lowMenu">
+								상품 등록
+							</li>
+							<li id="asd1" class="lowMenu">
+								상품관리
+							</li>
+						</ul>	
 					</div>
 							
 
@@ -1219,61 +1260,48 @@
     <!-- //footer -->
     
     <!-- JavaScript Libraries -->
-    <script src="js/jquery.min_1.12.4.js"></script>
+<!--     <script src="js/jquery.min_1.12.4.js"></script>
     <script src="js/modernizr-custom.js"></script>
     <script src="js/slick.min.js"></script>
-    <script src="js/lightgallery.min.js"></script>
+    <script src="js/lightgallery.min.js"></script> -->
     
-   	<script>
-   	
-   	$('.menuTest').mouseenter(function(){
-		$(this).next().slideDown(function(){
-			$(this).addClass("contents");
-		});
-   	});
-   		
-   	$('.menuTest').mouseleave(function(){
-		$(this).next(".contents").slideUp(function(){			
-			$(this).removeClass('contents');
-		}); 
-   	});  	
-   	
-   	
-<%--    	$(function(){
+    
+<!--SDB_20191018_사이드 메뉴 .. IF문이 너무 많다 더럽다. 가독성최악이네...  -->
+   	<script> 
+	$(function(){
 		 $('.menuTest').click(function(){ 
 
-			
-//			$(this).next().slideDown();
-			/* $(this).next("p").slideToggle(1000,function(){
-				console.log('토글완료!');
-			}); */
-			/* $(this).next("p").slideToggle(1000,'easeInOutBounce'); */
-			
-		 		<%if(  != null) {%>
-				<div id="myPage2" class="mySideMenu" onclick="location.href='/jspProject/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</div>
-			<%}else{ %>
-				<div id="myPage2" class="mySideMenu" >정보수정</div>
-			<%} %>
-			
-/* 				$(this).next(".contents").slideDown(function(){			
-				$(this).next().siblings(".contents").slideUp();	
-			}); */
-		
-//			$(this).next().siblings(".contentsTest").slideUp();	// 하나씩만 열림 - */ 
 
-			//1. 클래스 추가 및 제거
- 				$(this).next().slideDown(function(){
-				$(this).addClass("contents");
-			});
-			
-			$(this).next(".contents").slideUp(function(){			
-				$(this).removeClass('contents');
-			}); 
-
-			
+			if($(this).next(".contents").css("display")=="block"){
+				$(this).next().siblings(".contentsTest").slideUp();
+//alert("1");
+				if($(this).next(".contents").css("display")=="block"){
+					$(this).addClass("contents");
+//alert("2");
+					if($(this).next(".contents").css("display")=="block"){
+						$(this).next(".contents").slideUp();
+						$(this).removeClass('contents');
+//alert("3");
+					}
+				}
+				
+			} else {
+				$(this).next().slideDown(function(){
+					$(this).addClass("contents");
+//alert("0");
+				});
+//alert("4");
+				if($(this).next(".contents").css("display")=="block"){
+					$(this).addClass("contents");
+					$(this).next().siblings(".contentsTest").slideUp();
+//alert("5");
+				}else{
+//alert("6");					
+					$(this).next().siblings(".contentsTest").slideUp();
+				}
+			}
 		});
-	}); --%>
-   	
+	}); 
 	</script>
     
     
@@ -1332,6 +1360,12 @@
             }
         });
         
+        
+<%--         $(".btn2").click(function(e){
+            e.preventDefault();
+            location.href="<%=request.getContextPath()%>/views/common/mainLoing.jsp";
+        }); --%>
+        
 /*         $(window).resize(function(){
             var wWidth = $(window).width();
             if(wWidth > 600){
@@ -1339,7 +1373,7 @@
             }
         }); */
         
-        //라이트 박스
+/*         //라이트 박스
         $(".lightbox").lightGallery({
             thumbnail: true,
             autoplay: true,
@@ -1361,7 +1395,7 @@
 			      	}
 			    }
 			]
-		});
+		}); */
          
         //sns 공유하기
         $(".facebook").click(function(e){
