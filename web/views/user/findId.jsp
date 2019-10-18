@@ -71,8 +71,15 @@ input[type=button] {
    padding: 9px 20px;
    width: 30.5%;
 }
+#findIdBtn{
+   cursor: pointer;
+   padding: 9px 20px;
+   width: 30.5%;
+}
+
 #beforeBtn3{
-   width : 61.5%;
+   margin-left: 390px;
+   width : 45.7%;
 }
 #name {
    margin-left: 50px;
@@ -106,7 +113,7 @@ input[type=button] {
    width: 34.9%;
 }
 
-#see1, #see2 {
+#findIdEmail, #findIdPhone {
    display: none;
 }
 </style>
@@ -123,45 +130,44 @@ input[type=button] {
       </div>
    </div>
    <br clear="both">
-
-   <form>
       <br>
-      <div class=findId1>아이디 / 비밀번호 찾기</div>
-      <br>
-      <div class=findId2>
-         아이디 찾기 <br> 아이디를 모르시나요 ? <br> 아이디 찾기 방법 중 편한 방법을 선택해주세요:)
+      <div class=findId1>아이디 / 비밀번호 찾기</div> <br>
+      <div class=findId2>  아이디 찾기 
+      				<br> 아이디를 모르시나요 ? 
+      				<br> 아이디 찾기 방법 중 편한 방법을 선택해주세요:)
       </div>
-      <br>
-      <br>
+      <br> <br>
+      <%-- <form id = "findIdForm" action = "<%=request.getContextPath() %>/findId.find" method = post> --%>
       <div class=title>
          <div class=join>
             <input type=radio id=findMailId name=find value=findMailId>
-            <label for=findMailId> 내 정보에 등록된 이메일로 아이디 찾기 </label> <br>
-            <br>
-            <div id=see1>
+            <label for=findMailId> 내 정보에 등록된 이메일로 아이디 찾기 </label> <br> <br>
+            <form id = findIdEmail action = "<%=request.getContextPath() %>/findIdEmail.find" method = post>
                <label> 이름 </label> 
                <input type=text id=name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
                <br>
                <br> <label> 이메일 </label> 
                <input type=text id=email1 name=email1 maxlength=20 placeholder= "이메일을 입력하세요" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');">
-               <input type=text id=email2 name=email3 maxlength=15   placeholder="이메일을 선택하세요" disabled> 
+               <input type=text id=email2 name=email3 maxlength=15 placeholder="이메일을 선택하세요" disabled> 
                <select id=email3 name=email2>
-                  <option>이메일을 선택하세요</option>
+                  <option value = "">이메일을 선택하세요</option>
                   <option value="@naver.com">@naver.com</option>
                   <option value="@daum.net">@daum.net</option>
                   <option value="@gmail.com">@gmail.com</option>
                   <option value="@nate.com">@nate.com</option>
                </select> <br>
                <br>
-               <input type=button value = 로그인화면으로 onclick="beforeFind1();"> 
-               <input type=button value = 다음단계 onclick="emailFind1();">
-            </div>
+               <input type = button value = "로그인 하러가기!" onclick="beforeFind1();">
+               <input type = button id = findIdBtn value = "다음단계" onclick = "emailFind();">
+               <!-- <input type=button value = 다음단계 onclick="emailFind();"> -->
+            </form>
          </div> <br>
+         
          <div class=join>
             <input type=radio id=findPhone name=find value=findPhone> 
             <label for=findPhone> 내 정보에 등록된 핸드폰번호로 아이디 찾기 </label> <br>
             <br>
-            <div id=see2>
+            <form id= findIdPhone action = "<%=request.getContextPath() %>/findIdPhone.find" method = post>
                <label> 이름 </label> 
                <input type=text id=name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
                <br>
@@ -172,15 +178,17 @@ input[type=button] {
                   <option value=SKT>SKT</option>
                   <option value=LG>LG</option>
                </select> 
-               <input type=text id=phone2 name=phone2 maxlength=11   placeholder="(-) 빼고 입력해주세요"> <br>
+               <input type=text id=phone2 name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요"> <br>
                <br>
-               <input type=button value = 로그인화면으로 onclick="beforeFind2();"> 
-               <input type=button value = 다음단계 onclick="phoneFind2();">
+               <input type=button value = "로그인 하러가기!" onclick="beforeFind2();"> 
+               <button id = findIdBtn value = "다음단계" onclick = "phoneFind();"> 다음단계 </button>
+               <!-- <input type=button value = 다음단계 onclick="phoneFind();"> -->
+   	     </form>
             </div>
          </div><br><br>
-         <input type = button id = beforeBtn3 value = 로그인화면으로 onclick = "beforeFind3();">
-      </div>
-   </form>
+         <input type = button id = beforeBtn3 value = "로그인 하러가기!" onclick = "beforeFind3();">
+    <!--   </form> -->
+  
 
    <script type="text/javascript">
       // 여기서부터 ->
@@ -191,22 +199,25 @@ input[type=button] {
                      "input[type = radio][name = find]:checked").val();
 
                if (checkValue == "findMailId") {
-                  $("#see1").css("display", "block");
-                  $("#see2").css("display", "none");
+                  $("#findIdEmail").css("display", "block");
+                  $("#findIdPhone").css("display", "none");
+                  $("#beforeBtn3").css("display","none");
                }
                if (checkValue == "findPhone") {
-                  $("#see1").css("display", "none");
-                  $("#see2").css("display", "block");
+                  $("#findIdEmail").css("display", "none");
+                  $("#findIdPhone").css("display", "block");
+                  $("#beforeBtn3").css("display","none");
                }
             }); // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
 
-             // 입력한 값이 똑같을 경우에 나오게 해야한다. 
-      function emailFind1() {
-            
+           
+      function emailFind() {  
+          $("#findIdEmail").submit();  // <- /findIdEmail.find Servlet
       }  
-      function phoneFind2() {
-         alert("회원 정보를 다시 입력해주세요"); // <- 나중에 if 문으로 기능 추가  성공 or 실패 
-      }
+      function phoneFind() {
+    	  $("#findIdPhone").submit();  // <- /findIdPhone.find Servlet 
+      } 
+      
       function beforeFind1() {
          location = '../common/loginPage.jsp'; // <- 이전 단계 
       }

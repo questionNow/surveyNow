@@ -170,11 +170,13 @@ width : 23.5%;
    padding : 9px 20px;
    width : 27%;
 }
+ 
 </style>
 <script language = "javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 </script>
 </head>
 <body>
+<%-- <%@ include file = "../common/footer.jsp" %> --%>
 <div id="register">
    <div id="logo1">
    <img src="<%=request.getContextPath() %>/image/semiLogo.png" class=nowlogo></div>
@@ -182,11 +184,11 @@ width : 23.5%;
    <font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
 </div> <br clear="both">
    
-   <form onsubmit = "return checkCondition();" id = registerForm name = registerForm action = "<%=request.getContextPath()%>/register.user" method = post> <br>
+   <form  onsubmit = "return checkCondition();" id = registerForm name = registerForm action = "<%=request.getContextPath()%>/register.user" method = post> <br>
    <!-- <form onsubmit = "return checkCondition1();" id = registerForm1 name = registerForm1 action = "#registerForm2" method = post> <br> --> 
-   <div class = title1>
+   <div class = title1 >
       <div class = register>
-         회원가입
+         	회원가입
       </div> <br>
       <div class = join>
          <label for = id> 아이디 </label> <br>
@@ -263,7 +265,7 @@ width : 23.5%;
          <div id = secondClick> <input type = button id = nextRegister value = "가입 2단계 진행"></div> <br>
          <input type = reset value = "다시쓰기" id = clear1>
          <input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
-      </div> </div>
+      </div> </div> 
    <%-- <form onsubmit = "return checkCondition2();" id = registerForm2 name = registerForm2 action = "<%=request.getContextPath()%>/register.user" method = post> <br> --%>
    <div class = title2>
       <div class = register>

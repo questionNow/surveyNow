@@ -130,6 +130,7 @@ public class UserDao {
 		return user;
 	}
 
+	// SeoJaeWoong 회원가입
 	public int registerUser(Connection conn, UserInfo userInfo) {
 		PreparedStatement pst = null;
 		int result = 0;
@@ -167,6 +168,7 @@ public class UserDao {
 		return result;
 	}
 
+	// SeoJaeWoong 아이디 중복 체크
 	public int idCheck(Connection conn, String userId) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -191,5 +193,60 @@ public class UserDao {
 		System.out.println("dao 검사" + result);
 		return result;
 	}
+	
+	// SeoJaeWoong 아이디 찾기(핸드폰)
+	public UserInfo findIdPhone(Connection conn, UserInfo findData) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		UserInfo findId = new UserInfo(); // <- 기본생성자로생성  findId 에 아무값도 안들어감
+		
+		try {
+			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERNAME =? AND PHONE =?");
 
+			pst.setString(1, findData.getUserName());
+			pst.setString(2, findData.getPhone());
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				findId.setUserId(rs.getString("userId"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pst);
+			close(rs);
+		}
+		System.out.println("다오쪽" + findId);
+		return findId;
+	}
+
+	// SeoJaeWoong 아이디 찾기(이메일)
+	public UserInfo findIdEmail(Connection conn, UserInfo findData) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		UserInfo findId = new UserInfo(); // <- 기본생성자로생성 findId 에 null 값 들어간 상태
+		
+		try {
+			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERNAME=? AND EMAIL=?");
+			
+			pst.setString(1, findData.getUserName());
+			pst.setString(2, findData.getEmail());
+			
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				findId.setUserId(rs.getString("userId"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		System.out.println("다오쪽 : " + findId);
+		return findId;
+	}
 }
