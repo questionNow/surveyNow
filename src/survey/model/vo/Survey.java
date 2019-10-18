@@ -9,7 +9,7 @@ public class Survey implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -5412214412295286625L;
-
+//
 	private int sNum;
 	private String sType;
 	private String sTitle;
