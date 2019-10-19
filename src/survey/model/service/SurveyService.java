@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import survey.model.dao.SurveyDao;
+import survey.model.vo.Answer;
+import survey.model.vo.DoSurvey;
+import survey.model.vo.Question;
 import survey.model.vo.Survey;
 
 public class SurveyService {
@@ -82,6 +85,27 @@ public class SurveyService {
 		commit(conn);
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<Survey> selectSurveys(String userId) {
+		Connection conn = getConnection();
+		ArrayList<Survey> sList = new SurveyDao().selectSurveys(conn,userId);
+		
+		close(conn);
+		
+		return sList;
+	}
+
+	public ArrayList<DoSurvey> doServey(int sNum) {
+		Connection conn  = getConnection();
+		SurveyDao sDao = new SurveyDao();
+		Survey s = sDao.doServeyS(conn, sNum);
+		ArrayList<Question> qList = sDao.doServeyQ(conn, sNum);	
+		ArrayList<DoSurvey> dsList = sDao.doServeyA(conn, s, qList);
+		
+		close(conn);
+		
+		return dsList;
 	}
 
 

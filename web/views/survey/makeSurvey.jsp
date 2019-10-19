@@ -34,7 +34,7 @@ body {
 <body>
 	<%@ include file="../common/menubar2.jsp" %>
 	
-	<div class="row">
+	<div class="rightPage">
 		<div class="right" style="background-color: #ddd;">
 			<h2>설문 만들기</h2>
 			<div id="surveyType">
@@ -44,13 +44,12 @@ body {
 			</div>
 			<form action="<%=request.getContextPath()%>/surveyMake.sv">
 				<div id="survey">
-
 					<h2>
 						설문 제목<input type="button" id="reset" onclick="resetSurvey();"
 							style="float: right" value="초기화">
 					</h2>
-					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size = "100px">
-					<h3>요청 패널 수 <input name = sCount type=number min="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 포인트 / 패널 <input name = sPoint type=number min="50" step = "50"></h3>
+					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size = "70%">
+					<h3>요청 패널 수  <input name = sCount type=number min="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 포인트 / 패널  <input name = sPoint type=number min="50" step = "50"></h3>
 					<input name="userId" type="hidden" value="<%= loginUser.getUserId() %>">
 					
 					 <div>
@@ -83,14 +82,12 @@ body {
 							id=cultural name=sInterest value=문화생활> <label for=cultural>
 							문화생활 </label> <br> <input type=checkbox id=pet name=sInterest
 							value=애견> <label for=pet> 애완동물 </label>
-						</div><br><br>
+						</div><br>
 						<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
 					</div>
 
 					<br>
-					<br>
-					<br>
-					<button>저장</button>
+					<button>설문 저장하기</button>
 			</form>
 		</div>
 	</div>
@@ -102,7 +99,7 @@ body {
 			qCount++;
 			$("#survey")
 					.append(
-							"<div class = question id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype>객관식 질문<input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목<input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div>")
+							"<div class = question id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목<input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div>")
 
 		}
 		var aCount = 0;

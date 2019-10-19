@@ -7,9 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static common.JDBCTemplate.*;
 
+import survey.model.vo.Answer;
+import survey.model.vo.DoSurvey;
+import survey.model.vo.Question;
 import survey.model.vo.Survey;
 
 public class SurveyDao {
@@ -262,4 +266,109 @@ public class SurveyDao {
 		}
 		return qResult;
 	}
+
+	public ArrayList<Survey> selectSurveys(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> sList = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS = 'H'and NOT SUSERID = ?");
+			pstmt.setString(1, userId);
+			sList = new ArrayList<Survey>();
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId"));
+				sList.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sList;
+	}
+
+	public ArrayList<Question> doServeyQ(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Question> qList = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM QUESTION WHERE SNUM = ?");
+			pstmt.setInt(1, sNum);
+
+			rs = pstmt.executeQuery();
+			qList = new ArrayList();
+			while (rs.next()) {
+				Question q = new Question(rs.getInt("qnum"), rs.getInt("snum"), rs.getString("qtype"),
+						rs.getString("qtitle"));
+				qList.add(q);
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+
+		}
+		return qList;
+	}
+
+	public ArrayList<DoSurvey> doServeyA(Connection conn, Survey s, ArrayList<Question> qList) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<DoSurvey> dsList = new ArrayList();
+		DoSurvey ds = null;
+		ArrayList<Answer> aList= new ArrayList<Answer>();
+		
+		for (int i = 0; i < qList.size(); i++) {
+			try {
+				
+				pstmt = conn.prepareStatement("SELECT * FROM ANSWER WHERE QNUM=?");
+				pstmt.setInt(1, qList.get(i).getqNum());
+				rs = pstmt.executeQuery();
+				Question q = new Question(qList.get(i).getqNum(),s.getsNum(), qList.get(i).getqType(), qList.get(i).getqTitle());
+				
+				while (rs.next()) {
+					Answer a= new Answer(rs.getInt("anum"), qList.get(i).getqNum(), rs.getString("acontent"));
+					aList.add(a);
+				}
+				dsList.add(new DoSurvey(s, q, aList));
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
+			}
+		}
+		return dsList;
+	}
+
+	public Survey doServeyS(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Survey s = new Survey();
+
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SNUM = ?");
+			pstmt.setInt(1, sNum);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				s.setsNum(sNum);
+				s.setsTitle(rs.getString("stitle"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return s;
+	}
+
 }

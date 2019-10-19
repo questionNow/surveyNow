@@ -1475,9 +1475,9 @@ body {
 							<li id="asd1" class="lowMenu">설문 관리</li>
 						</ul>
 
-						<li class="menuTest" value="0"><a href="#">설문 <i
-								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<li class="menuTest" value="0"><a>설문 <i	class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
+							<li id="asd" class="lowMenu" onclick = "doSurvey();">설문 참여하기</li>
 							<li id="asd" class="lowMenu" onclick="makeSurvey();">설문 만들기</li>
 							<li id="asd1" class="lowMenu" onclick="holdSurvey();">작성된 설문</li>
 							<li id="asd1" class="lowMenu" onclick="ingSurvey();">진행중인 설문</li>
@@ -1734,6 +1734,9 @@ body {
     	}
     	function purchaseSurvey(){
     		location.href = "<%=request.getContextPath()%>/surveyPurchaseList.sv?userId=<%=loginUser.getUserId()%>";
+    	}
+    	function doSurvey(){
+    		location.href = "<%=request.getContextPath()%>/surveyListView.sv?userId=<%=loginUser.getUserId()%>";
     	}
     </script>
 
