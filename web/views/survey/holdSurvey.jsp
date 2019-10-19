@@ -2,11 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*, survey.model.vo.*"%>
 <%
 	ArrayList<Survey> sList = (ArrayList<Survey>)request.getAttribute("sList");
-
 %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,26 +29,27 @@ body {
 }
 </style>
 </head>
-<body>
-	<%@ include file="../common/menubar2.jsp" %> 
+
 </head>
 <body>
+	<%@ include file="../common/menubar2.jsp" %>
 	<div class="row">
 
 		<div class="right" style="background-color: #ddd;">
-			<h2>진행중인 설문함</h2>
-			<p>진행중인 설문를 확인해보세요. 중간 분석 결과를 확인하시거나 중간에 종료 하실 수 있습니다.</p>
+			<h2>작성된 설문함</h2>
+			<p>내가 작성한 설문들을 한눈에 확인 해보세요</p>
+			<p>클릭하여 설문을 수정 해보세요 :)</p>
 			<div id="surveyList">
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
 					<tr>
 						<th width="550px">제목</th>
+						<th width="200px">패널 수</th>
 						<th width="100px">문항 수</th>
 						<th width="150px">작성일</th>
 						<th width="100px">응답자 수</th>
-						<th width="200px">패널 수</th>
 						<th width="100px">분석</th>
-						<th width="100px">종료</th>
+						<th width="100px">삭제</th>
 					</tr>
 					<% if(sList.isEmpty()){ %>
 					<tr>
@@ -63,6 +60,7 @@ body {
 								<input type = "hidden" value = "<%= s.getsNum() %>">
 								<td><%=s.getsTitle() %></td>
 								<td><%=s.getsCount() %></td>
+								<td><%=s.getaCount() %></td>
 								<td><%=s.getsCreateDate() %></td>
 								<td><%=s.getaCount() %></td>
 								<td>차트 사진</td>
@@ -79,7 +77,7 @@ body {
 	<script type="text/javascript">
 		$(function(){
 			$("#surveyListTable td").mouseenter(function(){
-				$(this).parent().css({"background":"orangered","cursor":"pointer"})
+				$(this).parent().css({"background":"orangered","cursor":"pointer"});
 			}).mouseout(function(){
 				$(this).parent().css({"background":"lightgray"});
 			}).click(function(){

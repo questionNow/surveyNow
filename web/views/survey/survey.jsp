@@ -32,9 +32,7 @@
 </style>
 </head>
 <body>
-	<%@ include file = "surveySideBar.jsp" %>
-	
-
+	<%@ include file="../common/menubar2.jsp" %> 
 </head>
 <body>
 <div class="row">
