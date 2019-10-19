@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import = "user.model.vo.UserInfo"
+%>
+<%
+	UserInfo userInfo = (UserInfo)request.getAttribute("UserInfo");
+
+	String userId = userInfo.getUserId();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,17 +76,17 @@ body{
 		<h2> 아이디 찾기 </h2>
 	</div>
 	<div id = successId>
-		<h4> 입력하신 정보로 등록된 아이디는 ___ 입니다. </h4>
+		<h4> 입력하신 정보로 등록된 아이디는  <%=userId %> 입니다. </h4> 
 		<input type = button onclick = "loginMain();" id = successBtn value = "로그인 하기">
 		<input type = button onclick = "findPwd();" id = successBtn value = "패스워드 찾기">
 	</div>
 	
 	<script type="text/javascript">
 		function findPwd(){
-			location='findPw.jsp';
+			location.href = '/surveyNow/views/user/findPw.jsp';
 		}
 		function loginMain(){
-			location='../common/loginmain.jsp';
+			location.href = '/surveyNow/views/common/loginPage.jsp';
 		}
 	</script>
 </body>

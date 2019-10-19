@@ -40,13 +40,17 @@ public class UserInfo implements Serializable{
 
 	}
 
-	
-	
+
 	public UserInfo(String userId, String userPwd) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
 	}
+	
+	
+	  
+	 
+
 
 	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, String finalEducation, String job, String income, String livingType,

@@ -35,13 +35,13 @@
 body{
    background-color : #F8EFE6;
 }
-.findId1{
+.findPwd1{
    font-size : 1.5em;
    font-weight : bold;
    letter-spacing : 7px;
    text-align : center; 
 }
-.findId2{
+.findPwd2{
    letter-spacing : 3px;
    text-align : center;
 }
@@ -64,31 +64,28 @@ input[type = button]{
    padding : 9px 20px;
    width : 30.5%;
 }
-#name1, #name2, #name3{
+#beforeBtn3{
+   margin-left: 390px;
+   width : 45.7%;
+}
+#findPwdBtn{
+	cursor : pointer;
+	padding : 9px 20px;
+	width : 30.5%;
+}
+#name {
    margin-left : 50px;
 }
-.golbang{
-   font-size : 1.7em; 
-}
+
 #email1{
    margin-left : 33px;
-   width : 17.1%;
+   width : 18%;
 }
 #email2{
-   width : 16.5%;
+   width : 18%;
 }
 #email3{
-   width : 15%;
-   border-radius : 10px;
-   border : 1px solid #ccc;
-   padding : .7em;
-}
-#birty1 {
-   margin-left : 17px;
-   width : 17.6%;
-}
-#birty2 {
-   width : 17.7%;
+   width : 16%;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
@@ -103,10 +100,10 @@ input[type = button]{
 #phone2{
    width : 34.9%;
 }
-#id1{
+#id{
    margin-left : 33px;
 }
-#see1, #see2 {
+#findPwdEmail, #findPwdPhone {
    display : none;
 }
 </style>
@@ -117,89 +114,107 @@ input[type = button]{
    <img src="<%=request.getContextPath() %>/image/semiLogo.png" class=nowlogo></div>
    <div id="logo2">
    <font size=60 color=#FF8C19> <b>설문 NOW</b> </font></div>
-</div> <br clear="both">
-
-   <form><br>
-      <div class = findId1>
+</div> <br clear="both"> <br>
+      <div class = findPwd1>
          아이디 / 비밀번호 찾기          
       </div> <br>
-      <div class = findId2>
+      <div class = findPwd2>
          비밀번호 찾기 <br>
          비밀번호를 모르시나요 ? <br>
          비밀번호 찾기 방법 중 편한 방법을 선택해주세요:)
       </div> <br><br>
-      <div class = title>
-      <div class = join>
-         <input type = radio id = findMailId name = find value = findMailId>
-         <label for = findMailId> 내 정보에 등록된 이메일로 아이디 찾기 </label>
-         <br><br>
-         <div id = see1>
-         <label> 아이디 </label> 
-         <input type = text id = id1 maxlength = 20 placeholder = "아이디를 입력하세요">
-         <br><br>
-         <label> 이름 </label> 
-         <input type = text id = name1 maxlength = 5 placeholder = "이름을 입력하세요">
-         <br><br>
-         <label> 이메일 </label>
-         <input type = text id = email1 name = email1 maxlength = 20 placeholder = "이메일을 입력하세요" onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');"> 
-         <input type = text id = email2 name = email3 maxlength = 15 placeholder = "이메일을 선택하세요" disabled>
-         <select   id = email3 name = email2>
-            <option> 이메일을 선택하세요 </option>
-            <option value = "@naver.com"> @naver.com </option>
-            <option value = "@daum.net"> @daum.net </option>
-            <option value = "@gmail.com"> @gmail.com </option>
-            <option value = "@nate.com"> @nate.com </option>
-         </select>
-      <br><br></div></div>
-      
-      <div class = join>
-         <input type = radio id = findPhone name = find value = findPhone>
-         <label for = findPhone> 내 정보에 등록된 핸드폰번호로 비밀번호 찾기 </label>
-         <br><br>
-         <div id = see2>
-         <label> 아이디 </label> 
-         <input type = text id = id1 maxlength = 20 placeholder = "아이디를 입력하세요">
-         <br><br>
-         <label> 이름 </label> 
-         <input type = text id = name3 maxlength = 5 placeholder = "이름을 입력하세요"> 
-         <br><br>
-         <label for = phone> 핸드폰 </label>
-         <select id = phone1 name = phone1>
-            <option value = ""> 통신사 </option>
-            <option value = KT> KT </option>
-            <option value = SKT> SKT </option>
-            <option value = LG> LG </option>
-         </select> 
-         <input type = text id = phone2 name = phone2 maxlength = 11 placeholder = "(-) 빼고 입력해주세요">
-         <br><br>
-      </div></div>
-      <input type = button value = 이전으로 onclick = "beforeFind();">
-      <input type = button value = 다음단계 onclick = "nextFind();">
-   </div>
-   </form>
+     
+         <div class=title>
+         <div class=join>
+            <input type=radio id=findMail name=find value=findMail>
+            <label for=findMail> 내 정보에 등록된 이메일로 비밀번호 찾기 </label> <br> <br>
+            <form id = findPwdEmail action = "<%=request.getContextPath() %>/findPwdEmail.find" method = post>
+               <label> 아이디 </label>
+               <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+               <br><br>
+               <label> 이름 </label> 
+               <input type=text id=name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
+               <br><br> 
+               <label> 이메일 </label> 
+               <input type=text id=email1 name=email1 maxlength=20 placeholder= "이메일을 입력하세요" onkeyup="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');">
+               <input type=text id=email2 name=email3 maxlength=15 placeholder="이메일을 선택하세요" disabled> 
+               <select id=email3 name=email2>
+                  <option value = "">이메일을 선택하세요</option>
+                  <option value="@naver.com">@naver.com</option>
+                  <option value="@daum.net">@daum.net</option>
+                  <option value="@gmail.com">@gmail.com</option>
+                  <option value="@nate.com">@nate.com</option>
+               </select> <br>
+               <br>
+               <input type = button value = "이전단계" onclick = "beforeFind1();">
+               <input type = button id = findPwdBtn value = "다음단계" onclick = "emailFind();">
+               <!-- <input type=button value = 다음단계 onclick="emailFind();"> -->
+            </form>
+         </div> <br>
+         
+         <div class=join>
+            <input type=radio id=findPhone name=find value=findPhone> 
+            <label for=findPhone> 내 정보에 등록된 핸드폰번호로 아이디 찾기 </label> <br>
+            <br>
+            <form id= findPwdPhone action = "<%=request.getContextPath() %>/findPwdPhone.find" method = post>
+               <label> 아이디 </label>
+               <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+               <br><br>
+               <label> 이름 </label> 
+               <input type=text id = name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
+               <br><br> 
+               <label for=phone> 핸드폰 </label> 
+               <select id=phone1 name=phone1>
+                  <option value="">통신사</option>
+                  <option value=KT>KT</option>
+                  <option value=SKT>SKT</option>
+                  <option value=LG>LG</option>
+               </select> 
+               <input type=text id=phone2 name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요"> <br>
+               <br>
+               <input type=button value = "이전단계" onclick="beforeFind2();"> 
+               <button id = findPwdBtn value = "다음단계" onclick = "phoneFind();"> 다음단계 </button>
+               <!-- <input type=button value = 다음단계 onclick="phoneFind();"> -->
+   	     </form>
+            </div>
+         </div><br><br>
+         <input type = button id = beforeBtn3 value = "로그인 하러가기!" onclick = "beforeFind3();">
    
    <script type="text/javascript">
    // 여기서부터 ->
-   $("input[type = radio][name = find]").on("click", function(){
-      var checkValue = $("input[type = radio][name = find]:checked").val();
-      
-      if(checkValue == "findMailId"){
-         $("#see1").css("display", "block");
-         $("#see2").css("display", "none");
-      }
-      if(checkValue == "findPhone"){
-         $("#see1").css("display", "none");
-         $("#see2").css("display", "block");
-      }
-   }); // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
+  $("input[type = radio][name = find]").on(
+            "click",
+            function() {
+               var checkValue = $(
+                     "input[type = radio][name = find]:checked").val();
+
+               if (checkValue == "findMail") {
+                  $("#findPwdEmail").css("display", "block");
+                  $("#findPwdPhone").css("display", "none");
+                  $("#beforeBtn3").css("display","none");
+               }
+               if (checkValue == "findPhone") {
+                  $("#findPwdEmail").css("display", "none");
+                  $("#findPwdPhone").css("display", "block");
+                  $("#beforeBtn3").css("display","none");
+               }
+            });  // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
    
-      function nextFind(){
-         alert("회원 정보를 다시 입력해주세요");   // <- 나중에 if 문으로 기능 추가  성공 or 실패 
+      function emailFind(){
+         $("#findPwdEmail").submit();  // <- /findPwdEmail.find Servlet
       }
-      function beforeFind(){
+      function phoneFind(){
+          $("#findPwdPhone").submit();  // <- /findPwdPhone.find Servlet
+      }
+      function beforeFind1(){
          location = 'findId.jsp';  // <- 이전 단계
       }
-      
+      function beforeFind2(){
+    	  location = 'findId.jsp';  // <- 이전 단계
+      }
+      function beforeFind3(){
+    	  location = '../common/loginPage.jsp';  // <- 로그인 메인화면
+      }
       $(document).ready(function(){
           // 이메일 선택
           $("#email3").change(function(){

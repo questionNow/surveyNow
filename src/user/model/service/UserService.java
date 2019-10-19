@@ -44,7 +44,7 @@ public class UserService {
 		return user;
 	}
 
-	
+	// SeoJaeWoong 회원가입
 	public int registerUser(UserInfo userInfo) {
 		Connection conn = getConnection();
 		int result = new UserDao().registerUser(conn, userInfo);
@@ -58,6 +58,7 @@ public class UserService {
 		return result;
 	}
 
+	// SeoJaeWoong 아이디 중복체크 
 	public int idCheck(String userId) {
 		Connection conn = getConnection();
 		int result = new UserDao().idCheck(conn, userId);
@@ -65,5 +66,39 @@ public class UserService {
 		close(conn);
 		return result;
 	}
-
+	
+	// SeoJaeWoong 아이디 찾기 (이메일)
+	public UserInfo findIdEmail(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findId = new UserDao().findIdEmail(conn, findData);
+		
+		System.out.println("서비스쪽 : " + findId);
+		close (conn);
+		return findId;
+	}
+	// SeoJaeWoong 아이디 찾기 (핸드폰)
+	public UserInfo findIdPhone(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findId = new UserDao().findIdPhone(conn, findData);
+		
+		System.out.println("서비스쪽 : " + findId);
+		close(conn);
+		return findId;
+	}
+	// SeoJaeWoong 비밀번호 찾기(이메일)
+	public UserInfo findPwdEmail(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findPwd = new UserDao().findPwdEmail(conn, findData);
+		System.out.println("서비스쪽 : " + findPwd);
+		close(conn);
+		return findPwd;
+	}
+	// SeoJaeWonng 비밀번호 찾기(핸드폰)
+	public UserInfo findPwdPhone(UserInfo findData) {
+		Connection conn = getConnection();
+		UserInfo findPwd = new UserDao().findPwdPhone(conn, findData);
+		System.out.println("서비스쪽 : " + findPwd);
+		close(conn);
+		return findPwd;
+	}
 }
