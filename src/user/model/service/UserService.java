@@ -6,12 +6,15 @@ import java.sql.*;
 
 import user.model.dao.UserDao;
 import user.model.vo.UserInfo;
-
+import user.model.vo.surveyList;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+
+import user.model.vo.surveyList;
 
   
-public class UserService {
+public class UserService { 
 	
 	// 로그인 처리를 위한 상수 선언
 	public static int LOGIN_OK = 1;
@@ -64,6 +67,19 @@ public class UserService {
 		System.out.println("Service 검사" + result);
 		close(conn);
 		return result;
+	}
+
+
+
+	public ArrayList<surveyList> selectSurveyList(String userId) {
+		// SELECT 는 처음에 Connection conn = getConnection(); 생성함 
+		Connection conn = getConnection();
+		
+		ArrayList<surveyList> rlist = new UserDao().selectReplyList(conn,userId);
+		
+		close(conn);
+		
+		return rlist;
 	}
 
 }

@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import = "user.model.vo.*, java.util.ArrayList"%>
+    
+<%
+	ArrayList<surveyList> rlist = (ArrayList<surveyList>)request.getAttribute("rlist"); 
+%> 
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +70,7 @@
         #cont_left {float: left; width: 250px;}
         #cont_center {
             overflow: hidden; 
-            margin-right: 250px; 
+            margin-right: 250px;  
             min-height: 1300px; 
             border-right: 1px solid #dbdbdb;
             border-left: 1px solid #dbdbdb;
@@ -678,6 +683,35 @@
                 //cont_left
                  -->
                 <section id="cont_center">
+                <article class="column col4">
+					<h4 class="col_tit">해당 리스트 클릭 (설문 페이지 완성되면 작업해야될거같다.)</h4>
+					<p class="col_desc">조건에 맞는 설문으로 이동</p>
+<!-- 작업중  -->
+					<div id="replySelectArea">
+						<table id="replySelectTable" border="1" align="center">
+							<%if(rlist.isEmpty()) {%>
+								<tr><td colspan="3">관련된 설문이 없습니다.</td></tr>
+							<%}else{ %> 
+								<%for(int i=0;i<rlist.size();i++){ %>
+									<tr>
+										<td width="100px"><%=rlist.get(i).getSnum() %></td>
+										<td width="100px"><%=rlist.get(i).getStype() %></td>
+										<td width="100px"><%=rlist.get(i).getStitle() %></td>
+										<td width="100px"><%=rlist.get(i).getSstartdt() %></td>
+										<td width="100px"><%=rlist.get(i).getSenddt() %></td>
+										<td width="100px"><%=rlist.get(i).getScount() %></td>
+
+									</tr>
+								<%} %>
+							<%} %>
+						</table>
+					</div>	
+				</article>
+                
+                
+                
+                
+                
                 
                 
                 
@@ -711,20 +745,20 @@
                     //col4 -->
                     
                     <article class="column col5">
-                        <h4 class="col_tit">이미지 를 넣어야함</h4>
-						<p class="col_desc">여기에 이미지 클릭하면 해당 설문으로 가면 좋을거 같은데 ?</p>
+                        <h4 class="col_tit">이미지 클릭</h4>
+						<p class="col_desc">관련 설문으로 이동</p>
 						<!-- lightbox -->
 						<div class="lightbox square clearfix">
-							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>blur</em></a>
-							<a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>brightness</em></a>
-							<a href="image/light03_s.jpg"><img src="image/light03.jpg" alt="이미지"><em>contrast</em></a>
-							<a href="image/light04_s.jpg"><img src="image/light04.jpg" alt="이미지"><em>grayscale</em></a>
-							<a href="image/light05_s.jpg"><img src="image/light05.jpg" alt="이미지"><em>hue-rotate</em></a>
-							<a href="image/light06_s.jpg"><img src="image/light06.jpg" alt="이미지"><em>invert</em></a>
-							<a href="image/light07_s.jpg"><img src="image/light07.jpg" alt="이미지"><em>opacity</em></a>
-							<a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>saturate</em></a>
-							<a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>sepia</em></a>
-							<a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>Mix</em></a>
+							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>애견</em></a>
+							<a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>자연보호</em></a>
+							<a href="image/light03_s.jpg"><img src="image/light03.jpg" alt="이미지"><em>정치</em></a>
+							<a href="image/light04_s.jpg"><img src="image/light04.jpg" alt="이미지"><em>도서</em></a>
+							<a href="image/light05_s.jpg"><img src="image/light05.jpg" alt="이미지"><em>우주</em></a>
+							<a href="image/light06_s.jpg"><img src="image/light06.jpg" alt="이미지"><em>부동산</em></a>
+							<a href="image/light07_s.jpg"><img src="image/light07.jpg" alt="이미지"><em>육아</em></a>
+							<a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>연금</em></a>
+							<a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>자기개발</em></a>
+							<a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>영화</em></a>
 						</div>
 						<!--//lightbox -->
                     </article>

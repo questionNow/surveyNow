@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="user.model.vo.UserInfo"%>
+    pageEncoding="UTF-8" import = "user.model.vo.*, java.util.ArrayList"%>
     
 <%
 	UserInfo loginUser = (UserInfo)session.getAttribute("loginUser");
+
+	/* ArrayList<surveyList> rlist = (ArrayList<surveyList>)request.getAttribute("rlist"); */
+
 %>
     
 <!DOCTYPE html>
@@ -113,7 +116,7 @@
         /* 레이아웃 */
         body {background: url(image/header_bg.jpg) repeat-x center top;}
         #header {  }
-        #nav {background-color: #f6fdff;}
+        #nav {background-color: #f6fdff; height:100%;}
         #title {background-color: #eaf7fd;}
         #contents .container {border-right: 1px solid #dbdbdb; border-left: 1px solid #dbdbdb;}
         #cont_left {float: left; width: 250px;}
@@ -133,10 +136,7 @@
         .container {position: relative; width: 1200px; margin: 0 auto; /* background: rgba(0,0,0,0.3) */}
 
         /* 헤더 */
-        
         #userHeader{display: inline-block; } 
-        
-        
         
 /*         .header {height: 327px;} */
         .header {height: 327px;} 
@@ -252,7 +252,7 @@
             background: #25a2d0;
             transition: all .2s ease-out;
         }
-        .nav > div li:hover a:after {width: 100%;}
+        .nav > div li:hover a:after {width: 100%; }
         
    
         /* 타이틀 */
@@ -266,32 +266,12 @@
             line-height: 60px; 
             background: #3192bf; 
             color: #fff;
-            font-size: 35px; 
+            font-size: 20px; 
             border-radius: 50%;
             transition: all 0.3s ease;
+            cursor:pointer;
         }
-        
-        .btn2 {
-            position: absolute; 
-            /* right: 0; */ 
-            left:0;
-            top: 5px;
-            width: 60px; 
-            height: 60px; 
-            line-height: 60px; 
-            background: #3192bf; 
-            color: #fff;
-            font-size: 35px; 
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            /* display: none; */
-        }
-        .title .btn2 :hover {
-            box-shadow: 
-                0 0 0 3px rgba(75,154,191,0.9) inset,
-                0 0 0 600px rgba(0,0,0,0.1) inset;
-        }
-                       
+          
          .title .btn :hover {
             box-shadow: 
                 0 0 0 3px rgba(75,154,191,0.9) inset,
@@ -588,7 +568,7 @@
         /* 화면 너비 0~1220px */
         @media (max-width: 1220px){
             .container {width: 100%;}
-            .row {padding: 0 15px;}
+            .row {padding: 0 15px; }
             #cont_center {min-height: 1350px;}
 	        #contents .container {border: 0;}
             
@@ -679,6 +659,138 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 작업중 */
+
+	/*====================
+		Search form 
+	====================*/
+	
+	.searchform {
+		position: absolute;
+		right: 15px;
+		top: 5px;
+		width: 360px;
+		line-height: 60px;
+		display: inline-block;
+		zoom: 1;
+		*display: inline;
+		border: 0;
+		padding: 0;
+	}
+	
+	#loginForm{
+		position: absolute;
+		right: 15px;
+		top: 5px;
+		width: 2350px;
+		line-height: 60px;
+		display: inline-block;
+		zoom: 1;
+		*display: inline;
+		border: 0;
+		padding: 0;	
+	}
+	
+	.goHome{
+		display: inline-block;
+		position: absolute; 
+		/* right: 0; */ 
+		left:0;
+		top: 0px;  
+		width: 60px; 
+		height: 60px; 
+		line-height: 60px; 
+		background: #3192bf; 
+		color: #fff; 
+		font-size: 20px; 
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		cursor:pointer;	
+	}
+	
+	.goHome:hover {
+		box-shadow: 
+		    0 0 0 3px rgba(75,154,191,0.9) inset,
+		    0 0 0 600px rgba(0,0,0,0.1) inset;
+	}
+	
+	
+	.btns{
+		position: absolute;
+		display: inline-block;
+	}
+	
+	.searchform input {
+		font: normal 12px/100% Arial, Helvetica, sans-serif;
+	}
+	.searchform .searchfield {
+		height: 27px;
+		line-height: 27px;
+		padding-left: 10px;
+		padding-right: 10px;
+		width: 150px;
+		border: 2px solid #3192bf;
+		outline: none;
+		-webkit-border-radius: 2em;
+		-moz-border-radius: 2em;
+		border-radius: 2em;
+		-moz-box-shadow: inset 1px 1px 2px #A1A1A1;
+		-webkit-box-shadow: inset 1px 1px 2px #A1A1A1;
+		box-shadow: inner 1px 1px 2px #A1A1A1;
+	}
+	
+	.searchfield:focus{
+		font-weight: 700;
+		width: 220px;
+	}
+	
+	.searchfield:not(:focus){
+		width: 150px;
+	}
+
+	/*====================
+		설문 Now 메뉴
+	====================*/
+	.btn2 {
+		display: inline-block;
+		position: absolute; 
+		/* right: 0; */ 
+		left:0;
+		top: 5px;
+		width: 60px; 
+		height: 60px; 
+		line-height: 60px; 
+		background: #3192bf; 
+		color: #fff; 
+		font-size: 20px; 
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		cursor:pointer;
+		/* display: none; */
+	}
+
+	.btn2:hover {
+		box-shadow: 
+		    0 0 0 3px rgba(75,154,191,0.9) inset,
+		    0 0 0 600px rgba(0,0,0,0.1) inset;
+	}
+
 	/* 메뉴 상단 고정  */
 		.jbFixed { 
 			width:100%;
@@ -721,6 +833,13 @@
 			vertical-align:middle;
 
 		}
+		/* <a href="#"> 
+		버튼 처럼 만들기위해 이렇게 a 태그가 먹어있으면 겉으로 파란색의 테두리가 생긴다.
+		 href="#" 를 뺀 이유는 클리시 최상단으로 올라가게 되어있어서
+		 */
+		a{
+			cursor:pointer;
+		}
 		
 		.menuTest:hover{
 /* 			background:darkgray;
@@ -737,6 +856,12 @@
 			/* display:blick; */
 			display:none;
 			color:orangered;
+		}
+
+
+		.serchMenu{
+		display:blick;
+			vertical-align:middle;
 		}
 
 
@@ -760,7 +885,6 @@
 					  	<%if(loginUser != null) {%>
 					  			<div class="userHeader">
 									<label><%=loginUser.getUserName() %> 하이? </label>  
-<!-- 작업중 -->
 					   				<a id="myPage" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
 									<a id="logoutBtn" onclick="logout()">로그아웃</a>                    
 								</div>     
@@ -846,13 +970,14 @@
                         <h1>여기에 이미지 슬라이드를 넣어야 될거같은데</h1><br>
                         <a href="http://www.iei.or.kr">kh 정보 교육원</a>
                     </div>
-                    <!-- //header_tit -->
+                    <!-- //header_tit --> 
                     <div class="header_icon">
                         <ul>
-                            <li><a href="#"><i class="fa fa-html5" aria-hidden="true"></i><span>HTML5</span></a></li>
-                            <li><a href="#"><i class="fa fa-github" aria-hidden="true"></i><span>GitHub</span></a></li>
-                            <li><a href="#" class="facebook"><i class="fa fa-facebook-square" aria-hidden="true"></i><span>Fackbook</span></a></li>
-                            <li><a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i><span>twitter</span></a></li>
+                        	<!-- <a href="#"> 클릭시 최상단으로 이동되서 빼버림-->
+                            <li><a ><i class="fa fa-html5" aria-hidden="true"></i><span>HTML5</span></a></li>
+                            <li><a ><i class="fa fa-github" aria-hidden="true"></i><span>GitHub</span></a></li>
+                            <li><a class="facebook"><i class="fa fa-facebook-square" aria-hidden="true"></i><span>Fackbook</span></a></li>
+                            <li><a class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i><span>twitter</span></a></li>
                         </ul>
                     </div>
                     <!-- //header_icon -->
@@ -866,9 +991,43 @@
 			<a href="#" class="btn"></a>
 		<div class="container">
 			<div class="title">
-				<a href="#" class="btn2"  onclick="location.href='/surveyNow/login.me?userId=<%=loginUser.getUserId()%>'"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
-				<h2>"설문 NOW"</h2>
-				<a href="#" class="btn"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
+			
+<%-- <a href="#" class="btn2"  onclick="location.href='/surveyNow/login.me?userId=<%=loginUser.getUserId()%>'"><i class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a> --%>
+				<!-- <div href="#" class="btn2" onclick="goHome()" -->
+<%-- <a href="#" ><h3 class="menuHeader" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">마이메뉴</h3> </a> --%>
+				
+				
+				
+				
+				
+
+ 
+<!-- 				<div href="#" class="btn2" onMouseOver="this.innerHTML='GoGo'" onMouseOut="this.innerHTML='Home'">
+					<i class="fa fa-angle-down" aria-hidden="true"></i><span>Home</span></div> -->
+					
+		 			<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
+				      				onsubmit="return validate()" method="post">
+				         <div class="btns" align="center">
+							<input type="submit" value="홈" class="goHome">
+				            <input type="hidden" name="userId" id = "userId" value="<%=loginUser.getUserId() %>">
+							<input type="hidden" name="userPwd" id = "userPwd" value="<%=loginUser.getUserPwd() %>">
+				         </div>
+					</form>	
+						
+					
+					<h2>"설문 NOW"</h2>
+
+					
+					<!-- Search Form -->
+					<form class="searchform" action="#"> 
+						<input class="searchfield" type="text" value="Search..." onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+					</form>
+					<!-- / Search Form -->
+	
+				<div href="#" class="btn"
+					onMouseOver="this.innerHTML='Click'"
+					onMouseOut="this.innerHTML='Menu'"
+				><i class="fa fa-angle-down" aria-hidden="true"></i><span>Menu</span></div>
 			</div>
 		</div>
 	
@@ -975,8 +1134,8 @@
 					</div>	 --%>			
 
  
-	 			<div class="menu"> 
-					<li class="menuTest" value="3"><a href="#">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
+	 			<div class="menu">
+					<li class="menuTest" value="3"><a>마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
 						<ul class="contentsTest" >
 							<li id="asd" class="lowMenu" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">
 								개인정보 수정
@@ -986,7 +1145,7 @@
 							</li>
 						</ul>
 						
-					<li class="menuTest" value="0"><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+					<li class="menuTest" value="0"><a>Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest" >
 							<li id="asd" class="lowMenu">
 								설문 만들기
@@ -996,7 +1155,7 @@
 							</li>
 						</ul>
 						
-					<li class="menuTest" value="0"><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+					<li class="menuTest" value="0"><a>WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest" >
 							<li id="asd" class="lowMenu">
 								회원 조회
@@ -1005,7 +1164,7 @@
 								패널 랭킹
 							</li>
 						</ul>
-					<li class="menuTest"><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+					<li class="menuTest"><a>Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">
 								상품 등록
@@ -1015,7 +1174,7 @@
 							</li>
 						</ul>
 							
-					<li class="menuTest" value="0"><a href="#">CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+					<li class="menuTest" value="0"><a>CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">
 								상품 등록
@@ -1025,7 +1184,7 @@
 							</li>
 						</ul>
 							
-					<li class="menuTest" value="0"><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+					<li class="menuTest" value="0"><a>HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">
 								상품 등록
@@ -1266,7 +1425,11 @@
     <script src="js/lightgallery.min.js"></script> -->
     
     
-<!--SDB_20191018_사이드 메뉴 .. IF문이 너무 많다 더럽다. 가독성최악이네...  -->
+<!--SDB_20191018_사이드 메뉴 .. IF문이 너무 많다 더럽다. 가독성최악이네...  
+	이렇게 if문을 많이 한 이유가. 
+		contentsTest 태그가 첫번째 태그만 잡힌다.. (밑에 태그들 클릭시 출력값은 contentsTest태그 처음것만 나오네.? : 이유는 모름)
+	코드 줄여주면 감사합니다.
+-->
    	<script> 
 	$(function(){
 		 $('.menuTest').click(function(){ 
@@ -1288,15 +1451,15 @@
 			} else {
 				$(this).next().slideDown(function(){
 					$(this).addClass("contents");
-//alert("0");
-				});
 //alert("4");
+				});
+//alert("5");
 				if($(this).next(".contents").css("display")=="block"){
 					$(this).addClass("contents");
 					$(this).next().siblings(".contentsTest").slideUp();
-//alert("5");
+//alert("6");
 				}else{
-//alert("6");					
+//alert("7");					
 					$(this).next().siblings(".contentsTest").slideUp();
 				}
 			}
@@ -1337,6 +1500,17 @@
 			
 			// LogoutServlet 만들기~ 꼬꼬씽~
 		}
+		
+ 		function goHome(){
+			<%-- //location.href="<%=request.getContextPath()%>/views/common/mainLoing.jsp"; --%>
+			<%-- location.href='<%=request.getContextPath()%>/login.me?userId=<% userId %>'; --%>
+			
+			
+			
+			<%-- <form id ="loginForm" action="<%=request.getContextPath()%>/login.me" onsubmit="return validate()" method="post"> --%>
+		}		 
+		
+		
 	</script>
 <!--END 화면 onclick 이벤트 ------------------------------------------------------------------------>
  

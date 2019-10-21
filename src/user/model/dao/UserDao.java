@@ -3,7 +3,11 @@ package user.model.dao;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
+
+import user.model.vo.surveyList;
+
 import java.sql.*;
 /*import java.sql.ResultSet;
 import java.sql.PreparedStatement;
@@ -13,9 +17,10 @@ import java.sql.Connection;
 import static common.JDBCTemplate.*;
 
 import user.model.vo.UserInfo;
+import user.model.vo.surveyList;
 
 public class UserDao {
-	private Properties prop = new Properties();
+	private Properties prop = new Properties(); 
 
 	public UserDao() {
 		// 기본생성자는 항상 member-query.properties 값을 불러올 수 있도록
@@ -45,10 +50,10 @@ public class UserDao {
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERPWD=? AND STATUS='N'");
 
 			pstmt.setString(1, user.getUserId());
-			pstmt.setString(2, user.getUserPwd());
+//			pstmt.setString(2, user.getUserPwd());
 
 //			pstmt.setString(1, "admin");
-//			pstmt.setString(2, "1234");
+			pstmt.setString(2, "1234");
 
 			System.out.println("암호화 처리되서 넘어감 : 수동입력");
 			System.out.println("1 : " + user.getUserId());
@@ -190,6 +195,57 @@ public class UserDao {
 		}
 		System.out.println("dao 검사" + result);
 		return result;
+	}
+
+// 메인화면에 설문가능한 List 출력
+	public ArrayList<surveyList> selectReplyList(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<surveyList> rlist = null;
+		
+		String query = prop.getProperty("selectReplyList");	// board-query.properties에 만들자
+		
+		
+		
+		try {
+//			pstmt = conn.prepareStatement(query);
+			
+			// 추후에 쿼리 변경해야함
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY");
+			// 값안넘기고 그냥 테이블에 내용 조회되는지 TEST
+			//pstmt.setString(1, userId);
+			
+			rs=pstmt.executeQuery();
+			
+			rlist = new ArrayList<surveyList>();
+			
+			while(rs.next()) {
+				rlist.add(new surveyList(rs.getInt("SNUM"),
+									rs.getString("STYPE"),
+									rs.getString("STITLE"),
+									rs.getDate("SSTARTDT"),
+									rs.getDate("SENDDT"),
+									rs.getInt("SCOUNT"),
+									rs.getInt("SPOINT"),
+									rs.getInt("ACOUNT"),
+									rs.getString("SSTATUS"),
+									rs.getString("STARGET"),
+									rs.getDate("SCREATEDT"),
+									rs.getString("SUSERID")		
+						
+						));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+	
+		
+		return rlist;
 	}
 
 }

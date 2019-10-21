@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,13 +13,15 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.jni.User;
 
+import user.model.vo.surveyList;
 import user.model.service.UserService;
 import user.model.vo.UserInfo;
+
 
 /**
  * Servlet implementation class LoginServlet
  */
-//@WebServlet("/login.user")
+//@WebServlet("/login.user") 
 @WebServlet(urlPatterns = "/login.me", name = "LoginServlet")
 
 public class LoginServlet extends HttpServlet {
@@ -46,9 +49,14 @@ public class LoginServlet extends HttpServlet {
 		 
 		 UserInfo user = new UserInfo(userId, userPwd);
 		 UserInfo loginUser = new UserService().loginUser(user);
-// syso		 
-//System.out.println(loginUser);
+// syso
+//System.out.println("loginUser : " + loginUser);
 		
+		 
+// 당장은 survey에서 빼오는걸로 하는데 .. 
+// user_info 테이블이랑 엮어야함
+		 ArrayList<surveyList> rlist = new UserService().selectSurveyList(userId);
+		 
 		 response.setContentType("text/html;charset=utf-8");
 		 RequestDispatcher view = null;
 		 
@@ -57,6 +65,14 @@ public class LoginServlet extends HttpServlet {
 			 HttpSession session = request.getSession();	//session객체는 request에서 제공하는 getSession()이라는 메소드로 만들 수 있음
 			 
 			 session.setAttribute("loginUser", loginUser);
+			 request.setAttribute("rlist", rlist);
+			 
+System.out.println("1111111111111111111111111111111111111");
+
+System.out.println("loginUser : " + loginUser);
+System.out.println("rlist : " + rlist);
+
+System.out.println("1111111111111111111111111111111111111");
 
 			 
 //			 if() {
@@ -65,15 +81,18 @@ public class LoginServlet extends HttpServlet {
 //			 }
 			 
 			/* view = request.getRequestDispatcher("views/common/mainNow(n).jsp"); */
-			 view = request.getRequestDispatcher("views/common/mainLoing.jsp");
+//			 view = request.getRequestDispatcher("views/common/mainLoing.jsp");
+			 request.getRequestDispatcher("views/common/mainLoing.jsp").forward(request, response);
+			 
 			 
 			  
 		 }else {//실패할 경우
 			 request.setAttribute("msg", "로그인 실패");
 			 view = request.getRequestDispatcher("views/common/errorPage.jsp");
 			 //view.forward(request, response);
+			 view.forward(request, response);
 		 }
-		 view.forward(request, response);
+		 
 	}
 
 	/**
