@@ -47,6 +47,36 @@ public class UserInfo implements Serializable{
 		this.userId = userId;
 		this.userPwd = userPwd;
 	}
+	
+	
+
+
+
+
+
+	public UserInfo(String userId, String userName, int age, String email, String phone, String address,
+			String finalEducation, String job, String income, String livingType, String houseType, String religion,
+			String maritalStatus, String livingWith, String armyGo) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.age = age;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+		this.finalEducation = finalEducation;
+		this.job = job;
+		this.income = income;
+		this.livingType = livingType;
+		this.houseType = houseType;
+		this.religion = religion;
+		this.maritalStatus = maritalStatus;
+		this.livingWith = livingWith;
+		this.armyGo = armyGo;
+
+	}
+
+
 
 	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, String finalEducation, String job, String income, String livingType,

@@ -13,11 +13,22 @@ public class Point implements Serializable{
 	private int pNum;
 	private String userId;
 	private int point;
-	private Date pDate;
+	private Date pDate; 
 	private String pContent;
-	public Point() {
 	
+	public Point() {
 	}
+	
+
+	public Point(int point, Date pDate, String pContent) {
+		super();
+		this.point = point;
+		this.pDate = pDate;
+		this.pContent = pContent;
+	}
+
+
+
 	public Point(int pNum, String userId, int point, Date pDate, String pContent) {
 		super();
 		this.pNum = pNum;

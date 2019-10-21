@@ -95,41 +95,7 @@ public class UserDao {
 		// 다시 Service로 가자!!
 	}
 	
-	// 마이페이지 !
-	public UserInfo selectUser(Connection conn, String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		UserInfo user = null;
-
-		try {
-
-			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=?");
-			pstmt.setString(1, userId);
-//			pstmt.setString(1, "admin");
-
-			rs = pstmt.executeQuery();
-
-			// resultSet의 결과가 있으면 ...
-			if (rs.next()) {
-				user = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
-						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
-						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
-						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
-						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
-						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
-						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rs);
-		}
-
-		return user;
-	}
+	
 
 	public int registerUser(Connection conn, UserInfo userInfo) {
 		PreparedStatement pst = null;
@@ -193,38 +159,5 @@ public class UserDao {
 		return result;
 	}
 
-	public UserInfo InfoChange(Connection conn, String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		UserInfo user = null;
-
-		try {
-
-			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=?");
-			pstmt.setString(1, userId);
-
-			rs = pstmt.executeQuery();
-
-			// resultSet의 결과가 있으면 ...
-			if (rs.next()) {
-				user = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
-						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
-						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
-						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
-						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
-						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
-						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rs);
-		}
-
-		return user;
-	}
 
 }

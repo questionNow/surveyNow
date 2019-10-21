@@ -15,7 +15,7 @@
 		<%-- location.href="<%=request.getContextPath()%>/views/common/menubar.jsp"; --%>
 		<%-- location.href="<%=request.getContextPath()%>/mainNow(n).jsp"; --%>
 		location.href="<%=request.getContextPath()%>/views/common/loginPage.jsp";
-
+		
 	</script>
 	
 </body>

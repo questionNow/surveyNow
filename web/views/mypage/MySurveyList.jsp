@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="survey.model.vo.*, java.util.ArrayList" %>
     
-<%
-	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+<<%-- %
+	ArrayList<Survey> list = (ArrayList<Survey>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int ListCount = pi.getListCount();
@@ -11,6 +11,7 @@
 	int startPage=pi.getStartPage();
 	int endPage = pi.getEndPage();
 %>    
+ --%>
 
 <!DOCTYPE html>
 <html>

@@ -503,7 +503,7 @@
    
 <%--    <%if(loginUser == null) {%> --%>
       <form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
-      onsubmit="return validate()" method="post"> <!-- validate() 을 실행하고 난뒤의 반환값(return) -->
+      onsubmit="return validate()" method="get"> <!-- validate() 을 실행하고 난뒤의 반환값(return) -->
          <div class="btns" align="center">
             <table>
                <tr>
