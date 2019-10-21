@@ -46,14 +46,6 @@ public class UserDao {
 
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getUserPwd());
-
-//			pstmt.setString(1, "admin");
-//			pstmt.setString(2, "1234");
-
-			System.out.println("암호화 처리되서 넘어감 : 수동입력");
-			System.out.println("1 : " + user.getUserId());
-			System.out.println("2 : " + user.getUserPwd());
-
 			rs = pstmt.executeQuery();
 
 			// resultSet의 결과가 있으면 ...
@@ -190,7 +182,6 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
-		System.out.println("dao 검사" + result);
 		return result;
 	}
 	
@@ -218,7 +209,6 @@ public class UserDao {
 			close(pst);
 			close(rs);
 		}
-		System.out.println("다오쪽" + findId);
 		return findId;
 	}
 
@@ -246,7 +236,6 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
-		System.out.println("다오쪽 : " + findId);
 		return findId;
 	}
 	// SeoJaeWoong 비밀번호 찾기(이메일)
@@ -273,7 +262,6 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
-		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
 	// SeoJaeWoong 비밀번호 찾기(핸드폰)
@@ -301,7 +289,33 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
-		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
+	
+	 public static Integer userType(Connection conn, String userId) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      int userType = 0;
+	      String query = "SELECT userType FROM user_info WHERE userId=?";
+
+	      try {
+	         pstmt = conn.prepareStatement(query);
+
+	         pstmt.setString(1, userId);
+	         
+	         rs = pstmt.executeQuery();
+	         if (rs.next())
+	         {
+	            userType = rs.getInt("userType");
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	       
+	      return userType;
+	   }
+	
 }

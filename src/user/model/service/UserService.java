@@ -101,4 +101,16 @@ public class UserService {
 		close(conn);
 		return findPwd;
 	}
+	
+	public static Integer userType(String userId) {
+	      Connection conn = getConnection();
+	      new UserDao();
+	      int userType = UserDao.userType(conn, userId);
+	      
+	      close(conn);
+	      
+	      return userType;
+	   }
+
+	
 }
