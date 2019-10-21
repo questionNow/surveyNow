@@ -18,19 +18,23 @@ import survey.model.vo.Survey;
 @WebServlet("/surveyMake.sv")
 public class SurveyMakeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SurveyMakeServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public SurveyMakeServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String bool = request.getParameter("bool");
+
 		String sTitle = request.getParameter("sTitle");
 		String[] sInterest = request.getParameterValues("sInterest");
 		String userId = request.getParameter("userId");
@@ -40,7 +44,7 @@ public class SurveyMakeServlet extends HttpServlet {
 		String[] qType = request.getParameterValues("Qtype");
 		String[] qTitle = request.getParameterValues("Qtitle");
 		String interest = "";
-		for(int i = 0; i<sInterest.length; i++) {
+		for (int i = 0; i < sInterest.length; i++) {
 			interest += sInterest[i];
 		}
 		Survey s = new Survey();
@@ -51,21 +55,24 @@ public class SurveyMakeServlet extends HttpServlet {
 		s.setsCount(sCount);
 		s.setqCount(qNum.length);
 		ArrayList<String[]> answer = new ArrayList();
-		for(String Q : qNum) {
+		for (String Q : qNum) {
 			String[] ans = request.getParameterValues(Q);
 			answer.add(ans);
 		}
 		int result = new SurveyService().makeSurvey(s, qNum, qType, qTitle, answer);
-		
+
 		request.setAttribute("msg", "설문 등록 완료!");
-		request.getRequestDispatcher("views/survey/surveySuccess.jsp").forward(request, response);;
-		
+		request.getRequestDispatcher("views/survey/surveySuccess.jsp").forward(request, response);
+		;
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

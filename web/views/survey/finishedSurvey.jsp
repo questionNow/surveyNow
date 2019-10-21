@@ -61,10 +61,10 @@ body {
 							<tr>
 								<input type = "hidden" value = "<%= s.getsNum() %>">
 								<td><%=s.getsTitle() %></td>
-								<td><%=s.getsCount() %></td>
+								<td><%=s.getqCount() %></td>
 								<td><%=s.getsEndDate() %></td>
 								<td><%=s.getaCount() %></td>
-								<td><%=s.getaCount() %></td>
+								<td><%=s.getsCount() %></td>
 								<td>차트 사진</td>
 						<%} %>
 						<%} %>
