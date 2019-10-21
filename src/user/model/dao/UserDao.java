@@ -265,6 +265,7 @@ public class UserDao {
 			rs = pst.executeQuery();
 			
 			if(rs.next()) {
+				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
 		} catch (SQLException e) {
@@ -293,6 +294,7 @@ public class UserDao {
 			rs = pst.executeQuery();
 					
 			if(rs.next()) {
+				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
 		} catch (SQLException e) {
@@ -304,4 +306,50 @@ public class UserDao {
 		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
+	// SeoJaeWoong 비밀번호 수정
+	public int changePwd(Connection conn, UserInfo changeData) {
+		PreparedStatement pst = null;
+		int result = 0;		
+		try {
+			pst = conn.prepareStatement("UPDATE USER_INFO SET USERPWD=? WHERE USERID=?");
+			
+			pst.setString(1, changeData.getUserPwd());
+			pst.setString(2, changeData.getUserId());
+			
+			result = pst.executeUpdate();
+			System.out.println("다오 쪽 : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pst);
+		}		
+		return result;
+	}
+	// 회원 or 관리자 구분해서 로그인 
+	public static int userType(Connection conn, String userId) {
+		  PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      int userType = 0;
+	      String query = "SELECT userType FROM user_info WHERE userId=?";
+
+	      try {
+	         pstmt = conn.prepareStatement(query);
+
+	         pstmt.setString(1, userId);
+	         
+	         rs = pstmt.executeQuery();
+	         if (rs.next())
+	         {
+	            userType = rs.getInt("userType");
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         close(rs);
+	         close(pstmt);
+	      }
+	       
+	      return userType;
+	   }
+		
 }

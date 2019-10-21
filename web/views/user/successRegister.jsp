@@ -14,19 +14,25 @@
 <title> 회원가입 성공 화면 </title>
 <style>
 body{
-   background : url("<%=request.getContextPath()%>/image/suRegister.jpg") no-repeat;
-   background-size : cover;
+   background : url("<%=request.getContextPath()%>/image/successJoin.jpg") no-repeat;
+   background-size : 1550px 750px;
    
 }
-#success{
-   color : black;
+#successJoin{
+   color : White;
+   font-size : 2.5em;
+   padding-left: 130px;
+   color : #F95401;
+}
+#successJoin:hover{
+	cursor:pointer;
+	color : white;
 }
 
 </style>
 </head>
 <body>
-    <h1 align = center id = success> <%= msg %> </h1>
-   <a href = "<%= request.getContextPath() %>/index.jsp" align = right>
-   <h1> 설문하러가즈아 </h1> </a>
+    <h1 align = center id = success> <%= msg %> </h1> <br><br><br><br><br><br><br><br><br><br>
+    <div id = successJoin onclick = "location.href='/surveyNow/views/common/loginPage.jsp'"> 설문하러가즈아 </div>
 </body>
 </html>

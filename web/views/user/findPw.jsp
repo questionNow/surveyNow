@@ -51,7 +51,7 @@ body{
 }
 
 input[type = text]{
-   width : 53.8%;
+   width: 608px;
    display : inline-block;
    border : 1px solid #ccc;
    border-radius : 10px;
@@ -62,45 +62,45 @@ input[type = text]{
 input[type = button]{
    cursor : pointer;
    padding : 9px 20px;
-   width : 30.5%;
+   width: 344px;
 }
 #beforeBtn3{
    margin-left: 390px;
-   width : 45.7%;
+   width : 695px;
 }
-#findPwdBtn{
+#findPwdEmailBtn, #findPwdPhoneBtn{
 	cursor : pointer;
 	padding : 9px 20px;
-	width : 30.5%;
+	width: 344px;
 }
-#name {
+#name, #name1 {
    margin-left : 50px;
 }
 
 #email1{
    margin-left : 33px;
-   width : 18%;
+   width : 200px;
 }
 #email2{
-   width : 18%;
+   width : 187px;
 }
 #email3{
-   width : 16%;
+   width : 200px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
-#phone1{
-   width : 17.7%;
+#tongsin{
+   width: 200px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
    margin-left : 33px;
 }
-#phone2{
-   width : 34.9%;
+#phoneNum{
+   width: 393px;
 }
-#id{
+#id, #id1{
    margin-left : 33px;
 }
 #findPwdEmail, #findPwdPhone {
@@ -130,7 +130,7 @@ input[type = button]{
             <label for=findMail> 내 정보에 등록된 이메일로 비밀번호 찾기 </label> <br> <br>
             <form id = findPwdEmail action = "<%=request.getContextPath() %>/findPwdEmail.find" method = post>
                <label> 아이디 </label>
-               <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+               <input type = text id = id name = userId placeholder = "아이디를 입력하세요" maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
                <br><br>
                <label> 이름 </label> 
                <input type=text id=name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
@@ -147,8 +147,7 @@ input[type = button]{
                </select> <br>
                <br>
                <input type = button value = "이전단계" onclick = "beforeFind1();">
-               <input type = button id = findPwdBtn value = "다음단계" onclick = "emailFind();">
-               <!-- <input type=button value = 다음단계 onclick="emailFind();"> -->
+               <input type = button id = findPwdEmailBtn value = "다음단계"> 
             </form>
          </div> <br>
          
@@ -158,23 +157,22 @@ input[type = button]{
             <br>
             <form id= findPwdPhone action = "<%=request.getContextPath() %>/findPwdPhone.find" method = post>
                <label> 아이디 </label>
-               <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+               <input type = text id = id1 name = userId placeholder = "아이디를 입력하세요" maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
                <br><br>
                <label> 이름 </label> 
-               <input type=text id = name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
+               <input type=text id = name1 name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
                <br><br> 
                <label for=phone> 핸드폰 </label> 
-               <select id=phone1 name=phone1>
+               <select id = tongsin name=phone1>
                   <option value="">통신사</option>
                   <option value=KT>KT</option>
                   <option value=SKT>SKT</option>
                   <option value=LG>LG</option>
                </select> 
-               <input type=text id=phone2 name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요"> <br>
+               <input type=text id=phoneNum name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');"> <br>
                <br>
                <input type=button value = "이전단계" onclick="beforeFind2();"> 
-               <button id = findPwdBtn value = "다음단계" onclick = "phoneFind();"> 다음단계 </button>
-               <!-- <input type=button value = 다음단계 onclick="phoneFind();"> -->
+               <input type = button id = findPwdPhoneBtn value = "다음단계">
    	     </form>
             </div>
          </div><br><br>
@@ -199,13 +197,51 @@ input[type = button]{
                   $("#beforeBtn3").css("display","none");
                }
             });  // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
-   
-      function emailFind(){
-         $("#findPwdEmail").submit();  // <- /findPwdEmail.find Servlet
-      }
-      function phoneFind(){
-          $("#findPwdPhone").submit();  // <- /findPwdPhone.find Servlet
-      }
+            
+   	  // ---->> 여기서부터 Pwd 찾을 때 빈칸 검사
+   	  $("#findPwdEmailBtn").click(function(){
+   		 if($("#id").val() == ""){
+   			 alert("아이디를 입력해주세요");
+   			 $("#id").focus();
+   			 return false;
+   		 } else if ($("#name").val() == ""){
+   			 alert("이름을 입력해주세요");
+   			 $("#name").focus();
+   			 return false;
+   		 } else if ($("#email1").val() == ""){
+   			 alert("이메일을 입력해주세요");
+   			 $("#email1").focus();
+   			 return false;
+   		 } else if ($("#email2").val() == ""){
+   			 alert("이메일을 선택해주세요");
+   			 $("#email2").focus();
+   			 return false;
+   		 } else {
+   			 $("#findPwdEmail").submit();  // <- /findPwdEmail.find Servlet
+   		 }
+   	  });   	  
+	  $("#findPwdPhoneBtn").click(function(){
+	   		 if($("#id1").val() == ""){
+	   			 alert("아이디를 입력해주세요");
+	   			 $("#id1").focus();
+	   			 return false;
+	   		 } else if ($("#name1").val() == ""){
+	   			 alert("이름을 입력해주세요");
+	   			 $("#name1").focus();
+	   			 return false;
+	   		 } else if ($("#tongsin").val() == ""){
+	   			 alert("통신사를 선택해주세요");
+	   			 $("#tongsin").focus();
+	   			 return false;
+	   		 } else if ($("#phoneNum").val() == ""){
+	   			 alert("핸드폰 번호를 입력해주세요");
+	   			 $("#phoneNum").focus();
+	   			 return false;
+	   		 } else {
+	   			 $("#findPwdPhone").submit();  // <- /findPwdEmail.find Servlet
+	   		 }
+	  });  // ----> 여기까지 Pwd 찾을 때 빈칸 검사
+	  
       function beforeFind1(){
          location = 'findId.jsp';  // <- 이전 단계
       }

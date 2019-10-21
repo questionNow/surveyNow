@@ -48,10 +48,6 @@ public class UserInfo implements Serializable{
 	}
 	
 	
-	  
-	 
-
-
 	public UserInfo(String userId, String userPwd, String userName, int age, String gender, String email, String phone,
 			String address, String recommendId, String finalEducation, String job, String income, String livingType,
 			String houseType, String religion, String maritalStatus, String livingWith, String armyGo, String interest) {

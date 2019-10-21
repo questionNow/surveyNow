@@ -20,7 +20,7 @@ import wrapper.EncryptWrapper;
 
 @WebFilter(filterName = "encrypt",
          //urlPatterns = "*.me")
-         servletNames = {"RegisterServlet", "LoginServlet"})
+         servletNames = {"RegisterServlet", "ChangePwdSerlvet", "LoginServlet"})
 public class EncryptFilter implements Filter {
 
     /**

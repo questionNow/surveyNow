@@ -52,10 +52,10 @@ input[type = button]{
 input[type = reset]{
    cursor : pointer;
    padding : 9px 20px;
-   width : 26.6%;
+   width : 266.5px;
 }
 input[type = text]{
-   width : 53.8%;
+   width : 540px;
    display : inline-block;
    border : 1px solid #ccc;
    border-radius : 10px;
@@ -63,7 +63,7 @@ input[type = text]{
    padding : 12px 20px;
 }
 input[type = password]{
-   width : 53.8%;
+   width : 540px;
    display : inline-block;
    border : 1px solid #ccc;
    border-radius : 10px;
@@ -72,91 +72,92 @@ input[type = password]{
 }
 
 #id {
-   width : 43.5%;
+   width : 405px;
+}
+#idChk{
+	width : 130px;
 }
 #gender{
-   width : 53.8%;
+   width : 540px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #email1, #email2{
-   width : 17.9%;
+   width : 179.5px;
 }
 #email3{
-   width : 17%;
+   width : 170px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
-#confirmNum{
-   width : 28%;
-}
 #tongsin{
-   width : 17%;
+   width : 180px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #phoneNum{
-   width : 36.5%;
+   width : 355px;
 }
 #postCode{
-   width : 18%;   
+   width : 150px;   
 }
 #address1{
-   width : 25%;
+   width : 278px;
 }
 #seAddress{
    cursor : pointer;
    padding : 9px 20px;
+   width : 100px;
 }
 #detailAddress{
-width : 30%;
+	width : 295px;
 }
 #extraAddress{
-width : 23.5%;
+	width : 240px;
 }
 #nextMain{
-   width : 26.7%;
+   width : 268.5px;
 }
 #nextRegister, #checkForm{
    cursor : pointer;
    padding : 9px 20px;
-   width : 53.8%;
+   width : 540px;
 }
 .question {
    margin-left : 450px;
    font-size : larger;
 }
 #finalEdu{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #job{
-   width : 46.7%;
+   width : 492px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 39.5px;
    padding : .7em;
 }
 #income{
-   width : 46.6%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 12.5px;
    padding : .7em;
 }
 #home1, #home2, #family1{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #religion, #marry, #soldier{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 39px;
@@ -168,7 +169,7 @@ width : 23.5%;
 #successRegister, #backBtn{
    cursor : pointer;
    padding : 9px 20px;
-   width : 27%;
+   width : 285px;
 }
  
 </style>
@@ -192,7 +193,7 @@ width : 23.5%;
       </div> <br>
       <div class = join>
          <label for = id> 아이디 </label> <br>
-         <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+         <input type = text id = id name = userId placeholder = "아이디를 입력하세요" maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" check_result = "fail" required>
          <input type = button value = 중복확인 id = idChk> <br>
          <label id = resultId> </label>
       </div> <br>
@@ -446,6 +447,11 @@ width : 23.5%;
       $(function(){
          var isUsable = false;
          $("#idChk").click(function(){
+        	// ---> 여기서부터 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+        	$(".id").change(function(){
+        		$(".id").attr("check_result", "fail");
+        	}); // ---> 여기서까지 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+        	
             var userId = $("input[name = 'userId']");
          
             if(!userId || userId.val().length < 4){
@@ -462,6 +468,7 @@ width : 23.5%;
                         userId.focus();
                      } else {
                         alert("사용 가능 아이디 입니다.");
+                        $("#id").attr("check_result", "success");  // <- 아이디 중복체크 확인이벤트
                         isUsable = true;
                      }
                   },
@@ -469,8 +476,8 @@ width : 23.5%;
                      console.log("코드 다시 확인해봐야함ㅠㅠ");
                   }
                });
-            }   
-      });
+            } 
+      	});
       });
       // 여기까지 아이디 중복체크
       
@@ -501,8 +508,6 @@ width : 23.5%;
                $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
                $("#id").val("");
                $("#id").focus();
-            } else {
-               $("#resultId").html("중복확인을 눌러주세요").css("color","navy");
             }
          });
       });
@@ -529,6 +534,11 @@ width : 23.5%;
       var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
       var checkPhone = /^(?=.*?[0-9]).{11,}$/;
       
+      	 if($("#id").attr("check_result") == "fail"){
+      		 alert("아이디 중복 확인을 해주세요");
+      		 $("#id").focus();
+      		 return false;   // <- 아이디 중복확인 버튼 안누르면 경고창
+      	 }
          if($("#id").val() == ""){
             alert("아이디를 입력해주세요");
             $("#id").focus();
@@ -608,9 +618,9 @@ width : 23.5%;
             $("#detailAddress").focus();
             return false;
          }
-          $("#firstClick").hide();
-          $("#secondClick").show();
-          return true; 
+         $("#firstClick").hide();
+         $("#secondClick").show();
+         return true; 
          });
       });     // <---------  여기까지 가입1단계 유효성 검사 
       
@@ -676,6 +686,8 @@ width : 23.5%;
           return true;
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
+     
+      
       $(document).ready(function(){
          $(".title2").hide();  // <- 회원가입 두번째 창 숨기기          
       $("#nextRegister").click(function(){

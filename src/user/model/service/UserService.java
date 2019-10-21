@@ -93,7 +93,7 @@ public class UserService {
 		close(conn);
 		return findPwd;
 	}
-	// SeoJaeWonng 비밀번호 찾기(핸드폰)
+	// SeoJaeWopng 비밀번호 찾기(핸드폰)
 	public UserInfo findPwdPhone(UserInfo findData) {
 		Connection conn = getConnection();
 		UserInfo findPwd = new UserDao().findPwdPhone(conn, findData);
@@ -101,4 +101,28 @@ public class UserService {
 		close(conn);
 		return findPwd;
 	}
+	// SeoJaeWooong 비밀번호 수정
+	public int changePwd(UserInfo changeData) {
+		Connection conn = getConnection();
+		int result = new UserDao().changePwd(conn, changeData);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		System.out.println("서비스쪽 : " + result);
+		close(conn);
+		return result;
+	}
+	// 회원 or 관리자 구분해서 로그인 
+	public static int userType(String userId) {
+		Connection conn = getConnection();
+	      new UserDao();
+	      int userType = UserDao.userType(conn, userId);
+	      
+	      close(conn);
+	      
+	      return userType;
+	   }		
 }

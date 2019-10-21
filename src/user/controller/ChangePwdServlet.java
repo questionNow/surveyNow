@@ -13,16 +13,16 @@ import user.model.service.UserService;
 import user.model.vo.UserInfo;
 
 /**
- * Servlet implementation class FindPwdEmailServlet
+ * Servlet implementation class ChangePwdServlet
  */
-@WebServlet("/findPwdEmail.find")
-public class FindPwdEmailServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/changePwd.cp", name = "ChangePwdSerlvet")
+public class ChangePwdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindPwdEmailServlet() {
+    public ChangePwdServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,28 +34,28 @@ public class FindPwdEmailServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String userId = request.getParameter("userId");
-		String userName = request.getParameter("userName");
-		String email = request.getParameter("email1") + request.getParameter("email2");
+		String userPwd = request.getParameter("userPwd");
+		System.out.println("Servlet 1st test : " + userPwd);
+		System.out.println("Servlet 1st test : " + userId);
 		
-		UserInfo findData = new UserInfo();
-		findData.setUserId(userId);
-		findData.setUserName(userName);
-		findData.setEmail(email);
+		UserInfo changeData = new UserInfo();  
+		changeData.setUserId(userId);
+		changeData.setUserPwd(userPwd);
+		int findPwd = new UserService().changePwd(changeData);
 		
-		UserInfo findPwd = new UserService().findPwdEmail(findData);
+		// int result = new UserService().changePwd(new UserInfo(findPwd));
 		
-		response.setContentType("text/html;charset=utf-8");
-		RequestDispatcher view = null;
+		System.out.println("Servlet 2nd : " + findPwd);
 		
-		if(findPwd.getUserPwd() != null) {
-			System.out.println("변경해야할 비밀번호 : " + findPwd.getUserPwd());
-			view = request.getRequestDispatcher("views/user/successPwd.jsp"); 
-			request.setAttribute("UserInfo", findPwd);
+		String page = "";
+		if(findPwd > 0) {
+			page = "views/common/loginPage.jsp";
 		} else {
-			System.out.println("없는 회원 정보");
-			view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			request.setAttribute("msg", "입력하신 정보에 맞는 비밀번호를 찾을 수 없습니다.");
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "비밀번호 수정 실패");
 		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 	}
 
