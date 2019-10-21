@@ -78,6 +78,16 @@ public class MyPageService {
 		return user;
 	}
 
+	public int getListCount() {
+		  Connection conn = getConnection();
+		  
+			 int listCount = new MyPageDao().getListCount(conn);
+			  
+			  close(conn);
+			 
+			  return listCount;
+	}
+
 
 	
 
