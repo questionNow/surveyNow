@@ -47,8 +47,27 @@
 						설문 제목<input type="reset" id="reset" onclick="resetSurvey();"
 							style="float: right" value="초기화">
 					</h2>
-					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요"
-						size="70%">
+					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size="70%">
+					<h2>카테고리 <select name = "sCategory">
+						<option value = --->--------</option>
+						<option value = sports>스포츠</option>
+						<option value = food>음식</option>
+						<option value = trip>여행</option>
+						<option value = game>게임</option>
+						<option value = science>과학</option>
+						<option value = fashion>패션</option>
+						<option value = it>IT</option>
+						<option value = car>자동차</option>
+						<option value = society>사회이슈</option>
+						<option value = celebrity>연예인</option>
+						<option value = childrenEdu>육아</option>
+						<option value = hire>취업</option>
+						<option value = education>교육</option>
+						<option value = family>가족</option>
+						<option value = cultural>문화생활</option>
+						<option value = pet>애견</option>
+					
+							</select></h2>
 					<h3>
 						요청 패널 수 <input name=sCount type=number min="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						포인트 <input name=sPoint type=number min="50" step="50"><br>
@@ -102,9 +121,8 @@
 		function submit(){
 			var bool = confirm("설문을 저장하시겠습니까?\n저장 후 '작성된 설문함'에서 확인 / 수정 가능합니다.");
 			if(bool){
-				$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyTargetSetting.sv");
+				$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyMake.sv").submit();
 			}
-			
 		}
 		
 	</script>
@@ -113,13 +131,14 @@
 	<script type="text/javascript">
 	tnum = 0;
 		function setTarget(){
-			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><select class = target"+tnum+" name = targetType onchange = 'checkTarget("+tnum+");'>"
+			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
+														 +"<select class = target"+tnum+" name = targetType onchange = 'checkTarget("+tnum+");'>"
 														 +"<option>-------</option>"
 														 +"<option value = finalEducation>최종학력</option>"
 														 +"<option value = job>직업</option>"
 														 +"<option value = income>소득</option>"
 														 +"<option value = livingType>주거형태</option>"
-														 +"<option value = homeType>주택유형</option>"
+														 +"<option value = houseType>주택유형</option>"
 														 +"<option value = religion>종교</option>"
 														 +"<option value = maritalStatus>혼인</option>"
 														 +"<option value = livingWith>동거가족</option>"
@@ -137,66 +156,64 @@
 		}
 		
 		function checkTarget(num){
-			console.log($(".target"+num+" option:selected").val());
-			
+			$("#target"+num+" div").remove();
 			if($(".target"+num+" option:selected").val()== "finalEducation"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '초졸' name = finalEducation><label for = '초등학교 졸업'>초등학교 졸업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '중졸' name = finalEducation><label for = '중학교 졸업'>중학교 졸업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '고졸' name = finalEducation><label for = '고등학교 졸업'>고등학교 졸업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '대학졸' name = finalEducation><label for = '대학(2~3년) 졸업'>대학(2~3년) 졸업</label>"
-										+"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-										+"<input type ='checkbox' id = '대학교졸' name = finalEducation><label for = '대학교(4년) 졸업'>대학교(4년) 졸업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '석사' name = finalEducation><label for = '석사 학위 취득'>석사 학위 취득</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '박사' name = finalEducation><label for = '박사 학위 취득'>박사 학위 취득</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '초등학교 졸업' name = 'finalEducation' value = '초등학교 졸업'><label for = '초등학교 졸업'>초등학교 졸업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '중학교 졸업' name = 'finalEducation' value = '중학교 졸업'><label for = '중학교 졸업'>중학교 졸업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '고등학교 졸업' name = 'finalEducation' value = '고등학교 졸업'><label for = '고등학교 졸업'>고등학교 졸업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '대학(2~3년) 졸업' name = 'finalEducation' value = '대학(2~3년) 졸업'><label for = '대학(2~3년) 졸업'>대학(2~3년) 졸업</label>"
+										+"<br>&nbsp;&nbsp;"
+										+"<input type ='checkbox' id = '대학교(4년) 졸업' name = finalEducation value = '대학교(4년) 졸업'><label for = '대학교(4년) 졸업'>대학교(4년) 졸업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '석사 학위 취득' name = finalEducation value = '석사 학위 취득'><label for = '석사 학위 취득'>석사 학위 취득</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '박사 학위 취득' name = finalEducation value = '박사 학위 취득'><label for = '박사 학위 취득'>박사 학위 취득</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "job"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '무직' name = finalEducation><label for = '무직'>무직</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '학생' name = finalEducation><label for = '학생'>학생</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '자영업' name = finalEducation><label for = '자영업'>자영업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '사무직' name = finalEducation><label for = '사무직'>사무직</label>"
-										+"<input type ='checkbox' id = '판매/서비스직' name = finalEducation><label for = '판매/서비스직'>판매/서비스직</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '생산/기술직' name = finalEducation><label for = '생산/기술직'>생산/기술직</label>"
-										+"<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '전문/예술직' name = finalEducation><label for = '전문/예술직'>전문/예술직</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '경영/관리직' name = finalEducation><label for = '경영/관리직'>경영/관리직</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '농/어/축산업' name = finalEducation><label for = '농/어/축산업'>농/어/축산업</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = finalEducation><label for = '기타'>기타</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '무직' name = job value = '무직'><label for = '무직'>무직</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '학생' name = job value = '학생'><label for = '학생'>학생</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '자영업' name = job value = '자영업'><label for = '자영업'>자영업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '사무직' name = job value = '사무직'><label for = '사무직'>사무직</label>"
+										+"<input type ='checkbox' id = '판매/서비스직' name = job value = '판매/서비스직'><label for = '판매/서비스직'>판매/서비스직</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '생산/기술직' name = job value = '생산/기술직'><label for = '생산/기술직'>생산/기술직</label>"
+										+"<br>&nbsp;&nbsp;<input type ='checkbox' id = '전문/예술직' name = job value = '전문/예술직'><label for = '전문/예술직'>전문/예술직</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '경영/관리직' name = job value = '경영/관리직'><label for = '경영/관리직'>경영/관리직</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '농/어/축산업' name = job value = '농/어/축산업'><label for = '농/어/축산업'>농/어/축산업</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = job value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "income"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '200만원 이하' name = finalEducation><label for = '200만원 이하'>200만원 이하</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '400만원 이하' name = finalEducation><label for = '400만원 이하'>400만원 이하</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 이하' name = finalEducation><label for = '600만원 이하'>600만원 이하</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 초과' name = finalEducation><label for = '600만원 초과'>600만원 초과</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '200만원 이하' name = income value = '200만원 이하'><label for = '200만원 이하'>200만원 이하</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '400만원 이하' name = income value = '400만원 이하'><label for = '400만원 이하'>400만원 이하</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 이하' name = income value = '600만원 이하'><label for = '600만원 이하'>600만원 이하</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 초과' name = income value = '600만원 초과'><label for = '600만원 초과'>600만원 초과</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "livingType"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '월세' name = finalEducation><label for = '월세'>월세</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '전세' name = finalEducation><label for = '전세'>전세</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '반전세' name = finalEducation><label for = '반전세'>반전세</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '자가' name = finalEducation><label for = '자가'>자가</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = finalEducation><label for = '기타'>기타</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '월세' name = livingType value = '월세'><label for = '월세'>월세</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '전세' name = livingType value = '전세'><label for = '전세'>전세</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '반전세' name = livingType value = '반전세'><label for = '반전세'>반전세</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '자가' name = livingType value = '자가'><label for = '자가'>자가</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = livingType value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "houseType"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '단독 주택' name = finalEducation><label for = '단독 주택'>단독 주택</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '다세대 주택' name = finalEducation><label for = '다세대 주택'>다세대 주택</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '아파트' name = finalEducation><label for = '아파트'>아파트</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = finalEducation><label for = '기타'>기타</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '단독 주택' name = houseType value = '단독 주택'><label for = '단독 주택'>단독 주택</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '다세대 주택' name = houseType value = '다세대 주택'><label for = '다세대 주택'>다세대 주택</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '아파트' name = houseType value = '아파트'><label for = '아파트'>아파트</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = houseType value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "religion"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '무교' name = finalEducation><label for = '무교'>무교</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기독교' name = finalEducation><label for = '기독교'>기독교</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '불교' name = finalEducation><label for = '불교'>불교</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '천주교' name = finalEducation><label for = '천주교'>천주교</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = finalEducation><label for = '기타'>기타</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '무교' name = religion value = '무교'><label for = '무교'>무교</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기독교' name = religion value = '기독교'><label for = '기독교'>기독교</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '불교' name = religion value = '불교'><label for = '불교'>불교</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '천주교' name = religion value = '천주교'><label for = '천주교'>천주교</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = religion value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "maritalStatus"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = finalEducation><label for = '미혼'>미혼</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '기혼' name = finalEducation><label for = '기혼'>기혼</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = ma	ritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '기혼' name = maritalStatus value = '기혼'><label for = '기혼'>기혼</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "livingWith"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '혼자' name = finalEducation><label for = '혼자'>혼자</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '1명' name = finalEducation><label for = '1명'>1명</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '2명' name = finalEducation><label for = '2명'>2명</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '3명' name = finalEducation><label for = '3명'>3명</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '4명' name = finalEducation><label for = '4명'>4명</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '5명' name = finalEducation><label for = '5명'>5명</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '6명 이상' name = finalEducation><label for = '6명 이상'>6명 이상</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '혼자' name = livingWith value = '혼자'><label for = '혼자'>혼자</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '1명' name = livingWith value = '1명'><label for = '1명'>1명</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '2명' name = livingWith value = '2명'><label for = '2명'>2명</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '3명' name = livingWith value = '3명'><label for = '3명'>3명</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '4명' name = livingWith value = '4명'><label for = '4명'>4명</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '5명' name = livingWith value = '5명'><label for = '5명'>5명</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '6명 이상' name = livingWith value = '6명 이상'><label for = '6명 이상'>6명 이상</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "armyGo"){
-				 $("#target"+num).append("&nbsp;&nbsp;<input type ='checkbox' id = '미필' name = finalEducation><label for = '미필'>미필</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '군필' name = finalEducation><label for = '군필'>군필</label>"
-										+"&nbsp;&nbsp;<input type ='checkbox' id = '면제' name = finalEducation><label for = '면제'>면제</label>");
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미필' name = armyGo value = '미필'><label for = '미필'>미필</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '군필' name = armyGo value = '군필'><label for = '군필'>군필</label>"
+										+"&nbsp;&nbsp;<input type ='checkbox' id = '면제' name = armyGo value = '면제'><label for = '면제'>면제</label></div>");
 			}			
 		}
 		

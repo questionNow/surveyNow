@@ -8,17 +8,7 @@
 </head>
 <body>
 	<form action = "<%=request.getContextPath()%>/prac.pr">
-		<table>
-			<tr>
-				<td><input type = "text" name = practice></td>
-				<td><input type = "text" name = practice></td>
-				<td><input type = "text" name = practice></td>
-				<td><input type = "text" name = practice></td>
-				<td><input type = "text" name = practice></td>
-				<td><input type = "text" name = practice></td>
-			</tr>
-		
-		</table>
+		<input type = hidden value = 11 name = sNum>
 		<button>고고</button>
 	</form>
 

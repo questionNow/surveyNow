@@ -1,5 +1,6 @@
 /common/
 /filter/
+/mypage/
 /notice/
 /product/
 /qna/
@@ -7,4 +8,3 @@
 /survey/
 /user/
 /wrapper/
-/mypage/

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
 import survey.model.vo.Survey;
+import survey.model.vo.SurveyTarget;
 
 /**
  * Servlet implementation class SurveyMakeServlet
@@ -33,8 +34,20 @@ public class SurveyMakeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String bool = request.getParameter("bool");
-
+		ArrayList<String[]> targetList = new ArrayList<String[]>();
+		
+		String[] targetType = request.getParameterValues("targetType");
+		for(int i = 0 ; i<targetType.length ; i ++) {
+			System.out.println(targetType[i]);
+			
+			String[] targetDetail = request.getParameterValues(targetType[i]);
+			targetList.add(targetDetail);
+			for(int j = 0; j<targetDetail.length; j++) {
+			System.out.println(targetList.get(i)[j]);
+			}
+		}
+		
+		
 		String sTitle = request.getParameter("sTitle");
 		String[] sInterest = request.getParameterValues("sInterest");
 		String userId = request.getParameter("userId");
@@ -43,14 +56,14 @@ public class SurveyMakeServlet extends HttpServlet {
 		String[] qNum = request.getParameterValues("Qnum");
 		String[] qType = request.getParameterValues("Qtype");
 		String[] qTitle = request.getParameterValues("Qtitle");
-		String interest = "";
-		for (int i = 0; i < sInterest.length; i++) {
-			interest += sInterest[i];
-		}
+		String sCategory = request.getParameter("sCategory");
+		System.out.println(sCategory);
+		SurveyTarget st = new SurveyTarget(targetType, targetList);
+		
 		Survey s = new Survey();
 		s.setsUserId(userId);
 		s.setsTitle(sTitle);
-		s.setsTarget(interest);
+		s.setsType(sCategory);
 		s.setsPoint(sPoint);
 		s.setsCount(sCount);
 		s.setqCount(qNum.length);
@@ -59,7 +72,7 @@ public class SurveyMakeServlet extends HttpServlet {
 			String[] ans = request.getParameterValues(Q);
 			answer.add(ans);
 		}
-		int result = new SurveyService().makeSurvey(s, qNum, qType, qTitle, answer);
+		int result = new SurveyService().makeSurvey(s, st, qNum, qType, qTitle, answer);
 
 		request.setAttribute("msg", "설문 등록 완료!");
 		request.getRequestDispatcher("views/survey/surveySuccess.jsp").forward(request, response);

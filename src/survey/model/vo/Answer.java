@@ -11,7 +11,9 @@ public class Answer implements Serializable{
 	
 	private int aNum;
 	private int qNum;
+	private int sNum;
 	private String aContent;
+	private String eayn;
 	public Answer() {
 	}
 	public Answer(int aNum, int qNum, String aContent) {

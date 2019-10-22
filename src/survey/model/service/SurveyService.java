@@ -8,9 +8,11 @@ import java.util.HashMap;
 
 import survey.model.dao.SurveyDao;
 import survey.model.vo.Answer;
+import survey.model.vo.Chart;
 import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
 import survey.model.vo.Survey;
+import survey.model.vo.SurveyTarget;
 
 public class SurveyService {
 
@@ -77,11 +79,12 @@ public class SurveyService {
 		return sNum;
 	}
 
-	public int makeSurvey(Survey s, String[] qNum, String[] qType, String[] qTitle, ArrayList<String[]> answer) {
+	public int makeSurvey(Survey s, SurveyTarget st, String[] qNum, String[] qType, String[] qTitle, ArrayList<String[]> answer) {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		int result = sDao.makeSurvey(conn, s);
-		int result1 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
+		int result1 = sDao.makeSurveyTarget(conn, st);
+		int result2 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
 		commit(conn);
 		close(conn);
 		return result;
@@ -106,6 +109,24 @@ public class SurveyService {
 		close(conn);
 		
 		return dsList;
+	}
+	
+	public ArrayList<Chart> chartSurvey(int sNum){
+		
+		Connection conn  = getConnection();
+		SurveyDao sDao = new SurveyDao();
+		Survey s = sDao.doServeyS(conn, sNum);
+		ArrayList<Question> qList = sDao.doServeyQ(conn, sNum);
+		System.out.println("큐리" + qList);
+		//	qnum과 일치하는 anum들의 리스트를 작성
+		ArrayList<DoSurvey> dsList = sDao.doServeyA(conn, s, qList);
+		System.out.println("ds리" + dsList);
+		ArrayList<Chart> cList = sDao.chartServey(conn, s, qList, dsList); 
+		
+		close(conn);
+		
+		return cList;
+		
 	}
 
 

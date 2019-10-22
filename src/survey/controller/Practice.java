@@ -32,7 +32,8 @@ public class Practice extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	
+		int sNum = Integer.valueOf(request.getParameter("sNum"));
+		new SurveyService().chartSurvey(sNum);
 	}
 
 
