@@ -83,8 +83,11 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		int result = sDao.makeSurvey(conn, s);
+		System.out.println("survey make : " +result);
 		int result1 = sDao.makeSurveyTarget(conn, st);
+		System.out.println("survey makeTarget : " +result1);
 		int result2 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
+		System.out.println("Question Make : " +result2);
 		commit(conn);
 		close(conn);
 		return result;

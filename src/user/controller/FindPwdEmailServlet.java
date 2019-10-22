@@ -48,8 +48,8 @@ public class FindPwdEmailServlet extends HttpServlet {
 		RequestDispatcher view = null;
 		
 		if(findPwd.getUserPwd() != null) {
-			System.out.println(findPwd.getUserPwd());
-			view = request.getRequestDispatcher("views/user/successPwd.jsp");
+			System.out.println("변경해야할 비밀번호 : " + findPwd.getUserPwd());
+			view = request.getRequestDispatcher("views/user/successPwd.jsp"); 
 			request.setAttribute("UserInfo", findPwd);
 		} else {
 			System.out.println("없는 회원 정보");

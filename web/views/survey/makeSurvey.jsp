@@ -50,22 +50,22 @@
 					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size="70%">
 					<h2>카테고리 <select name = "sCategory">
 						<option value = --->--------</option>
-						<option value = sports>스포츠</option>
-						<option value = food>음식</option>
-						<option value = trip>여행</option>
-						<option value = game>게임</option>
-						<option value = science>과학</option>
-						<option value = fashion>패션</option>
-						<option value = it>IT</option>
-						<option value = car>자동차</option>
-						<option value = society>사회이슈</option>
-						<option value = celebrity>연예인</option>
-						<option value = childrenEdu>육아</option>
-						<option value = hire>취업</option>
-						<option value = education>교육</option>
-						<option value = family>가족</option>
-						<option value = cultural>문화생활</option>
-						<option value = pet>애견</option>
+						<option value = 스포츠>스포츠</option>
+						<option value = 음식>음식</option>
+						<option value = 여행>여행</option>
+						<option value = 게임>게임</option>
+						<option value = 과학>과학</option>
+						<option value = 패션>패션</option>
+						<option value = IT>IT</option>
+						<option value = 자동차>자동차</option>
+						<option value = 사회이슈>사회이슈</option>
+						<option value = 연예인>연예인</option>
+						<option value = 육아>육아</option>
+						<option value = 취업>취업</option>
+						<option value = 교육>교육</option>
+						<option value = 가족>가족</option>
+						<option value = 문화생활>문화생활</option>
+						<option value = 애견>애견</option>
 					
 							</select></h2>
 					<h3>

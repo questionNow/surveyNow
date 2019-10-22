@@ -23,56 +23,60 @@ import user.model.vo.UserInfo;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LoginServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-	       String userPwd = request.getParameter("userPwd");
-	       
-	       UserInfo user = new UserInfo(userId, userPwd);
-	       UserInfo loginUser = new UserService().loginUser(user);
-	       
-	       response.setContentType("text/html;charset=utf-8");
-	       RequestDispatcher view = null;
-	       
-	       if(loginUser != null) {   //성공일 경우
-	          
-	          HttpSession session = request.getSession();   
-	          
-	          session.setAttribute("loginUser", loginUser);
+		request.setCharacterEncoding("UTF-8"); // 로그인에서는 필요없음(한글 쓸일 없으니까)
 
-	         // usertpye 구분해서 로그인하는 것
-	          int usertype = UserService.userType(userId);
-	          
-	          if(usertype == 2) {
-	             view = request.getRequestDispatcher("views/common/mainLoing.jsp");
-	          }      
-	          else if(usertype == 1) {
-	             view = request.getRequestDispatcher("views/common/adminMain.jsp");
-	          }
-	   
-	       }else {//실패할 경우
-	          request.setAttribute("msg", "로그인 실패");
-	          view = request.getRequestDispatcher("views/common/errorPage.jsp");
-	       }
-	       view.forward(request, response);
+		String userId = request.getParameter("userId");
+		String userPwd = request.getParameter("userPwd");
+
+		UserInfo user = new UserInfo(userId, userPwd);
+		UserInfo loginUser = new UserService().loginUser(user);
+
+		response.setContentType("text/html;charset=utf-8");
+		RequestDispatcher view = null;
+
+		if (loginUser != null) { // 성공일 경우
+
+			HttpSession session = request.getSession();
+
+			session.setAttribute("loginUser", loginUser);
+
+			// usertpye 구분해서 로그인하는 것
+			int usertype = UserService.userType(userId);
+
+			if (usertype == 2) {
+				view = request.getRequestDispatcher("views/common/mainLoing.jsp");
+			} else if (usertype == 1) {
+				view = request.getRequestDispatcher("views/common/adminMain.jsp");
+			}
+
+		} else {// 실패할 경우
+			request.setAttribute("msg", "로그인 실패");
+			view = request.getRequestDispatcher("views/common/errorPage.jsp");
+		}
+		view.forward(request, response);
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

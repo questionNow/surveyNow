@@ -75,10 +75,9 @@ public class RegisterServlet extends HttpServlet {
       String page = "";
       if(result > 0) {
          page = "views/user/successRegister.jsp";
-         request.setAttribute("msg", "W E L C O M E");
       } else {
          page = "views/common/errorPage.jsp";
-         request.setAttribute("msg", "회원 가입 실패");
+         request.setAttribute("msg", "회원 가입에 실패하였습니다. 다시 가입해주세요");
       }
       
       RequestDispatcher view = request.getRequestDispatcher(page);

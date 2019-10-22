@@ -46,8 +46,10 @@ public class UserDao {
 
 			pstmt.setString(1, user.getUserId());
 			pstmt.setString(2, user.getUserPwd());
+
 			rs = pstmt.executeQuery();
 
+			System.out.println(user);
 			// resultSet의 결과가 있으면 ...
 			if (rs.next()) {
 				loginUser = new UserInfo(rs.getString("USERID"),
@@ -182,6 +184,7 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
+		System.out.println("dao 검사" + result);
 		return result;
 	}
 	
@@ -209,6 +212,7 @@ public class UserDao {
 			close(pst);
 			close(rs);
 		}
+		System.out.println("다오쪽" + findId);
 		return findId;
 	}
 
@@ -236,6 +240,7 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
+		System.out.println("다오쪽 : " + findId);
 		return findId;
 	}
 	// SeoJaeWoong 비밀번호 찾기(이메일)
@@ -254,6 +259,7 @@ public class UserDao {
 			rs = pst.executeQuery();
 			
 			if(rs.next()) {
+				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
 		} catch (SQLException e) {
@@ -262,6 +268,7 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
+		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
 	// SeoJaeWoong 비밀번호 찾기(핸드폰)
@@ -281,6 +288,7 @@ public class UserDao {
 			rs = pst.executeQuery();
 					
 			if(rs.next()) {
+				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
 		} catch (SQLException e) {
@@ -289,11 +297,31 @@ public class UserDao {
 			close(rs);
 			close(pst);
 		}
+		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
-	
-	 public static Integer userType(Connection conn, String userId) {
-	      PreparedStatement pstmt = null;
+	// SeoJaeWoong 비밀번호 수정
+	public int changePwd(Connection conn, UserInfo changeData) {
+		PreparedStatement pst = null;
+		int result = 0;		
+		try {
+			pst = conn.prepareStatement("UPDATE USER_INFO SET USERPWD=? WHERE USERID=?");
+			
+			pst.setString(1, changeData.getUserPwd());
+			pst.setString(2, changeData.getUserId());
+			
+			result = pst.executeUpdate();
+			System.out.println("다오 쪽 : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pst);
+		}		
+		return result;
+	}
+	// 회원 or 관리자 구분해서 로그인 
+	public static int userType(Connection conn, String userId) {
+		  PreparedStatement pstmt = null;
 	      ResultSet rs = null;
 	      int userType = 0;
 	      String query = "SELECT userType FROM user_info WHERE userId=?";
@@ -317,5 +345,31 @@ public class UserDao {
 	       
 	      return userType;
 	   }
+	// SeoJaeWoong 추천인 아이디 점검
+	public int reIdCheck(Connection conn, String recommendId) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		int result = 0;
+
+		try {
+			pst = conn.prepareStatement("SELECT COUNT(*) FROM USER_INFO WHERE USERID=?");
+			pst.setString(1, recommendId);
+			rs = pst.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		System.out.println("dao 검사" + result);
+		return result;
 	
+	}
+		
 }

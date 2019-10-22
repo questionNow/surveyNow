@@ -53,11 +53,11 @@ body {
 }
 
 .title {
-   margin-left: 390px;
+   margin-left: 600px;
 }
 
 input[type=text] {
-   width: 53.8%;
+   width: 608px;
    display: inline-block;
    border: 1px solid #ccc;
    border-radius: 10px;
@@ -69,52 +69,55 @@ input[type=text] {
 input[type=button] {
    cursor: pointer;
    padding: 9px 20px;
-   width: 30.5%;
+   width: 344px;
 }
-#findIdBtn{
+#findIdEmailBtn, #findIdPhoneBtn{
    cursor: pointer;
    padding: 9px 20px;
-   width: 30.5%;
+   width: 344px;
 }
 
 #beforeBtn3{
-   margin-left: 390px;
-   width : 45.7%;
+   margin-left: 600px;
+   width : 695px;
 }
-#name {
+#name, #name1 {
    margin-left: 50px;
 }
 
 #email1 {
    margin-left: 33px;
-   width: 18%;
+   width: 200px;
 }
 
 #email2 {
-   width: 18%;
+   width: 187px;
 }
 
 #email3 {
-   width: 16%;
+   width: 200px;
    border-radius: 10px;
    border: 1px solid #ccc;
    padding: .7em;
 }
 
-#phone1 {
-   width: 17.7%;
+#tongsin {
+   width: 200px;
    border-radius: 10px;
    border: 1px solid #ccc;
    padding: .7em;
    margin-left: 33px;
 }
 
-#phone2 {
-   width: 34.9%;
+#phoneNum {
+   width: 393px;
 }
 
 #findIdEmail, #findIdPhone {
    display: none;
+}
+input::placeholder {
+  color: #D44D08;
 }
 </style>
 </head>
@@ -135,9 +138,7 @@ input[type=button] {
       <div class=findId2>  아이디 찾기 
       				<br> 아이디를 모르시나요 ? 
       				<br> 아이디 찾기 방법 중 편한 방법을 선택해주세요:)
-      </div>
-      <br> <br>
-      <%-- <form id = "findIdForm" action = "<%=request.getContextPath() %>/findId.find" method = post> --%>
+      </div> <br> <br>
       <div class=title>
          <div class=join>
             <input type=radio id=findMailId name=find value=findMailId>
@@ -158,8 +159,7 @@ input[type=button] {
                </select> <br>
                <br>
                <input type = button value = "로그인 하러가기!" onclick="beforeFind1();">
-               <input type = button id = findIdBtn value = "다음단계" onclick = "emailFind();">
-               <!-- <input type=button value = 다음단계 onclick="emailFind();"> -->
+               <input type = button id = findIdEmailBtn value = "다음단계">  
             </form>
          </div> <br>
          
@@ -169,26 +169,23 @@ input[type=button] {
             <br>
             <form id= findIdPhone action = "<%=request.getContextPath() %>/findIdPhone.find" method = post>
                <label> 이름 </label> 
-               <input type=text id=name name=userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
+               <input type = text id = name1 name = userName placeholder="이름을 입력하세요" maxlength=5 onkeyup="this.value=this.value.replace(/[^가-힣]/g,'');" required>
                <br>
                <br> <label for=phone> 핸드폰 </label> 
-               <select id=phone1 name=phone1>
+               <select id = tongsin name = phone1>
                   <option value="">통신사</option>
                   <option value=KT>KT</option>
                   <option value=SKT>SKT</option>
                   <option value=LG>LG</option>
                </select> 
-               <input type=text id=phone2 name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요"> <br>
+               <input type=text id = phoneNum name = phone maxlength=11 placeholder="(-) 빼고 입력해주세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');"> <br>
                <br>
-               <input type=button value = "로그인 하러가기!" onclick="beforeFind2();"> 
-               <button id = findIdBtn value = "다음단계" onclick = "phoneFind();"> 다음단계 </button>
-               <!-- <input type=button value = 다음단계 onclick="phoneFind();"> -->
+               <input type=button value = "로그인 하러가기!" onclick="beforeFind2();">
+               <input type = button id = findIdPhoneBtn value = "다음단계"> 
    	     </form>
             </div>
          </div><br><br>
-         <input type = button id = beforeBtn3 value = "로그인 하러가기!" onclick = "beforeFind3();">
-    <!--   </form> -->
-  
+         <input type = button id = beforeBtn3 value = "로그인 하러가기!" onclick = "beforeFind3();"> 
 
    <script type="text/javascript">
       // 여기서부터 ->
@@ -209,14 +206,41 @@ input[type=button] {
                   $("#beforeBtn3").css("display","none");
                }
             }); // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
-
-           
-      function emailFind() {  
-          $("#findIdEmail").submit();  // <- /findIdEmail.find Servlet
-      }  
-      function phoneFind() {
-    	  $("#findIdPhone").submit();  // <- /findIdPhone.find Servlet 
-      } 
+		// ----> 여기서부터 Id 찾을때 빈칸 검사
+      $("#findIdEmailBtn").click(function(){
+    	 if($("#name").val() == ""){
+    		 alert("이름을 입력해주세요");
+    		 $("#name").focus();
+    		 return false;
+    	 } else if ($("#email1").val() == ""){
+    		 alert("이메일을 입력해주세요");
+    	 	 $("#email1").focus();
+    	 	 return false;
+    	 } else if ($("#email2").val() == ""){
+    		 alert("이메일을 선택해주세요");
+    		 $("#email2").focus();
+    		 return false;
+    	 } else {
+    		 $("#findIdEmail").submit();   // <- /findIdEmail.find Servlet
+    	 }   	 
+      });
+      $("#findIdPhoneBtn").click(function(){
+    	 if($("#name1").val() == ""){
+    		 alert("이름을 입력해주세요");
+    		 $("#name1").focus();
+    		 return false;
+    	 } else if($("#tongsin").val() == ""){
+    		 alert("통신사를 선택해주세요");
+    		 $("#tongsin").focus();
+    		 return false;
+    	 } else if($("#phoneNum").val() == ""){
+    		 alert("핸드폰 번호를 입력해주세요");
+    		 $("#phoneNum").focus();
+    		 return false;
+    	 } else {
+    		 $("#findIdPhone").submit();  // <- /findIdPhone.find Servlet
+    	 }
+      });  //  ----> 여기까지 Id 찾을때 빈칸 검사
       
       function beforeFind1() {
          location = '../common/loginPage.jsp'; // <- 이전 단계 

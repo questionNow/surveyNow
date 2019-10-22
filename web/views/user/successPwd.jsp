@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
-    
-<%-- import = "user.model.vo.UserInfo" --%>
+    pageEncoding="UTF-8" import = "user.model.vo.UserInfo" %>
 
-<%-- <%
+<% 
 	UserInfo userInfo = (UserInfo)request.getAttribute("UserInfo");
-
+	String userPwd = userInfo.getUserPwd();
 	String userId = userInfo.getUserId();
-%> --%>
+%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +54,7 @@ body{
 	color : #FF8C19;
 }
 #changePwd{
-	padding : 1.5% 35%; 
+	padding-left : 700px;
 }
 input[type = password]{
    width : 460px;
@@ -89,72 +87,78 @@ input[type = password]{
 </div> <br clear="both"><br>
 	
 	<div id = successPwd>
-		<h2> 비밀번호 재설정하기 </h2>
+		<h2> 비밀번호 재설정하기  </h2>
 	</div>
 	
 	<form onsubmit = "return checkPwd();" id = changePwdForm action = "<%=request.getContextPath()%>/changePwd.cp" method = post>
 	<div id = changePwd>
 		<div class = pwd>
-			<label for = changePwd> 비밀번호 </label> <br>
-			<input type = password name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 required>
+			<label> 비밀번호 </label> <br>
+			<input type = hidden id = userId name = userId value = "<%=userId %>">
+			<input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 required><br>
+			<label id = resultPw1></label>
 			<br><br>
 			<label> 비밀번호 확인 </label> <br>
-			<input type = password name = userPwd1 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20>
-			<label id = resultPw> </label>
+			<input type = password id = pw2 name = userPwd1 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20><br>
+			<label id = resultPw2> </label>
 		</div> <br><br>
 		
-		<button onclick = "changeBtn();" id = successBtn> 변경하기 </button>
+		<button id = successBtn class = changeBtn onclick = "changePwd();"> 변경하기 </button>
 		<input type = button value = "로그인" onclick = "login();" id = successBtn>
 	</div>
 	</form>
 	
 	<script type="text/javascript">
-		function changeBtn(){
-			alert("새로운 비밀번호로 로그인하세요");
-		}
-		function login(){
-			location = "../common/loginPage.jsp";
-		}
-		function checkPwd(){
+		function login(){   
+			location.href = '/surveyNow/views/common/loginPage.jsp';
+		} // <- 로그인 버튼 누르면 로그인 화면으로
+		
+		function changePwd() {  
+	        $("#changePwdForm").submit();  // <- /changePwd.cp Servlet
+	    }  
+		// -------> 여기서부터 비밀번호 유효성 검사
+		$(".changeBtn").click(function(){
 			var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-		         if($("#pw1").val() == ""){
-		            alert("비밀번호를 입력해주세요");
-		            $("#pw1").focus();
-		            return false;
-		         }
-		         if ($("#id").val() == ($("#pw1").val())) {
-		               alert("비밀번호가 ID와 똑같습니다!");
-		               $("#pw1").val("");
-		               $("#pw1").focus();
-		               return false;
-		          }
-		         if(!checkPwd.test($("#pw1").val())){
-		            alert("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.");
+	         if($("#pw1").val() == ""){
+	            alert("비밀번호를 입력해주세요");
+	            $("#pw1").focus();
+	            return false;
+	         } else if(!checkPwd.test($("#pw1").val())) {
+	        	 alert("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.");
 		            $("#pw1").val("");
 		            $("#pw1").focus();
 		            return false;
-		         }   
-		}
+	         } else {
+	        	 alert("새로운 비밀번호로 로그인을 해주세요");
+	        	 $("#changePwdForm").submit();  // <- /changePwd.cp Servlet
+	        	 return true;
+	         }
+		});
+		
 		 $(function(){
-	         var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
 	         var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 	         $("#pw1").change(function(){
 	            if(!checkPwd.test($("#pw1").val())){
-	               $("#resultPw").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
+	               $("#resultPw1").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
 	               $("#pw1").val("");
 	               $("#pw1").focus();
+	            } else {
+	            	$("#resultPw1").css("display", "none");
 	            }   
 	         });
 	         
 	         $("#pw2").change(function(){
 	          if($('#pw1').val() != $(this).val()){
-	            $("#resultPw").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+	            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
 	            $("#pw2").val("");
 	            $(this).focus();
 	          } else {
-	             $("#resultPw").html("비밀번호가 일치 합니다.").css("color", "navy");
+	             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
 	          }
 	         });
+		 }); 
+		 // <------- 여기까지 비밀번호 유효성 검사 완료
+		 
 	</script>
 </body>
 </html>

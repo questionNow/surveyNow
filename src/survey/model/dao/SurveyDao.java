@@ -389,18 +389,18 @@ public class SurveyDao {
 					targetDetail += st.getTargetDetail().get(i)[j] + ",";
 				}
 			}
-
 			try {
-				pstmt = conn.prepareStatement("INSERT INTO SURVEY_TARGET VALUES(SEQ_SERVEY.CURRVAL, ?, ?)");
+				pstmt = conn.prepareStatement("INSERT INTO SURVEY_TARGET VALUES(SEQ_SURVEY_TARGET.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
 				pstmt.setString(1, st.getTargetType()[i]);
 				pstmt.setString(2, targetDetail);
+				
+				stResult = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				close(pstmt);
 			}
 		}
-		System.out.println("타겟 잘 들어가는가,,,?" + stResult);
 		return stResult;
 	}
 

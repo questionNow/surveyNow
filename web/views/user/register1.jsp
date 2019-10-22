@@ -41,7 +41,7 @@ body{
 }
 
 .join {
-   margin-left: 500px;
+   margin-left: 650px;
    
 }
 
@@ -52,10 +52,10 @@ input[type = button]{
 input[type = reset]{
    cursor : pointer;
    padding : 9px 20px;
-   width : 26.6%;
+   width : 266.5px;
 }
 input[type = text]{
-   width : 53.8%;
+   width : 540px;
    display : inline-block;
    border : 1px solid #ccc;
    border-radius : 10px;
@@ -63,7 +63,7 @@ input[type = text]{
    padding : 12px 20px;
 }
 input[type = password]{
-   width : 53.8%;
+   width : 540px;
    display : inline-block;
    border : 1px solid #ccc;
    border-radius : 10px;
@@ -72,91 +72,101 @@ input[type = password]{
 }
 
 #id {
-   width : 43.5%;
+   width : 405px;
+}
+#idChk{
+	width : 130px;
 }
 #gender{
-   width : 53.8%;
+   width : 540px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #email1, #email2{
-   width : 17.9%;
+   width : 179.5px;
 }
 #email3{
-   width : 17%;
+   width : 170px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
-#confirmNum{
-   width : 28%;
+#emailNum{
+	width : 280px;
 }
 #tongsin{
-   width : 17%;
+   width : 180px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #phoneNum{
-   width : 36.5%;
+   width : 355px;
 }
 #postCode{
-   width : 18%;   
+   width : 150px;   
 }
 #address1{
-   width : 25%;
+   width : 278px;
 }
 #seAddress{
    cursor : pointer;
    padding : 9px 20px;
+   width : 100px;
 }
 #detailAddress{
-width : 30%;
+	width : 295px;
 }
 #extraAddress{
-width : 23.5%;
+	width : 240px;
+}
+#recommendId{
+    width : 405px;	
+}
+#reIdChk{
+	width : 128px;
 }
 #nextMain{
-   width : 26.7%;
+   width : 268.5px;
 }
 #nextRegister, #checkForm{
    cursor : pointer;
    padding : 9px 20px;
-   width : 53.8%;
+   width : 540px;
 }
 .question {
-   margin-left : 450px;
+   margin-left : 630px;
    font-size : larger;
 }
 #finalEdu{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #job{
-   width : 46.7%;
+   width : 492px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 39.5px;
    padding : .7em;
 }
 #income{
-   width : 46.6%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 12.5px;
    padding : .7em;
 }
 #home1, #home2, #family1{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    padding : .7em;
 }
 #religion, #marry, #soldier{
-   width : 46.7%;
+   width : 493px;
    border-radius : 10px;
    border : 1px solid #ccc;
    margin-left : 39px;
@@ -168,7 +178,7 @@ width : 23.5%;
 #successRegister, #backBtn{
    cursor : pointer;
    padding : 9px 20px;
-   width : 27%;
+   width : 285px;
 }
  
 </style>
@@ -192,18 +202,19 @@ width : 23.5%;
       </div> <br>
       <div class = join>
          <label for = id> 아이디 </label> <br>
-         <input type = text id = id name = userId placeholder = "아이디를 입력하세요" minlength = 4 maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" required>
+         <input type = text id = id name = userId placeholder = "아이디를 입력하세요" maxlength = 12 onkeyup = "this.value=this.value.replace(/[^a-zA-Z0-9]/g,'');" check_result = "fail" required>
          <input type = button value = 중복확인 id = idChk> <br>
          <label id = resultId> </label>
       </div> <br>
       <div class = join>
          <label for = pw1> 비밀번호 </label> <br>
-         <input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 style = "ime-mode:inactive" required>
+         <input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 style = "ime-mode:inactive" required><br>
+         <label id = resultPw1> </label>
       </div> <br>
       <div class = join>
          <label for = pw2> 비밀번호 확인 </label> <br>
          <input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20 style = "ime-mode:inactive" required> <br>
-         <label id = resultPw> </label>
+         <label id = resultPw2> </label>
       </div> <br>
       <div class = join>
          <label for = name> 이름 </label> <br>
@@ -231,11 +242,12 @@ width : 23.5%;
             <option value = "@daum.net"> @daum.net </option>
             <option value = "@gmail.com"> @gmail.com </option>
             <option value = "@nate.com"> @nate.com </option>
-         </select>
-         <!-- <input type = text id = confirmNum name = confirmNum maxlength = 10 placeholder = "인증번호 입력">
-         <input type = button value = "인증번호받기" onclick = "receive();">
-         <input type = button value = "인증번호확인" onclick = "confirm();"> 
-         나중에 시간 남을때 인증번호 구현 -->
+         </select> <br>
+         <!-- 이메일 인증번호 입력 칸 
+         <input type = text id = emailNum name = emailNum placeholder = "인증번호 입력">
+         <input type = button id = receiveNum value = "인증번호전송">
+         <input type = button id = confirmNum value = "인증번호확인" onclick = "confirm();"> 
+         -->
       </div> <br>
       <div class = join>
          <label> 핸드폰번호 </label> <br>
@@ -258,7 +270,8 @@ width : 23.5%;
       </div> <br>
       <div class = join>
          <label> 추천인 </label> <br>
-         <input type = text id = recommend name = recommendId placeholder = "추천인이 있으면 입력하세요">
+         <input type = text id = recommendId name = recommendId placeholder = "추천인이 있으면 입력하세요">
+         <input type = button value = "추천인 확인" id = reIdChk>
       </div> <br>
       <div class = join>
          <div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div>
@@ -266,7 +279,7 @@ width : 23.5%;
          <input type = reset value = "다시쓰기" id = clear1>
          <input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
       </div> </div> 
-   <%-- <form onsubmit = "return checkCondition2();" id = registerForm2 name = registerForm2 action = "<%=request.getContextPath()%>/register.user" method = post> <br> --%>
+
    <div class = title2>
       <div class = register>
          패널 정보 등록
@@ -446,6 +459,11 @@ width : 23.5%;
       $(function(){
          var isUsable = false;
          $("#idChk").click(function(){
+        	// ---> 여기서부터 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+        	$(".id").change(function(){
+        		$(".id").attr("check_result", "fail");
+        	}); // ---> 여기서까지 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+        	
             var userId = $("input[name = 'userId']");
          
             if(!userId || userId.val().length < 4){
@@ -462,6 +480,7 @@ width : 23.5%;
                         userId.focus();
                      } else {
                         alert("사용 가능 아이디 입니다.");
+                        $("#id").attr("check_result", "success");  // <- 아이디 중복체크 확인이벤트
                         isUsable = true;
                      }
                   },
@@ -469,10 +488,43 @@ width : 23.5%;
                      console.log("코드 다시 확인해봐야함ㅠㅠ");
                   }
                });
-            }   
-      });
+            } 
+      	});
       });
       // 여기까지 아이디 중복체크
+     $(function(){
+    	var isUsable = false;
+    	$("#reIdChk").click(function(){
+    		var recommendId = $("input[name = 'recommendId']");
+    		
+    		$.ajax({
+    			url:"<%=request.getContextPath()%>/reIdCheck.ck",
+    			type:"post",
+    			data:{recommendId:recommendId.val()},
+    			success:function(data){
+    				if(data == "fail"){
+    					alert("추천 불가능 아이디 입니다.");
+    					$("#recommendId").val("");
+    				} else {
+    					alert("추천 가능한 아이디 입니다.");
+    					isUsable = true;
+    				}
+    			},
+    			error:function(data){
+    				console.log("코드 다시 확인해야함ㅠㅠ");
+    			}
+    			
+    		});
+    	});
+     });
+      
+      // ------->> 여기서부터 이메일 인증번호 보내기 
+     <%--  function receive(){
+    	  $("#registerForm").attr("action","<%=request.getContextPath()%>/sendMail.user");
+      } --%>
+      <%-- $("#receiveNum").click(function(){
+    	 $("#registerForm").attr("atcion","<%=request.getContextPath()%>/sendMail.user").submit(); 
+      }); --%>  
       
       // -> 여기서부터 비밀번호 유효성 검사 및 일치 확인         
       $(function(){
@@ -480,19 +532,22 @@ width : 23.5%;
          var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
          $("#pw1").change(function(){
             if(!checkPwd.test($("#pw1").val())){
-               $("#resultPw").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
+               $("#resultPw1").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
                $("#pw1").val("");
                $("#pw1").focus();
-            }   
+            } else {
+            	$("#resultPw1").css("display", "none");
+            }
+            
          });
          
          $("#pw2").change(function(){
           if($('#pw1').val() != $(this).val()){
-            $("#resultPw").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
             $("#pw2").val("");
             $(this).focus();
           } else {
-             $("#resultPw").html("비밀번호가 일치 합니다.").css("color", "navy");
+             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
           }
          });
          
@@ -501,27 +556,14 @@ width : 23.5%;
                $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
                $("#id").val("");
                $("#id").focus();
-            } else {
-               $("#resultId").html("중복확인을 눌러주세요").css("color","navy");
             }
          });
       });
-      // <- 여기까지 비밀번호 유효성 검사 및 일치 확인
-      
-      // -> 이메일 인증은 일단 스킵
-      /* function receive(){
-         var certNum = Math.floor(Math.random() * 100000) + 1000;
-         alert("인증번호 : " + certNum);
-      }
-      function confirm(){
-         alert("인증번호 이메일 구현해야하뮤ㅠㅠㅠㅠ");
-      } */ // <- 이메일 인증은 일단 스킵
-      
-      
+      // <- 여기까지 비밀번호 유효성 검사 및 일치 확인     
       
    //   ----------->  여기서부터 가입 1단계 유효성 검사 (input 태그에 기본적으로 안써지게 그냥 막아놈)
       //                     ex) 아이디 input 태그에 특수문자 안들어가게 강제적으로 막았음 
-      $(document).ready(function(){
+  	  $(document).ready(function(){
          $("#secondClick").hide();
       $("#checkForm").click(function(){
          
@@ -529,6 +571,11 @@ width : 23.5%;
       var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
       var checkPhone = /^(?=.*?[0-9]).{11,}$/;
       
+      	 if($("#id").attr("check_result") == "fail"){
+      		 alert("아이디 중복 확인을 해주세요");
+      		 $("#id").focus();
+      		 return false;   // <- 아이디 중복확인 버튼 안누르면 경고창
+      	 }
          if($("#id").val() == ""){
             alert("아이디를 입력해주세요");
             $("#id").focus();
@@ -608,11 +655,11 @@ width : 23.5%;
             $("#detailAddress").focus();
             return false;
          }
-          $("#firstClick").hide();
-          $("#secondClick").show();
-          return true; 
+         $("#firstClick").hide();
+         $("#secondClick").show();
+         return true; 
          });
-      });     // <---------  여기까지 가입1단계 유효성 검사 
+      });      // <---------  여기까지 가입1단계 유효성 검사 
       
       // --------------> 여기서부터 패널등록 빈칸 검사
       function checkCondition(){
@@ -676,6 +723,8 @@ width : 23.5%;
           return true;
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
+     
+      
       $(document).ready(function(){
          $(".title2").hide();  // <- 회원가입 두번째 창 숨기기          
       $("#nextRegister").click(function(){

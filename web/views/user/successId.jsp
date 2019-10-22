@@ -76,7 +76,7 @@ body{
 		<h2> 아이디 찾기 </h2>
 	</div>
 	<div id = successId>
-		<h4> 입력하신 정보로 등록된 아이디는  <%=userId %> 입니다. </h4> 
+		<h4> 입력하신 정보로 등록된 아이디는    [ <%=userId %> ]   입니다. </h4> 
 		<input type = button onclick = "loginMain();" id = successBtn value = "로그인 하기">
 		<input type = button onclick = "findPwd();" id = successBtn value = "패스워드 찾기">
 	</div>
