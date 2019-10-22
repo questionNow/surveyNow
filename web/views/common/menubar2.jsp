@@ -978,7 +978,7 @@
 	 			<div class="menu"> 
 					<li class="menuTest" value="3"><a href="#">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
 						<ul class="contentsTest" >
-							<li id="asd" class="lowMenu" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">
+							<li id="asd" class="lowMenu" onclick="location.href='/surveyNow/myinfo.mi?userId=<%=loginUser.getUserId()%>'">
 								개인정보 수정
 							</li>
 							<li id="asd1" class="lowMenu">

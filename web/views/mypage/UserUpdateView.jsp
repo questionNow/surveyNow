@@ -21,10 +21,10 @@
     String livingWith = user.getLivingWith();
     String armyGo = user.getArmyGo();
     
-	 String[] checkedInterest = new String[16];
+	String[] checkedInterest = new String[16];
 	
 	if(user.getInterest() != null){	//사용자가 회원가입시 흥미버튼을 체크했다면
-		String[] interestArr = user.getInterest().split(",");
+		String[] interestArr = user.getInterest().split(" ,");
 	
 		for(int i=0; i<interestArr.length; i++){
 			switch(interestArr[i]){

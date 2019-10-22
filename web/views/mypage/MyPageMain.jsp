@@ -64,7 +64,7 @@
 	<h1>FullCalendar 예제 입니다.</h1>
 		</div>
 <script>
-	$(document).ready(function() {
+/* 	$(document).ready(function() {
 		setCalendar();
 	});
 
@@ -99,7 +99,7 @@
 				
 		calendar.render();
 
-	}
+	} */
 	
 	</script>
 	<!-- 마이페이지 개인정보 화면 -->
