@@ -371,5 +371,35 @@ public class UserDao {
 		return result;
 	
 	}
+
+	public int registerPoint(Connection conn, UserInfo userInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, 100, SYSDATE, '회원가입 축하')");
+			pstmt.setString(1, userInfo.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int recPoint(Connection conn, UserInfo userInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, 50, SYSDATE, ?)");
+			pstmt.setString(1,  userInfo.getRecommendId());
+			pstmt.setString(2,  "추천 포인트 : " + userInfo.getUserId());
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 		
 }

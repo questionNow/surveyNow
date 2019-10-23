@@ -35,7 +35,6 @@ public class SurveryViewServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		
 		ArrayList<Survey> sList = new SurveyService().selectSurveys(userId);
-		System.out.println(sList);
 		request.setAttribute("sList", sList);
 		request.getRequestDispatcher("views/survey/doSurvey.jsp").forward(request, response);;
 	}

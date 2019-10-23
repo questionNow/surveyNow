@@ -214,18 +214,29 @@ input::placeholder {
             });  // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
        
       // -----> 여기서부터 이메일 인증번호 받기
-       <%-- $("#receiveNum").click(function(){
-    	  $("#findPwdEmail").attr("action","<%=request.getContextPath()%>/sendMail.user").submit();
-      });   --%>
+    
      
+     // ajax로 sendMail.jsp에서 발생한 인증번호 받아오기
 	 $("#receiveNum").click(function(){
-          // window.name = "부모창 이름"; 
-          window.name = "findPw.jsp";
-          // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-          window.open("sendMail.jsp",
-                 "margin-left=auto margin-right=auto width=10, height=10, location = no, resizable = no, scrollbars = no");    
+		 var emailTo = ""+ $("#email1").get(0).value + $("#email3").get(0).value;
+         	$.ajax({
+         		url : "sendMail.jsp",
+         		data : {emailTo, emailTo},
+         		success : function(data){
+         			alert("인증번호 전송 하였습니다. 메일을 확인하시고 정확하게 입력해주세요.");
+         			confirmNumber = data;
+         		}
+         	});    
 	 });
-      
+     
+     // 인증번호 확인 버튼 눌렀을 때 인증번호와 전송한 번호가 일치하면 정답, 틀리면 땡 :)
+	 $("#confirmNum").click(function(){
+		 if(data = $("#emailNum").get(0).value){
+			 alert("정답");
+		 }else
+			 alert("땡");
+	 });
+	 
       // <----- 여기까지 이메일 인증번호 받기
             
    	  // ---->> 여기서부터 Pwd 찾을 때 빈칸 검사

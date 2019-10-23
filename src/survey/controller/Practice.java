@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+
 import survey.model.service.SurveyService;
 
 /**
@@ -34,6 +36,7 @@ public class Practice extends HttpServlet {
 			throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		new SurveyService().chartSurvey(sNum);
+		JsonObject json = new JsonObject();
 	}
 
 

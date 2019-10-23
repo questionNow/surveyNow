@@ -69,7 +69,7 @@
 					
 							</select></h2>
 					<h3>
-						요청 패널 수 <input name=sCount type=number min="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						요청 패널 수 <input name=sCount type=number min="5" step = "5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						포인트 <input name=sPoint type=number min="50" step="50"><br>
 						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요)  <input type="button"
 							value="재설정" style="float: right" onclick="deleteTarget();"><input type="button"

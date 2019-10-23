@@ -494,7 +494,6 @@ public class SurveyDao {
 				pstmt.setString(4, aContent[i]);
 
 				result[i] = pstmt.executeUpdate();
-				System.out.println("기록 넣기 :"+ result[i]);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -600,5 +599,48 @@ public class SurveyDao {
 		}
 		
 		return result;
+	}
+
+	public int recordPoint(Connection conn, Survey survey, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, ?, SYSDATE, ?)");
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, survey.getsPoint());
+			pstmt.setString(3, "설문 참여보상 : \"" +survey.getsTitle() +"\"");
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Survey selectSurveys(Connection conn, int sNum) {
+		PreparedStatement pstmt= null;
+		ResultSet rs = null;
+		
+		Survey survey = new Survey();
+		try {
+			pstmt = conn.prepareStatement("SELECT SPOINT, STITLE FROM SURVEY WHERE SNUM = ?");
+			pstmt.setInt(1,  sNum);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				survey.setsNum(sNum);
+				survey.setsPoint(rs.getInt("spoint"));
+				survey.setsTitle(rs.getString("stitle"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return survey;
 	}
 }

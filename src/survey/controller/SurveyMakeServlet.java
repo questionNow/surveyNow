@@ -38,12 +38,9 @@ public class SurveyMakeServlet extends HttpServlet {
 		
 		String[] targetType = request.getParameterValues("targetType");
 		for(int i = 0 ; i<targetType.length ; i ++) {
-			System.out.println(targetType[i]);
-			
 			String[] targetDetail = request.getParameterValues(targetType[i]);
 			targetList.add(targetDetail);
 			for(int j = 0; j<targetDetail.length; j++) {
-			System.out.println(targetList.get(i)[j]);
 			}
 		}
 		
@@ -57,7 +54,6 @@ public class SurveyMakeServlet extends HttpServlet {
 		String[] qType = request.getParameterValues("Qtype");
 		String[] qTitle = request.getParameterValues("Qtitle");
 		String sCategory = request.getParameter("sCategory");
-		System.out.println(sCategory);
 		SurveyTarget st = new SurveyTarget(targetType, targetList);
 		
 		Survey s = new Survey();

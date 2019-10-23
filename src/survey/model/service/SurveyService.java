@@ -111,7 +111,6 @@ public class SurveyService {
 		Survey s = sDao.doServeyS(conn, sNum);
 		ArrayList<Question> qList = sDao.doServeyQ(conn, sNum);
 		ArrayList<DoSurvey> dsList = sDao.doServeyA(conn, s, qList);
-		System.out.println(dsList);
 		close(conn);
 
 		return dsList;
@@ -138,11 +137,11 @@ public class SurveyService {
 		int cResult = 0;
 		int countSurvey = sDao.addSurveyCount(conn, sNum);
 		int checkSurveyCount = sDao.checkSurveyCount(conn, sNum);
+		Survey survey = sDao.selectSurveys(conn, sNum);
+		int pointRecord = sDao.recordPoint(conn, survey, userId);
 		for (int i = 0; i < result.length; i++) {
 			if (result[i] > 0) {
 				countResult[i] = sDao.addAnswerCount(conn, aNum[i]);
-				
-				System.out.println("카운트 늘리기 : " +countResult[i]);
 			}
 		}
 		if(result.length == countResult.length) {

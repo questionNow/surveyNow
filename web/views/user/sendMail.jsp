@@ -1,3 +1,4 @@
+<%@page import="com.google.gson.JsonObject"%>
 <%@page import="javax.mail.Transport"%>
 <%@page import="javax.mail.Message"%>
 <%@page import="javax.mail.Address"%>
@@ -7,20 +8,21 @@
 <%@page import="javax.mail.Authenticator"%>
 <%@page import="user.controller.SMTPAuthenticator"%>
 <%@page import="java.util.Properties"%>
+<%@page import="com.google.gson.*"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("utf-8");
  
 String m_name = "서재웅";   
-String m_email = request.getParameter("email1") + request.getParameter("email2");
+String m_email = request.getParameter("emailTo");
 String m_title = "테스트 메일"; 
 String m_text = "인증번호는  ";   
 int randomNum = (int)(Math.random()*10000)+1;  // <- 추가 메일 내용 
 String plusText = " 입니다. 정확히 입력해주세요.";
-System.out.println("이메일 테스트 : " + m_email);
 try {
-    String mail_from = "hiwodnd@gmail.com";  // 내 메일 
+    String mail_from = "chadolskii123@gmail.com";  // 내 메일 
     String mail_to = m_email;  // 받는 사람 
     String title = m_title;  // 제목 
     String contents = m_text + randomNum + plusText; //  메일 내용 
@@ -57,7 +59,9 @@ try {
 
 }
 out.println("<script>alert('이메일을 확인해주세요');</script>");  // 성공 시
-
+String num = ""+randomNum;
+response.setContentType("text");
+response.getWriter().print(num);
 
 %>
 
