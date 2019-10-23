@@ -73,9 +73,8 @@ public class SurveyMakeServlet extends HttpServlet {
 			answer.add(ans);
 		}
 		int result = new SurveyService().makeSurvey(s, st, qNum, qType, qTitle, answer);
-
-		request.setAttribute("msg", "설문 등록 완료!");
-		request.getRequestDispatcher("views/survey/surveySuccess.jsp").forward(request, response);
+		request.setAttribute("userId",s.getsUserId());
+		request.getRequestDispatcher("surveyHoldList.sv").forward(request, response);
 		;
 
 	}

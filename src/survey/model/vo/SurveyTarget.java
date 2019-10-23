@@ -14,6 +14,7 @@ public class SurveyTarget implements Serializable{
 	private int sNum;
 	private String[] targetType;
 	private ArrayList<String[]> targetDetail;
+	
 	public SurveyTarget() {
 	
 	}

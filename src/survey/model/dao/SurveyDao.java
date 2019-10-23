@@ -12,11 +12,11 @@ import java.util.Map;
 import static common.JDBCTemplate.*;
 
 import survey.model.vo.Answer;
-import survey.model.vo.Chart;
 import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
+import user.model.vo.UserInfo;
 
 public class SurveyDao {
 
@@ -25,7 +25,6 @@ public class SurveyDao {
 		ResultSet rs = null;
 
 		ArrayList<Survey> sList = null;
-		System.out.println(userId);
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SUSERID =? AND SSTATUS ='H'");
 			pstmt.setString(1, userId);
@@ -129,7 +128,6 @@ public class SurveyDao {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -256,8 +254,8 @@ public class SurveyDao {
 				qResult = pstmt.executeUpdate();
 				ans = answer.get(i);
 				for (int j = 0; j < ans.length; j++) {
-					pstmt = conn
-							.prepareStatement("INSERT INTO ANSWER VALUES(SEQ_ANSWER.NEXTVAL, SEQ_QUESTION.CURRVAL, ?)");
+					pstmt = conn.prepareStatement(
+							"INSERT INTO ANSWER VALUES(SEQ_ANSWER.NEXTVAL, SEQ_QUESTION.CURRVAL, ?, DEFAULT)");
 					pstmt.setString(1, ans[j]);
 					aResult = pstmt.executeUpdate();
 				}
@@ -276,7 +274,7 @@ public class SurveyDao {
 
 		ArrayList<Survey> sList = null;
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS = 'H'and NOT SUSERID = ?");
+			pstmt = conn.prepareStatement("SELECT DISTINCT SNUM, STYPE, STITLE, SSTARTDT, SENDDT, SCOUNT, SPOINT, QCOUNT, ACOUNT, SSTATUS, STARGET, SCREATEDT, SUSERID FROM DOSURVEYLIST WHERE SSTATUS = 'H' AND NOT SUSERID = ? AND RNUM IS NULL");
 			pstmt.setString(1, userId);
 			sList = new ArrayList<Survey>();
 			rs = pstmt.executeQuery();
@@ -339,7 +337,11 @@ public class SurveyDao {
 						qList.get(i).getqTitle());
 				int aCount = 0;
 				while (rs.next()) {
-					Answer a = new Answer(rs.getInt("anum"), qList.get(i).getqNum(), rs.getString("acontent"));
+					Answer a = new Answer(rs.getInt("anum"), qList.get(i).getqNum(), rs.getString("acontent"),
+							rs.getInt("answercount"));
+					;
+					a.setaNum(rs.getInt("anum"));
+
 					aList.add(a);
 					aCount++;
 				}
@@ -358,11 +360,9 @@ public class SurveyDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Survey s = new Survey();
-
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SNUM = ?");
 			pstmt.setInt(1, sNum);
-
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				s.setsNum(sNum);
@@ -380,8 +380,9 @@ public class SurveyDao {
 	public int makeSurveyTarget(Connection conn, SurveyTarget st) {
 		PreparedStatement pstmt = null;
 		int stResult = 0;
-		String targetDetail = "";
+
 		for (int i = 0; i < st.getTargetType().length; i++) {
+			String targetDetail = "";
 			for (int j = 0; j < st.getTargetDetail().get(i).length; j++) {
 				if (j == st.getTargetDetail().get(i).length - 1) {
 					targetDetail += st.getTargetDetail().get(i)[j];
@@ -390,10 +391,11 @@ public class SurveyDao {
 				}
 			}
 			try {
-				pstmt = conn.prepareStatement("INSERT INTO SURVEY_TARGET VALUES(SEQ_SURVEY_TARGET.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
+				pstmt = conn.prepareStatement(
+						"INSERT INTO SURVEY_TARGET VALUES(SEQ_SURVEY_TARGET.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
 				pstmt.setString(1, st.getTargetType()[i]);
 				pstmt.setString(2, targetDetail);
-				
+
 				stResult = pstmt.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -416,7 +418,7 @@ public class SurveyDao {
 				pstmt = conn.prepareStatement("SELECT * FROM ANSWER WHERE QNUM=?");
 				pstmt.setInt(1, qList.get(i).getqNum());
 				while (rs.next()) {
-					aList.add(new Answer(rs.getInt("anum"), qList.get(i).getqNum(), rs.getString("acontent")));
+					aList.add(new Answer(rs.getInt("anum"), qList.get(i).getqNum(), rs.getString("acontent"), rs.getInt("answercount")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -424,38 +426,6 @@ public class SurveyDao {
 		}
 
 		return aList;
-	}
-
-	public ArrayList<Chart> chartServey(Connection conn, Survey s, ArrayList<Question> qList,
-			ArrayList<DoSurvey> dsList) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		ArrayList<Chart> cList = new ArrayList<Chart>();
-
-		int aCount = 0;
-
-		try {
-			for (int i = 0; i < qList.size(); i++) {
-				for(int j = 0; j< dsList.get(i).getA().size(); j++) {
-					pstmt = conn.prepareStatement("SELECT count(*) FROM RESULT WHERE QNUM = ? AND ANUM =?");
-					pstmt.setInt(1, qList.get(i).getqNum());
-					pstmt.setInt(2, dsList.get(i).getA().get(j).getaNum());
-					
-					rs = pstmt.executeQuery();
-					
-					while(rs.next()) {
-						Chart c = new Chart(s.getsNum(), s.getsTitle(), s.getsTarget(), s.getsStartDate(), s.getsEndDate(),qList.get(i).getqNum(), qList.get(i).getqTitle(),
-										dsList.get(i).getA().get(j).getaContent(), rs.getInt(1));
-						System.out.println(c);
-						cList.add(c);
-					}
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return cList;
 	}
 
 	public ArrayList<int[]> checkAnum(Connection conn, ArrayList<Question> qList, ArrayList<Integer> aCount) {
@@ -509,5 +479,126 @@ public class SurveyDao {
 
 	public ArrayList<DoSurvey> checkDS(Connection conn, Survey s, ArrayList<Question> qList) {
 		return null;
+	}
+
+	public int[] recordAnswer(Connection conn, String userId, int sNum, int[] qNum, int[] aNum, String[] aContent) {
+		PreparedStatement pstmt = null;
+		int[] result = new int[qNum.length];
+
+		try {
+			for (int i = 0; i < qNum.length; i++) {
+				pstmt = conn.prepareStatement("INSERT INTO RESULT VALUES(SEQ_RESULT.NEXTVAL, ?, ?, ?, ?, SYSDATE)");
+				pstmt.setInt(1, aNum[i]);
+				pstmt.setInt(2, qNum[i]);
+				pstmt.setString(3, userId);
+				pstmt.setString(4, aContent[i]);
+
+				result[i] = pstmt.executeUpdate();
+				System.out.println("기록 넣기 :"+ result[i]);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int addAnswerCount(Connection conn, int aNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		try {
+			pstmt = conn.prepareStatement("UPDATE ANSWER SET ANSWERCOUNT = (ANSWERCOUNT+1) WHERE ANUM =?");
+			pstmt.setInt(1, aNum);
+
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+	public void checkTarget(Connection conn, ArrayList<Survey> sList) {
+		
+		
+	}
+	public UserInfo checkTarget2(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		UserInfo userInfo = new UserInfo();
+		
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID =?");
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				userInfo = new UserInfo(rs.getString("USERID"),
+						rs.getString("USERPWD"),
+						rs.getString("USERNAME"),
+						rs.getInt("AGE"),
+						rs.getString("GENDER"),
+						rs.getString("EMAIL"),
+						rs.getString("PHONE"),
+						rs.getString("ADDRESS"),
+						rs.getString("RECOMMEND_ID"),
+						rs.getInt("SURVEYCOUNT"),
+						rs.getInt("VISITCOUNT"),
+						rs.getInt("USERTYPE"),
+						rs.getString("STATUS"),
+						rs.getString("FINAL_EDUCATION"),
+						rs.getString("JOB"),
+						rs.getString("INCOME"),
+						rs.getString("LIVING_TYPE"),
+						rs.getString("HOUSE_TYPE"),
+						rs.getString("RELIGION"),
+						rs.getString("MARITAL_STATUS"),
+						rs.getString("LIVING_WITH"),
+						rs.getString("ARMY_GO"),
+						rs.getString("INTEREST"),
+						rs.getDate("PWDDATE"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return userInfo;
+		
+		
+	}
+
+	public int addSurveyCount(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt= conn.prepareStatement("UPDATE SURVEY SET ACOUNT = ACOUNT+1 WHERE SNUM = ?");
+			pstmt.setInt(1,sNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int checkSurveyCount(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'H' WHERE ACOUNT = SCOUNT");
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }

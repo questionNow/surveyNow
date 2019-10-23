@@ -1,9 +1,7 @@
 package survey.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
-import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class SurveryViewServlet
+ * Servlet implementation class SurveyAnswerServlet
  */
-@WebServlet("/surveyListView.sv")
-public class SurveryViewServlet extends HttpServlet {
+@WebServlet("/surveyAnswer.sv")
+public class SurveyAnswerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SurveryViewServlet() {
+    public SurveyAnswerServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,12 +29,25 @@ public class SurveryViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String[] qName = request.getParameterValues("answerQnum");
+		int[] qNum = new int[qName.length];
+		String answer[] = new String[qName.length];
+		int[] aNum = new int[qName.length];
+		String[] aContent = new String[qName.length];
+		for(int i = 0 ; i< qName.length ; i++) {
+			qNum[i] = Integer.valueOf(qName[i]);
+			answer[i] = request.getParameter(qName[i]);
+			aNum[i] = Integer.valueOf(answer[i].split(",")[0]);
+			aContent[i] = answer[i].split(",")[1];
+		}
+		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		String userId = request.getParameter("userId");
+		int result = new SurveyService().recordAnswer(userId, sNum, qNum, aNum, aContent);
+		if(result >0) {
+			request.setAttribute("userId", userId);
+			request.getRequestDispatcher("surveyListView.sv").forward(request, response);
+		}
 		
-		ArrayList<Survey> sList = new SurveyService().selectSurveys(userId);
-		System.out.println(sList);
-		request.setAttribute("sList", sList);
-		request.getRequestDispatcher("views/survey/doSurvey.jsp").forward(request, response);;
 	}
 
 	/**

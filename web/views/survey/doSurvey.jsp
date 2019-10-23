@@ -42,12 +42,15 @@
 				설문 제목 :
 				<%=s.getsTitle()%></h3>
 			<h2>
-				참여가능 패널 수 :
-				<%=s.getsCount()%>명
+				설문 주제 :
+				<%=s.getsType()%></h2>
+			<h2>
+				패널 수 :
+				<%=s.getaCount()%>명 / <%=s.getsCount()%>명
 			</h2>
 			<h2>
-				설문 주제 :
-				<%=s.getsTarget()%></h2>
+				문항 수 : <%= s.getqCount()%> 문항
+			</h2>
 			<h2>
 				참여시 획득 가능 포인트 :
 				<%=s.getsPoint()%></h2>
