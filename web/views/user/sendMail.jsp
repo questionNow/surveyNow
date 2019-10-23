@@ -22,7 +22,7 @@ String m_text = "인증번호는  ";
 int randomNum = (int)(Math.random()*10000)+1;  // <- 추가 메일 내용 
 String plusText = " 입니다. 정확히 입력해주세요.";
 try {
-    String mail_from = "chadolskii123@gmail.com";  // 내 메일 
+    String mail_from = "hiwodnd@gmail.com";  // 내 메일 
     String mail_to = m_email;  // 받는 사람 
     String title = m_title;  // 제목 
     String contents = m_text + randomNum + plusText; //  메일 내용 
@@ -58,7 +58,7 @@ try {
 } finally {
 
 }
-out.println("<script>alert('이메일을 확인해주세요');</script>");  // 성공 시
+//성공시 findPw로 randomNum 값 넘겨줌
 String num = ""+randomNum;
 response.setContentType("text");
 response.getWriter().print(num);
