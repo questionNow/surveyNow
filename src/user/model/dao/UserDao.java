@@ -18,18 +18,6 @@ public class UserDao {
 	private Properties prop = new Properties();
 
 	public UserDao() {
-		// 기본생성자는 항상 member-query.properties 값을 불러올 수 있도록
-		// 기본 생성자 안에서 properties 파일을 불러오는 작업을 하자
-		String fileName = UserDao.class.getResource("/sql/user/user-query.properties").getPath();
-
-		try {
-			prop.load(new FileReader(fileName));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	// SDB 로그인
@@ -38,9 +26,6 @@ public class UserDao {
 		ResultSet rs = null;
 
 		UserInfo loginUser = null;
-
-		String query = prop.getProperty("loginMember");
-
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERPWD=? AND STATUS='N'");
 
@@ -75,7 +60,9 @@ public class UserDao {
 										rs.getString("LIVING_WITH"),
 										rs.getString("ARMY_GO"),
 										rs.getString("INTEREST"),
-										rs.getDate("PWDDATE"));
+										rs.getDate("PWDDATE"),
+			                            rs.getDate("joindate"),
+			                            rs.getInt("point"));
 			}
 
 		} catch (SQLException e) {
@@ -98,7 +85,6 @@ public class UserDao {
 
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=?");
 			pstmt.setString(1, userId);
-//			pstmt.setString(1, "admin");
 
 			rs = pstmt.executeQuery();
 
@@ -111,7 +97,7 @@ public class UserDao {
 						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
 						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
 						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"), rs.getDate("PWDDATE"));
+						rs.getString("INTEREST"), rs.getDate("PWDDATE"),rs.getDate("joindate"), rs.getInt("point"));
 			}
 
 		} catch (SQLException e) {

@@ -525,52 +525,7 @@ public class SurveyDao {
 		
 		
 	}
-	public UserInfo checkTarget2(Connection conn, String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		UserInfo userInfo = new UserInfo();
-		
-		try {
-			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID =?");
-			pstmt.setString(1, userId);
-			rs = pstmt.executeQuery();
-			while(rs.next()){
-				userInfo = new UserInfo(rs.getString("USERID"),
-						rs.getString("USERPWD"),
-						rs.getString("USERNAME"),
-						rs.getInt("AGE"),
-						rs.getString("GENDER"),
-						rs.getString("EMAIL"),
-						rs.getString("PHONE"),
-						rs.getString("ADDRESS"),
-						rs.getString("RECOMMEND_ID"),
-						rs.getInt("SURVEYCOUNT"),
-						rs.getInt("VISITCOUNT"),
-						rs.getInt("USERTYPE"),
-						rs.getString("STATUS"),
-						rs.getString("FINAL_EDUCATION"),
-						rs.getString("JOB"),
-						rs.getString("INCOME"),
-						rs.getString("LIVING_TYPE"),
-						rs.getString("HOUSE_TYPE"),
-						rs.getString("RELIGION"),
-						rs.getString("MARITAL_STATUS"),
-						rs.getString("LIVING_WITH"),
-						rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"),
-						rs.getDate("PWDDATE"));
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rs);
-		}
-		return userInfo;
-		
-		
-	}
+	
 
 	public int addSurveyCount(Connection conn, int sNum) {
 		PreparedStatement pstmt = null;
@@ -642,5 +597,20 @@ public class SurveyDao {
 			close(rs);
 		}
 		return survey;
+	}
+
+	public int addPoint(Connection conn, Survey survey, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("UDPATE USER_INFO SET POINT = POINT+? WHERE USERID=?");
+			pstmt.setInt(1,  survey.getsPoint());
+			pstmt.setString(2,  userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

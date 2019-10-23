@@ -221,7 +221,7 @@ input::placeholder {
 		 var emailTo = ""+ $("#email1").get(0).value + $("#email3").get(0).value;
          	$.ajax({
          		url : "sendMail.jsp",
-         		data : {emailTo, emailTo},
+         		data : {emailTo : emailTo},
          		success : function(data){
          			alert("인증번호 전송 하였습니다. 메일을 확인하시고 정확하게 입력해주세요.");
          			confirmNumber = data;
