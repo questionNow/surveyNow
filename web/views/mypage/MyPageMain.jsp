@@ -55,9 +55,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="../common/menubar2.jsp" %>
-	<%--   <%@ include file="../common/menubarUser.jsp"  %> --%>	
+
 	
+	<%@ include file="../common/menubar2.jsp" %>
+
 <!-- 마이페이지부분 전체 div -->	
 
 		<div id="calendar">

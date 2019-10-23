@@ -968,7 +968,7 @@
            			<li id="asd2" class="lowMenu" onclick="location.href='/surveyNow/mypoint.mp?userId=<%=loginUser.getUserId()%>'">
                         	포인트
                      </li>
-                  		<li id="asd3" class="lowMenu" onclick="location.href='/views/mypage/MyQnAboard.jsp?'">
+                  		<li id="asd3" class="lowMenu" onclick="location.href='views/mypage/MyQnABoard.jsp'">
                         	1대1 문의
                      </li>   
                   </ul>

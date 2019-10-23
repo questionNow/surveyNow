@@ -2,7 +2,7 @@ package mypage.model.vo;
 
 import java.io.Serializable;
 
-public class Board implements Serializable {
+public class QnA implements Serializable {
 
 	/**
 	 * 
@@ -17,10 +17,24 @@ public class Board implements Serializable {
 	private String qnaType;
 	private String aContent;
 	private String aStatus;
-	public Board() {
+	public QnA() {
 		super();
 	}
-	public Board(int qnaNum, String userId, String qnaTitle, String qnaContent, String qnaType, String aContent,
+	
+	
+	
+	public QnA(int qnaNum, String userId, String qnaTitle, String qnaContent, String qnaType) {
+		super();
+		this.qnaNum = qnaNum;
+		this.userId = userId;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+		this.qnaType = qnaType;
+	}
+
+
+
+	public QnA(int qnaNum, String userId, String qnaTitle, String qnaContent, String qnaType, String aContent,
 			String aStatus) {
 		super();
 		this.qnaNum = qnaNum;

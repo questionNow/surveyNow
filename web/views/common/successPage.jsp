@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%
-	String msg = (String)request.getAttribute("msg");
+	String MyMain = (String)request.getAttribute("MyMain");
 %>   
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1 align="center"><%= msg %></h1>
-	<a href="<%=request.getContextPath() %>/MyPageMain.jsp" align="center" ><h1>메인으로 돌아가기</h1></a>
+	<h1 align="center"><%= MyMain %></h1>
+	<a href="<%=request.getContextPath() %>/index.jsp" align="center" ><h1>메인으로 돌아가기</h1></a>
 </body>
 </html>

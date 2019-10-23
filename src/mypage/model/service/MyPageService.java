@@ -1,11 +1,16 @@
 package mypage.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import mypage.model.dao.MyPageDao;
+import mypage.model.vo.Board;
+import mypage.model.vo.QnA;
 import user.model.vo.Point;
 import user.model.vo.UserInfo;
 
@@ -42,7 +47,7 @@ public class MyPageService {
 	
 
 
-
+	  // 포인트
 	public ArrayList<Point> selectPointList(int currentPage, int limit, int listCount) {
 		Connection conn = getConnection();
 		
@@ -77,7 +82,8 @@ public class MyPageService {
 		
 		return user;
 	}
-
+	
+	
 	public int getListCount() {
 		  Connection conn = getConnection();
 		  
@@ -87,6 +93,48 @@ public class MyPageService {
 			 
 			  return listCount;
 	}
+	
+	// 1대1 문의 
+	public int getQnAListCount() {
+		Connection conn = getConnection();
+		  
+		 int listCount = new MyPageDao().getQnAListCount(conn);
+		  
+		  close(conn);
+		 
+		  return listCount;
+	}
+
+	/*
+	 *  public ArrayList<Board> selectQnAList(int currentPage, int
+	 * limit) { Connection conn = getConnection();
+	 * 
+	 * ArrayList<Board> list = new MyPageDao().selectQnAList(conn, currentPage,
+	 * limit);
+	 * 
+	 * close(conn);
+	 * 
+	 * return list; }
+	 */
+
+	public int insertMyQnA(QnA qna) {
+		Connection conn = getConnection();
+		
+		int result = new MyPageDao().insertMyQnA(conn, qna);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+
+
+	
 
 
 	

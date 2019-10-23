@@ -38,6 +38,7 @@ public class InfoChangeServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		 String userId = request.getParameter("userId");
+		 String userPwd = request.getParameter("userPwd");
 	      String userName = request.getParameter("userName");
 	    	 int age = Integer.parseInt(request.getParameter("age")); 
 	      String email = request.getParameter("email1") + request.getParameter("email2");
@@ -55,6 +56,7 @@ public class InfoChangeServlet extends HttpServlet {
 		  String [] interestArr = request.getParameterValues("interest"); 
 	     
 System.out.println("1 userId : " + userId); 
+System.out.println("0 userPwd : " + userPwd);
 System.out.println("2 userName : " + userName); 
 	 System.out.println("3 age : " + age); 
 System.out.println("4 email : " + email); 
@@ -77,27 +79,32 @@ System.out.println("15 armyGo : " + armyGo);
 		
 		  String interest = "";
 		  
-		 if(interestArr != null) { for(int i=0; i < interestArr.length; i++) { if(i ==
-		  interestArr.length -1) { interest += interestArr[i]; }else { interest +=
-		  interestArr[i] + " ,"; } 
+		 if(interestArr != null) { 
+			for(int i=0; i < interestArr.length; i++) { 
+				if(i == interestArr.length -1) { 
+					interest += interestArr[i]; 
+					}else { 
+						interest += interestArr[i] + ","; 
+						} 
 		 }
 		 }
 		 
 		  
-		  UserInfo userInfo = new UserInfo(userId, userName, age, email, phone,
+		  UserInfo userInfo = new UserInfo(userId, userPwd, userName, age, email, phone,
 		  address, finalEducation, job, income, livingType, houseType, religion,
-		  maritalStatus, livingWith, armyGo);
+		  maritalStatus, livingWith, armyGo, interest);
 		
 		 
 		  int result = new MyPageService().InfoChange(userInfo);
 		  
+		  
 		 RequestDispatcher view = null; 
 		 if(result > 0) { 
 			 view =request.getRequestDispatcher("views/common/successPage.jsp");
-		  request.setAttribute("msg", "회원 수정 성공"); 
+		  request.setAttribute("MyMain", "회원 수정 성공"); 
 		  }else {
-		  view = request.getRequestDispatcher("views/common/errorPage.jsp");
-		  request.setAttribute("msg", "회원 수정 실패"); 
+		  view = request.getRequestDispatcher("views/mypage/UserUpdateView.jsp");
+		  request.setAttribute("user", userInfo); 
 		  } 
 		 view.forward(request, response);
 
