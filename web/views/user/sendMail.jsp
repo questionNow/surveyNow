@@ -19,7 +19,7 @@ String m_name = "서재웅";
 String m_email = request.getParameter("emailTo");
 String m_title = "테스트 메일"; 
 String m_text = "인증번호는  ";   
-int randomNum = (int)(Math.random()*10000)+1;  // <- 추가 메일 내용 
+int randomNum = (int)(Math.random()*9000)+1000;  // <- 추가 메일 내용 
 String plusText = " 입니다. 정확히 입력해주세요.";
 try {
     String mail_from = "hiwodnd@gmail.com";  // 내 메일 
@@ -56,22 +56,11 @@ try {
 } catch (Exception e) {
     response.sendRedirect("views/common/errorPage.jsp");  //  실패 
 } finally {
-
+	
 }
+	int[] arr = {randomNum};
+	response.setContentType("application/json");
+	new Gson().toJson(arr,response.getWriter());
 //성공시 findPw로 randomNum 값 넘겨줌
-String num = ""+randomNum;
-response.setContentType("text");
-response.getWriter().print(num);
 
 %>
-
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>

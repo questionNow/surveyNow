@@ -70,9 +70,9 @@ input[type = button]{
    width : 695px;
 }
 #findPwdEmailBtn, #findPwdPhoneBtn{
-	cursor : pointer;
-	padding : 9px 20px;
-	width: 344px;
+   cursor : pointer;
+   padding : 9px 20px;
+   width: 344px;
 }
 #name, #name1 {
    margin-left : 50px;
@@ -92,11 +92,11 @@ input[type = button]{
    padding : .7em;
 }
 #emailNum{
-	margin-left : 17px;
-	width : 200px;
+   margin-left : 17px;
+   width : 200px;
 }
 #receiveNum, #confirmNum{
-	width : 198px;
+   width : 198px;
 }
 
 #tongsin{
@@ -158,7 +158,7 @@ input::placeholder {
                   <option value="@nate.com">@nate.com</option>
                </select> <br><br>
                <label> 인증번호 </label>
-               <input type = text id = emailNum name = emailNum placeholder = "인증번호를 입력하세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');">
+               <input type = text id = emailNum name = emailNum maxlength = 4 placeholder = "인증번호를 입력하세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');" requeried>
                <input type = button value = "인증번호전송" id = receiveNum>
                <input type = button value = "인증번호확인" id = confirmNum> <br><br>
                <input type = button value = "이전단계" onclick = "beforeFind1();">
@@ -188,14 +188,15 @@ input::placeholder {
                <br>
                <input type=button value = "이전단계" onclick="beforeFind2();"> 
                <input type = button id = findPwdPhoneBtn value = "다음단계">
-   	     </form>
+           </form>
             </div>
          </div><br><br>
          <input type = button id = beforeBtn3 value = "로그인 하러가기!" onclick = "beforeFind3();">
    
+    
    <script type="text/javascript">
    // 여기서부터 ->
-  		$("input[type = radio][name = find]").on(
+        $("input[type = radio][name = find]").on(
             "click",
             function() {
                var checkValue = $(
@@ -214,82 +215,86 @@ input::placeholder {
             });  // <- 여기까지 라디오 버튼 누르면 display 활성화 / 비활성화
        
       // -----> 여기서부터 이메일 인증번호 받기
-    
-     
      // ajax로 sendMail.jsp에서 발생한 인증번호 받아오기
-	 $("#receiveNum").click(function(){
-		 var emailTo = ""+ $("#email1").get(0).value + $("#email3").get(0).value;
-         	$.ajax({
-         		url : "sendMail.jsp",
-         		data : {emailTo : emailTo},
-         		success : function(data){
-         			alert("인증번호 전송 하였습니다. 메일을 확인하시고 정확하게 입력해주세요.");
-         			confirmNumber = data;
-         		}
-         	});    
-	 });
-     
+     var randomNumTest = 123456798;
+    $("#receiveNum").click(function(){
+       var emailTo = ""+ $("#email1").get(0).value + $("#email3").get(0).value;
+            $.ajax({
+               url : "sendMail.jsp",
+               data : {emailTo : emailTo},
+               success : function(data){
+                  alert("인증번호 전송 하였습니다. 메일을 확인하시고 정확하게 입력해주세요.");
+                  randomNumTest = parseInt(data[0]);
+               }
+            });    
+    });
      // 인증번호 확인 버튼 눌렀을 때 인증번호와 전송한 번호가 일치하면 정답, 틀리면 땡 :)
-	 $("#confirmNum").click(function(){
-		 if(data = $("#emailNum").get(0).value){
-			 alert("정답");
-		 }else
-			 alert("땡");
-	 });
+    $("#confirmNum").click(function(){
+       console.log(randomNumTest);
+       console.log($("#emailNum")[0].value);
+       if(randomNumTest*1 === $("#emailNum")[0].value*1){
+          alert("인증번호랑 일치합니다.");
+       }else
+          alert("인증번호가 일치 하지 않습니다!!!!!!");
+    });
+   
       // <----- 여기까지 이메일 인증번호 받기
             
-   	  // ---->> 여기서부터 Pwd 찾을 때 빈칸 검사
-   	  $("#findPwdEmailBtn").click(function(){
-   		 if($("#id").val() == ""){
-   			 alert("아이디를 입력해주세요");
-   			 $("#id").focus();
-   			 return false;
-   		 } else if ($("#name").val() == ""){
-   			 alert("이름을 입력해주세요");
-   			 $("#name").focus();
-   			 return false;
-   		 } else if ($("#email1").val() == ""){
-   			 alert("이메일을 입력해주세요");
-   			 $("#email1").focus();
-   			 return false;
-   		 } else if ($("#email2").val() == ""){
-   			 alert("이메일을 선택해주세요");
-   			 $("#email2").focus();
-   			 return false;
-   		 } else {
-   			 $("#findPwdEmail").submit();  // <- /findPwdEmail.find Servlet
-   		 }
-   	  });   	  
-	  $("#findPwdPhoneBtn").click(function(){
-	   		 if($("#id1").val() == ""){
-	   			 alert("아이디를 입력해주세요");
-	   			 $("#id1").focus();
-	   			 return false;
-	   		 } else if ($("#name1").val() == ""){
-	   			 alert("이름을 입력해주세요");
-	   			 $("#name1").focus();
-	   			 return false;
-	   		 } else if ($("#tongsin").val() == ""){
-	   			 alert("통신사를 선택해주세요");
-	   			 $("#tongsin").focus();
-	   			 return false;
-	   		 } else if ($("#phoneNum").val() == ""){
-	   			 alert("핸드폰 번호를 입력해주세요");
-	   			 $("#phoneNum").focus();
-	   			 return false;
-	   		 } else {
-	   			 $("#findPwdPhone").submit();  // <- /findPwdPhone.find Servlet
-	   		 }
-	  });  // ----> 여기까지 Pwd 찾을 때 빈칸 검사
-	  
+        // ---->> 여기서부터 Pwd 찾을 때 빈칸 검사
+        $("#findPwdEmailBtn").click(function(){
+          if($("#id").val() == ""){
+             alert("아이디를 입력해주세요");
+             $("#id").focus();
+             return false;
+          } else if ($("#name").val() == ""){
+             alert("이름을 입력해주세요");
+             $("#name").focus();
+             return false;
+          } else if ($("#email1").val() == ""){
+             alert("이메일을 입력해주세요");
+             $("#email1").focus();
+             return false;
+          } else if ($("#email2").val() == ""){
+             alert("이메일을 선택해주세요");
+             $("#email2").focus();
+             return false;
+          } else if ($("#emailNum").val() == ""){
+             alert("인증번호를 입력해주세요");
+             $("#emailNum").focus();
+          } else {
+             $("#findPwdEmail").submit();  // <- /findPwdEmail.find Servlet
+          }
+        });        
+     $("#findPwdPhoneBtn").click(function(){
+             if($("#id1").val() == ""){
+                alert("아이디를 입력해주세요");
+                $("#id1").focus();
+                return false;
+             } else if ($("#name1").val() == ""){
+                alert("이름을 입력해주세요");
+                $("#name1").focus();
+                return false;
+             } else if ($("#tongsin").val() == ""){
+                alert("통신사를 선택해주세요");
+                $("#tongsin").focus();
+                return false;
+             } else if ($("#phoneNum").val() == ""){
+                alert("핸드폰 번호를 입력해주세요");
+                $("#phoneNum").focus();
+                return false;
+             } else {
+                $("#findPwdPhone").submit();  // <- /findPwdPhone.find Servlet
+             }
+     });  // ----> 여기까지 Pwd 찾을 때 빈칸 검사
+     
       function beforeFind1(){
          location = 'findId.jsp';  // <- 이전 단계
       }
       function beforeFind2(){
-    	  location = 'findId.jsp';  // <- 이전 단계
+         location = 'findId.jsp';  // <- 이전 단계
       }
       function beforeFind3(){
-    	  location = '../common/loginPage.jsp';  // <- 로그인 메인화면
+         location = '../common/loginPage.jsp';  // <- 로그인 메인화면
       }
       $(document).ready(function(){
           // 이메일 선택

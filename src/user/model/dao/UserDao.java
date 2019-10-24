@@ -20,12 +20,14 @@ public class UserDao {
 	public UserDao() {
 	}
 
-	// SDB 로그인
 	public UserInfo loginUser(Connection conn, UserInfo user) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		UserInfo loginUser = null;
+
+		String query = prop.getProperty("loginMember");
+
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERPWD=? AND STATUS='N'");
 
@@ -37,32 +39,14 @@ public class UserDao {
 			System.out.println(user);
 			// resultSet의 결과가 있으면 ...
 			if (rs.next()) {
-				loginUser = new UserInfo(rs.getString("USERID"),
-										rs.getString("USERPWD"),
-										rs.getString("USERNAME"),
-										rs.getInt("AGE"),
-										rs.getString("GENDER"),
-										rs.getString("EMAIL"),
-										rs.getString("PHONE"),
-										rs.getString("ADDRESS"),
-										rs.getString("RECOMMEND_ID"),
-										rs.getInt("SURVEYCOUNT"),
-										rs.getInt("VISITCOUNT"),
-										rs.getInt("USERTYPE"),
-										rs.getString("STATUS"),
-										rs.getString("FINAL_EDUCATION"),
-										rs.getString("JOB"),
-										rs.getString("INCOME"),
-										rs.getString("LIVING_TYPE"),
-										rs.getString("HOUSE_TYPE"),
-										rs.getString("RELIGION"),
-										rs.getString("MARITAL_STATUS"),
-										rs.getString("LIVING_WITH"),
-										rs.getString("ARMY_GO"),
-										rs.getString("INTEREST"),
-										rs.getDate("PWDDATE"),
-			                            rs.getDate("joindate"),
-			                            rs.getInt("point"));
+				loginUser = new UserInfo(rs.getString("USERID"), rs.getString("USERPWD"), rs.getString("USERNAME"),
+						rs.getInt("AGE"), rs.getString("GENDER"), rs.getString("EMAIL"), rs.getString("PHONE"),
+						rs.getString("ADDRESS"), rs.getString("RECOMMEND_ID"), rs.getInt("SURVEYCOUNT"),
+						rs.getInt("VISITCOUNT"), rs.getInt("USERTYPE"), rs.getString("STATUS"),
+						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
+						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
+						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
+						rs.getString("INTEREST"), rs.getDate("PWDDATE"), rs.getDate("joindate"), rs.getInt("point"));
 			}
 
 		} catch (SQLException e) {
@@ -85,6 +69,7 @@ public class UserDao {
 
 			pstmt = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=?");
 			pstmt.setString(1, userId);
+//	         pstmt.setString(1, "admin");
 
 			rs = pstmt.executeQuery();
 
@@ -97,7 +82,7 @@ public class UserDao {
 						rs.getString("FINAL_EDUCATION"), rs.getString("JOB"), rs.getString("INCOME"),
 						rs.getString("LIVING_TYPE"), rs.getString("HOUSE_TYPE"), rs.getString("RELIGION"),
 						rs.getString("MARITAL_STATUS"), rs.getString("LIVING_WITH"), rs.getString("ARMY_GO"),
-						rs.getString("INTEREST"), rs.getDate("PWDDATE"),rs.getDate("joindate"), rs.getInt("point"));
+						rs.getString("INTEREST"), rs.getDate("PWDDATE"), rs.getDate("joindate"), rs.getInt("point"));
 			}
 
 		} catch (SQLException e) {
@@ -116,7 +101,7 @@ public class UserDao {
 		int result = 0;
 		try {
 			pst = conn.prepareStatement(
-					"INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)");
+					"INSERT INTO USER_INFO VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, DEFAULT, DEFAULT, DEFAULT, DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE, SYSDATE, 100)");
 
 			pst.setString(1, userInfo.getUserId());
 			pst.setString(2, userInfo.getUserPwd());
@@ -173,23 +158,23 @@ public class UserDao {
 		System.out.println("dao 검사" + result);
 		return result;
 	}
-	
+
 	// SeoJaeWoong 아이디 찾기(핸드폰)
 	public UserInfo findIdPhone(Connection conn, UserInfo findData) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		UserInfo findId = new UserInfo(); // <- 기본생성자로생성 findId 에 null 값 들어간 상태
-		
+
 		try {
 			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERNAME =? AND PHONE =?");
 
 			pst.setString(1, findData.getUserName());
 			pst.setString(2, findData.getPhone());
-			
+
 			rs = pst.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				findId.setUserId(rs.getString("userId"));
 			}
 		} catch (SQLException e) {
@@ -206,18 +191,18 @@ public class UserDao {
 	public UserInfo findIdEmail(Connection conn, UserInfo findData) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		UserInfo findId = new UserInfo(); // <- 기본생성자로생성 findId 에 null 값 들어간 상태
-		
+
 		try {
 			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERNAME=? AND EMAIL=?");
-			
+
 			pst.setString(1, findData.getUserName());
 			pst.setString(2, findData.getEmail());
-			
+
 			rs = pst.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				findId.setUserId(rs.getString("userId"));
 			}
 		} catch (SQLException e) {
@@ -229,22 +214,23 @@ public class UserDao {
 		System.out.println("다오쪽 : " + findId);
 		return findId;
 	}
+
 	// SeoJaeWoong 비밀번호 찾기(이메일)
 	public UserInfo findPwdEmail(Connection conn, UserInfo findData) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		UserInfo findPwd = new UserInfo();
 		try {
 			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERNAME=? AND EMAIL=?");
-			
+
 			pst.setString(1, findData.getUserId());
 			pst.setString(2, findData.getUserName());
 			pst.setString(3, findData.getEmail());
-			
+
 			rs = pst.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
@@ -257,23 +243,24 @@ public class UserDao {
 		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
+
 	// SeoJaeWoong 비밀번호 찾기(핸드폰)
 	public UserInfo findPwdPhone(Connection conn, UserInfo findData) {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		
+
 		UserInfo findPwd = new UserInfo();
-		
+
 		try {
 			pst = conn.prepareStatement("SELECT * FROM USER_INFO WHERE USERID=? AND USERNAME=? AND PHONE=?");
-			
+
 			pst.setString(1, findData.getUserId());
 			pst.setString(2, findData.getUserName());
 			pst.setString(3, findData.getPhone());
-			
+
 			rs = pst.executeQuery();
-					
-			if(rs.next()) {
+
+			if (rs.next()) {
 				findPwd.setUserId(rs.getString("userId"));
 				findPwd.setUserPwd(rs.getString("userPwd"));
 			}
@@ -286,51 +273,53 @@ public class UserDao {
 		System.out.println("다오쪽 : " + findPwd);
 		return findPwd;
 	}
+
 	// SeoJaeWoong 비밀번호 수정
 	public int changePwd(Connection conn, UserInfo changeData) {
 		PreparedStatement pst = null;
-		int result = 0;		
+		int result = 0;
 		try {
 			pst = conn.prepareStatement("UPDATE USER_INFO SET USERPWD=? WHERE USERID=?");
-			
+
 			pst.setString(1, changeData.getUserPwd());
 			pst.setString(2, changeData.getUserId());
-			
+
 			result = pst.executeUpdate();
 			System.out.println("다오 쪽 : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(pst);
-		}		
+		}
 		return result;
 	}
-	// 회원 or 관리자 구분해서 로그인 
+
+	// 회원 or 관리자 구분해서 로그인
 	public static int userType(Connection conn, String userId) {
-		  PreparedStatement pstmt = null;
-	      ResultSet rs = null;
-	      int userType = 0;
-	      String query = "SELECT userType FROM user_info WHERE userId=?";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int userType = 0;
+		String query = "SELECT userType FROM user_info WHERE userId=?";
 
-	      try {
-	         pstmt = conn.prepareStatement(query);
+		try {
+			pstmt = conn.prepareStatement(query);
 
-	         pstmt.setString(1, userId);
-	         
-	         rs = pstmt.executeQuery();
-	         if (rs.next())
-	         {
-	            userType = rs.getInt("userType");
-	         }
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      } finally {
-	         close(rs);
-	         close(pstmt);
-	      }
-	       
-	      return userType;
-	   }
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				userType = rs.getInt("userType");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return userType;
+	}
+
 	// SeoJaeWoong 추천인 아이디 점검
 	public int reIdCheck(Connection conn, String recommendId) {
 		PreparedStatement pst = null;
@@ -355,19 +344,19 @@ public class UserDao {
 		}
 		System.out.println("dao 검사" + result);
 		return result;
-	
+
 	}
 
 	public int registerPoint(Connection conn, UserInfo userInfo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, 100, SYSDATE, '회원가입 축하')");
 			pstmt.setString(1, userInfo.getUserId());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 		return result;
@@ -376,16 +365,16 @@ public class UserDao {
 	public int recPoint(Connection conn, UserInfo userInfo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, 50, SYSDATE, ?)");
-			pstmt.setString(1,  userInfo.getRecommendId());
-			pstmt.setString(2,  "추천 포인트 : " + userInfo.getUserId());
-			result= pstmt.executeUpdate();
+			pstmt.setString(1, userInfo.getRecommendId());
+			pstmt.setString(2, "추천 포인트 : " + userInfo.getUserId());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-		
+
 }
