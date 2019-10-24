@@ -503,7 +503,7 @@
    
 <%--    <%if(loginUser == null) {%> --%>
       <form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
-      onsubmit="return validate()" method="post"> <!-- validate() 을 실행하고 난뒤의 반환값(return) -->
+      onsubmit="return validate()" method="get"> <!-- validate() 을 실행하고 난뒤의 반환값(return) -->
          <div class="btns" align="center">
             <table>
                <tr>
@@ -527,6 +527,7 @@
             
             <input type = button id = findId name = findId value = "아이디 찾기" onclick = "location='../user/findId.jsp'">
             <input type = button id = findPwd name = findPwd value = "비밀번호 찾기" onclick = "location='../user/findPw.jsp'">
+
          </div>
          
       </form>

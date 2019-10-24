@@ -17,16 +17,45 @@ public class Survey implements Serializable{
 	private Date sStartDate;
 	private int sCount;
 	private int sPoint;
+	private int qCount;
 	private int aCount;
 	private String sStatus;
 	private String sTarget;
 	private Date sCreateDate;
 	private String sUserId;
+	private String utilD;
 	public Survey() {
 
 	}
+	
+	public String getUtilD() {
+		return utilD;
+	}
+
+	public void setUtilD(String utilD) {
+		this.utilD = utilD;
+	}
+
 	public Survey(int sNum, String sType, String sTitle, Date sEndDate, Date sStartDate, int sCount, int sPoint,
-			int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId) {
+			int qCount, int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId, String utilD) {
+		this.sNum = sNum;
+		this.sType = sType;
+		this.sTitle = sTitle;
+		this.sEndDate = sEndDate;
+		this.sStartDate = sStartDate;
+		this.sCount = sCount;
+		this.sPoint = sPoint;
+		this.qCount = qCount;
+		this.aCount = aCount;
+		this.sStatus = sStatus;
+		this.sTarget = sTarget;
+		this.sCreateDate = sCreateDate;
+		this.sUserId = sUserId;
+		this.utilD = utilD;
+	}
+
+	public Survey(int sNum, String sType, String sTitle, Date sEndDate, Date sStartDate, int sCount, int sPoint,
+			int qCount, int aCount, String sStatus, String sTarget, Date sCreateDate, String sUserId) {
 		super();
 		this.sNum = sNum;
 		this.sType = sType;
@@ -35,12 +64,25 @@ public class Survey implements Serializable{
 		this.sStartDate = sStartDate;
 		this.sCount = sCount;
 		this.sPoint = sPoint;
+		this.qCount = qCount;
 		this.aCount = aCount;
 		this.sStatus = sStatus;
 		this.sTarget = sTarget;
 		this.sCreateDate = sCreateDate;
 		this.sUserId = sUserId;
 	}
+	
+// SDB	
+	public Survey(int sNum, String sTitle, int sCount, int qCount, Date sCreateDate, int aCount) {
+		super();
+		this.sNum = sNum;
+		this.sTitle = sTitle;
+		this.sCount = sCount;
+		this.qCount = qCount;
+		this.aCount = aCount;
+		this.sCreateDate = sCreateDate;
+	}
+	
 	public int getsNum() {
 		return sNum;
 	}
@@ -83,6 +125,12 @@ public class Survey implements Serializable{
 	public void setsPoint(int sPoint) {
 		this.sPoint = sPoint;
 	}
+	public int getqCount() {
+		return qCount;
+	}
+	public void setqCount(int qCount) {
+		this.qCount = qCount;
+	}
 	public int getaCount() {
 		return aCount;
 	}
@@ -119,10 +167,10 @@ public class Survey implements Serializable{
 	@Override
 	public String toString() {
 		return "Survey [sNum=" + sNum + ", sType=" + sType + ", sTitle=" + sTitle + ", sEndDate=" + sEndDate
-				+ ", sStartDate=" + sStartDate + ", sCount=" + sCount + ", sPoint=" + sPoint + ", aCount=" + aCount
-				+ ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", sCreateDate=" + sCreateDate + ", sUserId="
-				+ sUserId + "]";
+				+ ", sStartDate=" + sStartDate + ", sCount=" + sCount + ", sPoint=" + sPoint + ", qCount=" + qCount
+				+ ", aCount=" + aCount + ", sStatus=" + sStatus + ", sTarget=" + sTarget + ", sCreateDate="
+				+ sCreateDate + ", sUserId=" + sUserId + ", utilD=" + utilD + "]";
 	}
-
-
+	
+	
 }

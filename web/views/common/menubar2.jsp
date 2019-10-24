@@ -3,6 +3,8 @@
     
 <%
 	UserInfo loginUser = (UserInfo)session.getAttribute("loginUser");
+/* 작업 */
+	/* ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("arr"); */
 
 	/* ArrayList<surveyList> rlist = (ArrayList<surveyList>)request.getAttribute("rlist"); */
 
@@ -1006,7 +1008,7 @@
 					<i class="fa fa-angle-down" aria-hidden="true"></i><span>Home</span></div> -->
 					
 		 			<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
-				      				onsubmit="return validate()" method="post">
+				      				onsubmit="return validate()" method="get">
 				         <div class="btns" align="center">
 							<input type="submit" value="홈" class="goHome">
 				            <input type="hidden" name="userId" id = "userId" value="<%=loginUser.getUserId() %>">
@@ -1146,14 +1148,15 @@
 						</ul>
 						
 					<li class="menuTest" value="0"><a>Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-						<ul class="contentsTest" >
-							<li id="asd" class="lowMenu">
-								설문 만들기
-							</li>
-							<li id="asd1" class="lowMenu">
-								작성된 설문
-							</li>
-						</ul>
+						<ul class="contentsTest">
+							<li id="asd" class="lowMenu" onclick = "doSurvey();">설문 참여하기</li>
+							<li id="asd" class="lowMenu" onclick="makeSurvey();">설문 만들기</li>
+							<li id="asd1" class="lowMenu" onclick="holdSurvey();">작성된 설문</li>
+							<li id="asd1" class="lowMenu" onclick="ingSurvey();">진행중인 설문</li>
+							<li id="asd1" class="lowMenu" onclick="finishedSurvey();">완료된 설문</li>
+							<li id="asd1" class="lowMenu" onclick="deletedSurvey();">삭제한 설문</li>
+							<li id="asd1" class="lowMenu" onclick="purchaseSurvey();">설문 결제하기</li>
+						</ul>	
 						
 					<li class="menuTest" value="0"><a>WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest" >
@@ -1201,17 +1204,64 @@
                     <!-- //col1 -->
                     
                     <article class="column col2">
-						<h4 class="col_tit">게시판</h4>
+						<h4 class="col_tit">공지사항</h4>
 						<!-- <p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p> -->
 						<!-- 게시판 -->
 						<div class="notice1">
-							<h5>게시판 제목1</h5>
+							<h5>최신 공지사항</h5>
 							<ul>
+<!-- 작업 -->			
+			<%-- 					<div class="tableArea">
+									<!-- 조회가 잘 되어 출력되는지 확인 -->
+									<table align="center" id="listArea">
+										<tr>
+											<th>글번호</th>
+											<th width="300px">글제목</th>
+											<th width="100px">작성자</th>
+											<th>조회수</th>
+											<th width="100px">작성일</th>
+										</tr>
+										for문으로 변경
+											<td><%= list.get(0).getnNo() %></td>
+											<td><%= list.get(0).getnTitle() %></td>
+											<td><%= list.get(0).getnWriter() %></td>
+											<td><%= list.get(0).getnCount() %></td>
+											<td><%= list.get(0).getnDate() %></td>
+										
+										    <!-- public boolean isEmpty() {
+										        return size == 0;
+										    } isEmpty : size가 0 이면 true -->
+										<%if(list.isEmpty()){ %> <!-- list가 없을때 -->
+										<tr>
+											<td colspan="5">존재하는 공지사항이 없습니다.</td>
+										</tr>
+										<%}else{ %>
+											<% for(Notice no : list) {%>
+											<tr>
+												<td><%= no.getnNo() %></td>
+												<td><%= no.getnTitle() %></td>
+												<td><%= no.getnWriter() %></td>
+												<td><%= no.getnCount() %></td>
+												<td><%= no.getnDate() %></td>
+											</tr>
+											<% } %>
+										<% } %>
+									</table>
+								</div>
+							 --%>
+							
 								<li><a href="#">한 줄 씩 만 나 온 다!</a></li>
 								<li><a href="#">배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~</a></li>
 								<li><a href="#">배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~</a></li>
 								<li><a href="#">배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~</a></li>
 								<li><a href="#">배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~배고파 너의 오빠 ~</a></li>
+								 
+								 
+								 
+								 
+								 
+								 
+								 
 							</ul>
 							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 						</div>
@@ -1582,11 +1632,79 @@
         });
     </script>
 
+   <script type="text/javascript">
+       function makeSurvey(){
+          location.href = "views/survey/makeSurvey.jsp";
+       }
+       function holdSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyHoldList.sv?userId=<%=loginUser.getUserId()%>";
+       }
+       function ingSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyIngList.sv?userId=<%=loginUser.getUserId()%>";
+       }
+       function finishedSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyFinishedList.sv?userId=<%=loginUser.getUserId()%>";
+       }
+       function deletedSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyDeletedList.sv?userId=<%=loginUser.getUserId()%>";
+       }
+       function purchaseSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyPurchaseList.sv?userId=<%=loginUser.getUserId()%>";
+       }
+       function doSurvey(){
+          location.href = "<%=request.getContextPath()%>/surveyListView.sv?userId=<%=loginUser.getUserId()%>";
+       }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 화면 맨아래 보이게 -->
 <%-- <%@ include file="../common/footer.jsp" %> 
 .. ... 일단 나중에... 흘
 
 --%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 
