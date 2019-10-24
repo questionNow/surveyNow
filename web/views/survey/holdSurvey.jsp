@@ -122,6 +122,7 @@ a.btn-layerClose:hover {
 						<th width="150px">작성일</th>
 						<th width="100px">응답자 수</th>
 						<th width="100px">분석</th>
+						<th width="100px">수정</th>
 						<th width="100px">삭제</th>
 					</tr>
 					<% if(sList.isEmpty()){ %>
@@ -136,6 +137,9 @@ a.btn-layerClose:hover {
 								<td><%=s.getqCount() %></td>
 								<td><%=s.getsCreateDate() %></td>
 								<td><%=s.getaCount() %></td>
+								<td id = "chart">분석</td>
+								<td id = "modify">수정</td>
+								<td id = "delete">삭제</td>
 							</tr>
 						<%} %>
 						<%} %>
@@ -146,39 +150,50 @@ a.btn-layerClose:hover {
 	</div>
 
 	<script type="text/javascript">
-		$(function() {
-			$("#surveyListTable td")
-					.mouseenter(function() {
-						$(this).css("cursor", "pointer");
-					})
-					.click(
-							function() {
-								var sNum = $(this).parent().children("input")
-										.val();
-
-								location.href = "
-	<%=request.getContextPath()%>/surveyDetailView.sv="+sNum;
-				
-			});
-			
-			$("#deleteBtn").mouseenter(function(){
-				$(this).css("cursor","pointer");
-			}).click(function(){
-					
-			})
-			
-			
-		});
+	$("tr > #chart").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("분석 페이지로 넘어가시겠습니까?");
+		if(bool){
+			location.href = "" 
+		}		
+	});
+	
+	$("tr > #delete").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("삭제 하시겠습니까?");
+		if(bool){
+			location.href = "<%= request.getContextPath()%>/surveyDelete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}
+	});
+	
+	$("tr > #modify").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("수정 하시겠습니까?");
+		if(bool){
+			location.href = "<%= request.getContextPath()%>/surveyModify.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}
+		
+	});
+	
 	</script>
 
-<!-- 버튼 추가 -->
+
+<!-- 
 <a href="#layer2" class="btn-example">딤처리 팝업레이어 1</a>
 <div class="dim-layer">
     <div class="dimBg"></div>
     <div id="layer2" class="pop-layer">
         <div class="pop-container">
             <div class="pop-conts">
-                <!--content //-->
+                content //
                 <p class="ctxt mb20">여기는 어디<br>
                    	설문 넘버 알려주고 어떻게 처리할 지 눌러보자<br>
                 </p>
@@ -194,6 +209,7 @@ a.btn-layerClose:hover {
 </div>
 
 <script type="text/javascript">
+
 $('.btn-example').click(function(){
     var $href = $(this).attr('href');
     layer_popup($href);
@@ -230,13 +246,9 @@ function layer_popup(el){
         return false;
     });
 
-}
+} 
 </script>
-
-<!-- 버튼 추가 -->
-
-
-
+-->
 
 
 </body>

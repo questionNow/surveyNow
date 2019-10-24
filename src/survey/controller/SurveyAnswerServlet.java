@@ -29,6 +29,7 @@ public class SurveyAnswerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String[] qName = request.getParameterValues("answerQnum");
 		int[] qNum = new int[qName.length];
 		String answer[] = new String[qName.length];

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import survey.model.service.SurveyService;
+
 /**
  * Servlet implementation class SurveyDeleteServlet
  */
@@ -26,7 +28,12 @@ public class SurveyDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int sNum = Integer.valueOf(request.getParameter("sNum"));
+		String userId = request.getParameter("userId");
+		int result = new SurveyService().deleteSurvey(sNum);
+		if (result >0) {
+			response.sendRedirect("surveyHoldList.sv?userId="+userId);
+		}
 	}
 
 	/**

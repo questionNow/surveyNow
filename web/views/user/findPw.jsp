@@ -158,11 +158,11 @@ input::placeholder {
                   <option value="@nate.com">@nate.com</option>
                </select> <br><br>
                <label> 인증번호 </label>
-               <input type = text id = emailNum name = emailNum maxlength = 4 placeholder = "인증번호를 입력하세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');" requeried>
+               <input type = text id = emailNum name = emailNum maxlength = 4 placeholder = "인증번호를 입력하세요" onKeyup = "this.value=this.value.replace(/[^0-9]/g,'');" required>
                <input type = button value = "인증번호전송" id = receiveNum>
                <input type = button value = "인증번호확인" id = confirmNum> <br><br>
                <input type = button value = "이전단계" onclick = "beforeFind1();">
-               <input type = button id = findPwdEmailBtn value = "다음단계"> 
+               <input type = button id = findPwdEmailBtn value = "다음단계" disabled> 
             </form>
          </div> <br>
          
@@ -234,14 +234,20 @@ input::placeholder {
        console.log($("#emailNum")[0].value);
        if(randomNumTest*1 === $("#emailNum")[0].value*1){
           alert("인증번호랑 일치합니다.");
+          $("#findPwdEmailBtn").removeAttr("disabled");
        }else
           alert("인증번호가 일치 하지 않습니다!!!!!!");
+           // $("#emailNum").val("");
     });
    
       // <----- 여기까지 이메일 인증번호 받기
             
         // ---->> 여기서부터 Pwd 찾을 때 빈칸 검사
         $("#findPwdEmailBtn").click(function(){
+          /* $("#emailNum").change(function(){
+             $("#emailNum").attr("check_result", "fail");
+             alert("인증번호 확인 버튼을 눌러주세요");
+          });  */
           if($("#id").val() == ""){
              alert("아이디를 입력해주세요");
              $("#id").focus();

@@ -274,9 +274,9 @@ public class SurveyDao {
 
 		ArrayList<Survey> sList = null;
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEYCHECK ");
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS = 'H' AND NOT SUSERID = ? AND (SANSWERID NOT LIKE ? OR SANSWERID IS NULL)");
 			pstmt.setString(1, userId);
-			pstmt.setString(2, userId);
+			pstmt.setString(2,"%"+userId+"%");
 			sList = new ArrayList<Survey>();
 			rs = pstmt.executeQuery();
 
@@ -531,7 +531,6 @@ public class SurveyDao {
 	public int addSurveyCount(Connection conn, int sNum) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
 		try {
 			pstmt= conn.prepareStatement("UPDATE SURVEY SET ACOUNT = ACOUNT+1 WHERE SNUM = ?");
 			pstmt.setInt(1,sNum);
@@ -620,11 +619,27 @@ public class SurveyDao {
 		int result = 0;
 		
 		try {
-			pstmt = conn.prepareStatement("UPDATE SURVEY SET SANSWERID = SANSWERID ||' '|| '?' where snum =?");
+			pstmt = conn.prepareStatement("UPDATE SURVEY SET SANSWERID = SANSWERID ||' '|| ? where snum =?");
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, survey.getsNum());
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return result;
+	}
+
+	public int deleteSurvey(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'D' WHERE SNUM = ?");
+			pstmt.setInt(1,  sNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
