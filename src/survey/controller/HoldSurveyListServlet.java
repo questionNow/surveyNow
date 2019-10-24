@@ -32,6 +32,7 @@ public class HoldSurveyListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
+		System.out.println(userId);
 		ArrayList<Survey> sList = new SurveyService().selectHoldSurvey(userId);
 		
 		request.setAttribute("sList", sList);

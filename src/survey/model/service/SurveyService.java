@@ -100,8 +100,8 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
+		
 		close(conn);
-
 		return sList;
 	}
 
@@ -140,6 +140,7 @@ public class SurveyService {
 		Survey survey = sDao.selectSurveys(conn, sNum);
 		int pointRecord = sDao.recordPoint(conn, survey, userId);
 		int addUpdate = sDao.addPoint(conn,survey, userId);
+		int addAnswerUser = sDao.addAnswerUser(conn,survey, userId);
 		for (int i = 0; i < result.length; i++) {
 			if (result[i] > 0) {
 				countResult[i] = sDao.addAnswerCount(conn, aNum[i]);

@@ -1,6 +1,7 @@
 package survey.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.JsonObject;
 
 import survey.model.service.SurveyService;
+import survey.model.vo.DoSurvey;
 
 /**
  * Servlet implementation class Practice
@@ -35,8 +37,12 @@ public class Practice extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
-		new SurveyService().chartSurvey(sNum);
-		JsonObject json = new JsonObject();
+		System.out.println(sNum);
+		ArrayList<DoSurvey> dsList =  new SurveyService().doServey(sNum);
+		System.out.println("서블릿 : "+ dsList);
+		request.setAttribute("dsList",dsList);
+		request.getRequestDispatcher("views/survey/Chart.jsp").forward(request, response);
+		
 	}
 
 

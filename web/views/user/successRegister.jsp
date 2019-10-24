@@ -23,12 +23,12 @@ body{
    color : #F95401;
 }
 #successJoin:hover{
-	cursor:pointer;
-	color : white;
+   cursor:pointer;
+   color : white;
 }
 #success{
-	padding-left : 450px;
-	padding-top : 350px;
+   padding-left : 450px;
+   padding-top : 350px;
 }
 </style>
 </head>

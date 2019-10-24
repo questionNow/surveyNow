@@ -49,8 +49,13 @@ public class UserService {
 
 		if (result > 0) {
 			int result2 = uDao.registerPoint(conn, userInfo);
-			if (userInfo.getRecommendId() != null) {
+			if (userInfo.getRecommendId().length() >4) {
+				// 추천인 등록한 가입자 포인트 추가
+				int result4 = uDao.recPoint2(conn,userInfo);
+				int result5 = uDao.recUserPointUpdate(conn, userInfo);
+				// 추천 대상 포인트 추가
 				int result3 = uDao.recPoint(conn, userInfo);
+				int result6 = uDao.recPointUpdate(conn, userInfo);
 			}
 			commit(conn);
 		} else {

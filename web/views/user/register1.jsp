@@ -75,7 +75,7 @@ input[type = password]{
    width : 405px;
 }
 #idChk{
-	width : 130px;
+   width : 130px;
 }
 #gender{
    width : 540px;
@@ -93,7 +93,7 @@ input[type = password]{
    padding : .7em;
 }
 #emailNum{
-	width : 280px;
+   width : 280px;
 }
 #tongsin{
    width : 180px;
@@ -116,16 +116,16 @@ input[type = password]{
    width : 100px;
 }
 #detailAddress{
-	width : 295px;
+   width : 295px;
 }
 #extraAddress{
-	width : 240px;
+   width : 240px;
 }
 #recommendId{
-    width : 405px;	
+    width : 405px;   
 }
 #reIdChk{
-	width : 128px;
+   width : 128px;
 }
 #nextMain{
    width : 268.5px;
@@ -198,7 +198,7 @@ input[type = password]{
    <!-- <form onsubmit = "return checkCondition1();" id = registerForm1 name = registerForm1 action = "#registerForm2" method = post> <br> --> 
    <div class = title1 >
       <div class = register>
-         	회원가입
+            회원가입
       </div> <br>
       <div class = join>
          <label for = id> 아이디 </label> <br>
@@ -459,11 +459,11 @@ input[type = password]{
       $(function(){
          var isUsable = false;
          $("#idChk").click(function(){
-        	// ---> 여기서부터 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
-        	$(".id").change(function(){
-        		$(".id").attr("check_result", "fail");
-        	}); // ---> 여기서까지 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
-        	
+           // ---> 여기서부터 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+           $(".id").change(function(){
+              $(".id").attr("check_result", "fail");
+           }); // ---> 여기서까지 아이디 중복체크 안눌렀을때 가입 버튼 누르면 중복체크 하라는 이벤트
+           
             var userId = $("input[name = 'userId']");
          
             if(!userId || userId.val().length < 4){
@@ -489,45 +489,46 @@ input[type = password]{
                   }
                });
             } 
-      	});
+         });
       });
       // 여기까지 아이디 중복체크
      $(function(){
-    	var isUsable = false;
-    	$("#reIdChk").click(function(){
-    		var recommendId = $("input[name = 'recommendId']");
-    		
-    		$.ajax({
-    			url:"<%=request.getContextPath()%>/reIdCheck.ck",
-    			type:"post",
-    			data:{recommendId:recommendId.val()},
-    			success:function(data){
-    				if(data == "fail"){
-    					alert("추천 불가능 아이디 입니다.");
-    					$("#recommendId").val("");
-    				} else {
-    					alert("추천 가능한 아이디 입니다.");
-    					isUsable = true;
-    				}
-    			},
-    			error:function(data){
-    				console.log("코드 다시 확인해야함ㅠㅠ");
-    			}
-    			
-    		});
-    	});
+       var isUsable = false;
+       $("#reIdChk").click(function(){
+          var recommendId = $("input[name = 'recommendId']");
+          
+          $.ajax({
+             url:"<%=request.getContextPath()%>/reIdCheck.ck",
+             type:"post",
+             data:{recommendId:recommendId.val()},
+             success:function(data){
+                if(data == "fail"){
+                   alert("추천 불가능 아이디 입니다.");
+                   $("#recommendId").val("");
+                } else {
+                   alert("추천 가능한 아이디 입니다.");
+                   isUsable = true;
+                }
+             },
+             error:function(data){
+                console.log("코드 다시 확인해야함ㅠㅠ");
+             }
+             
+          });
+       });
      });
       
       // ------->> 여기서부터 이메일 인증번호 보내기 
      <%--  function receive(){
-    	  $("#registerForm").attr("action","<%=request.getContextPath()%>/sendMail.user");
+         $("#registerForm").attr("action","<%=request.getContextPath()%>/sendMail.user");
       } --%>
       <%-- $("#receiveNum").click(function(){
-    	 $("#registerForm").attr("atcion","<%=request.getContextPath()%>/sendMail.user").submit(); 
+        $("#registerForm").attr("atcion","<%=request.getContextPath()%>/sendMail.user").submit(); 
       }); --%>  
       
       // -> 여기서부터 비밀번호 유효성 검사 및 일치 확인         
       $(function(){
+       
          var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
          var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
          $("#pw1").change(function(){
@@ -536,9 +537,13 @@ input[type = password]{
                $("#pw1").val("");
                $("#pw1").focus();
             } else {
-            	$("#resultPw1").css("display", "none");
+               $("#resultPw1").css("display", "none");
             }
-            
+            if($("#pw1").val() != ($("#pw2").val())){
+               $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color","red");
+               $("#pw2").val("");
+               $("#pw2").focus();
+            }
          });
          
          $("#pw2").change(function(){
@@ -546,9 +551,11 @@ input[type = password]{
             $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
             $("#pw2").val("");
             $(this).focus();
+           
           } else {
              $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
           }
+         
          });
          
          $("#id").change(function(){
@@ -563,19 +570,14 @@ input[type = password]{
       
    //   ----------->  여기서부터 가입 1단계 유효성 검사 (input 태그에 기본적으로 안써지게 그냥 막아놈)
       //                     ex) 아이디 input 태그에 특수문자 안들어가게 강제적으로 막았음 
-  	  $(document).ready(function(){
+       $(document).ready(function(){
          $("#secondClick").hide();
       $("#checkForm").click(function(){
          
       var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
       var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
       var checkPhone = /^(?=.*?[0-9]).{11,}$/;
-      
-      	 if($("#id").attr("check_result") == "fail"){
-      		 alert("아이디 중복 확인을 해주세요");
-      		 $("#id").focus();
-      		 return false;   // <- 아이디 중복확인 버튼 안누르면 경고창
-      	 }
+         
          if($("#id").val() == ""){
             alert("아이디를 입력해주세요");
             $("#id").focus();
@@ -587,6 +589,11 @@ input[type = password]{
             $("#id").focus();
             return false;
          }
+         if($("#id").attr("check_result") == "fail"){
+             alert("아이디 중복 확인을 해주세요");
+             $("#id").focus();
+             return false;   // <- 아이디 중복확인 버튼 안누르면 경고창
+          }
          if($("#pw1").val() == ""){
             alert("비밀번호를 입력해주세요");
             $("#pw1").focus();
@@ -604,6 +611,11 @@ input[type = password]{
             $("#pw1").focus();
             return false;
          }   
+         if($("#pw1").val() != ($("#pw2").val())){
+            alert("비밀번호가 일치하지 않습니다.");
+            $("#pw1").focus();
+            return false;
+         }
           if($("#name").val() == ""){
             alert("이름 입력해주세요");
             $("#name").focus();

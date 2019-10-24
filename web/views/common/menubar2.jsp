@@ -1713,7 +1713,7 @@ body {
 --%>
 	<script type="text/javascript">
     	function makeSurvey(){
-    		location.href = "views/survey/makeSurvey.jsp";
+    		location.href = "<%=request.getContextPath()%>/surveyMakeMake.sv";
     	}
     	function holdSurvey(){
     		location.href = "<%=request.getContextPath()%>/surveyHoldList.sv?userId=<%=loginUser.getUserId()%>";

@@ -222,7 +222,7 @@ public class SurveyDao {
 		int sResult = 0;
 		try {
 			pstmt = conn.prepareStatement(
-					"INSERT INTO SURVEY VALUES(SEQ_SURVEY.NEXTVAL, ?, ?, SYSDATE, NULL, ?, ?, ?, 0, 'H', ?, SYSDATE, ?)");
+					"INSERT INTO SURVEY VALUES(SEQ_SURVEY.NEXTVAL, ?, ?, SYSDATE, NULL, ?, ?, ?, 0, 'H', ?, SYSDATE, ?, NULL)");
 			pstmt.setString(1, s.getsType());
 			pstmt.setString(2, s.getsTitle());
 			pstmt.setInt(3, s.getsCount());
@@ -274,8 +274,9 @@ public class SurveyDao {
 
 		ArrayList<Survey> sList = null;
 		try {
-			pstmt = conn.prepareStatement("SELECT DISTINCT SNUM, STYPE, STITLE, SSTARTDT, SENDDT, SCOUNT, SPOINT, QCOUNT, ACOUNT, SSTATUS, STARGET, SCREATEDT, SUSERID FROM DOSURVEYLIST WHERE SSTATUS = 'H' AND NOT SUSERID = ? AND RNUM IS NULL");
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEYCHECK ");
 			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
 			sList = new ArrayList<Survey>();
 			rs = pstmt.executeQuery();
 
@@ -302,7 +303,7 @@ public class SurveyDao {
 
 			rs = pstmt.executeQuery();
 			qList = new ArrayList();
-			while (rs.next()) {
+				while (rs.next()) {
 				Question q = new Question(rs.getInt("qnum"), rs.getInt("snum"), rs.getString("qtype"),
 						rs.getString("qtitle"));
 				qList.add(q);
@@ -547,7 +548,7 @@ public class SurveyDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
-			pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'H' WHERE ACOUNT = SCOUNT");
+			pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'C' WHERE ACOUNT = SCOUNT");
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -604,7 +605,7 @@ public class SurveyDao {
 		int result = 0;
 		
 		try {
-			pstmt = conn.prepareStatement("UDPATE USER_INFO SET POINT = POINT+? WHERE USERID=?");
+			pstmt = conn.prepareStatement("UPDATE USER_INFO SET POINT = POINT+? WHERE USERID=?");
 			pstmt.setInt(1,  survey.getsPoint());
 			pstmt.setString(2,  userId);
 			result = pstmt.executeUpdate();
@@ -612,5 +613,18 @@ public class SurveyDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public int addAnswerUser(Connection conn, Survey survey, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("UPDATE SURVEY SET SANSWERID = SANSWERID ||' '|| '?' where snum =?");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

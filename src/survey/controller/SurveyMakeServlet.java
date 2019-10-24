@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import survey.model.service.SurveyService;
 import survey.model.vo.Survey;
@@ -69,8 +70,7 @@ public class SurveyMakeServlet extends HttpServlet {
 			answer.add(ans);
 		}
 		int result = new SurveyService().makeSurvey(s, st, qNum, qType, qTitle, answer);
-		request.setAttribute("userId",s.getsUserId());
-		request.getRequestDispatcher("surveyHoldList.sv").forward(request, response);
+		response.sendRedirect("surveyHoldList.sv?userId="+userId);
 		;
 
 	}

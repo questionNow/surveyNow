@@ -377,4 +377,57 @@ public class UserDao {
 		return result;
 	}
 
+	public int recPoint2(Connection conn, UserInfo userInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt=conn.prepareStatement("INSERT INTO POINT VALUES(SEQ_POINT.NEXTVAL, ?, 50, SYSDATE, ?)");
+			pstmt.setString(1, userInfo.getUserId());
+			pstmt.setString(2, "추천인 등록 추가 포인트 : " + userInfo.getRecommendId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return 0;
+	}
+
+	public int recUserPointUpdate(Connection conn, UserInfo userInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("UPDATE USER_INFO SET POINT = POINT + 50 WHERE USERID =?");
+			pstmt.setString(1,  userInfo.getUserId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int recPointUpdate(Connection conn, UserInfo userInfo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("UPDATE USER_INFO SET POINT = POINT + 50 WHERE USERID =?");
+			pstmt.setString(1,  userInfo.getRecommendId());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 }
