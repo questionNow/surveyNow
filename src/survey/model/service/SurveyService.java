@@ -84,12 +84,12 @@ public class SurveyService {
 		SurveyDao sDao = new SurveyDao();
 		int result = sDao.makeSurvey(conn, s);
 		if (result > 0) {
-			int result1 = sDao.makeSurveyTarget(conn, st);
-			if (result1 > 0) {
-				int result2 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
-				if (result2 > 0) {
-					commit(conn);
-				}
+			if (st != null) {
+				int result1 = sDao.makeSurveyTarget(conn, st);
+			}
+			int result2 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
+			if (result2 > 0) {
+				commit(conn);
 			}
 		}
 		close(conn);
@@ -100,7 +100,7 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
-		
+
 		close(conn);
 		return sList;
 	}
@@ -109,7 +109,7 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		Survey s = sDao.doServeyS(conn, sNum);
-		ArrayList<Question> qList = sDao.doServeyQ(conn, sNum);
+		ArrayList<Question> qList = sDao.doServeyQ(conn, s);
 		ArrayList<DoSurvey> dsList = sDao.doServeyA(conn, s, qList);
 		close(conn);
 
@@ -120,8 +120,8 @@ public class SurveyService {
 
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
-		Survey s = sDao.doServeyS(conn, snum);
-		ArrayList<Question> qList = sDao.doServeyQ(conn, snum);
+		Survey s = sDao.doServeyS2(conn, snum);
+		ArrayList<Question> qList = sDao.doServeyQ(conn, s);
 		// qnum과 일치하는 anum들의 리스트를 작성
 		ArrayList<DoSurvey> dsList = sDao.doServeyA(conn, s, qList);
 		close(conn);
@@ -139,33 +139,46 @@ public class SurveyService {
 		int checkSurveyCount = sDao.checkSurveyCount(conn, sNum);
 		Survey survey = sDao.selectSurveys(conn, sNum);
 		int pointRecord = sDao.recordPoint(conn, survey, userId);
-		int addUpdate = sDao.addPoint(conn,survey, userId);
-		int addAnswerUser = sDao.addAnswerUser(conn,survey, userId);
+		int addUpdate = sDao.addPoint(conn, survey, userId);
+		int addAnswerUser = sDao.addAnswerUser(conn, survey, userId);
 		for (int i = 0; i < result.length; i++) {
 			if (result[i] > 0) {
 				countResult[i] = sDao.addAnswerCount(conn, aNum[i]);
 			}
 		}
-		if(result.length == countResult.length) {
+		if (result.length == countResult.length) {
 			cResult = 1;
 			commit(conn);
-		}else {
+		} else {
 			rollback(conn);
 		}
 		close(conn);
-		
+
 		return cResult;
 	}
 
 	public int deleteSurvey(int sNum) {
 		Connection conn = getConnection();
-		
+
 		int result = new SurveyDao().deleteSurvey(conn, sNum);
-		if(result >0) {
+		if (result > 0) {
 			commit(conn);
-		}else
+		} else
 			rollback(conn);
-		
+
+		close(conn);
+		return result;
+	}
+
+	public int powerDeleteSurvey(int sNum) {
+		Connection conn = getConnection();
+
+		int result = new SurveyDao().powerDeleteSurvey(conn, sNum);
+		if (result > 0) {
+			commit(conn);
+		} else
+			rollback(conn);
+
 		close(conn);
 		return result;
 	}

@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 
 			session.setAttribute("loginUser", loginUser);
 
-			// usertpye 구분해서 로그인하는 것
+			// usertype 구분해서 로그인하는 것
 			int usertype = UserService.userType(userId);
 
 			if (usertype == 2) {

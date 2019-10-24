@@ -25,8 +25,6 @@
 }
 </style>
 </head>
-
-</head>
 <body>
 	<%@ include file="../common/menubar2.jsp"%>
 
@@ -47,42 +45,44 @@
 						설문 제목<input type="reset" id="reset" onclick="resetSurvey();"
 							style="float: right" value="초기화">
 					</h2>
-					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size="70%">
-					<h2>카테고리 <select name = "sCategory">
-						<option value = --->--------</option>
-						<option value = 스포츠>스포츠</option>
-						<option value = 음식>음식</option>
-						<option value = 여행>여행</option>
-						<option value = 게임>게임</option>
-						<option value = 과학>과학</option>
-						<option value = 패션>패션</option>
-						<option value = IT>IT</option>
-						<option value = 자동차>자동차</option>
-						<option value = 사회이슈>사회이슈</option>
-						<option value = 연예인>연예인</option>
-						<option value = 육아>육아</option>
-						<option value = 취업>취업</option>
-						<option value = 교육>교육</option>
-						<option value = 가족>가족</option>
-						<option value = 문화생활>문화생활</option>
-						<option value = 애견>애견</option>
-					
-							</select></h2>
+					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요"
+						size="70%">
+					<h2>
+						카테고리 <select name="sCategory">
+							<option value=--->--------</option>
+							<option value=스포츠>스포츠</option>
+							<option value=음식>음식</option>
+							<option value=여행>여행</option>
+							<option value=게임>게임</option>
+							<option value=과학>과학</option>
+							<option value=패션>패션</option>
+							<option value=IT>IT</option>
+							<option value=자동차>자동차</option>
+							<option value=사회이슈>사회이슈</option>
+							<option value=연예인>연예인</option>
+							<option value=육아>육아</option>
+							<option value=취업>취업</option>
+							<option value=교육>교육</option>
+							<option value=가족>가족</option>
+							<option value=문화생활>문화생활</option>
+							<option value=애견>애견</option>
+
+						</select>
+					</h2>
 					<h3>
-						요청 패널 수 <input name=sCount type=number min="5" step = "5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						요청 패널 수 <input name=sCount type=number min="5" step="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						포인트 <input name=sPoint type=number min="50" step="50"><br>
-						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요)  <input type="button"
-							value="재설정" style="float: right" onclick="deleteTarget();"><input type="button"
-							value="설문 대상 설정하기"  style="float: right" onclick="setTarget();">	
+						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요) <input type="button"
+							value="재설정" style="float: right" onclick="deleteTarget();"><input
+							type="button" value="설문 대상 설정하기" style="float: right"
+							onclick="setTarget();">
 					</h3>
-					<div id = "targetDiv">					
-					</div>
+					<div id="targetDiv"></div>
 
 					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
 				</div>
 
-				<br> <label onclick="submit();">저장하기</label> <label
-					onclick="checkTarget();">타겟</label>
+				<br> <label onclick="blankCheck();" style="cursor: pointer">저장하기</label>
 			</form>
 		</div>
 	</div>
@@ -106,9 +106,7 @@
 							"<div id= answer"+aCount+"><h4>항목 <input class = 'answer' name = Q"+num+" type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></h4></div>");
 		}
 		function resetSurvey() {
-			qCount =0;
-			aCount =0;
-			/* $("#survey div").remove(); */
+			$("#survey #targetDiv div").remove();
 			$(".question").remove();
 		}
 		
@@ -118,12 +116,7 @@
 		function removeAnswer(num){
 			$("#answer"+num).remove();
 		}			
-		function submit(){
-			var bool = confirm("설문을 저장하시겠습니까?\n저장 후 '작성된 설문함'에서 확인 / 수정 가능합니다.");
-			if(bool){
-				$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyMake.sv").submit();
-			}
-		}
+		
 		
 	</script>
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 끝 -->
@@ -132,7 +125,7 @@
 	tnum = 0;
 		function setTarget(){
 			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
-														 +"<select class = target"+tnum+" name = targetType onchange = 'checkTarget("+tnum+");'>"
+														 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
 														 +"<option>-------</option>"
 														 +"<option value = finalEducation>최종학력</option>"
 														 +"<option value = job>직업</option>"
@@ -156,6 +149,20 @@
 		}
 		
 		function checkTarget(num){
+			for(var i =0; i<$(".target").length ; i++){
+				if($(".target").length>1){
+					for(var j = i+1 ; j<$(".target").length ; j++){						
+						if($(".target")[i].value === $(".target")[j].value){
+							alert("기존에 입력한 것과 다른 대상 타입을 선택해주세요.");
+							$(".target")[j].value = "-------";
+							$("#target"+num+" div").remove();
+							return false;
+						}
+					}
+				}else{
+					continue;
+				}
+			}
 			$("#target"+num+" div").remove();
 			if($(".target"+num+" option:selected").val()== "finalEducation"){
 				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '초등학교 졸업' name = 'finalEducation' value = '초등학교 졸업'><label for = '초등학교 졸업'>초등학교 졸업</label>"
@@ -220,6 +227,84 @@
 		
 	</script>
 
+	<!-- 빈칸 검사  / submit-->
+	<script type="text/javascript">
+	function blankCheck(){
+		// 설문 제목 입력
+		if($("#survey > input")[0].value ==""){
+	            alert("설문 제목을 입력해주세요.");
+	            $("#survey > input")[0].focus();
+	            return false;
+		}
+		// 카테고리 선택
+		if($("#survey > h2 > select")[0].value ==="---"){
+			alert("카테고리를 선택해주세요.");
+            $("#survey > h2 > select")[0].focus();
+            return false;
+		}
+		if($("#survey > h3 > input")[0].value <5){
+			if($("#survey > h3 > input")[0].value === ""){
+				alert("요청 패널 수를 입력해주세요.");
+			}else
+				alert("요청 패널은 최소 5명 이상 입력해야 합니다.");
+            $("#survey > h3 > input")[0].focus();
+            return false;
+		}
+		if($("#survey > h3 > input")[1].value <50){
+			if($("#survey > h3 > input")[1].value === ""){
+				alert("포인트를 입력해주세요.");
+			}else
+				alert("포인트는 최소 50이상 입력해야 합니다.");
+            $("#survey > h3 > input")[1].focus();
+            return false;
+		}
+		
+		
+		for(var i = 0; i < tnum ; i++){
+			if($(".target")[i].value==="-------"){
+				alert("설문 대상 타입을 선택 해주세요.");
+				$(".target"+i).focus();
+	            return false;
+			}
+			if($("#target"+[i]+" > div > input:checked").length===0){
+				alert("설문 대상을 체크해주세요.");
+				return false;
+			}
+			
+		}
+		if($("#qTitle").length===0){
+			alert("질문을 추가해주세요.");
+			$("#surveyType").focus();
+		}
+		for(var i = 1; i <= $(".question").length ; i++){
+			if($("#question"+i+" #qTitle").val() === "" ){
+				alert("질문을 입력해주세요.");
+				$("#question"+i+" #qTitle").focus();
+				return false;
+			}else{
+				if($("#question"+i+" .answer").length >= 2){
+					for(var j = 0 ; j < $("#question"+i+" .answer").length ; j++){
+						if($("#question"+i+" .answer")[j].value === ""){
+							alert("보기를 입력 해주세요.");
+							$("#question"+i+" .answer")[j].focus();
+							return false;
+						}
+					}
+				}else{
+					alert("보기는 2개 이상 등록 해주세요.");
+					return false;
+				}
+			}		
+			var bool = confirm("설문을 저장하시겠습니까?\n저장 후 '작성된 설문함'에서 확인 / 수정 가능합니다.");
+			if(bool){
+				$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyMake.sv").submit();
+			}
+		}
+	}
+		
+	
+	</script>
+	<!-- 빈칸 검사 -->
 
 </body>
 </html>

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>설문 참여하기</title>
 <style>
 #S {
 	border: 1px solid red;

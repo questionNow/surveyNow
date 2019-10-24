@@ -293,13 +293,13 @@ public class SurveyDao {
 		return sList;
 	}
 
-	public ArrayList<Question> doServeyQ(Connection conn, int sNum) {
+	public ArrayList<Question> doServeyQ(Connection conn, Survey s) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Question> qList = null;
 		try {
 			pstmt = conn.prepareStatement("SELECT * FROM QUESTION WHERE SNUM = ?");
-			pstmt.setInt(1, sNum);
+			pstmt.setInt(1, s.getsNum());
 
 			rs = pstmt.executeQuery();
 			qList = new ArrayList();
@@ -362,7 +362,7 @@ public class SurveyDao {
 		ResultSet rs = null;
 		Survey s = new Survey();
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SNUM = ?");
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SNUM = ? AND SSTATUS = 'I'");
 			pstmt.setInt(1, sNum);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -641,5 +641,40 @@ public class SurveyDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public int powerDeleteSurvey(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("DELETE FROM SURVEY WHERE SNUM =?");
+			pstmt.setInt(1,  sNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public Survey doServeyS2(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Survey s = new Survey();
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SNUM = ? AND (NOT SSTATUS = 'D' OR NOT SSTATUS = 'H')");
+			pstmt.setInt(1, sNum);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				s.setsNum(sNum);
+				s.setsTitle(rs.getString("stitle"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return s;
 	}
 }

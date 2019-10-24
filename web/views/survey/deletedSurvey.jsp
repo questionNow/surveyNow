@@ -86,22 +86,24 @@ body {
 
 
 	<script type="text/javascript">
-	
-	$(function(){
-		$("#revive").click(function(){
-			var sNum = $(this).parent().children("input").val();
-			var bool = confirm("정말 복구 시키겠습니까?");
-			
-			if(bool){
-				location.href = "<%=request.getContextPath()%>/surveyRevive.sv?sNum="+sNum;
-				}
-		});
-		
+	$("tr > #revive").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("복구 시키시겠습니까?");
+		if(bool){
+			location.href = "<%=request.getContextPath()%>/surveyRevive.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}		
 	});
-	$(function(){
-		if(<%=msg%> != null){
-			alert(<%=msg%>);
-		}
+	
+	$("tr > #delete").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("정말 삭제하시겠습니까?\n확인을 누르시면 영구히 사라집니다.");
+		if(bool){
+			location.href = "<%=request.getContextPath()%>/surveyPowerDelete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}		
 	});
 	</script>
 

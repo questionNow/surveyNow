@@ -166,6 +166,7 @@ input::placeholder {
       
       // 캡스락 이벤트
       function caps_lock(e) {
+    	  console.log(e);
           var keyCode = 0;
           var shiftKey = false;
           keyCode = e.keyCode;
@@ -174,9 +175,8 @@ input::placeholder {
                   || ((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
               show_caps_lock();
               setTimeout("hide_caps_lock()", 36000);
-          } else {
-              hide_caps_lock();
-          }
+          } else
+        	  hide_caps_lock();
       }
 
       function show_caps_lock() {

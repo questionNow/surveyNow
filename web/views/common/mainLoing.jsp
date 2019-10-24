@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>여기로 가는거니?</title>
  
    <style>
         /* reset */
@@ -146,6 +146,7 @@
 </style>
 </head>
 <%@ include file="../common/menubar2.jsp" %>
+
 <body>
 		<main>
             <div class="container">

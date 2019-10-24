@@ -1,8 +1,6 @@
 package survey.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
-import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class ReviveSurveyServlet
+ * Servlet implementation class PowerDeleteServlet
  */
-@WebServlet("/surveyRevive.sv")
-public class ReviveSurveyServlet extends HttpServlet {
+@WebServlet("/surveyPowerDelete.sv")
+public class PowerDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReviveSurveyServlet() {
+    public PowerDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,10 +30,10 @@ public class ReviveSurveyServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		String userId = request.getParameter("userId");
-		int result = new SurveyService().reviveSurvey(sNum);
-		 if(result >0) {
-			 response.sendRedirect("surveyDeletedList.sv?userId="+userId);
-		 }
+		int result = new SurveyService().powerDeleteSurvey(sNum);
+		if (result >0) {
+			response.sendRedirect("surveyDeletedList.sv?userId="+userId);
+		}
 	}
 
 	/**

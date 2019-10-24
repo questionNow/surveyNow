@@ -14,10 +14,14 @@
 		<button>고고</button>
 		<label onclick = "able();">살리기</label>
 		<label onclick = "disable();">죽이기</label>
+		<input type = "text" onfocus = "check2();">
 	</form>
 	<button onclick="move();">버튼</button>
 
+<script type="text/javascript">
+</script>
 		<script type="text/javascript">
+		
 		console.log($("button"));
 		function move(){
 		location.href = "<%= request.getContextPath()%>/prac.pr";
@@ -29,6 +33,7 @@
 		function disable(){
 			$("button").attr("disabled",true);
 		}
+		
 		</script>
 
 

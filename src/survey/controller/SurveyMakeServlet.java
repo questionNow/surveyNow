@@ -36,18 +36,22 @@ public class SurveyMakeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<String[]> targetList = new ArrayList<String[]>();
-		
-		String[] targetType = request.getParameterValues("targetType");
-		for(int i = 0 ; i<targetType.length ; i ++) {
-			String[] targetDetail = request.getParameterValues(targetType[i]);
-			targetList.add(targetDetail);
-			for(int j = 0; j<targetDetail.length; j++) {
+		String[] targetType = null;
+		String[] targetDetail = null;
+		SurveyTarget st = null;
+		if(request.getParameterValues("targetType") != null) {
+			targetType = request.getParameterValues("targetType");
+			for(int i = 0 ; i<targetType.length ; i ++) {
+				targetDetail = request.getParameterValues(targetType[i]);
+				targetList.add(targetDetail);
+				for(int j = 0; j<targetDetail.length; j++) {
+				}
 			}
+		st = new SurveyTarget(targetType, targetList);
 		}
 		
 		
 		String sTitle = request.getParameter("sTitle");
-		String[] sInterest = request.getParameterValues("sInterest");
 		String userId = request.getParameter("userId");
 		int sPoint = Integer.valueOf(request.getParameter("sPoint"));
 		int sCount = Integer.valueOf(request.getParameter("sCount"));
@@ -55,7 +59,7 @@ public class SurveyMakeServlet extends HttpServlet {
 		String[] qType = request.getParameterValues("Qtype");
 		String[] qTitle = request.getParameterValues("Qtitle");
 		String sCategory = request.getParameter("sCategory");
-		SurveyTarget st = new SurveyTarget(targetType, targetList);
+		
 		
 		Survey s = new Survey();
 		s.setsUserId(userId);
