@@ -150,7 +150,6 @@ public class SurveyDao {
 
 				sList.add(s);
 			}
-			;
 
 		} catch (SQLException e) {
 			e.printStackTrace();

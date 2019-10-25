@@ -51,7 +51,6 @@ body {
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="50px">선택</td>
 						<th width="550px">제목</th>
 						<th width="150px">작성일</th>
 						<th width="100px">문항 수</th>
@@ -74,30 +73,23 @@ body {
 					
 					<tr>
 						<input type="hidden" value="<%=s.getsNum()%>">
-						<td><input type="checkbox" id="check"></td>
 						<td><%=s.getsTitle()%></td>
 						<td><%=s.getsCreateDate()%></td>
 						<td><%=s.getsCount()%></td>
 						<td><%=s.getaCount()%></td>
-						<td onclick="check();"><%=s.getsPoint()%></td>
+						<td><%=s.getsPoint()%></td>
 						<%
 							if (s.getsPoint() * s.getsCount() < 1000) {
 						%>
-						<td><%=df.format(1000)%></td>
+						<td id = <%=s.getsNum() %>><%=df.format(1000)%></td>
 						<%
 							} else {
 						%>
-						<td><%=df.format((s.getsPoint() * s.getsCount()))%></td>
-						<%
-							}
-						%>
+						<td id = <%=s.getsNum() %>><%=df.format((s.getsPoint() * s.getsCount()))%></td>
+						<%	}	%>
 						<td id="delete" onclick="del()">X</td>
-						<%
-							}
-						%>
-						<%
-							}
-						%>
+						<%	}	%>
+						<%	}	%>
 					</tr>
 
 
@@ -110,24 +102,22 @@ body {
 
 	<script type="text/javascript">
 	$(function(){
-			$("#delete").mouseenter(function(){
-				$(this).parent().css({"background":"orangered","cursor":"pointer"});
-			}).mouseout(function(){
-				$(this).parent().css({"background":"lightgray"});
-			}).click(function(){
-				var sNum = $(this).parent().children("input").val();
-				location.href="<%=request.getContextPath()%>/surveyDelete.sv="+sNum;
-			});
+		$("#surveyListTable td").click(function(){
+			$(this).parent().css({"background":"orangered","cursor":"pointer"});
+		}).click(function(){
+			$(this).parent().css({"background":"lightgray","cursor":"pointer"});
 		});
-
-		
-		$("td > input").click(function(){
-			console.log($("td > input"));
-			if($(this) == "checked"){
-				alert(" ");
-			}
-		});
-		
+	});
+	$(function(){
+		if($("#check:checked").length === 0){
+			$("#surveyList").append("<h3>결제할 설문을 체크해주세요</h3>");
+		}
+	});
+	
+	function purchaseSurvey(num){
+		$("#serveyList").append("<h3>결제할 설문을 체크해주세요</h3>");
+	}
+	
 	</script>
 
 
