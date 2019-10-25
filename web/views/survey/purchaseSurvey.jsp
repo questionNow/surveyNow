@@ -11,6 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <title>Survey</title>
 <style>
@@ -35,6 +36,9 @@ body {
 
 #delete {
 	cursor: pointer;
+}
+.show{
+background : orangered
 }
 </style>
 </head>
@@ -71,12 +75,12 @@ body {
 							for (Survey s : sList) {
 						%>
 					
-					<tr>
+					<tr id = tableRow onclick = "checkSurvey(this);">
 						<input type="hidden" value="<%=s.getsNum()%>">
 						<td><%=s.getsTitle()%></td>
 						<td><%=s.getsCreateDate()%></td>
+						<td><%=s.getqCount()%></td>
 						<td><%=s.getsCount()%></td>
-						<td><%=s.getaCount()%></td>
 						<td><%=s.getsPoint()%></td>
 						<%
 							if (s.getsPoint() * s.getsCount() < 1000) {
@@ -91,9 +95,6 @@ body {
 						<%	}	%>
 						<%	}	%>
 					</tr>
-
-
-
 				</table>
 			</div>
 		</div>
@@ -102,21 +103,28 @@ body {
 
 	<script type="text/javascript">
 	$(function(){
-		$("#surveyListTable td").click(function(){
-			$(this).parent().css({"background":"orangered","cursor":"pointer"});
-		}).click(function(){
-			$(this).parent().css({"background":"lightgray","cursor":"pointer"});
-		});
-	});
-	$(function(){
-		if($("#check:checked").length === 0){
-			$("#surveyList").append("<h3>결제할 설문을 체크해주세요</h3>");
-		}
+		$("#surveyListTable td").mouseenter(function(){
+			$(this).parent().css("cursor","pointer")
+		})
 	});
 	
-	function purchaseSurvey(num){
-		$("#serveyList").append("<h3>결제할 설문을 체크해주세요</h3>");
-	}
+	
+	function checkSurvey(obj) {
+		obj.classList.toggle("show");
+		$("#purchase").remove();
+		if($(".show").length != 0){
+			var price = 0;
+			for(var i = 0 ; i< $(".show").length ; i++){
+				if((($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1)) < 1000){
+					price += 1000;
+				}else{
+					price += (($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1))
+				}
+			}
+			
+			$("#surveyList").append("<div id = 'purchase'><br>총 "+$(".show").length+"개 설문 총 "+price+"원 <input type = 'button' onclick = 'doPurchase();' value = '결제하기' style = 'float : right'></div>");
+		}
+		}
 	
 	</script>
 

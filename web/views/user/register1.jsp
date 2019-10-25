@@ -570,7 +570,6 @@ input[type = password]{
    //   ----------->  여기서부터 가입 1단계 유효성 검사 (input 태그에 기본적으로 안써지게 그냥 막아놈)
       //                     ex) 아이디 input 태그에 특수문자 안들어가게 강제적으로 막았음 
        $(document).ready(function(){
-         $("#secondClick").hide();
       $("#checkForm").click(function(){
          
       var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
@@ -734,7 +733,6 @@ input[type = password]{
    
      
       function nextStep(){
-    	  $(".title2").hide();
     	  $(".title1").hide();
           $(".title2").show();
       }
