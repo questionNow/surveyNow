@@ -29,17 +29,28 @@ public class SurveyAnswerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String[] qName = request.getParameterValues("answerQnum");
 		int[] qNum = new int[qName.length];
 		String answer[] = new String[qName.length];
 		int[] aNum = new int[qName.length];
 		String[] aContent = new String[qName.length];
+		String[] qType = request.getParameterValues("answerQtype");
+		
 		for(int i = 0 ; i< qName.length ; i++) {
-			qNum[i] = Integer.valueOf(qName[i]);
-			answer[i] = request.getParameter(qName[i]);
-			aNum[i] = Integer.valueOf(answer[i].split(",")[0]);
-			aContent[i] = answer[i].split(",")[1];
+			System.out.println(qType[i]);
+			if(qType[i].equals("객관식")) {
+				System.out.println("여기는 들어오니 객관식");
+				qNum[i] = Integer.valueOf(qName[i]);
+				answer[i] = request.getParameter(qName[i]);
+				aNum[i] = Integer.valueOf(answer[i].split(",")[0]);
+				aContent[i] = answer[i].split(",")[1];
+			}else if(qType[i].equals("주관식")) {
+				System.out.println("여기는 들어오니 주관식");
+				qNum[i] = Integer.valueOf(qName[i]);
+				answer[i] = request.getParameter(qName[i]);
+				System.out.println("번호 : " + answer[i]);
+				aNum[i] = Integer.valueOf(answer[i]);
+			}
 		}
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		String userId = request.getParameter("userId");

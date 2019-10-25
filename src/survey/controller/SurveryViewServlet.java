@@ -33,7 +33,6 @@ public class SurveryViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
-		
 		ArrayList<Survey> sList = new SurveyService().selectSurveys(userId);
 		request.setAttribute("sList", sList);
 		request.getRequestDispatcher("views/survey/doSurvey.jsp").forward(request, response);;

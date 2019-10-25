@@ -261,12 +261,12 @@ input[type = password]{
       </div> <br>
       <div class = join>
          <label> 주소 </label> <br>
-         <input type = text id = postCode name = postCode placeholder = "우편번호" disabled>
+         <input type = text id = postCode name = postCode placeholder = "우편번호">
          <input type = text id = address1 name = address1 placeholder = "도로명 주소">
          <input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
          <span id= guide style = "color:#999; display:none"> </span>
          <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요">
-         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소" disabled>
+         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
       </div> <br>
       <div class = join>
          <label> 추천인 </label> <br>
@@ -275,12 +275,11 @@ input[type = password]{
       </div> <br>
       <div class = join>
          <div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div>
-         <div id = secondClick> <input type = button id = nextRegister value = "가입 2단계 진행"></div> <br>
          <input type = reset value = "다시쓰기" id = clear1>
          <input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
       </div> </div> 
 
-   <div class = title2>
+   <div class = title2 style = "display : none">
       <div class = register>
          패널 정보 등록
       </div> <br>
@@ -667,9 +666,7 @@ input[type = password]{
             $("#detailAddress").focus();
             return false;
          }
-         $("#firstClick").hide();
-         $("#secondClick").show();
-         return true; 
+         nextStep(); 
          });
       });      // <---------  여기까지 가입1단계 유효성 검사 
       
@@ -736,15 +733,11 @@ input[type = password]{
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
      
-      
-      $(document).ready(function(){
-         $(".title2").hide();  // <- 회원가입 두번째 창 숨기기          
-      $("#nextRegister").click(function(){
-      //   alert("test");
-         $(".title1").hide();  // <- 클릭 시 회원가입 첫번째 창 숨기기
-         $(".title2").show();  // <- 클릭 시 회원가입 두번째 창 보여주기
-         });
-      });
+      function nextStep(){
+    	  $(".title2").hide();
+    	  $(".title1").hide();
+          $(".title2").show();
+      }
    
       // 여기서부터 ->
       $(document).ready(function(){

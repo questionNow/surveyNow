@@ -3,15 +3,33 @@
 	
 
 <html>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <head>
   
   </head>
   <body>
-  	<button onclick = "chart();">차트보러 ㄱ</button>
+  	<div id = "abc">
   	
-  	function(){
-  	}
   	
+  	</div>
+  	
+  	
+  	
+  	<script type="text/javascript">
+  		$("#abc").append("<div>div1</div>");
+  		
+  		
+  		for(var i = 0 ; i<10 ; i++){
+  			function abc+i(){
+  				alert(i);
+  			}
+  		}
+  		$(function(){
+  			abc(3);
+  		})
+  		
+  	</script>
   	
   </body>
 </html>

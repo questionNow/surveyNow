@@ -274,13 +274,12 @@ public class SurveyDao {
 
 		ArrayList<Survey> sList = null;
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS = 'H' AND NOT SUSERID = ? AND (SANSWERID NOT LIKE ? OR SANSWERID IS NULL)");
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS = 'I' AND NOT SUSERID = ? AND (SANSWERID NOT LIKE ? OR SANSWERID IS NULL)");
 			pstmt.setString(1, userId);
 			pstmt.setString(2,"%"+userId+"%");
 			sList = new ArrayList<Survey>();
 			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
+			while(rs.next()) {
 				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
 						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
 						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),

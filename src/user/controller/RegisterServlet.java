@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
       String gender = request.getParameter("gender");
       String email = request.getParameter("email1") + request.getParameter("email2");
       String phone = request.getParameter("phone");
-      String address = request.getParameter("address1") + " " + request.getParameter("address2");
+      String address = request.getParameter("postCode") + "@" + request.getParameter("extraAddress") + "@" + request.getParameter("address1") + "@" + request.getParameter("address2");
       String recommendId = request.getParameter("recommendId");
       String finalEducation = request.getParameter("finalEducation");
       String job = request.getParameter("job");

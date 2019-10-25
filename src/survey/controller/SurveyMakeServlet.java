@@ -35,22 +35,23 @@ public class SurveyMakeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<String[]> targetList = new ArrayList<String[]>();
+		System.out.println("서블릿으로 오니?");
+		ArrayList<String[]> targetList = null;
 		String[] targetType = null;
 		String[] targetDetail = null;
 		SurveyTarget st = null;
-		if(request.getParameterValues("targetType") != null) {
+		if (request.getParameterValues("targetType") != null) {
+			targetList = new ArrayList<>();
 			targetType = request.getParameterValues("targetType");
-			for(int i = 0 ; i<targetType.length ; i ++) {
+			for (int i = 0; i < targetType.length; i++) {
 				targetDetail = request.getParameterValues(targetType[i]);
 				targetList.add(targetDetail);
-				for(int j = 0; j<targetDetail.length; j++) {
+				for (int j = 0; j < targetDetail.length; j++) {
 				}
 			}
-		st = new SurveyTarget(targetType, targetList);
+			st = new SurveyTarget(targetType, targetList);
 		}
-		
-		
+
 		String sTitle = request.getParameter("sTitle");
 		String userId = request.getParameter("userId");
 		int sPoint = Integer.valueOf(request.getParameter("sPoint"));
@@ -59,8 +60,22 @@ public class SurveyMakeServlet extends HttpServlet {
 		String[] qType = request.getParameterValues("Qtype");
 		String[] qTitle = request.getParameterValues("Qtitle");
 		String sCategory = request.getParameter("sCategory");
+
 		
-		
+		// 객관식일 경우 보기 값을 / 주관식일 경우 "주관식 을 담음"
+		ArrayList<String[]> answer = new ArrayList();
+		for (int i = 0; i < qType.length; i++) {
+			if (qType[i].equals("객관식")) {
+				String[] ans = new String[qType[i].length()];
+				ans = request.getParameterValues(qNum[i]);
+				answer.add(ans);
+			} else if (qType[i].equals("주관식")) {
+				String[] ans = new String[1];
+				ans[0] = qType[i];
+				answer.add(ans);
+			}
+		}
+
 		Survey s = new Survey();
 		s.setsUserId(userId);
 		s.setsTitle(sTitle);
@@ -68,16 +83,12 @@ public class SurveyMakeServlet extends HttpServlet {
 		s.setsPoint(sPoint);
 		s.setsCount(sCount);
 		s.setqCount(qNum.length);
-		ArrayList<String[]> answer = new ArrayList();
-		for (String Q : qNum) {
-			String[] ans = request.getParameterValues(Q);
-			answer.add(ans);
-		}
+
 		int result = new SurveyService().makeSurvey(s, st, qNum, qType, qTitle, answer);
-		response.sendRedirect("surveyHoldList.sv?userId="+userId);
-		;
+		response.sendRedirect("surveyHoldList.sv?userId=" + userId);
 
 	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

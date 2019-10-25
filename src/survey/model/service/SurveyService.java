@@ -89,9 +89,11 @@ public class SurveyService {
 			}
 			int result2 = sDao.makeQuestion(conn, qNum, qType, qTitle, answer);
 			if (result2 > 0) {
-				commit(conn);
+				
 			}
+			commit(conn);
 		}
+		
 		close(conn);
 		return result;
 	}
@@ -100,7 +102,6 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
-
 		close(conn);
 		return sList;
 	}

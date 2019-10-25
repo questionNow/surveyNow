@@ -4,6 +4,7 @@
 	ArrayList<DoSurvey> dsList = (ArrayList<DoSurvey>) request.getAttribute("dsList");
 
 	int sNum = (Integer) request.getAttribute("sNum");
+	
 %>
 
 <!DOCTYPE html>
@@ -50,9 +51,11 @@ body {
 					<%
 						for (int i = 0; i < dsList.size(); i++) {
 					%>
+					<br>
 					<div id="question">
 						<h3><%=dsList.get(i).getQ().getqTitle()%></h3>
 						<input type = hidden value = "<%=dsList.get(i).getQ().getqNum() %>" name = answerQnum>
+						<input type = hidden value = "<%=dsList.get(i).getQ().getqType() %>" name = answerQtype>
 						<% if(dsList.get(i).getQ().getqType().equals("객관식")){ %>
 						<%	for (int j = 0; j < dsList.get(i).getA().size(); j++) {%>
 						<div id="answer">
@@ -66,8 +69,9 @@ body {
 						<%	for (int j = 0; j < dsList.get(i).getA().size(); j++) {%>
 						<div id="answer">
 							<h4>
+								<input type = hidden value = "<%=dsList.get(i).getA().get(j).getaNum() %>" name="<%=dsList.get(i).getQ().getqNum()%>">
 								<input type= text
-									value=<%=dsList.get(i).getA().get(j).getaContent()%>
+									placeholder = "답변을 입력하세요:)"
 									id="<%=dsList.get(i).getQ().getqNum()%><%=dsList.get(i).getA().get(j).getaNum()%>"
 									name=<%=dsList.get(i).getQ().getqNum()%>>
 							</h4>
