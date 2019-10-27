@@ -37,11 +37,9 @@ public class Practice extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
-		System.out.println(sNum);
 		ArrayList<DoSurvey> dsList =  new SurveyService().doServey(sNum);
-		System.out.println("서블릿 : "+ dsList);
 		request.setAttribute("dsList",dsList);
-		request.getRequestDispatcher("views/survey/Chart.jsp").forward(request, response);
+		request.getRequestDispatcher("views/survey/practice.jsp").forward(request, response);
 		
 	}
 

@@ -32,7 +32,6 @@ public class PurchaseSurveyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
-		System.out.println(userId);
 		ArrayList<Survey> sList = new SurveyService().selectPurchaseSurvey(userId);
 		
 		request.setAttribute("sList", sList);

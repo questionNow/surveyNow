@@ -254,6 +254,7 @@ public class SurveyDao {
 				pstmt.setString(2, qTitle[i]);
 				qResult = pstmt.executeUpdate();
 				ans = answer.get(i);
+				
 				for (int j = 0; j < ans.length; j++) {
 					pstmt = conn.prepareStatement(
 							"INSERT INTO ANSWER VALUES(SEQ_ANSWER.NEXTVAL, SEQ_QUESTION.CURRVAL, ?, DEFAULT)");
@@ -813,4 +814,55 @@ public class SurveyDao {
 
 		return dsList;
 	}
+
+	public int deleteModifiedAnswer(Connection conn, String[] delQnum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			for(int i = 0 ; i< delQnum.length ; i++) {
+			pstmt = conn.prepareStatement("DELETE FROM ANSWER WHERE QNUM=?");
+			pstmt.setInt(1, Integer.valueOf(delQnum[i]));
+			result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteModifiedQuestion(Connection conn, String[] delSnum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("DELETE FROM QUESTION WHERE SNUM= ?");
+			pstmt.setInt(1, Integer.valueOf(delSnum[0]));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteModifiedSurvey(Connection conn, String[] delSnum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		try {
+			pstmt = conn.prepareStatement("DELETE FROM SURVEY WHERE SNUM= ?");
+			pstmt.setInt(1, Integer.valueOf(delSnum[0]));
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
 }

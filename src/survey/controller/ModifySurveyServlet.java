@@ -35,7 +35,6 @@ public class ModifySurveyServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		
 		ArrayList<DoSurvey> dsList = new SurveyService().modifySurvey(sNum,userId);
-		
 		request.setAttribute("dsList", dsList);
 		request.setAttribute("userId", userId);
 		request.getRequestDispatcher("views/survey/modifySurvey.jsp").forward(request, response);

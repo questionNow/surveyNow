@@ -33,8 +33,8 @@ public class DoSurveyServlet extends HttpServlet {
 			throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		
-		ArrayList<DoSurvey> dsList = new SurveyService().doServey(sNum);
 		
+		ArrayList<DoSurvey> dsList = new SurveyService().doServey(sNum);
 		
 		request.setAttribute("sNum", sNum);
 		request.setAttribute("dsList", dsList);

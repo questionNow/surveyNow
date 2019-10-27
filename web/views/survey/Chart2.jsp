@@ -58,6 +58,10 @@ display : inline-block;
    
           var chart = new google.visualization.PieChart(document.getElementById('piechart<%=i%>'));
 
+          google.visualization.events.addListener(chart, 'click', function(e) {
+        	  console.log(e)
+          })
+          
           chart.draw(data, options);
           $("#piechart<%=i%> > div > div:nth-child(1) > div > svg > g:nth-child(4) > g:nth-child(2) > g > text").click(function(){
         	  alert("asdf");

@@ -32,22 +32,24 @@
 	<%@ include file="../common/menubar2.jsp"%>
 	<div class="rightPage">
 
-		<div class="right" style="background-color: #ddd;">
+		<div class="right" style="background-color: #ddd;">			
 			<h2>설문 만들기</h2>
 			<div id="surveyType">
+			
 				<button id="pick" onclick="addQuestion()">+객관식</button>
 				<button id="write" onclick="addWriteQuestion()">+주관식</button>
 				<button id="rank">+순위</button>
 			</div>
 			<form id="submitSurvey">
+
 				<input name="userId" type="hidden"	value="<%=userId%>">
 				<div id="survey">
 					<h2>
 						설문 제목<input type="reset" id="reset" onclick="resetSurvey();" style="float: right" value="초기화">
 					</h2>
-					<input type="text" name="sTitle" size="70%" value = <%=dsList.get(0).getS().getsTitle() %>>
+					<input type="text" name="sTitle" size="70%" value ="<%=dsList.get(0).getS().getsTitle()%>">
 					<h2>
-						카테고리 <select name="sCategory" value = 스포츠>
+						카테고리 <select class = "category" name="sCategory">
 							<option value=--->--------</option>
 							<option value=스포츠>스포츠</option>
 							<option value=음식>음식</option>
@@ -66,7 +68,9 @@
 							<option value=문화생활>문화생활</option>
 							<option value=애견>애견</option>
 						</select>
-						
+						<script type="text/javascript">
+						$(".category option[value='<%=dsList.get(0).getS().getsType()%>']").prop("selected", true);
+						</script>
 						
 					</h2>
 					<h3>
@@ -99,6 +103,7 @@
 										$(document).ready(function(){
 										    $(".target<%= i%> option[value='<%= dsList.get(0).getSt().getTargetType()[i] %>']").attr("selected", true);
 										});
+										
 										$(function(){ 
 										if($(".target<%= i %> option:selected").val()== "finalEducation"){
 										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '초등학교 졸업' name = 'finalEducation' value = '초등학교 졸업'><label for = '초등학교 졸업'>초등학교 졸업</label>"
@@ -143,7 +148,7 @@
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '천주교' name = religion value = '천주교'><label for = '천주교'>천주교</label>"
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = religion value = '기타'><label for = '기타'>기타</label></div>");
 									} else if($(".target<%= i %> option:selected").val()== "maritalStatus"){
-										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = ma	ritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
+										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = maritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '기혼' name = maritalStatus value = '기혼'><label for = '기혼'>기혼</label></div>");
 									} else if($(".target<%= i %> option:selected").val()== "livingWith"){
 										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '혼자' name = livingWith value = '혼자'><label for = '혼자'>혼자</label>"
@@ -172,9 +177,10 @@
 					<br>
 					
 					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
+					
 					<% for(int i = 0 ; i < dsList.size() ; i++){ %>
 					<div class = "question pick" id="question<%=dsList.get(i).getQ().getqNum()%>">
-					<input type = hidden value =Q"<%=dsList.get(i).getQ().getqNum() %>" name = Qnum>
+					<input type = hidden value = Q<%= dsList.get(0).getQ().getqNum() %> name = Qnum>
 					<input type = hidden value = '객관식' name = Qtype>
 					<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(0).getQ().getqNum()%>);' style='float: right'>
 					<h3>질문 제목(객관식) <input type='button' value='항목 추가' onclick = 'addAnswer(<%=dsList.get(0).getQ().getqNum()%>);' style='float: right'></h3>
@@ -182,7 +188,7 @@
 					
 						<% for(int j = 0 ; j < dsList.get(i).getA().size() ; j++){ %>
 								<div id= "answer<%= dsList.get(i).getA().get(j).getaNum()%>">
-								<h4>항목 <input class = 'answer' name = "Q<%= dsList.get(i).getA().get(j).getaNum()%>" type='text' value = "<%=dsList.get(i).getA().get(j).getaContent()%>">
+								<h4>항목 <input class = 'answer' name = "Q<%= dsList.get(i).getA().get(j).getqNum()%>" type='text' value = "<%=dsList.get(i).getA().get(j).getaContent()%>">
 								<input type='button' value='삭제' onclick='removeAnswer(<%= dsList.get(i).getA().get(j).getaNum()%>);' style='float: right'></h4>
 								</div>				
 						<%} %>
@@ -190,6 +196,17 @@
 					</div>
 				</div>
 				<br> <label onclick="blankCheck();" style="cursor: pointer">저장하기</label>
+			<% for(int i = 0 ; i < dsList.size() ; i++) {%>
+			<div><input type = text value ="<%=dsList.get(i).getS().getsNum() %>" name = delSnum>
+			<input type = text value ="<%=dsList.get(i).getQ().getqNum() %>" name = delQnum>
+			dsList<%=dsList.size() %>
+			
+				<% for (int j = 0 ; j< dsList.get(i).getA().size(); j++){ %>
+				<input type = text value ="<%=dsList.get(i).getA().get(j).getaNum() %>" name ="A<%=dsList.get(i).getQ().getqNum() %>">
+				AList<%= dsList.get(i).getA().size() %>
+				<%} %>
+			</div>
+			<%} %>
 				
 			</form>
 		</div>
@@ -198,23 +215,23 @@
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 시작 -->
 	<script type="text/javascript">
 		snum = 0;
-		<%-- <% int size = dsList.size(); %>; --%>
-		qCount = <%= dsList.get(0).getQ().getqNum() %>;		
-		
+		qCount = 0;
 		function addWriteQuestion(){
 			qCount++;
 			$("#survey")
 					.append(
-							"<br><div class = 'question write' id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '주관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(주관식)</h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div><br>")
+							"<div class = 'question write' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '주관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(주관식)</h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 							aCount++;
 			}
+		
+		
 		
 		
 		function addQuestion() {
 			qCount++;
 			$("#survey")
 					.append(
-							"<br><div class = 'question pick' id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'><h3>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div><br>")
+							"<div class = 'question pick' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 
 		}
 		var aCount = 0;
@@ -236,30 +253,46 @@
 			$("#answer"+num).remove();
 		}			
 		
-		
+		function check(){
+			var qs = "";
+			for(var i = 0 ; i < $(".question").length ; i ++){
+				qs += $(".question")[i].id;				
+			}
+			var qNumbers = qs.split("question");
+			for(var s in qNumbers){
+				if(s != 0){
+					console.log(qNumbers[s]);
+				}
+				
+			}
+		}
 	</script>
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 끝 -->
 
 	<script type="text/javascript">
 	tnum = 0;
-	<% if(dsList.get(0).getS().getsTarget() != null){ %>
-		tnum = <%= dsList.get(0).getSt().getSvNum() %>+1;
-	<% } %>
 		function setTarget(){
-			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
-														 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
-														 +"<option>-------</option>"
-														 +"<option value = finalEducation>최종학력</option>"
-														 +"<option value = job>직업</option>"
-														 +"<option value = income>소득</option>"
-														 +"<option value = livingType>주거형태</option>"
-														 +"<option value = houseType>주택유형</option>"
-														 +"<option value = religion>종교</option>"
-														 +"<option value = maritalStatus>혼인</option>"
-														 +"<option value = livingWith>동거가족</option>"
-														 +"<option value = armyGo>병역</option>"
-														 +"</select><label style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
-			tnum++;
+			if($(".target").length == 1 && $(".target")[0].value =="-------" ){
+				alert("대상 타입을 선택해주세요.");
+				$(".target")[0].focus();
+				return false;
+			}else{
+				$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
+															 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
+															 +"<option>-------</option>"
+															 +"<option value = finalEducation>최종학력</option>"
+															 +"<option value = job>직업</option>"
+															 +"<option value = income>소득</option>"
+															 +"<option value = livingType>주거형태</option>"
+															 +"<option value = houseType>주택유형</option>"
+															 +"<option value = religion>종교</option>"
+															 +"<option value = maritalStatus>혼인</option>"
+															 +"<option value = livingWith>동거가족</option>"
+															 +"<option value = armyGo>병역</option>"
+															 +"</select><label style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
+				tnum++;
+			
+			}
 		}
 		function deleteTarget(){
 			$("#targetDiv *").remove();
@@ -270,7 +303,7 @@
 			$("#target"+num).remove();
 		}
 		
-		function checkTarget(num){ 
+		function checkTarget(num){
 			for(var i =0; i<$(".target").length ; i++){
 				if($(".target").length>1){
 					for(var j = i+1 ; j<$(".target").length ; j++){						
@@ -329,7 +362,7 @@
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '천주교' name = religion value = '천주교'><label for = '천주교'>천주교</label>"
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = religion value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "maritalStatus"){
-				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = ma	ritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = maritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '기혼' name = maritalStatus value = '기혼'><label for = '기혼'>기혼</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "livingWith"){
 				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '혼자' name = livingWith value = '혼자'><label for = '혼자'>혼자</label>"
@@ -346,16 +379,14 @@
 			}			
 		}
 		
-		$(function(){
-			
-		})
 		
 	</script>
 
 	<!-- 빈칸 검사  / submit-->
 	<script type="text/javascript">
 	function blankCheck(){
-		// 설문 제목 입력
+		
+		
 		if($("#survey > input")[0].value ==""){
 	            alert("설문 제목을 입력해주세요.");
 	            $("#survey > input")[0].focus();
@@ -384,64 +415,84 @@
             return false;
 		}
 		
+		var ts = "";
+		for(var i = 0 ; i < $("#survey > #targetDiv > div").length ; i++){
+			ts += $("#survey > div > div")[i].id;
+		}
+		var tNumbers = ts.split("target").slice(1);
 		
-		for(var i = 0; i < $(".target").length ; i++){
-			if($(".target")[i].value==="-------"){
+		for(var t in tNumbers){
+			if($(".target")[t].value==="-------"){
 				alert("설문 대상 타입을 선택 해주세요.");
-				$(".target"+i).focus();
+				$(".target"+tNumbers[t]).focus();
 	            return false;
 			}
-			if($("#target"+[i]+" > div > input:checked").length===0){
+			if($("#target"+tNumbers[t]+" > div > input:checked").length < 1){
 				alert("설문 대상을 체크해주세요.");
 				return false;
 			}
-			
 		}
 		if($("#qTitle").length===0){
 			alert("질문을 추가해주세요.");
 			$("#surveyType").focus();
 			return false;
 		}
-		for(var i = 1; i <= $(".question").length ; i++){
-			if($("#question"+i+" #qTitle").val() === "" ){
+		
+		var annswer = "";
+		for(var i ; i< $(".question #qTitle").length ; i++){
+			if($(".question #qTitle")[i].value ==""){
 				alert("질문을 입력해주세요.");
-				$("#question"+i+" #qTitle").focus();
+				$(".question #qTitle")[i].focus();
 				return false;
-			}else{
-				if($("#question"+i+" > input")[1].value === "객관식"){
-					if($("#question"+i+" .answer").length >= 2){
-						for(var j = 0 ; j < $("#question"+i+" .answer").length ; j++){
-							if($("#question"+i+" .answer")[j].value === ""){
-								alert("보기를 입력 해주세요.");
-								$("#question"+i+" .answer")[j].focus();
-								return false;
-							}
-						}
+			}
+		}
+		
+		var qs = "";
+		for(var i = 0 ; i < $(".question").length ; i ++){
+			qs += $(".question")[i].id;				
+		}
+		var qNumbers = qs.split("question");
+		
+		for(var s in qNumbers){
+			if(s != 0){
+				console.log(qNumbers[s]);
+			}
+			
+		}
+		
+		for(var s in qNumbers){
+			if(s != 0){
+				if($(".question"+qNumbers[s]+" #qTitle").val() === "" ){
 					
-					}else{
-						alert("보기는 2개 이상 등록 해주세요.");
-						return false;
+				}else{
+					if($("#question"+qNumbers[s]+" > input")[1].value === "객관식"){
+						if($("#question"+qNumbers[s]+" .answer").length >= 2){
+							for(var j = 0 ; j < $("#question"+qNumbers[s]+" .answer").length ; j++){
+								if($("#question"+qNumbers[s]+" .answer")[j].value === ""){
+									alert("보기를 입력 해주세요.");
+									$("#question"+qNumbers[s]+" .answer")[j].focus();
+									return false;
+								}
+							}
+						
+						}else{
+							alert("보기는 2개 이상 등록 해주세요.");
+							return false;
+						}
 					}
 				}
 			}
 		}
-	
+
 		var bool = confirm("설문을 저장하시겠습니까?\n저장 후 '작성된 설문함'에서 확인 / 수정 가능합니다.");
 		if(bool){
-			$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyMake.sv").submit();
+			$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyUpdate.sv").submit();
 		}		
 	}
 		
 	
-	
 	</script>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){
-		    $("select option[value='<%= dsList.get(0).getS().getsType() %>']").attr("selected", true);
-		});
-		
-	</script>
+	<!-- 빈칸 검사 -->
 
 </body>
 </html>

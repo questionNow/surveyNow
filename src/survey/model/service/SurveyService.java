@@ -102,6 +102,7 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
+		System.out.println(sList);
 		close(conn);
 		return sList;
 	}
@@ -193,16 +194,26 @@ public class SurveyService {
 		ArrayList<DoSurvey> dsList = new ArrayList<DoSurvey>();
 		if(s.getsTarget() != null) {
 			st = sDao.selectSurveyTarget(conn, s);
-			System.out.println(st);
 			dsList = sDao.modifySurveyTarget(conn, s, qList, st);
 		}else {
 			dsList = sDao.modifySurvey(conn, s, qList);
 		}
-		System.out.println(dsList);
 		
 		close(conn);
 		
 		return dsList;
+	}
+
+	public int deleteModifiedSurvey(String[] delSnum, String[] delQnum, ArrayList<String> delAnum) {
+		Connection conn = getConnection();
+		SurveyDao sDao = new SurveyDao();
+		int result1 =  sDao.deleteModifiedAnswer(conn, delQnum);
+		int result2 =  sDao.deleteModifiedQuestion(conn, delSnum);
+		int result3 =  sDao.deleteModifiedSurvey(conn, delSnum);
+		commit(conn);
+		
+		close(conn);
+		return result1 +result2+result3; 
 	}
 
 }
