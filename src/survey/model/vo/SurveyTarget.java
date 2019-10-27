@@ -11,24 +11,31 @@ public class SurveyTarget implements Serializable{
 	 */
 	private static final long serialVersionUID = 4464354407101272709L;
 
+	private int svNum;
 	private int sNum;
 	private String[] targetType;
 	private ArrayList<String[]> targetDetail;
-	
 	public SurveyTarget() {
-	
-	}
-	public SurveyTarget(int sNum, String[] targetType, ArrayList<String[]> targetDetail) {
-		super();
-		this.sNum = sNum;
-		this.targetType = targetType;
-		this.targetDetail = targetDetail;
 	}
 	
 	public SurveyTarget(String[] targetType, ArrayList<String[]> targetDetail) {
 		super();
 		this.targetType = targetType;
 		this.targetDetail = targetDetail;
+	}
+
+	public SurveyTarget(int svNum, int sNum, String[] targetType, ArrayList<String[]> targetDetail) {
+		super();
+		this.svNum = svNum;
+		this.sNum = sNum;
+		this.targetType = targetType;
+		this.targetDetail = targetDetail;
+	}
+	public int getSvNum() {
+		return svNum;
+	}
+	public void setSvNum(int svNum) {
+		this.svNum = svNum;
 	}
 	public int getsNum() {
 		return sNum;
@@ -53,8 +60,8 @@ public class SurveyTarget implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "SurveyTarget [sNum=" + sNum + ", targetType=" + Arrays.toString(targetType) + ", targetDetail="
-				+ targetDetail + "]";
+		return "SurveyTarget [svNum=" + svNum + ", sNum=" + sNum + ", targetType=" + Arrays.toString(targetType)
+				+ ", targetDetail=" + targetDetail + "]";
 	}
-	
+		
 }

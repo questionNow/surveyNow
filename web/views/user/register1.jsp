@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title> 회원가입 창 </title>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejuhallasan.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 #register {
    width: 700px;
    margin-left: auto;
@@ -22,6 +34,7 @@
    display:inline-block;
    margin-top:15px;
    float:left;
+   font-family: 'Jeju Hallasan', cursive;
 }
 .nowlogo {
    width: 100px;
@@ -38,6 +51,7 @@ body{
    font-weight : bold;
    letter-spacing : 22px;
    text-align : center; 
+   font-family: 'Hanna', sans-serif;
 }
 
 .join {
@@ -48,11 +62,19 @@ body{
 input[type = button]{
    cursor : pointer;
    padding : 9px 20px;
+   border-radius : 15px;
+   font-size : 16px;
 }
 input[type = reset]{
    cursor : pointer;
    padding : 9px 20px;
    width : 266.5px;
+   border-radius : 15px;
+   font-size : 16px;
+   background : #F1CFBE;
+}
+input[type = reset]:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 input[type = text]{
    width : 540px;
@@ -70,17 +92,23 @@ input[type = password]{
    box-sizing : border-box;
    padding : 12px 20px;
 }
-
+input[type = text], input[type = password], select{
+   border : 1px solid #F6B490;
+}
 #id {
    width : 405px;
 }
 #idChk{
    width : 130px;
+   background : #F1CFBE;
+}
+#idChk:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 #gender{
    width : 540px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    padding : .7em;
 }
 #email1, #email2{
@@ -89,7 +117,7 @@ input[type = password]{
 #email3{
    width : 170px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    padding : .7em;
 }
 #emailNum{
@@ -98,7 +126,7 @@ input[type = password]{
 #tongsin{
    width : 180px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    padding : .7em;
 }
 #phoneNum{
@@ -114,6 +142,10 @@ input[type = password]{
    cursor : pointer;
    padding : 9px 20px;
    width : 100px;
+   background : #F1CFBE;
+}
+#seAddress:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 #detailAddress{
    width : 295px;
@@ -126,14 +158,26 @@ input[type = password]{
 }
 #reIdChk{
    width : 128px;
+   background : #F1CFBE;
+}
+#reIdChk:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 #nextMain{
    width : 268.5px;
+   background : #F1CFBE;
+}
+#nextMain:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 #nextRegister, #checkForm{
    cursor : pointer;
    padding : 9px 20px;
    width : 540px;
+   background : #F1CFBE;
+}
+#nextRegister:hover, #checkForm:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 .question {
    margin-left : 630px;
@@ -142,33 +186,33 @@ input[type = password]{
 #finalEdu{
    width : 493px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    padding : .7em;
 }
 #job{
    width : 492px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    margin-left : 39.5px;
    padding : .7em;
 }
 #income{
    width : 493px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    margin-left : 12.5px;
    padding : .7em;
 }
 #home1, #home2, #family1{
    width : 493px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    padding : .7em;
 }
 #religion, #marry, #soldier{
    width : 493px;
    border-radius : 10px;
-   border : 1px solid #ccc;
+   border : 1px solid #F6B490;
    margin-left : 39px;
    padding : .7em;
 }
@@ -179,6 +223,12 @@ input[type = password]{
    cursor : pointer;
    padding : 9px 20px;
    width : 285px;
+   background : #F1CFBE;
+   border-radius : 15px;
+   font-size : 16px;
+}
+#successRegister:hover, #backBtn:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
  
 </style>
@@ -261,12 +311,12 @@ input[type = password]{
       </div> <br>
       <div class = join>
          <label> 주소 </label> <br>
-         <input type = text id = postCode name = postCode placeholder = "우편번호">
-         <input type = text id = address1 name = address1 placeholder = "도로명 주소">
+         <input type = text id = postCode name = postCode placeholder = "우편번호" disabled="disabled">
+         <input type = text id = address1 name = address1 placeholder = "도로명 주소" disabled="disabled">
          <input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
          <span id= guide style = "color:#999; display:none"> </span>
-         <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요">
-         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소">
+         <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요" disabled>
+         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소" disabled="disabled">
       </div> <br>
       <div class = join>
          <label> 추천인 </label> <br>
@@ -274,7 +324,7 @@ input[type = password]{
          <input type = button value = "추천인 확인" id = reIdChk>
       </div> <br>
       <div class = join>
-         <div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div>
+         <div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div><br>
          <input type = reset value = "다시쓰기" id = clear1>
          <input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
       </div> </div> 
@@ -530,40 +580,53 @@ input[type = password]{
        
          var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
          var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-         $("#pw1").change(function(){
-            if(!checkPwd.test($("#pw1").val())){
-               $("#resultPw1").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
-               $("#pw1").val("");
-               $("#pw1").focus();
-            } else {
-               $("#resultPw1").css("display", "none");
-            }
-            if($("#pw1").val() != ($("#pw2").val())){
-               $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color","red");
-               $("#pw2").val("");
-               $("#pw2").focus();
-            }
-         });
          
-         $("#pw2").change(function(){
-          if($('#pw1').val() != $(this).val()){
-            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
-            $("#pw2").val("");
-            $(this).focus();
-           
-          } else {
-             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
-          }
-         
-         });
          
          $("#id").change(function(){
             if(!checkId.test($("#id").val())){
                $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
                $("#id").val("");
                $("#id").focus();
+               return false;
+            }else{
+           		$("#resultId").css("display","none");
             }
          });
+         
+         $("#pw1").change(function(){
+            if(!checkPwd.test($("#pw1").val())){
+               $("#resultPw1").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
+               $("#pw1").val("");
+               $("#pw1").focus();
+               return false;
+            } else {
+               $("#resultPw1").css("display", "none");
+           		$(function(){
+           			if($("#pw2").val().length != 0){
+	            		if(($("#pw1").val() != ($("#pw2").val()))){
+			               	$("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color","red");
+			               	$("#pw2").val("");
+			               	$("#pw2").focus();
+			               	return false;
+	            		}
+           			}
+           		});	            	
+       		}
+       	});
+         
+         $("#pw2").change(function(){
+        	 if($(this).val().length != 0 ){
+		          if($('#pw1').val() != $(this).val()){
+		            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+		            $("#pw2").val("");
+		            $(this).focus();
+		           
+		          } else {
+		             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
+		          }
+        	 }
+         });
+        
       });
       // <- 여기까지 비밀번호 유효성 검사 및 일치 확인     
       
@@ -665,10 +728,13 @@ input[type = password]{
             $("#detailAddress").focus();
             return false;
          }
-         nextStep(); 
+         var bool = confirm("2단계 패널 정보 등록화면으로 넘어가시겠습니까?");
+         	if(bool){
+         		nextStep();
+         	}
          });
       });      // <---------  여기까지 가입1단계 유효성 검사 
-      
+     
       // --------------> 여기서부터 패널등록 빈칸 검사
       function checkCondition(){
          var interestCheck = false;
@@ -731,12 +797,11 @@ input[type = password]{
           return true;
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
-     
-      function nextStep(){
+     function nextStep(){
     	  $(".title1").hide();
-          $(".title2").show();
+    	  $(".title2").show();
       }
-   
+         
       // 여기서부터 ->
       $(document).ready(function(){
        $("#email3").change(function(){
@@ -803,8 +868,12 @@ input[type = password]{
                     guideTextBox.innerHTML = '';
                     guideTextBox.style.display = 'none';
                 }
+                if(document.querySelector("#address1").value != null){
+                    document.querySelector("#detailAddress").removeAttribute("disabled");
+                    }
             }
         }).open();   // <- 여기까지 주소넣기 
+        
     }  
    
 

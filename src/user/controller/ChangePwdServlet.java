@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,8 +52,10 @@ public class ChangePwdServlet extends HttpServlet {
 		if(findPwd > 0) {
 			page = "views/common/loginPage.jsp";
 		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "비밀번호 수정 실패");
+			PrintWriter out = response.getWriter();
+			out.println("<script> alert('비밀번호 수정에 실패하였습니다!!!'); location.href='views/user/successPwd.jsp'; </script>");
+			out.flush();
+			out.close();
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

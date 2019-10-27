@@ -35,21 +35,27 @@ public class SurveyMakeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("서블릿으로 오니?");
 		ArrayList<String[]> targetList = null;
 		String[] targetType = null;
 		String[] targetDetail = null;
 		SurveyTarget st = null;
+		Survey s = new Survey();
 		if (request.getParameterValues("targetType") != null) {
 			targetList = new ArrayList<>();
 			targetType = request.getParameterValues("targetType");
+			String sTarget = "";
 			for (int i = 0; i < targetType.length; i++) {
+				targetDetail = new String[targetType.length];
 				targetDetail = request.getParameterValues(targetType[i]);
 				targetList.add(targetDetail);
-				for (int j = 0; j < targetDetail.length; j++) {
+				if(i == targetType.length -1) {
+					sTarget += targetType[i];
+				}else {
+					sTarget += targetType[i] +",";
 				}
 			}
 			st = new SurveyTarget(targetType, targetList);
+			s.setsTarget(sTarget);
 		}
 
 		String sTitle = request.getParameter("sTitle");
@@ -76,7 +82,7 @@ public class SurveyMakeServlet extends HttpServlet {
 			}
 		}
 
-		Survey s = new Survey();
+		
 		s.setsUserId(userId);
 		s.setsTitle(sTitle);
 		s.setsType(sCategory);

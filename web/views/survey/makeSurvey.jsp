@@ -35,7 +35,7 @@
 			<div id="surveyType">
 				<button id="pick" onclick="addQuestion()">+객관식</button>
 				<button id="write" onclick="addWriteQuestion()">+주관식</button>
-				<button id="rank">+순위</button>
+				<button onclick = "check();">+순위</button>
 			</div>
 			<form id="submitSurvey">
 				<input name="userId" type="hidden"
@@ -90,22 +90,23 @@
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 시작 -->
 	<script type="text/javascript">
 		snum = 0;
-		var qCount = 0;
-		
+		qCount = 0;
 		function addWriteQuestion(){
 			qCount++;
 			$("#survey")
 					.append(
-							"<br><div class = 'question write' id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '주관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(주관식)</h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div><br>")
+							"<div class = 'question write' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '주관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(주관식)</h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 							aCount++;
 			}
+		
+		
 		
 		
 		function addQuestion() {
 			qCount++;
 			$("#survey")
 					.append(
-							"<br><div class = 'question pick' id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div><br>")
+							"<div class = 'question pick' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 
 		}
 		var aCount = 0;
@@ -127,13 +128,26 @@
 			$("#answer"+num).remove();
 		}			
 		
-		
+		function check(){
+			var qs = "";
+			for(var i = 0 ; i < $(".question").length ; i ++){
+				qs += $(".question")[i].id;				
+			}
+			var qNumbers = qs.split("question");
+			for(var s in qNumbers){
+				if(s != 0){
+					console.log(qNumbers[s]);
+				}
+				
+			}
+		}
 	</script>
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 끝 -->
 
 	<script type="text/javascript">
 	tnum = 0;
 		function setTarget(){
+			
 			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
 														 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
 														 +"<option>-------</option>"
@@ -159,6 +173,7 @@
 		}
 		
 		function checkTarget(num){
+			
 			for(var i =0; i<$(".target").length ; i++){
 				if($(".target").length>1){
 					for(var j = i+1 ; j<$(".target").length ; j++){						
@@ -217,7 +232,7 @@
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '천주교' name = religion value = '천주교'><label for = '천주교'>천주교</label>"
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = religion value = '기타'><label for = '기타'>기타</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "maritalStatus"){
-				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = ma	ritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
+				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '미혼' name = maritalStatus value = '미혼'><label for = '미혼'>미혼</label>"
 										+"&nbsp;&nbsp;<input type ='checkbox' id = '기혼' name = maritalStatus value = '기혼'><label for = '기혼'>기혼</label></div>");
 			} else if($(".target"+num+" option:selected").val()== "livingWith"){
 				 $("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '혼자' name = livingWith value = '혼자'><label for = '혼자'>혼자</label>"
@@ -240,7 +255,8 @@
 	<!-- 빈칸 검사  / submit-->
 	<script type="text/javascript">
 	function blankCheck(){
-		// 설문 제목 입력
+		
+		
 		if($("#survey > input")[0].value ==""){
 	            alert("설문 제목을 입력해주세요.");
 	            $("#survey > input")[0].focus();
@@ -269,48 +285,79 @@
             return false;
 		}
 		
+		var ts = "";
+		for(var i = 0 ; i < $("#survey > div > div").length ; i++){
+			ts += $("#survey > div > div")[i].id;
+		}
+		var tNumbers = ts.split("target");
 		
-		for(var i = 0; i < tnum ; i++){
-			if($(".target")[i].value==="-------"){
-				alert("설문 대상 타입을 선택 해주세요.");
-				$(".target"+i).focus();
-	            return false;
+		for(var t in tNumbers){
+			if(tNumbers[t] != null){	
+				if($(".target")[t].value==="-------"){
+					alert("설문 대상 타입을 선택 해주세요.");
+					$(".target"+tNumbers[t]).focus();
+		            return false;
+				}
+				console.log(tNumbers[t+1]);
+				console.log($("#targetDiv > #target"+tNumbers[t]+" > div input:checked").length);
+				if($("#target"+tNumbers[t]+" > div > input:checked").length < 1){
+					alert("설문 대상을 체크해주세요.");
+					return false;
+				}
 			}
-			if($("#target"+[i]+" > div > input:checked").length===0){
-				alert("설문 대상을 체크해주세요.");
-				return false;
-			}
-			
 		}
 		if($("#qTitle").length===0){
 			alert("질문을 추가해주세요.");
 			$("#surveyType").focus();
 			return false;
 		}
-		for(var i = 1; i <= $(".question").length ; i++){
-			if($("#question"+i+" #qTitle").val() === "" ){
+		
+		var annswer = "";
+		for(var i ; i< $(".question #qTitle").length ; i++){
+			if($(".question #qTitle")[i].value ==""){
 				alert("질문을 입력해주세요.");
-				$("#question"+i+" #qTitle").focus();
+				$(".question #qTitle")[i].focus();
 				return false;
-			}else{
-				if($("#question"+i+" > input")[1].value === "객관식"){
-					if($("#question"+i+" .answer").length >= 2){
-						for(var j = 0 ; j < $("#question"+i+" .answer").length ; j++){
-							if($("#question"+i+" .answer")[j].value === ""){
-								alert("보기를 입력 해주세요.");
-								$("#question"+i+" .answer")[j].focus();
-								return false;
-							}
-						}
+			}
+		}
+		
+		var qs = "";
+		for(var i = 0 ; i < $(".question").length ; i ++){
+			qs += $(".question")[i].id;				
+		}
+		var qNumbers = qs.split("question");
+		
+		for(var s in qNumbers){
+			if(s != 0){
+				console.log(qNumbers[s]);
+			}
+			
+		}
+		
+		for(var s in qNumbers){
+			if(s != 0){
+				if($(".question"+qNumbers[s]+" #qTitle").val() === "" ){
 					
-					}else{
-						alert("보기는 2개 이상 등록 해주세요.");
-						return false;
+				}else{
+					if($("#question"+qNumbers[s]+" > input")[1].value === "객관식"){
+						if($("#question"+qNumbers[s]+" .answer").length >= 2){
+							for(var j = 0 ; j < $("#question"+qNumbers[s]+" .answer").length ; j++){
+								if($("#question"+qNumbers[s]+" .answer")[j].value === ""){
+									alert("보기를 입력 해주세요.");
+									$("#question"+qNumbers[s]+" .answer")[j].focus();
+									return false;
+								}
+							}
+						
+						}else{
+							alert("보기는 2개 이상 등록 해주세요.");
+							return false;
+						}
 					}
 				}
 			}
 		}
-	
+
 		var bool = confirm("설문을 저장하시겠습니까?\n저장 후 '작성된 설문함'에서 확인 / 수정 가능합니다.");
 		if(bool){
 			$("#submitSurvey").attr("action","<%=request.getContextPath()%>/surveyMake.sv").submit();

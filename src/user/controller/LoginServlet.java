@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.apache.tomcat.jni.User;
 
 import user.model.service.UserService;
 import user.model.vo.UserInfo;
@@ -46,15 +45,16 @@ public class LoginServlet extends HttpServlet {
 		UserInfo loginUser = new UserService().loginUser(user);
 
 		response.setContentType("text/html;charset=utf-8");
-		RequestDispatcher view = null;
-
+		RequestDispatcher view = null;		 
+		
+		
 		if (loginUser != null) { // 성공일 경우
 
 			HttpSession session = request.getSession();
 
 			session.setAttribute("loginUser", loginUser);
 
-			// usertype 구분해서 로그인하는 것
+			// usertpye 구분해서 로그인하는 것
 			int usertype = UserService.userType(userId);
 
 			if (usertype == 2) {
@@ -64,9 +64,12 @@ public class LoginServlet extends HttpServlet {
 			}
 
 		} else {// 실패할 경우
-			request.setAttribute("msg", "로그인 실패");
-			view = request.getRequestDispatcher("views/common/errorPage.jsp");
+			PrintWriter out = response.getWriter();
+			out.println("<script> alert('로그인을 다시 시도해주세요!!!'); location.href='views/common/loginPage.jsp'; </script>");
+			out.flush();
+			out.close();
 		}
+		
 		view.forward(request, response);
 
 	}

@@ -184,4 +184,25 @@ public class SurveyService {
 		return result;
 	}
 
+	public ArrayList<DoSurvey> modifySurvey(int sNum, String userId) {
+		Connection conn = getConnection();
+		SurveyDao sDao = new SurveyDao();
+		Survey s = sDao.selectSurvey(conn, sNum);
+		SurveyTarget st = null;
+		ArrayList<Question> qList = sDao.selectQuestion(conn, s);
+		ArrayList<DoSurvey> dsList = new ArrayList<DoSurvey>();
+		if(s.getsTarget() != null) {
+			st = sDao.selectSurveyTarget(conn, s);
+			System.out.println(st);
+			dsList = sDao.modifySurveyTarget(conn, s, qList, st);
+		}else {
+			dsList = sDao.modifySurvey(conn, s, qList);
+		}
+		System.out.println(dsList);
+		
+		close(conn);
+		
+		return dsList;
+	}
+
 }

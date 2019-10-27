@@ -15,9 +15,27 @@ public class DoSurvey implements Serializable{
 	private Question q;
 	private ArrayList<Answer> a;
 	private int aCount;
+	private SurveyTarget st;
 	
 	public DoSurvey() {
 
+	}
+
+	public SurveyTarget getSt() {
+		return st;
+	}
+
+	public void setSt(SurveyTarget st) {
+		this.st = st;
+	}
+
+	public DoSurvey(Survey s, Question q, ArrayList<Answer> a, int aCount, SurveyTarget st) {
+		super();
+		this.s = s;
+		this.q = q;
+		this.a = a;
+		this.aCount = aCount;
+		this.st = st;
 	}
 
 	public DoSurvey(Survey s, Question q, ArrayList<Answer> a, int aCount) {
