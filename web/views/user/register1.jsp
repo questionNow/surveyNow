@@ -311,12 +311,12 @@ input[type = text], input[type = password], select{
       </div> <br>
       <div class = join>
          <label> 주소 </label> <br>
-         <input type = text id = postCode name = postCode placeholder = "우편번호" disabled="disabled">
-         <input type = text id = address1 name = address1 placeholder = "도로명 주소" disabled="disabled">
+         <input type = text id = postCode name = postCode placeholder = "우편번호" disabled>
+         <input type = text id = address1 name = address1 placeholder = "도로명 주소" disabled>
          <input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
          <span id= guide style = "color:#999; display:none"> </span>
-         <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요" disabled>
-         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소" disabled="disabled">
+         <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요">
+         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소" disabled>
       </div> <br>
       <div class = join>
          <label> 추천인 </label> <br>
@@ -580,19 +580,6 @@ input[type = text], input[type = password], select{
        
          var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
          var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-         
-         
-         $("#id").change(function(){
-            if(!checkId.test($("#id").val())){
-               $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
-               $("#id").val("");
-               $("#id").focus();
-               return false;
-            }else{
-           		$("#resultId").css("display","none");
-            }
-         });
-         
          $("#pw1").change(function(){
             if(!checkPwd.test($("#pw1").val())){
                $("#resultPw1").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
@@ -601,32 +588,38 @@ input[type = text], input[type = password], select{
                return false;
             } else {
                $("#resultPw1").css("display", "none");
-           		$(function(){
-           			if($("#pw2").val().length != 0){
-	            		if(($("#pw1").val() != ($("#pw2").val()))){
-			               	$("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color","red");
-			               	$("#pw2").val("");
-			               	$("#pw2").focus();
-			               	return false;
-	            		}
-           			}
-           		});	            	
-       		}
-       	});
+            $(function(){
+            if($("#pw2").val().length != 0){
+            if($("#pw1").val() != ($("#pw2").val())){
+               $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color","red");
+               $("#pw2").val("");
+               $("#pw2").focus();
+            
+                  }
+               }
+            });
+            }
+         });
          
          $("#pw2").change(function(){
-        	 if($(this).val().length != 0 ){
-		          if($('#pw1').val() != $(this).val()){
-		            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
-		            $("#pw2").val("");
-		            $(this).focus();
-		           
-		          } else {
-		             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
-		          }
-        	 }
+          if($('#pw1').val() != $(this).val()){
+            $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+            $("#pw2").val("");
+            $(this).focus();
+           
+          } else {
+             $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
+          }
+         
          });
-        
+         
+         $("#id").change(function(){
+            if(!checkId.test($("#id").val())){
+               $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
+               $("#id").val("");
+               $("#id").focus();
+            }
+         });
       });
       // <- 여기까지 비밀번호 유효성 검사 및 일치 확인     
       
@@ -728,10 +721,7 @@ input[type = text], input[type = password], select{
             $("#detailAddress").focus();
             return false;
          }
-         var bool = confirm("2단계 패널 정보 등록화면으로 넘어가시겠습니까?");
-         	if(bool){
-         		nextStep();
-         	}
+         nextStep();
          });
       });      // <---------  여기까지 가입1단계 유효성 검사 
      
@@ -798,8 +788,11 @@ input[type = text], input[type = password], select{
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
      function nextStep(){
-    	  $(".title1").hide();
-    	  $(".title2").show();
+         $(".title1").hide(); 
+         $(".title2").show(); 
+         $("#extraAddress").removeAttr("disabled");
+         $("#postCode").removeAttr("disabled");
+         $("#address1").removeAttr("disabled");
       }
          
       // 여기서부터 ->
@@ -868,12 +861,8 @@ input[type = text], input[type = password], select{
                     guideTextBox.innerHTML = '';
                     guideTextBox.style.display = 'none';
                 }
-                if(document.querySelector("#address1").value != null){
-                    document.querySelector("#detailAddress").removeAttribute("disabled");
-                    }
             }
         }).open();   // <- 여기까지 주소넣기 
-        
     }  
    
 

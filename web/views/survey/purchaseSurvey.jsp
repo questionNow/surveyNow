@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <meta charset="UTF-8">
 <title>Survey</title>
 <style>
@@ -112,19 +112,32 @@ background : orangered
 	function checkSurvey(obj) {
 		obj.classList.toggle("show");
 		$("#purchase").remove();
-		if($(".show").length != 0){
-			var price = 0;
-			for(var i = 0 ; i< $(".show").length ; i++){
-				if((($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1)) < 1000){
-					price += 1000;
-				}else{
-					price += (($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1))
+			if($(".show").length != 0){
+				var price = 0;
+				for(var i = 0 ; i< $(".show").length ; i++){
+					if((($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1)) < 1000){
+						price += 1000;
+					}else{
+						price += (($(".show").children()[4+(8*i)].innerHTML*1)*($(".show").children()[5+(8*i)].innerHTML*1))
+					}
 				}
+				
+				$("#surveyList").append("<div id = 'purchase'><br>총 "+$(".show").length+"개 설문 총 "+price+"원 <input type = 'button' onclick = 'doPurchase("+price+");' value = '결제하기' style = 'float : right'></div>");
 			}
-			
-			$("#surveyList").append("<div id = 'purchase'><br>총 "+$(".show").length+"개 설문 총 "+price+"원 <input type = 'button' onclick = 'doPurchase();' value = '결제하기' style = 'float : right'></div>");
 		}
+	function doPurchase(price){
+		var sNums = '';
+		for(var i = 0 ; i < $(".show input").length ; i++){
+			if(i == $(".show input").length-1){
+				sNums += $(".show input")[i].value;
+			}else{
+			sNums += ($(".show input")[i].value + ",");
+			}
 		}
+		console.log(sNums);
+		location.href = "<%= request.getContextPath() %>/DoPurchase.sv?sNums="+sNums+"&price="+price+"&userId=<%= loginUser.getUserId() %>";
+		
+	}
 	
 	</script>
 

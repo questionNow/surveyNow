@@ -12,6 +12,7 @@ import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
+import user.model.vo.UserInfo;
 
 public class SurveyService {
 
@@ -214,6 +215,24 @@ public class SurveyService {
 		
 		close(conn);
 		return result1 +result2+result3; 
+	}
+
+	public void sortChart(String aContent, int qNum) {
+		Connection conn = getConnection();
+		
+		SurveyDao sDao = new SurveyDao();
+		sDao.sortChart(conn, aContent, qNum);
+	}
+
+
+	public int purchaseSurvey(String sNums) {
+		Connection conn = getConnection();
+		System.out.println("purchase Survey : " + sNums);	
+		 int result = new SurveyDao().purchaseSurvey(conn, sNums);
+		commit(conn);
+	
+		close(conn);
+		return result;
 	}
 
 }

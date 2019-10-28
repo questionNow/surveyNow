@@ -32,11 +32,7 @@
 
 		<div class="right" style="background-color: #ddd;">
 			<h2>설문 만들기</h2>
-			<div id="surveyType">
-				<button id="pick" onclick="addQuestion()">+객관식</button>
-				<button id="write" onclick="addWriteQuestion()">+주관식</button>
-				<button onclick = "check();">+순위</button>
-			</div>
+			
 			<form id="submitSurvey">
 				<input name="userId" type="hidden"
 					value="<%=loginUser.getUserId()%>">
@@ -78,7 +74,11 @@
 							onclick="setTarget();">
 					</h3>
 					<div id="targetDiv"></div>
-
+			<div id="surveyType">
+				<label id="pick" onclick="addQuestion()">+객관식</label>
+				<label id="write" onclick="addWriteQuestion()">+주관식</label>
+				<label onclick = "check();">+순위</label>
+			</div>
 					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
 				</div>
 

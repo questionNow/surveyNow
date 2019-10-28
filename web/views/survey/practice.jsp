@@ -9,19 +9,38 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <head>
   <style>
-  
+  * {
+	box-sizing: border-box;
+}
+
+.right {
+	width: 55%;
+	padding: 15px;
+	display: inline-block;
+}
+  #add{
+  position: relative;
+  bottom : 100%;
+  left : 80%;
+  }
   </style>
   </head>
   <body>
-  <div id = "chartArea"></div>
+  <%@ include file="../common/menubar2.jsp" %>
+	<div class="row">
+		<div class="right">
+  			<div id = "chartArea" border = "1px solid red"></div>
+  		</div>
+  	</div>
   
   <script type="text/javascript">
-
+	 
   
 // ***** 여기는 문제 갯수만큼 돌아가야 하는 부분**********
   <%for(int i = 0 ; i < dsList.size() ; i++){ %>
 // ** 문제 갯수마다 piechart"넘버" 로 DIV를 추가해줌
-  $("#chartArea").append("<div id='piechart<%=i%>' style='width: 40%; height: 300px;'></div>");  
+  $("#chartArea").append("<br><br><br><br><div id='piechart<%=i%>' style='width: 100%; height: 300px;'></div><br><br><br><br>");  
+ 
  
   	google.charts.load("current", {packages:["corechart"]});
 	
@@ -40,7 +59,7 @@
 			      ]);
 	    	  
 	        var options = {
-	            title: '<%=dsList.get(i).getS().getsTitle()%>'
+	            title: '<%=dsList.get(i).getQ().getqTitle()%>'
 	            // ,is3D : true
 	          };
 	   
@@ -67,16 +86,47 @@
 				    }
 				  }
 				  if (message == '') {
-				    message = 'nothing';
 				  }
-				  alert('클릭 이벤트에 딸린 내용 : ' + message);
-				  aaa(message);
+				  // 실행부
+				  ajaj(message);
 				}
-	          function aaa(a){
-	        	  alert(a);
+	          function ajaj(aContent){
+	        	  $.ajax({
+	        		  url : "<%= request.getContextPath()%>/sortChart.ch",
+	        		  data : {aContent: aContent, qNum : <%=dsList.get(i).getQ().getqNum()%>},
+	        		  success : function(data){
+        				 var qNum = data[0];
+        				 var aContent = data[1];
+	        			 $("#piechart<%=i%> > #add").remove();
+	        			 if(data != null){
+		        		 	 $("#piechart<%=i%>").append("<div id = 'add'>"
+		        		 		 +"<h3>"+data+"에 대한 분석"
+								 +"&nbsp;&nbsp;&nbsp; <select class = 'target' name = targetType onchange = 'chart();'>"
+								 +"<option>-------</option>"
+								 +"<option value = finalEducation>최종학력</option>"
+								 +"<option value = job>직업</option>"
+								 +"<option value = income>소득</option>"
+								 +"<option value = livingType>주거형태</option>"
+								 +"<option value = houseType>주택유형</option>"
+								 +"<option value = religion>종교</option>"
+								 +"<option value = maritalStatus>혼인</option>"
+								 +"<option value = livingWith>동거가족</option>"
+								 +"<option value = armyGo>병역</option>"
+								 +"</select></h3>"
+							 +"</div>");
+		        		 	 
+	        			 }
+	        		 	
+	        		  }
+	        	  });
 	          }
+	          
 	      }
   <%}%>
+  function chart(num, data){
+		alert(num +" / " + data);
+		
+	 }
   </script>	
   </body>
 </html>

@@ -865,4 +865,32 @@ public class SurveyDao {
 		return result;
 	}
 
+	public void sortChart(Connection conn, String aContent, int qNum) {
+		PreparedStatement pstmt = null;
+		
+		
+	}
+
+	public int purchaseSurvey(Connection conn, String sNums) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String[] sNum = sNums.split(","); 
+		System.out.println("길이 : " + sNum.length);
+		try {
+			for(int i = 0 ; i < sNum.length ; i ++) {
+				System.out.println(sNum[i]);
+				pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'I' WHERE SNUM =?");
+				pstmt.setInt(1,  Integer.valueOf(sNum[i]));
+				result = pstmt.executeUpdate();
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	
+		return result;
+	}
+
 }

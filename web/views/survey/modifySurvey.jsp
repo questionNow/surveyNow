@@ -180,10 +180,10 @@
 					
 					<% for(int i = 0 ; i < dsList.size() ; i++){ %>
 					<div class = "question pick" id="question<%=dsList.get(i).getQ().getqNum()%>">
-					<input type = hidden value = Q<%= dsList.get(0).getQ().getqNum() %> name = Qnum>
+					<input type = hidden value = Q<%= dsList.get(i).getQ().getqNum() %> name = Qnum>
 					<input type = hidden value = '객관식' name = Qtype>
-					<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(0).getQ().getqNum()%>);' style='float: right'>
-					<h3>질문 제목(객관식) <input type='button' value='항목 추가' onclick = 'addAnswer(<%=dsList.get(0).getQ().getqNum()%>);' style='float: right'></h3>
+					<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'>
+					<h3>질문 제목(객관식) <input type='button' value='항목 추가' onclick = 'addAnswer(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'></h3>
 					<input id='qTitle' type='text' value = "<%= dsList.get(i).getQ().getqTitle() %>" name = Qtitle>
 					
 						<% for(int j = 0 ; j < dsList.get(i).getA().size() ; j++){ %>
@@ -197,13 +197,11 @@
 				</div>
 				<br> <label onclick="blankCheck();" style="cursor: pointer">저장하기</label>
 			<% for(int i = 0 ; i < dsList.size() ; i++) {%>
-			<div><input type = text value ="<%=dsList.get(i).getS().getsNum() %>" name = delSnum>
-			<input type = text value ="<%=dsList.get(i).getQ().getqNum() %>" name = delQnum>
-			dsList<%=dsList.size() %>
+			<div><input type = hidden value ="<%=dsList.get(i).getS().getsNum() %>" name = delSnum>
+			<input type = hidden value ="<%=dsList.get(i).getQ().getqNum() %>" name = delQnum>
 			
 				<% for (int j = 0 ; j< dsList.get(i).getA().size(); j++){ %>
-				<input type = text value ="<%=dsList.get(i).getA().get(j).getaNum() %>" name ="A<%=dsList.get(i).getQ().getqNum() %>">
-				AList<%= dsList.get(i).getA().size() %>
+				<input type = hidden value ="<%=dsList.get(i).getA().get(j).getaNum() %>" name ="A<%=dsList.get(i).getQ().getqNum() %>">
 				<%} %>
 			</div>
 			<%} %>
@@ -451,7 +449,7 @@
 		for(var i = 0 ; i < $(".question").length ; i ++){
 			qs += $(".question")[i].id;				
 		}
-		var qNumbers = qs.split("question");
+		var qNumbers = qs.split("question").slice(1);
 		
 		for(var s in qNumbers){
 			if(s != 0){
@@ -461,25 +459,19 @@
 		}
 		
 		for(var s in qNumbers){
-			if(s != 0){
-				if($(".question"+qNumbers[s]+" #qTitle").val() === "" ){
-					
-				}else{
-					if($("#question"+qNumbers[s]+" > input")[1].value === "객관식"){
-						if($("#question"+qNumbers[s]+" .answer").length >= 2){
-							for(var j = 0 ; j < $("#question"+qNumbers[s]+" .answer").length ; j++){
-								if($("#question"+qNumbers[s]+" .answer")[j].value === ""){
-									alert("보기를 입력 해주세요.");
-									$("#question"+qNumbers[s]+" .answer")[j].focus();
-									return false;
-								}
-							}
-						
-						}else{
-							alert("보기는 2개 이상 등록 해주세요.");
+			if($("#question"+qNumbers[s]+" > input")[1].value === "객관식"){
+				if($("#question"+qNumbers[s]+" .answer").length >= 2){
+					for(var j = 0 ; j < $("#question"+qNumbers[s]+" .answer").length ; j++){
+						if($("#question"+qNumbers[s]+" .answer")[j].value === ""){
+							alert("보기를 입력 해주세요.");
+							$("#question"+qNumbers[s]+" .answer")[j].focus();
 							return false;
 						}
 					}
+				
+				}else{
+					alert("보기는 2개 이상 등록 해주세요.");
+					return false;
 				}
 			}
 		}
