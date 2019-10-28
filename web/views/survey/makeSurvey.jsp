@@ -8,11 +8,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Survey</title>
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
 .right {
 	width: 55%;
 	padding: 15px;
 	display: inline-block;
+	background-color: #F8EFE6;
 }
 
 #surveyList * {
@@ -23,33 +31,110 @@
 #targetDiv {
 	display: none;
 }
+#titleSurvey{
+	font-size : 1.8em;
+	font-weight: bold;
+	font-family: 'Jeju Hallasan', cursive;
+}
+#pick, #write, #rank{
+	background-color: #F8EFE6;
+	margin-right : 15px;
+	font-size : 1.4em;
+	font-family: 돋음;
+}
+#title1Survey{
+	font-size : 1.5em;
+	font-weight: bold;
+}
+input[type = text]{
+	border-radius: 10px;
+	padding: 7px 15px;
+}
+::placeholder{
+	font-size : 1.2em;
+	color : #554D4A;
+}
+#reset{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 18px;
+    border : 1px solid #F8EFE6;
+    background : #FBB16F;
+}
+input[type = button]{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 18px;
+    border : 1px solid #F8EFE6;
+    background : #FBB16F;
+}
+#pstyle{
+	font-size : 1.5em;
+}
+#sCategory{
+	padding : .3em;
+	margin-left : 43px;
+	width : 150px;
+}
+#sCount{
+	margin-left : 13px;
+}
+#sPoint{
+	margin-left : 61px;
+}
+#qTITLE, #content{
+	font-size : 1.3em;
+	font-weight: bold;
+}
+#qTitle{
+	width : 498px;
+}
+#save, #target{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 23px;
+    border : 1px solid #F8EFE6;
+    background : #89562A;
+    color : white;
+}
+#pick, #write{
+	font-family: 'KoPub Batang', serif;
+	font-size : 2em;
+}
+#selectTarget{
+	width : 210px;
+	height : 28px;
+}
+#clear{
+	cursor : pointer;
+	font-size : 15px;
+	font-weight: bold;
+}
 </style>
 </head>
 
-</head>
 <body>
 	<%@ include file="../common/menubar2.jsp"%>
 
 	<div class="rightPage">
-
-		<div class="right" style="background-color: #ddd;">
-			<h2>설문 만들기</h2>
-			<div id="surveyType">
-				<button id="pick" onclick="addQuestion()">+객관식</button>
-				<button id="write" onclick="check()">+주관식</button>
-				<button id="rank">+순위</button>
-			</div>
+ 
+		<div class="right">
+			<p id = titleSurvey>설문 만들기</p>   <hr>
+			
 			<form id="submitSurvey">
 				<input name="userId" type="hidden"
 					value="<%=loginUser.getUserId()%>">
 				<div id="survey">
-					<h2>
-						설문 제목<input type="reset" id="reset" onclick="resetSurvey();"
-							style="float: right" value="초기화">
-					</h2>
-					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size="70%">
-					<h2>카테고리 <select name = "sCategory">
-						<option value = --->--------</option>
+					<p id = title1Survey>
+						설문 제목 <input type="reset" id="reset" onclick="resetSurvey();" style="float: right" value="초기화">
+					</p>
+					<input type="text" name="sTitle" placeholder="설문 제목을 입력하세요" size="70%"> <hr>
+					
+					<p id = pstyle>카테고리 <select id = sCategory name = "sCategory">
+						<option value = --->---------------------</option>
 						<option value = 스포츠>스포츠</option>
 						<option value = 음식>음식</option>
 						<option value = 여행>여행</option>
@@ -67,22 +152,25 @@
 						<option value = 문화생활>문화생활</option>
 						<option value = 애견>애견</option>
 					
-							</select></h2>
-					<h3>
-						요청 패널 수 <input name=sCount type=number min="5" step = "5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						포인트 <input name=sPoint type=number min="50" step="50"><br>
-						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요)  <input type="button"
-							value="재설정" style="float: right" onclick="deleteTarget();"><input type="button"
-							value="설문 대상 설정하기"  style="float: right" onclick="setTarget();">	
-					</h3>
+							</select></p>
+					<p id = pstyle>
+						요청 패널 수 <input id = sCount name=sCount type=number min="5" step = "5"> <br>
+						포인트 <input id = sPoint name=sPoint type=number min="50" step="50"><br>
+						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요)  ---> 
+						<input type="button" value="재설정" style="float: right" onclick="deleteTarget();">
+						<input type="button" value="설문 대상 설정하기"  style="float: right" onclick="setTarget();">	
+					<br><br></p> 
 					<div id = "targetDiv">					
 					</div>
-
-					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
-				</div>
-
-				<br> <label onclick="submit();">저장하기</label> <label
-					onclick="checkTarget();">타겟</label>
+					<div id="surveyType"> <hr>
+					<label type = button id="pick" onclick="addQuestion()">+객관식 </label>
+					<label type = button id="write" onclick="check()">+주관식</label>
+					</div>
+					<p id = pstyle>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</p>
+				</div> <hr>
+					
+				<br> <label id = save onclick="submit();">저장하기</label> 
+				<label id = target onclick="checkTarget();">타겟</label>
 			</form>
 		</div>
 	</div>
@@ -95,7 +183,7 @@
 			qCount++;
 			$("#survey")
 					.append(
-							"<div class = question id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목<input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div>")
+							"<div class = question id='question"+qCount+"'><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><p id = qTITLE>질문 제목<input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></p><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle></div>")
 
 		}
 		var aCount = 0;
@@ -103,7 +191,7 @@
 			aCount++;
 			$("#question"+num)
 					.append(
-							"<div id= answer"+aCount+"><h4>항목 <input class = 'answer' name = Q"+num+" type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></h4></div>");
+							"<div id= answer"+aCount+"><p id = content>항목 <input class = 'answer' name = Q"+num+" type='text' placeholder='항목을 입력하세요'><input type='button' value='삭제' onclick='removeAnswer("+aCount+");' style='float: right'></p></div>");
 		}
 		function resetSurvey() {
 			qCount =0;
@@ -132,7 +220,7 @@
 	tnum = 0;
 		function setTarget(){
 			$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
-														 +"<select class = target"+tnum+" name = targetType onchange = 'checkTarget("+tnum+");'>"
+														 +"<select id = selectTarget class = target"+tnum+" name = targetType onchange = 'checkTarget("+tnum+");'>"
 														 +"<option>-------</option>"
 														 +"<option value = finalEducation>최종학력</option>"
 														 +"<option value = job>직업</option>"
@@ -143,7 +231,7 @@
 														 +"<option value = maritalStatus>혼인</option>"
 														 +"<option value = livingWith>동거가족</option>"
 														 +"<option value = armyGo>병역</option>"
-														 +"</select><label style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
+														 +"</select><label id = clear style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
 			tnum++;
 		}
 		function deleteTarget(){

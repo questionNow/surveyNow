@@ -13,6 +13,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Survey</title>
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -26,6 +31,7 @@ body {
 	width: 55%;
 	padding: 15px;
 	display: inline-block;
+	background-color: #F8EFE6;
 }
 
 #surveyList * {
@@ -36,6 +42,25 @@ body {
 #delete {
 	cursor: pointer;
 }
+#titleSurvey{
+	font-size : 1.8em;
+	font-weight: bold;
+	font-family: 'Jeju Hallasan', cursive;
+}
+#secondSurvey{
+	font-size : 1.4em;
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-weight : bold;
+}
+#surveyListTable tr th {
+	height : 40px;
+	font-size: 1.4em;
+	font-weight : 900;
+}
+#surveyListTable tr td {
+	height : 30px;
+	font-size : 1.3em;
+}
 </style>
 </head>
 <body>
@@ -44,14 +69,14 @@ body {
 <body>
 	<div class="row">
 
-		<div class="right" style="background-color: #ddd;">
-			<h2>설문 결제하기</h2>
-			<p>작성해둔 설문을 결제 하세요. 왼쪽에 체크박스로 결제하실 설문을 골라주세요.</p>
+		<div class="right">
+			<p id = titleSurvey>설문 결제하기</p>
+			<p id = secondSurvey>작성해둔 설문을 결제 하세요. 왼쪽에 체크박스로 결제하실 설문을 골라주세요.</p> <br>
 			<div id="surveyList">
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
 					<tr>
-						<td width="50px">선택</td>
+						<th width="50px">선택</th>
 						<th width="550px">제목</th>
 						<th width="150px">작성일</th>
 						<th width="100px">문항 수</th>
@@ -64,7 +89,7 @@ body {
 						if (sList.isEmpty()) {
 					%>
 					<tr>
-						<td colspan=7>작성한 설문이 없습니다.</td>
+						<td colspan=8>작성한 설문이 없습니다.</td>
 						<%
 							} else {
 						%>

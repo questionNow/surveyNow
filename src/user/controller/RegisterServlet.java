@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
       String gender = request.getParameter("gender");
       String email = request.getParameter("email1") + request.getParameter("email2");
       String phone = request.getParameter("phone");
-      String address = request.getParameter("address1") + " " + request.getParameter("address2");
+      String address = request.getParameter("postCode") + "@" + request.getParameter("extraAddress") + "@" + request.getParameter("address1") + "@" + request.getParameter("address2");
       String recommendId = request.getParameter("recommendId");
       String finalEducation = request.getParameter("finalEducation");
       String job = request.getParameter("job");
@@ -76,8 +77,10 @@ public class RegisterServlet extends HttpServlet {
       if(result > 0) {
          page = "views/user/successRegister.jsp";
       } else {
-         page = "views/common/errorPage.jsp";
-         request.setAttribute("msg", "회원 가입에 실패하였습니다. 다시 가입해주세요");
+    	  PrintWriter out = response.getWriter();
+			out.println("<script> alert('회원가입에 실패하였습니다!!!'); location.href='views/user/register1.jsp'; </script>");
+			out.flush();
+			out.close();
       }
       
       RequestDispatcher view = request.getRequestDispatcher(page);

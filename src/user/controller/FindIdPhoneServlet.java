@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,9 +53,10 @@ public class FindIdPhoneServlet extends HttpServlet {
 			view = request.getRequestDispatcher("views/user/successId.jsp");
 			request.setAttribute("UserInfo", findId);
 		} else {
-			System.out.println("없는 회원 정보");
-			view = request.getRequestDispatcher("views/common/errorPage.jsp");
-			request.setAttribute("msg", "입력하신 정보에 맞는 아이디가 없습니다.");
+			PrintWriter out = response.getWriter();
+			out.println("<script> alert('입력하신 정보에 맞는 회원이 없습니다!!!'); location.href='views/user/findId.jsp'; </script>");
+			out.flush();
+			out.close();
 		}	      
 	    view.forward(request, response);     
 		

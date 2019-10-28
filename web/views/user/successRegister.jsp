@@ -19,7 +19,7 @@ body{
    color : White;
    font-size : 2.5em;
    font-family: 맑은 고딕;
-   padding-left: 130px;
+   padding-left: 220px;
    color : #F95401;
 }
 #successJoin:hover{

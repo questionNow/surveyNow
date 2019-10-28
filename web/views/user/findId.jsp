@@ -10,6 +10,17 @@
 </script>
 <title>아이디 찾기</title>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejuhallasan.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 #register {
    width: 700px;
    margin-left: auto;
@@ -28,6 +39,7 @@
    display: inline-block;
    margin-top: 15px;
    float: left;
+   font-family: 'Jeju Hallasan', cursive;
 }
 
 .nowlogo {
@@ -45,11 +57,14 @@ body {
    font-weight: bold;
    letter-spacing: 7px;
    text-align: center;
+   font-family: 'Hanna', sans-serif;
 }
 
 .findId2 {
    letter-spacing: 3px;
    text-align: center;
+   font-family: 'Nanum Gothic Coding', monospace;
+   font-size : 1.3em;
 }
 
 .title {
@@ -59,17 +74,26 @@ body {
 input[type=text] {
    width: 608px;
    display: inline-block;
-   border: 1px solid #ccc;
    border-radius: 10px;
    box-sizing: border-box;
    margin-left: 10px;
    padding: 12px 20px;
+   border : 1px solid #F6B490;
+}
+select{
+   border : 1px solid #F6B490;
 }
 
 input[type=button] {
    cursor: pointer;
    padding: 9px 20px;
    width: 344px;
+   background : #F1CFBE;
+   border-radius : 15px;
+   font-size : 18px;
+}
+input[type=button]:hover{
+   box-shadow : 10px 10px 10px 0 #FACF61;
 }
 #findIdEmailBtn, #findIdPhoneBtn{
    cursor: pointer;
@@ -99,6 +123,7 @@ input[type=button] {
    border-radius: 10px;
    border: 1px solid #ccc;
    padding: .7em;
+   border : 1px solid #F6B490;
 }
 
 #tongsin {
@@ -107,6 +132,7 @@ input[type=button] {
    border: 1px solid #ccc;
    padding: .7em;
    margin-left: 33px;
+   border : 1px solid #F6B490;
 }
 
 #phoneNum {
@@ -115,9 +141,6 @@ input[type=button] {
 
 #findIdEmail, #findIdPhone {
    display: none;
-}
-input::placeholder {
-  color: #D44D08;
 }
 </style>
 </head>

@@ -11,7 +11,7 @@
 <style>
 #loginMain {
    width: 700px;
-   text-align: center;
+   text-align: center; 
    margin-left: auto;
    margin-right: auto;
 }

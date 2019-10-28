@@ -9,6 +9,11 @@
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Survey</title>
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 
 <style>
 body {
@@ -23,6 +28,7 @@ body {
 	width: 55%;
 	padding: 15px;
 	display: inline-block;
+	background-color: #F8EFE6;
 }
 
 #surveyList * {
@@ -100,18 +106,36 @@ a.btn-layerClose:hover {
   background-color: #1f326a;
   color: #fff;
 }
+#titleSurvey{
+	font-size : 1.8em;
+	font-weight: bold;
+	font-family: 'Jeju Hallasan', cursive;
+}
+#secondSurvey{
+	font-size : 1.4em;
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-weight : bold;
+}
+#surveyListTable tr th {
+	height : 40px;
+	font-size: 1.4em;
+	font-weight : 900;
+}
+#surveyListTable tr td {
+	height : 30px;
+	font-size : 1.3em;
+}
 </style>
 </head>
 
-</head>
 <body>
 	<%@ include file="../common/menubar2.jsp" %>
 	<div class="row">
 
-		<div class="right" style="background-color: #ddd;">
-			<h2>작성된 설문함</h2>
-			<p>내가 작성한 설문들을 한눈에 확인 해보세요</p>
-			<p>클릭하여 설문을 수정 해보세요 :)</p>
+		<div class="right">
+			<p id = titleSurvey>작성된 설문함</p>
+			<p id = secondSurvey>내가 작성한 설문들을 한눈에 확인 해보세요</p>
+			<p id = secondSurvey>클릭하여 설문을 수정 해보세요 :)</p> <br>
 			<div id="surveyList">
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
@@ -127,7 +151,7 @@ a.btn-layerClose:hover {
 					</tr>
 					<% if(sList.isEmpty()){ %>
 					<tr>
-						<td colspan=7>작성한 설문이 없습니다.</td>
+						<td colspan=8>작성한 설문이 없습니다.</td>
 						<% } else {%>
 						<% for(Survey s : sList){ %>
 							<tr>

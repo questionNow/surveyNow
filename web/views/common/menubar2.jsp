@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="user.model.vo.UserInfo"%>
+	pageEncoding="UTF-8" import="user.model.vo.*,java.util.ArrayList"%>
 
 <%
    UserInfo loginUser = (UserInfo)session.getAttribute("loginUser");
+   // ArrayList<Board> boardList = (ArrayList<Board>)request.getAttribute("blist");
 %>
+ <!-- /* 작업 */
+	/* ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("arr"); */
 
+	/* ArrayList<surveyList> rlist = (ArrayList<surveyList>)request.getAttribute("rlist"); */ -->
 <!DOCTYPE html>
 <html>
-<head>
+<head> 
 <meta charset="UTF-8">
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -57,13 +61,7 @@
 <link href="https://fonts.googleapis.com/css?family=Abel"
 	rel="stylesheet">
 
-<!-- HTLM5shiv ie6~8 -->
-<!--[if lt IE 9]> 
-        <script src="js/html5shiv.min.js"></script>
-        <script type="text/javascript">
-            alert("현재 당신이 보는 브라우저는 지원하지 않습니다. 최신 브라우저로 업데이트해주세요!");
-        </script>
-    <![endif]-->
+
 <style>
 /* reset */
 /* 여백 초기화 */
@@ -199,26 +197,19 @@ img {
 /* style */
 /* 레이아웃 */
 body {
-	background: url(image/header_bg.jpg) repeat-x center top;
+	background: url(image/mainPageLogo.png) repeat-x center top;
 }
-
-#header {
-	
-}
-
 #nav {
 	background-color: #f6fdff;
+	height : 100%;
 }
-
 #title {
-	background-color: #eaf7fd;
+	background-color: #FACEAB;
 }
-
 #contents .container {
 	border-right: 1px solid #dbdbdb;
 	border-left: 1px solid #dbdbdb;
 }
-
 #cont_left {
 	float: left;
 	width: 250px;
@@ -261,19 +252,17 @@ body {
 .header {
 	height: 327px;
 }
-
 .header .header_menu {
 	text-align: right;
 }
-
 .header .header_menu a {
-	color: #fff;
+	color: black;
 	padding: 8px 0 6px 10px;
 	display: inline-block;
 	transition: color 0.3s ease;
 	font-family: 'Abel', sans-serif;
+	font-size : 1.5em;
 }
-
 .header .header_menu a:hover {
 	color: #ccc;
 }
@@ -451,8 +440,7 @@ body {
 
 .title h2 {
 	font-family: 'Nanum Brush Script', cursive;
-	font-size: 39px;
-	color: #0093bd;
+	font-size: 45px;
 	padding: 5px 0;
 }
 
@@ -463,7 +451,7 @@ body {
 	width: 60px;
 	height: 60px;
 	line-height: 60px;
-	background: #3192bf;
+	background: #933D07;
 	color: #fff;
 	font-size: 35px;
 	border-radius: 50%;
@@ -478,7 +466,7 @@ body {
 	width: 60px;
 	height: 60px;
 	line-height: 60px;
-	background: #3192bf;
+	background: #933D07;
 	color: #fff;
 	font-size: 35px;
 	border-radius: 50%;
@@ -504,7 +492,7 @@ body {
 
 .column .col_tit {
 	font-size: 20px;
-	color: #2f7fa6;
+	color: orangerd;
 	padding-bottom: 5px;
 }
 
@@ -515,42 +503,9 @@ body {
 	color: #878787;
 	line-height: 18px;
 }
-
-.column.col1 {
-	
-}
-
-.column.col2 {
-	
-}
-
-.column.col3 {
-	border-bottom: 0;
-}
-
-.column.col4 {
-	
-}
-
-.column.col5 {
-	
-}
-
-.column.col6 {
-	border-bottom: 0;
-}
-
-.column.col7 {
-	
-}
-
-.column.col8 {
-	
-}
-
-.column.col9 {
-	border-bottom: 0;
-}
+.column.col3 {border-bottom: 0;}
+.column.col6 {border-bottom: 0;}
+.column.col9 {border-bottom: 0;}
 
 /* 메뉴 */
 .menu li {
@@ -574,9 +529,9 @@ body {
 }
 
 .menu li a:hover {
-	box-shadow: inset 180px 0 0 0 rgba(36, 130, 174, 0.7);
-	color: #fff;
-	background: rgba(36, 130, 174, 0.9);
+	box-shadow: inset 180px 0 0 0 darkgray;
+	color: red;
+	background: orange;
 }
 
 /* 게시판1 */
@@ -706,284 +661,6 @@ body {
 	}
 }
 
-/* 이미지 슬라이드 */
-.slider figure {
-	position: relative;
-}
-
-.slider figcaption {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	padding: 20px;
-	box-sizing: border-box;
-	background-color: rgba(0, 0, 0, 0.5);
-	color: #fff;
-	font-size: 18px;
-}
-
-.slider figcaption em {
-	display: block;
-	font-weight: bold;
-	font-size: 28px;
-	text-transform: uppercase;
-	font-family: 'Abel', sans-serif;
-	opacity: 0;
-	transform: translateX(50px);
-	transition: all .84s ease;
-}
-
-.slider figcaption span {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	opacity: 0;
-	transform: translateX(50px);
-	transition: all .84s 0.2s ease;
-}
-
-.slider .slick-active figcaption em {
-	opacity: 1;
-	transform: translateX(0)
-}
-
-.slider .slick-active figcaption span {
-	opacity: 1;
-	transform: translateX(0)
-}
-
-.slider .slick-dots {
-	display: block;
-	width: 100%;
-	text-align: center;
-}
-
-.slider .slick-dots li {
-	display: inline-block;
-	width: 15px;
-	height: 15px;
-	margin: 5px;
-}
-
-.slider .slick-dots li button {
-	font-size: 0;
-	line-height: 0;
-	display: block;
-	width: 15px;
-	height: 15px;
-	cursor: pointer;
-	background: #5dbfeb;
-	border-radius: 50%;
-}
-
-.slider .slick-dots li.slick-active button {
-	background: #2b91c8;
-}
-
-.slider .slick-prev {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	z-index: 1000;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	font: normal normal normal 14px/1 FontAwesome;
-	text-indent: -9999px;
-}
-
-.slider .slick-prev::before {
-	content: "\f053";
-	color: #5dbfeb;
-	text-indent: 0;
-	position: absolute;
-	left: 9px;
-	top: 8px;
-}
-
-.slider .slick-next {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	z-index: 1000;
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	font: normal normal normal 14px/1 FontAwesome;
-	text-indent: -9999px;
-}
-
-.slider .slick-next::before {
-	content: "\f054";
-	color: #5dbfeb;
-	text-indent: 0;
-	position: absolute;
-	left: 11px;
-	top: 8px;
-}
-
-/* 라이트 박스 */
-.square a {
-	float: left;
-	width: 19%;
-	margin: 0.5%;
-	position: relative;
-	overflow: hidden;
-}
-
-.square a img {
-	width: 100%;
-	display: block;
-}
-
-.square a em {
-	background: rgba(0, 0, 0, 0.77);
-	color: #fff;
-	width: 100%;
-	text-align: center;
-	position: absolute;
-	left: 0;
-	bottom: -30px;
-	opacity: 1;
-	transition: all .3s ease;
-}
-
-.square a:hover em {
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.57);
-}
-
-.square a:nth-child(1):hover img {
-	filter: blur(2px);
-}
-
-.square a:nth-child(2):hover img {
-	filter: brightness(50%);
-}
-
-.square a:nth-child(3):hover img {
-	filter: contrast(10%);
-}
-
-.square a:nth-child(4):hover img {
-	filter: grayscale(100%);
-}
-
-.square a:nth-child(5):hover img {
-	filter: hue-rotate(120deg);
-}
-
-.square a:nth-child(6):hover img {
-	filter: invert(100%);
-}
-
-.square a:nth-child(7):hover img {
-	filter: opacity(10%);
-}
-
-.square a:nth-child(8):hover img {
-	filter: saturate(10%);
-}
-
-.square a:nth-child(9):hover img {
-	filter: sepia(120%);
-}
-
-.square a:nth-child(10):hover img {
-	filter: sepia(120%) hue-rotate(120deg);
-}
-
-/* 비디오 */
-.video {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%;
-}
-
-.video iframe {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-}
-
-/* 푸터 */
-.footer {
-	text-align: center;
-	padding: 30px 50px;
-}
-
-.footer li {
-	position: relative;
-	display: inline;
-	padding: 0 7px 0 10px;
-	white-space: nowrap;
-}
-
-.footer li:before {
-	content: '';
-	width: 1px;
-	height: 12px;
-	background-color: #dbdbdb;
-	position: absolute;
-	left: 0;
-	top: 2px;
-}
-
-.footer li:first-child:before {
-	width: 0;
-}
-
-.footer address {
-	padding-top: 15px;
-}
-
-/* 사이드 이펙트1 */
-.side1 {
-	position: relative;
-	display: block;
-	perspective: 600px;
-}
-
-.side1 .front {
-	transform-style: preserve-3d;
-	transform: rotateY(0deg);
-	transition: all 0.5s ease-in-out;
-	backface-visibility: hidden;
-}
-
-.side1 .back {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
-	transform-style: preserve-3d;
-	color: #fff;
-	background: #4038DC;
-	text-align: center;
-	transform: rotateY(-180deg);
-	transition: all 0.5s ease-in-out;
-	backface-visibility: hidden;
-}
-
-.side1 .back i {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.side1:hover .front {
-	transform: rotateY(180deg);
-}
-
-.side1:hover .back {
-	transform: rotateY(0deg);
-	z-index: 1;
-}
 
 /* 사이드 이펙트2 */
 .side2 {
@@ -1058,258 +735,7 @@ body {
 	z-index: 1;
 }
 
-/* 사이드 이펙트3 */
-.side3 {
-	position: relative;
-	overflow: hidden;
-	background: #000;
-}
 
-.side3 figcaption {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	color: #fff;
-	text-align: center;
-	opacity: 0;
-	text-transform: uppercase;
-	transition: all 0.3s ease;
-	transform: translate(350%, -50%) rotate(180deg);
-}
-
-.side3 figcaption:after {
-	content: '';
-	width: 100px;
-	height: 100px;
-	background: #000;
-	border-radius: 50%;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	z-index: -1;
-	transform: translate(-50%, -50%);
-}
-
-.side3 figcaption h3 {
-	font-size: 16px;
-}
-
-.side3 figcaption em {
-	display: block;
-	font-weight: bold;
-}
-
-.side3 img {
-	display: block;
-	transition: all 0.3s ease;
-}
-
-.side3:hover img {
-	opacity: 0.4;
-}
-
-.side3:hover figcaption {
-	transform: translate(-50%, -50%) rotate(0deg);
-	opacity: 1;
-}
-
-/* mediaquery */
-/* 화면 너비 0~1220px */
-@media ( max-width : 1220px) {
-	.container {
-		width: 100%;
-	}
-	.row {
-		padding: 0 15px;
-	}
-	#cont_center {
-		min-height: 1350px;
-	}
-	#contents .container {
-		border: 0;
-	}
-	.title .btn {
-		right: 15px;
-	}
-	.square a {
-		width: 24%
-	}
-	.square a:nth-child(5n) {
-		display: none;
-	}
-}
-
-/* 화면 너비 0~1024px */
-@media ( max-width : 1024px) {
-	.square a {
-		width: 32.33333%
-	}
-	.square a:nth-child(5) {
-		display: block;
-	}
-}
-
-/* 화면 너비 0~960px */
-@media ( max-width : 960px) {
-	#cont_right {
-		position: static;
-		width: 100%;
-		border-top: 1px solid #dbdbdb;
-	}
-	#cont_center {
-		margin-right: 0;
-		border-right: 0;
-	}
-	.nav>div {
-		float: none;
-		width: 100%;
-	}
-	.nav>div:last-child {
-		width: 100%;
-	}
-	.nav>div li {
-		width: 33.333%;
-	}
-	.nav>div:last-child li {
-		width: 33.333%;
-	}
-	.nav>div ol {
-		margin-bottom: 10px;
-	}
-	#cont_right {
-		overflow: hidden;
-	}
-	#cont_right .column {
-		float: left;
-		width: 33.333%;
-		box-sizing: border-box;
-	}
-	#cont_right .column.col7 {
-		border-right: 1px solid #dbdbdb;
-		border-bottom: 0;
-	}
-	#cont_right .column.col8 {
-		border-right: 1px solid #dbdbdb;
-		border-bottom: 0;
-	}
-}
-
-/* 화면 너비 0~768px */
-@media ( max-width : 768px) {
-	#cont_left {
-		float: none;
-		width: 100%;
-	}
-	#cont_center {
-		border-left: 0;
-	}
-}
-
-/* 화면 너비 0~600px */
-@media ( max-width : 600px) {
-	.header {
-		height: auto;
-	}
-	.nav>div li {
-		width: 50%;
-	}
-	.nav>div:last-child li {
-		width: 50%;
-	}
-	.header .header_tit {
-		display: none;
-	}
-	.header .header_icon {
-		display: none;
-	}
-	.title .btn {
-		display: none;
-	}
-	.column.col1 .col_tit {
-		display: none;
-	}
-	.column.col1 .col_desc {
-		display: none;
-	}
-	.column.col1 .menu li a i {
-		display: none;
-	}
-	.column.col1 {
-		padding: 0;
-		border-bottom: 0;
-	}
-	.column.col1 .menu ul {
-		overflow: hidden;
-	}
-	.column.col1 .menu li {
-		float: left;
-		width: 33.33333%;
-		text-align: center;
-		border-right: 1px solid #dbdbdb;
-		box-sizing: border-box;
-	}
-	.column.col1 .menu li:nth-child(3n) {
-		border-right: 0;
-	}
-	.column.col1 .menu li a {
-		color: #fff;
-		text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-	}
-	.column.col1 .menu li a:hover {
-		box-shadow: none;
-		background: rgba(36, 130, 174, 0.3);
-	}
-	.column.col2 {
-		background: #fff;
-	}
-	.column.col4 {
-		border-top: 1px solid #dbdbdb;
-	}
-	#cont_right .column {
-		width: 50%;
-	}
-	#cont_right .column.col8 {
-		border-right: 0;
-	}
-	#cont_right .column.col9 {
-		display: none;
-	}
-	.slider figcaption {
-		padding: 10px;
-	}
-	.slider figcaption em {
-		font-size: 18px;
-	}
-	.slider figcaption span {
-		font-size: 14px;
-	}
-	.square a {
-		width: 49%
-	}
-	.square a:nth-child(5) {
-		display: none;
-	}
-}
-
-/* 화면 너비 0~480px */
-@media ( max-width : 480px) {
-}
-
-/* 화면 너비 0~320px */
-@media ( max-width : 320px) {
-	#cont_right .column {
-		width: 100%;
-	}
-	#cont_right .column.col7 {
-		border-right: 0;
-		border-bottom: 1px solid #dbdbdb;
-	}
-	.square a {
-		width: 100%;
-		margin-left: 0;
-		margin-right: 0;
-	}
-}
 
 /* 메뉴 상단 고정  */
 .jbFixed {
@@ -1318,14 +744,6 @@ body {
 	z-index: 1000;
 	top: 0px;
 }
-
-.menuHeader:hover {
-	box-shadow: inset 180px 0 0 0 rgba(36, 130, 174, 0.7);
-	color: #fff;
-	background: rgba(36, 130, 174, 0.9);
-	box-shadow: none;
-}
-
 .lowMenu {
 	font-size: 13px;
 	text-transform: uppercase;
@@ -1336,7 +754,6 @@ body {
 	transition: box-shadow 0.34s ease, background 0.34s ease;
 	width: 190px;
 }
-
 .lowMenu:hover {
 	box-shadow: inset 180px 0 0 0 rgba(233, 161, 13, 0.8);
 	color: #fff;
@@ -1344,36 +761,58 @@ body {
 	background: rgba(233, 161, 13, 0.9);
 	cursor: pointer;
 }
-
-.sideMenu {
-	display: none;
-}
-
 .menuTest {
-	/*          background:black;
-         color:white;
-         text-align:center; */
 	vertical-align: middle;
 }
 
 .menuTest:hover {
-	/*          background:darkgray;
-         color:orangered;
-         font-wight:bold; */
 	cursor: pointer;
 }
 
 .contentsTest {
-	/* border:1px solid lightgray; */
 	width: 300px;
 	height: 100%;
-	/* display:none; */
-	/* display:blick; */
 	display: none;
 	color: orangered;
 }
-
-/*          main { min-height:100vh; } */
+  #loginForm{
+      position: absolute;
+      right: 15px;
+      top: 5px;
+      width: 2350px;
+      line-height: 60px;
+      display: inline-block;
+      zoom: 1;
+      *display: inline;
+      border: 0;
+      padding: 0;   
+   }
+      .goHome{
+      display: inline-block;
+      position: absolute; 
+      /* right: 0; */ 
+      left:0;
+      top: 0px;  
+      width: 60px; 
+      height: 60px; 
+      line-height: 60px; 
+      background: #933D07; 
+      color: #fff; 
+      font-size: 20px; 
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      cursor:pointer;   
+   }
+   
+   .goHome:hover {
+      box-shadow: 
+          0 0 0 3px rgba(75,154,191,0.9) inset,
+          0 0 0 600px rgba(0,0,0,0.1) inset;
+   }
+      .btns{
+      position: absolute;
+      display: inline-block;
+   }
 </style>
 </head>
 <body>
@@ -1385,15 +824,14 @@ body {
 					<div class="header_menu">
 						<%if(loginUser != null) {%>
 						<div class="userHeader">
-							<label><%=loginUser.getUserName() %> 님 환영합니다 :) </label>
+							<label style ="font-size : 1.5em"><%=loginUser.getUserName() %> 님 환영합니다 :) </label>
 							<!-- 작업중 -->
 							<a id="myPage"
-								onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
+								onclick="location.href='/surveyNow//myinfo.mi?userId=<%=loginUser.getUserId()%>'">정보수정</a>
 							<a id="logoutBtn" onclick="logout()">로그아웃</a>
 						</div>
 						<%} else{%>
-						<%--                           <form id ="loginForm" action="<%=request.getContextPath()%>/login.me" onsubmit="return validate()" method="post">                       --%>
-						<!-- <div class="userHeader"> -->
+					
 						<label> 로그인 이름 </label> <a id="myPage"
 							onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
 						<a id="logoutBtn" onclick="logout()">로그아웃</a>
@@ -1402,25 +840,6 @@ body {
 						<%} %>
 
 					</div>
-					<!-- //header_menu -->
-					<div class="header_tit">
-						<h1>여기에 이미지 슬라이드를 넣어야 될거같은데</h1>
-						<br> <a href="http://www.iei.or.kr">kh 정보 교육원</a>
-					</div>
-					<!-- //header_tit -->
-					<div class="header_icon">
-						<ul>
-							<li><a href="#"><i class="fa fa-html5"
-									aria-hidden="true"></i><span>HTML5</span></a></li>
-							<li><a href="#"><i class="fa fa-github"
-									aria-hidden="true"></i><span>GitHub</span></a></li>
-							<li><a href="#" class="facebook"><i
-									class="fa fa-facebook-square" aria-hidden="true"></i><span>Fackbook</span></a></li>
-							<li><a href="#" class="twitter"><i class="fa fa-twitter"
-									aria-hidden="true"></i><span>twitter</span></a></li>
-						</ul>
-					</div>
-					<!-- //header_icon -->
 				</div>
 			</div>
 		</div>
@@ -1431,25 +850,107 @@ body {
 		<a href="#" class="btn"></a>
 		<div class="container">
 			<div class="title">
-				<a href="#" class="btn2"
+			<%-- 	<a href="#" class="btn2"
 					onclick="location.href='/surveyNow/login.me?userId=<%=loginUser.getUserId()%>'"><i
 					class="fa fa-angle-down" aria-hidden="true"></i><span class="ir_su">전체메뉴
-						보기</span></a>
-				<h2>"설문 NOW"</h2>
+						보기</span></a> --%>
+			<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" onsubmit="return validate()" method="get">
+                     <div class="btns" align="center">
+                     <input type="submit" value="홈" class="goHome">
+                     <input type="hidden" name="userId" id = "userId" value="<%=loginUser.getUserId() %>">
+                     <input type="hidden" name="userPwd" id = "userPwd" value="<%=loginUser.getUserPwd() %>">
+                     </div>
+               </form>   
+				<h2 style = "color : #F46105">설문 NOW</h2>
+			
+				<!-- 
+				설문now 바 있는 곳 기능 추가 
+				<form class="searchform" action="#"> 
+						<input class="searchfield" type="text" value="Search..." onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" />
+					</form>
+					
+					/ Search Form
+				<div href="#" class="btn" onMouseOver="this.innerHTML='Click'" onMouseOut="this.innerHTML='Menu'">
+				<i class="fa fa-angle-down" aria-hidden="true">
+				</i><span>Menu</span></div> 
+				-->
 				<a href="#" class="btn"><i class="fa fa-angle-down"
 					aria-hidden="true"></i><span class="ir_su">전체메뉴 보기</span></a>
 			</div>
 		</div>
-
-
-
-		<nav id="nav">
-			<!-- class="jbMenu" -->
+		<!-- <nav id="nav">
+			class="jbMenu"
 			<div class="container">
 				<div class="row"></div>
 			</div>
 		</nav>
+	</article> -->
+	   <nav id="nav" ><!-- class="jbMenu" --> 
+		<div class="container">
+			<div class="row">
+				<div class="nav">
+					<h2 class="ir_su">전체 메뉴</h2>
+					<div>
+			            <!-- <h3>마이메뉴</h3> -->
+			            <a href="#" ><h3 class="menuHeader" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">마이메뉴</h3> </a>
+			            
+			            <ol>
+			                <li><a href="#">HTML 태그(Tag)</a></li>
+			                <li><a href="#">블록 요소/인라인 요소</a></li>
+			                <li><a href="#">DTD 선언</a></li>
+			                <li><a href="#">언어 속성 설정</a></li>
+			                <li><a href="#">HTML &lt;title&gt;</a></li>
+			                <li><a href="#">HTML &lt;meta&gt;</a></li>
+			            </ol>
+			        </div>
+			        <div>
+			            <a href="#" ><h3 class="menuHeader">설문</h3> </a>
+			            <ol>
+			                <li><a href="#">가나다</a></li>
+			                <li><a href="#">라마바</a></li>
+			                <li><a href="#">사아자</a></li>
+			                <li><a href="#">차카타</a></li>
+			                <li><a href="#">파하</a></li>
+			            </ol>
+			        </div> 
+			        <div>
+			            <a href="#" ><h3 class="menuHeader">공지사항</h3> </a>
+			            <ol>
+			                <li><a href="#">가나다</a></li>
+			                <li><a href="#">라마바</a></li>
+			                <li><a href="#">사아자</a></li>
+			                <li><a href="#">차카타</a></li>
+			                <li><a href="#">파하</a></li>
+			            </ol>
+			        </div>
+			        <div>
+			            <a href="#" ><h3 class="menuHeader">추가 1</h3> </a>
+			            <ol>
+			                <li><a href="#">가나다</a></li>
+			                <li><a href="#">라마바</a></li>
+			                <li><a href="#">사아자</a></li>
+			                <li><a href="#">차카타</a></li>
+			                <li><a href="#">파하</a></li>
+			            </ol>
+			        </div>
+			        
+			        <div>
+			            <a href="#" ><h3 class="menuHeader">추가 2</h3> </a>
+			            <ol>
+			                <li><a href="#">가나다</a></li>
+			                <li><a href="#">라마바</a></li>
+			                <li><a href="#">사아자</a></li>
+			                <li><a href="#">차카타</a></li>
+			                <li><a href="#">파하</a></li>
+			            </ol>
+			        </div>
+			        
+				</div>
+			</div>
+		</div>
+	</nav>
 	</article>
+	
 	<main>
 	<section id="contents">
 		<div class="container">
@@ -1461,7 +962,7 @@ body {
 
 
 					<div class="menu">
-						<li class="menuTest" value="3"><a href="#">마이메뉴 <i
+						<li class="menuTest" value="3"><a>마이메뉴 <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu"
@@ -1485,27 +986,27 @@ body {
 						</ul>
 
 
-						<li class="menuTest" value="0"><a href="#">WebSite <i
+						<li class="menuTest" value="0"><a>WebSite <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">회원 조회</li>
 							<li id="asd1" class="lowMenu">패널 랭킹</li>
 						</ul>
-						<li class="menuTest"><a href="#">Reference <i
+						<li class="menuTest"><a>Reference <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">상품 등록</li>
 							<li id="asd1" class="lowMenu">상품관리</li>
 						</ul>
 
-						<li class="menuTest" value="0"><a href="#">CSS3 <i
+						<li class="menuTest" value="0"><a>CSS3 <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">상품 등록</li>
 							<li id="asd1" class="lowMenu">상품관리</li>
 						</ul>
 
-						<li class="menuTest" value="0"><a href="#">HTML5 <i
+						<li class="menuTest" value="0"><a>HTML5 <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
 							<li id="asd" class="lowMenu">상품 등록</li>
@@ -1517,6 +1018,56 @@ body {
 					<!--//메뉴 -->
 				</article>
 				<!-- //col1 -->
+
+<%-- 				게시판 없애고 공지사항 (지금은 주석) 들어가기 
+						 <article class="column col2">
+						<!-- <h4 class="col_tit">공지사항</h4> -->
+						<!-- <p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p> -->
+						<!-- 게시판 -->
+						<div class="notice1">
+							<h4 class="col_tit">공지사항</h4>
+<!-- 작업 -->			
+								<div class="tableArea">
+									<table align="center" id="listArea">
+										<tr>
+										<th width="40px" type="hidden">카테고리</th>
+										<th width="60px">글제목</th>
+										
+											<!-- <th width="100px" type="hidden">글번호</th>
+							 				<th width="100px" type="hidden">카테고리</th> -->
+											<!-- <th width="300px">글제목</th> -->
+											<!-- <th width="100px" type="hidden">작성자</th>
+											<th width="100px" type="hidden">조회수</th>
+											<th width="150px" type="hidden">작성일</th> -->
+										</tr>
+										<%if(boardList.isEmpty()) { %>
+										<tr>
+											<td colspan="6">공지사항이 없습니다.</td>
+										</tr>
+										<%} else { %>
+ 											<%for(Board b : boardList){ %>
+												<tr>
+													<input type="hidden" value="<%=b.getbNum()%>">
+													<input type="hidden" value="<%=b.getbType()%>">
+													<td width="70px"><%=b.getbType() %></td>
+													<td><%=b.getbTitle() %></td>
+													<input type="hidden" value="<%=b.getbWName()%>">
+													<input type="hidden" value="<%=b.getbCount()%>"> 
+													<input type="hidden" value="<%=b.getbCreateDt()%>">
+													 
+													<td><%=b.getbNum() %></td>
+													<td><%=b.getbType() %></td>
+													<td><%=b.getbTitle() %></td>
+													<td><%=b.getbWName() %></td>
+													<td><%=b.getbCount() %></td>
+													<td><%=b.getbCreateDt()%></td> 
+												</tr>
+											<%} %>
+										<%} %>
+									</table>
+								</div> 
+							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+						</div> --%>
 
 				<article class="column col2">
 					<h4 class="col_tit">게시판</h4>
@@ -1603,6 +1154,7 @@ body {
 
 	<!--SDB_20191018_사이드 메뉴 .. IF문이 너무 많다 더럽다. 가독성최악이네...  -->
 	<script type="text/javascript"> 
+	
    $(function(){
        $('.menuTest').click(function(){ 
 
@@ -1659,12 +1211,6 @@ body {
 
 	<!--STR 화면 onclick 이벤트 ------------------------------------------------------------------------>
 	<script>
-      // 게시판 작업 시작(공지사항 관련된 작업이 끝나면)
-      function goBoard(){
-         location.href="<%=request.getContextPath()%>/list.bo"
-         //BoardListServlet.java 만들기
-      }
-      
       // logout() 함수 작성하기
       function logout(){
          location.href = '<%=request.getContextPath()%>/logout.me';
@@ -1672,9 +1218,6 @@ body {
          // LogoutServlet 만들기~ 꼬꼬씽~
       }
    </script>
-	<!--END 화면 onclick 이벤트 ------------------------------------------------------------------------>
-
-
 
 	<script>
         //접기/펼치기
@@ -1695,25 +1238,13 @@ body {
         });
         
   
-        //sns 공유하기
-        $(".facebook").click(function(e){
-            e.preventDefault();
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' +encodeURIComponent(document.URL)+'&t='+encodeURIComponent(document.title), 'facebooksharedialog', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600'); 
-        });
-        $(".twitter").click(function(e){
-            e.preventDefault();
-            window.open('https://twitter.com/intent/tweet?text=[%EA%B3%B5%EC%9C%A0]%20' +encodeURIComponent(document.URL)+'%20-%20'+encodeURIComponent(document.title), 'twittersharedialog', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=300, width=600');
-        });
+   
     </script>
 
-	<!-- 화면 맨아래 보이게 -->
-	<%-- <%@ include file="../common/footer.jsp" %> 
-.. ... 일단 나중에... 흘
-
---%>
 	<script type="text/javascript">
     	function makeSurvey(){
-    		location.href = "<%=request.getContextPath()%>/surveyMakeMake.sv";
+    		location.href = "views/survey/makeSurvey.jsp"; 
+    		// location.href = "<%=request.getContextPath()%>/surveyMake.sv?userId=<%=loginUser.getUserId()%>";
     	}
     	function holdSurvey(){
     		location.href = "<%=request.getContextPath()%>/surveyHoldList.sv?userId=<%=loginUser.getUserId()%>";
