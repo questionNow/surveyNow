@@ -245,16 +245,17 @@ public class SurveyDao {
 		PreparedStatement pstmt = null;
 		int qResult = 0;
 		int aResult = 0;
-		String[] ans = new String[answer.size()];
 		try {
 			for (int i = 0; i < qNum.length; i++) {
+				
 				pstmt = conn.prepareStatement(
 						"INSERT INTO QUESTION VALUES(SEQ_QUESTION.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
 				pstmt.setString(1, qType[i]);
 				pstmt.setString(2, qTitle[i]);
 				qResult = pstmt.executeUpdate();
+				String[] ans = new String[answer.get(i).length];
 				ans = answer.get(i);
-				
+
 				for (int j = 0; j < ans.length; j++) {
 					pstmt = conn.prepareStatement(
 							"INSERT INTO ANSWER VALUES(SEQ_ANSWER.NEXTVAL, SEQ_QUESTION.CURRVAL, ?, DEFAULT)");
@@ -757,7 +758,7 @@ public class SurveyDao {
 	public SurveyTarget selectSurveyTarget(Connection conn, Survey s) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		String[] targetType = s.getsTarget().split(",");
 		ArrayList<String[]> targetDetail = null;
 		SurveyTarget st = new SurveyTarget();
@@ -767,7 +768,7 @@ public class SurveyDao {
 			rs = pstmt.executeQuery();
 			targetDetail = new ArrayList<String[]>();
 			int svNum = 0;
-			while(rs.next()) {
+			while (rs.next()) {
 				svNum = rs.getInt("svnum");
 				String[] targetD = rs.getString("targetdetail").split(",");
 				targetDetail.add(targetD);
@@ -778,11 +779,12 @@ public class SurveyDao {
 		} finally {
 			close(pstmt);
 			close(rs);
-		}		
+		}
 		return st;
 	}
 
-	public ArrayList<DoSurvey> modifySurveyTarget(Connection conn, Survey s, ArrayList<Question> qList, SurveyTarget st) {
+	public ArrayList<DoSurvey> modifySurveyTarget(Connection conn, Survey s, ArrayList<Question> qList,
+			SurveyTarget st) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
@@ -818,12 +820,12 @@ public class SurveyDao {
 	public int deleteModifiedAnswer(Connection conn, String[] delQnum) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		try {
-			for(int i = 0 ; i< delQnum.length ; i++) {
-			pstmt = conn.prepareStatement("DELETE FROM ANSWER WHERE QNUM=?");
-			pstmt.setInt(1, Integer.valueOf(delQnum[i]));
-			result += pstmt.executeUpdate();
+			for (int i = 0; i < delQnum.length; i++) {
+				pstmt = conn.prepareStatement("DELETE FROM ANSWER WHERE QNUM=?");
+				pstmt.setInt(1, Integer.valueOf(delQnum[i]));
+				result += pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -836,7 +838,7 @@ public class SurveyDao {
 	public int deleteModifiedQuestion(Connection conn, String[] delSnum) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement("DELETE FROM QUESTION WHERE SNUM= ?");
 			pstmt.setInt(1, Integer.valueOf(delSnum[0]));
@@ -852,7 +854,7 @@ public class SurveyDao {
 	public int deleteModifiedSurvey(Connection conn, String[] delSnum) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
+
 		try {
 			pstmt = conn.prepareStatement("DELETE FROM SURVEY WHERE SNUM= ?");
 			pstmt.setInt(1, Integer.valueOf(delSnum[0]));
@@ -867,30 +869,68 @@ public class SurveyDao {
 
 	public void sortChart(Connection conn, String aContent, int qNum) {
 		PreparedStatement pstmt = null;
-		
-		
+
 	}
 
 	public int purchaseSurvey(Connection conn, String sNums) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		
-		String[] sNum = sNums.split(","); 
+
+		String[] sNum = sNums.split(",");
 		System.out.println("길이 : " + sNum.length);
 		try {
-			for(int i = 0 ; i < sNum.length ; i ++) {
+			for (int i = 0; i < sNum.length; i++) {
 				System.out.println(sNum[i]);
-				pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'I' WHERE SNUM =?");
-				pstmt.setInt(1,  Integer.valueOf(sNum[i]));
+				pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'P' WHERE SNUM =?");
+				pstmt.setInt(1, Integer.valueOf(sNum[i]));
 				result = pstmt.executeUpdate();
-				
+
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-	
+
 		return result;
+	}
+
+	public Survey targetCheck(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+
+		return null;
+	}
+
+	public ArrayList<Survey> checkSurveys(Connection conn, ArrayList<Survey> sList, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Survey> stList = new ArrayList<Survey>();
+		
+		try {
+			for (int i = 0; i < sList.size(); i++) {
+				if(sList.get(i).getsTarget() != null) {
+					stList.add(sList.get(i));
+					continue;
+				}else {
+					for (int j = 0; j < sList.get(i).getsTarget().split(",").length; j++) {
+						String targetName = sList.get(i).getsTarget().split(",")[j];
+						pstmt = conn.prepareStatement("SELECT ? FROM USERINFO WHERE USERID = ?");
+						pstmt.setString(1, targetName);
+						pstmt.setString(2, userId);
+						rs = pstmt.executeQuery();
+						
+						while(rs.next()) {
+							if((sList.get(i).getsTarget()).contains(rs.getString(targetName))){
+								stList.add(sList.get(i));
+							}	
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return stList;
 	}
 
 }

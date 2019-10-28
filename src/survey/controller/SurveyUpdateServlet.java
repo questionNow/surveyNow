@@ -92,6 +92,7 @@ public class SurveyUpdateServlet extends HttpServlet {
 				ans = request.getParameterValues(qNum[i]);
 				answer.add(ans);
 			} else if (qType[i].equals("주관식")) {
+				System.out.println("주관식");
 				String[] ans = new String[1];
 				ans[0] = qType[i];
 				answer.add(ans);

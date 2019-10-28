@@ -11,11 +11,19 @@
 
 <meta charset="UTF-8">
 <title>Survey</title>
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
 .right {
 	width: 55%;
 	padding: 15px;
 	display: inline-block;
+	background-color: #F8EFE6;
 }
 
 #surveyList * {
@@ -24,7 +32,89 @@
 }
 
 #targetDiv {
-	display: block;
+	display: none;
+}
+#titleSurvey{
+	font-size : 1.8em;
+	font-weight: bold;
+	font-family: 'Jeju Hallasan', cursive;
+}
+#pick, #write, #rank{
+	background-color: #F8EFE6;
+	margin-right : 15px;
+	font-size : 1.4em;
+	font-family: 돋음;
+}
+#title1Survey{
+	font-size : 1.5em;
+	font-weight: bold;
+}
+input[type = text]{
+	border-radius: 10px;
+	padding: 7px 15px;
+}
+::placeholder{
+	font-size : 1.2em;
+	color : #554D4A;
+}
+#reset{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 18px;
+    border : 1px solid #F8EFE6;
+    background : #FBB16F;
+}
+input[type = button]{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 18px;
+    border : 1px solid #F8EFE6;
+    background : #FBB16F;
+}
+#pstyle{
+	font-size : 1.5em;
+}
+#sCategory{
+	padding : .3em;
+	margin-left : 43px;
+	width : 150px;
+}
+#sCount{
+	margin-left : 13px;
+}
+#sPoint{
+	margin-left : 61px;
+}
+#qTITLE, #content{
+	font-size : 1.3em;
+	font-weight: bold;
+}
+#qTitle{
+	width : 498px;
+}
+#save, #target{
+	cursor: pointer;
+    padding: 4px 10px;
+    border-radius : 15px;
+    font-size : 23px;
+    border : 1px solid #F8EFE6;
+    background : #89562A;
+    color : white;
+}
+#pick, #write{
+	font-family: 'KoPub Batang', serif;
+	font-size : 2em;
+}
+#selectTarget{
+	width : 210px;
+	height : 28px;
+}
+#clear{
+	cursor : pointer;
+	font-size : 15px;
+	font-weight: bold;
 }
 </style>
 </head>
@@ -32,24 +122,19 @@
 	<%@ include file="../common/menubar2.jsp"%>
 	<div class="rightPage">
 
-		<div class="right" style="background-color: #ddd;">			
-			<h2>설문 만들기</h2>
-			<div id="surveyType">
+		<div class="right">
+			<p id = titleSurvey>설문 수정하기</p>  <hr>
 			
-				<button id="pick" onclick="addQuestion()">+객관식</button>
-				<button id="write" onclick="addWriteQuestion()">+주관식</button>
-				<button id="rank">+순위</button>
-			</div>
 			<form id="submitSurvey">
 
 				<input name="userId" type="hidden"	value="<%=userId%>">
 				<div id="survey">
-					<h2>
-						설문 제목<input type="reset" id="reset" onclick="resetSurvey();" style="float: right" value="초기화">
-					</h2>
+					<p id = title1Survey>
+						설문 제목<input type="reset" id="reset" onclick="resetSurvey();"
+							style="float: right" value="초기화">
+					</p>
 					<input type="text" name="sTitle" size="70%" value ="<%=dsList.get(0).getS().getsTitle()%>">
-					<h2>
-						카테고리 <select class = "category" name="sCategory">
+					<p id  = pstyle>카테고리 <select id = sCategory name="sCategory">
 							<option value=--->--------</option>
 							<option value=스포츠>스포츠</option>
 							<option value=음식>음식</option>
@@ -69,18 +154,18 @@
 							<option value=애견>애견</option>
 						</select>
 						<script type="text/javascript">
-						$(".category option[value='<%=dsList.get(0).getS().getsType()%>']").prop("selected", true);
+						$("#sCategory option[value='<%=dsList.get(0).getS().getsType()%>']").prop("selected", true);
 						</script>
 						
-					</h2>
-					<h3>
+					</p>
+					<p id = pstyle>
 						요청 패널 수 <input value = <%=dsList.get(0).getS().getsCount() %> name=sCount type=number min="5" step="5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						포인트 <input value = "<%=dsList.get(0).getS().getsPoint() %>" name=sPoint type=number min="50" step="50"><br>
 						설문 대상 설정 (특정 대상을 상대로만 설문을 진행하고 싶으시면 체크해주세요) <input type="button"
 							value="재설정" style="float: right" onclick="deleteTarget();"><input
 							type="button" value="설문 대상 설정하기" style="float: right"
 							onclick="setTarget();">
-					</h3>
+					<br><br></p>
 					<div id="targetDiv">
 						<% if(dsList.get(0).getS().getsTarget() != null){ %>
 							<% for(int i  = 0 ; i < dsList.get(0).getSt().getTargetType().length ; i++) { %>	
@@ -174,28 +259,39 @@
 							<%} %>	
 						<%} %>
 					</div>
-					<br>
+					<div id="surveyType">
+						<label type = button id="pick" onclick="addQuestion()">+객관식</label>
+						<label type = button id="write" onclick="addWriteQuestion()">+주관식</label>
+					</div>
 					
-					<h3>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</h3>
-					
+					<p id = content>질문을 추가하시려면 위에 질문 타입을 선택해주세요 :)</p>
 					<% for(int i = 0 ; i < dsList.size() ; i++){ %>
-					<div class = "question pick" id="question<%=dsList.get(i).getQ().getqNum()%>">
-					<input type = hidden value = Q<%= dsList.get(i).getQ().getqNum() %> name = Qnum>
-					<input type = hidden value = '객관식' name = Qtype>
-					<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'>
-					<h3>질문 제목(객관식) <input type='button' value='항목 추가' onclick = 'addAnswer(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'></h3>
-					<input id='qTitle' type='text' value = "<%= dsList.get(i).getQ().getqTitle() %>" name = Qtitle>
-					
-						<% for(int j = 0 ; j < dsList.get(i).getA().size() ; j++){ %>
-								<div id= "answer<%= dsList.get(i).getA().get(j).getaNum()%>">
-								<h4>항목 <input class = 'answer' name = "Q<%= dsList.get(i).getA().get(j).getqNum()%>" type='text' value = "<%=dsList.get(i).getA().get(j).getaContent()%>">
-								<input type='button' value='삭제' onclick='removeAnswer(<%= dsList.get(i).getA().get(j).getaNum()%>);' style='float: right'></h4>
-								</div>				
-						<%} %>
+						<% if (dsList.get(i).getQ().getqType().equals("객관식")){ %>
+						<div class = "question pick" id="question<%=dsList.get(i).getQ().getqNum()%>">
+						<input type = hidden value = '<%=dsList.get(i).getQ().getqType()%>' name = Qtype>
+						<input type = hidden value = Q<%= dsList.get(i).getQ().getqNum() %> name = Qnum>
+						<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'>
+						<p id = content>질문 제목(객관식) <input type='button' value='항목 추가' onclick = 'addAnswer(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'></p>
+						<input id='qTitle' type='text' value = "<%= dsList.get(i).getQ().getqTitle() %>" name = Qtitle>
+						
+							<% for(int j = 0 ; j < dsList.get(i).getA().size() ; j++){ %>
+									<div id= "answer<%= dsList.get(i).getA().get(j).getaNum()%>">
+									<h4>항목 <input class = 'answer' name = "Q<%= dsList.get(i).getA().get(j).getqNum()%>" type='text' value = "<%=dsList.get(i).getA().get(j).getaContent()%>">
+									<input type='button' value='삭제' onclick='removeAnswer(<%= dsList.get(i).getA().get(j).getaNum()%>);' style='float: right'></h4>
+									</div>				
+							<%} %>
+						<%} else{ %>
+							<div class = "question pick" id="question<%=dsList.get(i).getQ().getqNum()%>">
+							<input type = hidden value = '<%=dsList.get(i).getQ().getqType()%>' name = Qtype>
+							<input type = hidden value = Q<%= dsList.get(i).getQ().getqNum() %> name = Qnum>
+							<input type='button' value='질문 삭제' onclick='deleteQuestion(<%=dsList.get(i).getQ().getqNum()%>);' style='float: right'>
+							<p id = content>질문 제목(주관식) </p>
+							<input id='qTitle' type='text' value = "<%= dsList.get(i).getQ().getqTitle() %>" name = Qtitle>
+						<%} %>	
 					<%} %>
 					</div>
 				</div>
-				<br> <label onclick="blankCheck();" style="cursor: pointer">저장하기</label>
+				
 			<% for(int i = 0 ; i < dsList.size() ; i++) {%>
 			<div><input type = hidden value ="<%=dsList.get(i).getS().getsNum() %>" name = delSnum>
 			<input type = hidden value ="<%=dsList.get(i).getQ().getqNum() %>" name = delQnum>
@@ -205,7 +301,7 @@
 				<%} %>
 			</div>
 			<%} %>
-				
+				<br> <label id = save onclick="blankCheck();" style="cursor: pointer">저장하기</label>
 			</form>
 		</div>
 	</div>
@@ -213,12 +309,14 @@
 	<!-- 질문 / 보기 추가하기 & 질문 / 보기 삭제하기 & 초기화 시작 -->
 	<script type="text/javascript">
 		snum = 0;
-		qCount = 0;
+		
+		qCount = $(".question > input[type=hidden]:last")[0].value.slice(1);
+		
 		function addWriteQuestion(){
 			qCount++;
 			$("#survey")
 					.append(
-							"<div class = 'question write' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '주관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(주관식)</h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
+							"<div class = 'question write' id='question"+qCount+"'><br><input type = hidden value = '주관식' name = Qtype><input type = hidden value =Q"+qCount+" name = Qnum><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'><p>질문 제목(주관식)</p><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 							aCount++;
 			}
 		
@@ -229,7 +327,7 @@
 			qCount++;
 			$("#survey")
 					.append(
-							"<div class = 'question pick' id='question"+qCount+"'><br><input type = hidden value =Q"+qCount+" name = Qnum><input type = hidden value = '객관식' name = Qtype><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'></h3><h3>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></h3><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
+							"<div class = 'question pick' id='question"+qCount+"'><br><input type = hidden value = '객관식' name = Qtype><input type = hidden value =Q"+qCount+" name = Qnum><input type='button' value='질문 삭제' onclick='deleteQuestion("+qCount+");' style='float: right'><p>질문 제목(객관식) - 보기를 추가해주세요 :) <input type='button' value='항목 추가' onclick = 'addAnswer("+qCount+");' style='float: right'></p><input id='qTitle' type='text' placeholder='질문 제목을 입력하세요' name = Qtitle><br></div>")
 
 		}
 		var aCount = 0;
@@ -391,25 +489,25 @@
 	            return false;
 		}
 		// 카테고리 선택
-		if($("#survey > h2 > select")[0].value ==="---"){
+		if($("#survey > p > select")[0].value ==="---"){
 			alert("카테고리를 선택해주세요.");
-            $("#survey > h2 > select")[0].focus();
+            $("#survey > p > select")[0].focus();
             return false;
 		}
-		if($("#survey > h3 > input")[0].value <5){
-			if($("#survey > h3 > input")[0].value === ""){
+		if($("#survey > p > input")[1].value <5){
+			if($("#survey > p > input")[1].value === ""){
 				alert("요청 패널 수를 입력해주세요.");
 			}else
 				alert("요청 패널은 최소 5명 이상 입력해야 합니다.");
-            $("#survey > h3 > input")[0].focus();
+            $("#survey > p > input")[1].focus();
             return false;
 		}
-		if($("#survey > h3 > input")[1].value <50){
-			if($("#survey > h3 > input")[1].value === ""){
+		if($("#survey > p > input")[2].value <50){
+			if($("#survey > p > input")[2].value === ""){
 				alert("포인트를 입력해주세요.");
 			}else
 				alert("포인트는 최소 50이상 입력해야 합니다.");
-            $("#survey > h3 > input")[1].focus();
+            $("#survey > p > input")[2].focus();
             return false;
 		}
 		

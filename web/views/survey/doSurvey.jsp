@@ -19,6 +19,10 @@
 #S * {
 	padding: 5px;
 }
+#xSurvey{
+	font-size:3em;
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -28,7 +32,7 @@
 			if (sList.isEmpty()) {
 		%>
 		<div>
-			<h1>참여할 수 있는 설문이 없습니다.</h1>
+				<p id = xSurvey>참여할 수 있는 설문이 없습니다ㅠㅠ</p>
 		</div>
 		<%
 			} else {

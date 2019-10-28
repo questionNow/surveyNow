@@ -326,7 +326,7 @@ input[type = text], input[type = password], select{
       <div class = join>
          <div id = firstClick> <input type = button id = checkForm value = "가입 2단계 진행"></div><br>
          <input type = reset value = "다시쓰기" id = clear1>
-         <input type = button id = nextMain value = "메인화면" onclick = "location='../common/menubar.jsp'">
+         <input type = button id = nextMain value = "메인화면" onclick = "location='../common/loginPage.jsp'">
       </div> </div> 
 
    <div class = title2 style = "display : none">
@@ -595,8 +595,8 @@ input[type = text], input[type = password], select{
                $("#pw2").val("");
                $("#pw2").focus();
             
-                  }
-               }
+            		}
+            	}
             });
             }
          });
@@ -788,11 +788,11 @@ input[type = text], input[type = password], select{
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
      function nextStep(){
-         $(".title1").hide(); 
-         $(".title2").show(); 
-         $("#extraAddress").removeAttr("disabled");
-         $("#postCode").removeAttr("disabled");
-         $("#address1").removeAttr("disabled");
+    	  $(".title1").hide(); 
+    	  $(".title2").show(); 
+    	  $("#extraAddress").removeAttr("disabled");
+    	  $("#postCode").removeAttr("disabled");
+    	  $("#address1").removeAttr("disabled");
       }
          
       // 여기서부터 ->

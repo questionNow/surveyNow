@@ -31,7 +31,6 @@ public class DoPurchaseServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String sNums = request.getParameter("sNums");
-		System.out.println("doPurch Servlet : " + sNums);
 		int price = Integer.valueOf(request.getParameter("price"));
 		String userId = request.getParameter("userId");
 		
@@ -41,7 +40,6 @@ public class DoPurchaseServlet extends HttpServlet {
 		request.setAttribute("sNums", sNums);
 		request.setAttribute("userInfo", userInfo);
 		request.setAttribute("price", price);
-		
 		request.getRequestDispatcher("views/survey/Purchase.jsp").forward(request, response);
 	}
 

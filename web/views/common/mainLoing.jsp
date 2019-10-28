@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여기로 가는거니?</title>
+<title>Insert title here</title>
  
    <style>
         /* reset */
@@ -146,7 +146,6 @@
 </style>
 </head>
 <%@ include file="../common/menubar2.jsp" %>
-
 <body>
 		<main>
             <div class="container">
@@ -212,7 +211,7 @@
                                 <img src="image/PNH.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)">
                             </figure>
                             <figure class="back">
-                                <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)">
+                                <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg); margin-top : 30px; ">
                             </figure>
                         </div>
                     </article>

@@ -15,6 +15,17 @@
 </script>
 <title> 아이디 찾기 성공 </title>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+@import url(//fonts.googleapis.com/earlyaccess/jejuhallasan.css);
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 #register {
 	width: 700px;
 	margin-left: auto;
@@ -31,6 +42,7 @@
 	display:inline-block;
 	margin-top:15px;
 	float:left;
+	font-family: 'Jeju Hallasan', cursive;
 }
 .nowlogo {
 	width: 100px;
@@ -45,21 +57,26 @@ body{
 #findId{
 	text-align : center;
 	color : #FF8C19;
+	font-family: 'Hanna', sans-serif;
+	letter-spacing: 10px;
+	font-size : 1.4em;
 }
 
 #successId{
 	text-align : center;
+	font-family: 'Nanum Gothic Coding', monospace;
+    font-size : 1.3em;
 }
 
 #successBtn{
 	cursor : pointer;
-	background : rightgray;
-	border-radius : 20px;
-	font-size : 15px;
 	padding : 15px 20px;
+	background : #F1CFBE;
+    border-radius : 15px;
+    font-size : 18px;
 }
 #successBtn:hover{
-	box-shadow : 0 12px 16px 0 #FF8C19;
+	box-shadow : 10px 10px 10px 0 #FACF61;
 }
 </style>
 </head>

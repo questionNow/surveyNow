@@ -27,6 +27,7 @@ body {
 	width: 55%;
 	padding: 15px;
 	display: inline-block;
+	background-color: #F8EFE6;
 }
 
 #surveyList * {
@@ -37,8 +38,41 @@ body {
 #delete {
 	cursor: pointer;
 }
+#titleSurvey{
+	font-size : 1.8em;
+	font-weight: bold;
+	font-family: 'Jeju Hallasan', cursive;
+}
+#secondSurvey{
+	font-size : 1.4em;
+	font-family: 'Nanum Gothic Coding', monospace;
+	font-weight : bold;
+}
+#surveyListTable tr th {
+	height : 40px;
+	font-size: 1.4em;
+	font-weight : 900;
+}
+#surveyListTable tr td {
+	height : 30px;
+	font-size : 1.3em;
+}
 .show{
-background : orangered
+background : orangered;
+color : white;
+}
+#purchase{
+font-size: 1.4em;
+font-weight : 900;
+}
+#purchaseBtn{
+	cursor: pointer;
+	width : 140px;
+    font-size : 18px;
+    border-style : groove;
+    border-left : 2px solid #F8EFE6;
+    border : 2px solid #F8EFE6;
+    background : #FBB16F;
 }
 </style>
 </head>
@@ -48,9 +82,9 @@ background : orangered
 <body>
 	<div class="row">
 
-		<div class="right" style="background-color: #ddd;">
-			<h2>설문 결제하기</h2>
-			<p>작성해둔 설문을 결제 하세요. 왼쪽에 체크박스로 결제하실 설문을 골라주세요.</p>
+		<div class="right">
+			<p id = titleSurvey>설문 결제하기</p>
+			<p id = secondSurvey>작성해둔 설문을 결제 하세요. 왼쪽에 체크박스로 결제하실 설문을 골라주세요.</p> <br>
 			<div id="surveyList">
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
@@ -122,7 +156,7 @@ background : orangered
 					}
 				}
 				
-				$("#surveyList").append("<div id = 'purchase'><br>총 "+$(".show").length+"개 설문 총 "+price+"원 <input type = 'button' onclick = 'doPurchase("+price+");' value = '결제하기' style = 'float : right'></div>");
+				$("#surveyList").append("<div id = 'purchase'><br>총 "+$(".show").length+"개 설문 총 "+comma(price)+"원 <input id = purchaseBtn type = 'button' onclick = 'doPurchase("+price+");' value = '결제하기' style = 'float : right'></div>");
 			}
 		}
 	function doPurchase(price){
@@ -138,6 +172,19 @@ background : orangered
 		location.href = "<%= request.getContextPath() %>/DoPurchase.sv?sNums="+sNums+"&price="+price+"&userId=<%= loginUser.getUserId() %>";
 		
 	}
+	
+	  function comma(price) {
+
+		  	price = String(price);
+	        var minus = price.substring(0, 1);
+
+	        price = price.replace(/[^\d]+/g, '');
+	        price = price.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+
+	        if(minus == "-") price = "-"+price;
+
+	        return price;
+	    }
 	
 	</script>
 

@@ -103,9 +103,10 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
-		System.out.println(sList);
+		ArrayList<Survey> stList = sDao.checkSurveys(conn, sList, userId);
+		System.out.println(stList);
 		close(conn);
-		return sList;
+		return stList;
 	}
 
 	public ArrayList<DoSurvey> doServey(int sNum) {
