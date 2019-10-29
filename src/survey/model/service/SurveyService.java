@@ -10,6 +10,7 @@ import survey.model.dao.SurveyDao;
 import survey.model.vo.Answer;
 import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
+import survey.model.vo.SortByType;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
 import user.model.vo.UserInfo;
@@ -234,6 +235,15 @@ public class SurveyService {
 	
 		close(conn);
 		return result;
+	}
+
+	public ArrayList<SortByType> sortByType(int qNum, String aContent) {
+		Connection conn = getConnection();
+		
+		ArrayList<SortByType> sbtList = new SurveyDao().sortByType(conn, qNum, aContent);
+		
+		close(conn);
+		return sbtList;
 	}
 
 }

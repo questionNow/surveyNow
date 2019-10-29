@@ -28,7 +28,7 @@ height : 300px
 	<script type="text/javascript">
 	
 	function goChart(){
-		location.href = "<%=request.getContextPath()%>/prac.pr?sNum=21"
+		location.href = "<%=request.getContextPath()%>/prac.pr?sNum=88"
 	}
 	</script>
 </body>

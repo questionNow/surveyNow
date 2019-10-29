@@ -18,11 +18,13 @@
 	padding: 15px;
 	display: inline-block;
 }
+
   #add{
   position: relative;
   bottom : 100%;
   left : 80%;
   }
+  
   </style>
   </head>
   <body>
@@ -51,25 +53,33 @@
  		function drawChart<%=i%>() {
 	 		
  <%-- ** 데이터를 담을때 <% %> 이걸로 i 돌때마다 새로 받을 수 있게 수정 --%>
-	    	  var data<%=i%> = google.visualization.arrayToDataTable([
-			      ['<%=dsList.get(i).getQ().getqTitle()%>', '응답 수'],
-			      <%for(int j = 0 ; j< dsList.get(i).getA().size() ; j++){%>
+ 			 var data<%=i%> = new google.visualization.DataTable();
+			 data<%=i%>.addColumn('string', 'aContent');
+			 data<%=i%>.addColumn('number', 'Counts');
+			 data<%=i%>.addRows([
+				 <%for(int j = 0 ; j< dsList.get(i).getA().size() ; j++){%>
 			      ['<%=dsList.get(i).getA().get(j).getaContent()%>', <%=dsList.get(i).getA().get(j).getAnswerCount()%>],
 			      <% } %>
-			      ]);
-	    	  
+			 ]);	    	  
+ 
 	        var options = {
 	            title: '<%=dsList.get(i).getQ().getqTitle()%>'
 	            // ,is3D : true
 	          };
 	   
-	          var chart = new google.visualization.PieChart(document.getElementById('piechart<%=i%>'));
+	          var chart<%=i%> = new google.visualization.PieChart(document.getElementById('piechart<%=i%>'));
 
-	          chart.draw(data<%=i%>, options);
+	          chart<%=i%>.draw(data<%=i%>, options);
 
-	    	  google.visualization.events.addListener(chart, 'select', selectHandler);
+	          google.visualization.events.addListener(chart<%=i%>, 'select', selectHandler<%=i%>);
+	    	 
+	          function selectHandler<%=i%>() {
+	              var selectedItem = chart<%=i%>.getSelection()[0];
+	              var value<%=i%> = data<%=i%>.getValue(selectedItem.row, 0);
+	              alert('The user selected ' + value<%=i%>);
+	            }
 	          
-	          function selectHandler() {
+	          <%-- function selectHandler() {
 				  var selection = chart.getSelection();
 				  var message = '';
 				  for (var i = 0; i < selection.length; i++) {
@@ -89,7 +99,7 @@
 				  }
 				  // 실행부
 				  ajaj(message);
-				}
+				} --%>
 	          function ajaj(aContent){
 	        	  $.ajax({
 	        		  url : "<%= request.getContextPath()%>/sortChart.ch",
@@ -100,8 +110,8 @@
 	        			 $("#piechart<%=i%> > #add").remove();
 	        			 if(data != null){
 		        		 	 $("#piechart<%=i%>").append("<div id = 'add'>"
-		        		 		 +"<h3>"+data+"에 대한 분석"
-								 +"&nbsp;&nbsp;&nbsp; <select class = 'target' name = targetType onchange = 'chart();'>"
+		        		 		 +"<h3>"+aContent+"에 대한 분석"
+								 +"&nbsp;&nbsp;&nbsp; <select class = 'target' name = targetType>"
 								 +"<option>-------</option>"
 								 +"<option value = finalEducation>최종학력</option>"
 								 +"<option value = job>직업</option>"
@@ -114,8 +124,18 @@
 								 +"<option value = armyGo>병역</option>"
 								 +"</select></h3>"
 							 +"</div>");
-		        		 	 
+		        		 	$(".target").change(function(){
+		        		 		$.ajax({
+		        		 			url : "<%=request.getContextPath() %>/sortByType.sv",
+		        		 			data : {qNum : qNum, aContent : aContent},
+		        		 			success : function(data){
+		        		 				console.log(data);
+		        		 			}
+		        		 		});
+		        		 		
+		        		 	});
 	        			 }
+	        			 
 	        		 	
 	        		  }
 	        	  });
@@ -123,10 +143,6 @@
 	          
 	      }
   <%}%>
-  function chart(num, data){
-		alert(num +" / " + data);
-		
-	 }
   </script>	
   </body>
 </html>

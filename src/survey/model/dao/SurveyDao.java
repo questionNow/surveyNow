@@ -16,8 +16,10 @@ import static common.JDBCTemplate.*;
 import survey.model.vo.Answer;
 import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
+import survey.model.vo.SortByType;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
+import survey.model.vo.userType;
 import user.model.vo.UserInfo;
 
 public class SurveyDao {
@@ -905,14 +907,17 @@ public class SurveyDao {
 		ResultSet rs = null;
 		ArrayList<Survey> stList = new ArrayList<Survey>();
 		
+		System.out.println(sList);
 		try {
 			for (int i = 0; i < sList.size(); i++) {
+				String[] targetNames = sList.get(i).getsTarget().split(",");
 				if(sList.get(i).getsTarget() != null) {
 					stList.add(sList.get(i));
 					continue;
 				}else {
 					for (int j = 0; j < sList.get(i).getsTarget().split(",").length; j++) {
-						String targetName = sList.get(i).getsTarget().split(",")[j];
+						
+						String targetName = targetNames[j];
 						pstmt = conn.prepareStatement("SELECT ? FROM USERINFO WHERE USERID = ?");
 						pstmt.setString(1, targetName);
 						pstmt.setString(2, userId);
@@ -931,6 +936,45 @@ public class SurveyDao {
 		}
 
 		return stList;
+	}
+
+	public ArrayList<SortByType> sortByType(Connection conn, int qNum, String aContent) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String[] userTypes = userType.userTypes();
+		HashMap<String, String[]> typeList = userType.checkSurveys();
+		ArrayList<SortByType> sbtList = new ArrayList<SortByType>();
+		
+		try {
+			for (int i = 0; i < userTypes.length; i++) {
+				String[] typeDetail = new String[typeList.get(userTypes[i]).length];
+				int[] typeDetailCount = new int[typeList.get(userTypes[i]).length];
+				for (int j = 0; j < typeList.get(userTypes[i]).length ; j++) {
+					
+					String[] arr = typeList.get(userTypes[i]);
+					pstmt = conn.prepareStatement("SELECT COUNT(?) FROM CHATLIST WHERE QNUM = ? AND RTEXT = ?");
+					pstmt.setString(1, arr[j]);
+					pstmt.setInt(2, qNum);
+					pstmt.setString(3, aContent);
+					System.out.println(aContent);
+
+					rs = pstmt.executeQuery();
+					while (rs.next()) {
+						typeDetail[j] = arr[j];
+						typeDetailCount[j] = rs.getInt(1);
+					}
+
+				}
+				sbtList.add(new SortByType(userTypes[i], typeDetail, typeDetailCount));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}	
+		return sbtList;
 	}
 
 }

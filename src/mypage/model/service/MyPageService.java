@@ -1,11 +1,16 @@
 package mypage.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import mypage.model.dao.MyPageDao;
+import mypage.model.vo.attendence;
+import qna.model.vo.QnA;
 import user.model.vo.Point;
 import user.model.vo.UserInfo;
 
@@ -26,27 +31,11 @@ public class MyPageService {
 			return user;
 		}
 
-		
-	
-
-	
-	  public int getPointListCount() {
-		  Connection conn = getConnection();
-	  
-	 int listCount = new MyPageDao().getPointListCount(conn);
-	  
-	  close(conn);
-	 
-	  return listCount;
-	  }
-	
-
-
-
-	public ArrayList<Point> selectPointList(int currentPage, int limit, int listCount) {
+	  // 포인트
+	public ArrayList<Point> selectPointList(String userId) {
 		Connection conn = getConnection();
 		
-		ArrayList<Point> pointlist = new MyPageDao().selectPointList(conn, currentPage, limit, listCount);
+		ArrayList<Point> pointlist = new MyPageDao().selectPointList(conn, userId);
 		
 		close(conn);
 		
@@ -59,12 +48,13 @@ public class MyPageService {
 			Connection conn = getConnection();
 			int result = new MyPageDao().InfoChange(conn, userInfo);
 		
-			if(result > 0) 				
+			if(result > 0) 	{			
 				commit(conn);
-			else
+			}else {
 				rollback(conn);
-		
+			}
 				close(conn);
+				System.out.println(result);
 				return result;
 	}
 
@@ -76,16 +66,103 @@ public class MyPageService {
 		
 		return user;
 	}
-
-	public int getListCount() {
-		  Connection conn = getConnection();
+	
+	
+	
+	// 1대1 문의 
+	public int getQnAListCount() {
+		Connection conn = getConnection();
 		  
-			 int listCount = new MyPageDao().getListCount(conn);
-			  
-			  close(conn);
-			 
-			  return listCount;
+		 int listCount = new MyPageDao().getQnAListCount(conn);
+		  
+		  close(conn);
+		 
+		  return listCount;
 	}
+
+	// 1대1 문의 작성
+	public int insertMyQnA(QnA qna) {
+		Connection conn = getConnection();
+		
+		int result = new MyPageDao().insertMyQnA(conn, qna);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int Userdelete(String userId) {
+Connection conn = getConnection();
+		
+		int result = new MyPageDao().Userdelete(conn, userId);
+		
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	/*
+	 * public UserInfo UserDeleteForm(String userId) { Connection conn =
+	 * getConnection();
+	 * 
+	 * UserInfo user = new MyPageDao().UserDeleteForm(conn,userId);
+	 * 
+	 * close(conn); return user; }
+	 */
+
+	public ArrayList<attendence> calendarSave(String userId) {
+	Connection conn = getConnection();
+	
+	ArrayList<attendence> at = null;
+	
+		int result = new MyPageDao().calendarSave(conn, userId);
+		
+		if(result > 0) {
+			
+System.out.println("result222222 : " + result);			
+			
+			commit(conn);
+			
+System.out.println("userId : " + userId);	
+			
+ 	at = new MyPageDao().calendarSelect(conn, userId);
+ 		System.out.println("at1111 : " + at);			 
+	 
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return at;
+	}
+
+	public UserInfo UserDeleteForm(String userId) {
+		Connection conn = getConnection();
+		UserInfo result = new MyPageDao().UserDeleteForm(conn, userId);
+	
+		close(conn);
+		
+		return result;
+	}
+
+	public UserInfo MyQnASearch(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	
 
 
 	

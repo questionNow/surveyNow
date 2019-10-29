@@ -36,7 +36,7 @@ public class SortingChartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String aContent = request.getParameter("aContent");
 		String qNum = request.getParameter("qNum");
-		response.setContentType("application/json");	// charset=utf-8은 필터에서 해주니까 생략!
+		response.setContentType("application/json");
 		String[] arr = {qNum, aContent};
 		new Gson().toJson(arr,response.getWriter());
 	}

@@ -962,18 +962,32 @@ body {
 
 
 					<div class="menu">
-						<li class="menuTest" value="3"><a>마이메뉴 <i
+						<li class="menuTest" value="3"><a href="#">마이메뉴 <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
+							<li id="asd1" class="lowMenu"
+								onclick="location.href='/surveyNow//mypage.me?userId=<%=loginUser.getUserId()%>'">
+								마이 메뉴</li>
 							<li id="asd" class="lowMenu"
-								onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">
+								onclick="location.href='/surveyNow/myinfo.mi?userId=<%=loginUser.getUserId()%>'">
 								개인정보 수정</li>
-							<li id="asd1" class="lowMenu">설문 관리</li>
+
+							<li id="asd2" class="lowMenu"
+								onclick="location.href='/surveyNow/mypoint.mp?userId=<%=loginUser.getUserId()%>'">
+								포인트</li>
+							<li id="asd3" class="lowMenu"
+								onclick="location.href='/surveyNow/myqnalist.qna?userId=<%=loginUser.getUserId()%>'">
+								1대1 문의</li>
+							</li>
+							<li id="asd4" class="lowMenu"
+								onclick="location.href='/surveyNow/userdeleteform.df?userId=<%=loginUser.getUserId()%>'">
+								회원 탈퇴</li>
 						</ul>
 
-						<li class="menuTest" value="0"><a>설문 <i	class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<li class="menuTest" value="0"><a>설문 <i
+								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
-							<li id="asd" class="lowMenu" onclick = "doSurvey();">설문 참여하기</li>
+							<li id="asd" class="lowMenu" onclick="doSurvey();">설문 참여하기</li>
 							<li id="asd" class="lowMenu" onclick="makeSurvey();">설문 만들기</li>
 							<li id="asd1" class="lowMenu" onclick="holdSurvey();">작성된 설문</li>
 							<li id="asd1" class="lowMenu" onclick="ingSurvey();">진행중인 설문</li>
@@ -1244,7 +1258,6 @@ body {
 	<script type="text/javascript">
     	function makeSurvey(){
     		location.href = "views/survey/makeSurvey.jsp"; 
-    		// location.href = "<%=request.getContextPath()%>/surveyMake.sv?userId=<%=loginUser.getUserId()%>";
     	}
     	function holdSurvey(){
     		location.href = "<%=request.getContextPath()%>/surveyHoldList.sv?userId=<%=loginUser.getUserId()%>";

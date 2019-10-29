@@ -1,57 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="user.model.vo.Point, mypage.model.vo.PageInfo, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="user.model.vo.*, java.util.ArrayList"%>
     
 <%
 	 ArrayList<Point> pointlist = (ArrayList<Point>)request.getAttribute("pointlist");
-
-
- 	PageInfo pointpi = (PageInfo)request.getAttribute("pointpi");	 
-	int ListCount = pointpi.getListCount();
-	int currentPage = pointpi.getCurrentPage();
-	int maxPage = pointpi.getMaxPage();
-	int startPage=pointpi.getStartPage();
-	int endPage = pointpi.getEndPage(); 
+	 UserInfo user = (UserInfo)request.getAttribute("user");
+	
 %>    
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <style>
+ *{box-sizing:border-box; font-size:15px;}
  #boardArea{
-      width:800px;
+      width:900px;
       height:800px;
-      background:black;
-      color:white;
-      margin-left:auto;
-      margin-right:auto;
-      margin-top:220px;
+      background:transparent;
+      color:black;
+      margin-left:650px;
+      margin-top:70px;
    }
-  #boardTop{
-  	background:red;
-  	width:800px;
-  	height:80px;
-  	
-  }
-  
-  #boardBottom{
-  	background:blue;
-  	width:800px;
-  	height:150px;
-  	margin-top:400px;
-  	float:left;
-  }
-  
-   table {
-      border:1px solid white;
-      text-align:center;
-  }
-  .pagingArea{
-  	margin-top:60px;
-  }
- 
 
+
+   table {
+   	  background:white;
+   	  width:900px;
+       
+      text-align:center; 
+      }
+ 	 table tr{height:50px; border:1px solid}
+  
+  	.point_title{font-weight:bold; height:50px;  font-size:10px;  }
+  
+ 	 hr {margin:0;}
+ 	.point_content_wrap{width:400px; background:white;  }
+ 	.point_content{text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:100px; word-wrap:normal; background:white;}
+
+	.div-top{font-size:18px; font-weight:bold; }
+	
+	.pointSum{width:900px; height:100px; background:red;}
 </style>
 
 <title>Insert title here</title>
@@ -59,69 +50,61 @@
 <body>
 	
 	<%@ include file="../common/menubar2.jsp" %>
-	
 	<div id="boardArea">
-	
+	<div class="div-top"><i class="fas fa-user"></i>포인트 이력</div>	
+	<br>
+	<hr width = "100%" height = "10%" color = "#E98235">
 		<br>
-		<h2 align="center">참여한 설문</h2>
+		<h2 align="center"></h2>
+		
 			<table align="center" id="listArea">
-			<tr>
-				<th width="200px">적립일</th>
-				<th width="200px">내용</th>
-				<th width="200px">포인트</th>
-			</tr>
-		
-		 	 <% if(pointlist.isEmpty()){%>
-			<tr>
-				<td colspan="3">검색 결과가 없습니다.</td>
-			</tr>
-			<%}else{%> 
-			<%for(Point p : pointlist){%>
-			<tr>
-				  <input type="hidden" value="<%=p.getpNum() %>">
-				<td><%=p.getPoint()%></td>
-				<td><%=p.getpDate()%></td>
-				<td><%=p.getpContent()%></td>
-			</tr>
+			<tr class="point_title">
+			<td> 번호 </td>
+			<td width="400px">내용 </td>
+			<td width="100px">적립일</td>
+			<td>사용자</td>
+			<td width="100px">포인트</td>
+		</tr>
+		<%if(pointlist.isEmpty()){ %>
+		<tr>
+			<td colspan="5">존재하는 공지사항이 없습니다.</td>
+		</tr>
+		<%}else{ %>
+		<%for(Point p : pointlist){ %>
+		<tr class="point_content_wrap">
+			<%-- <td><%= list.get(0).getnNo() %></td>
+			<td><%= list.get(0).getnTitle() %></td>
+			<td><%= list.get(0).getnWriter() %></td>
+			<td><%= list.get(0).getnCount() %></td>
+			<td><%= list.get(0).getnDate() %></td> --%>
+			
+				 <td><%= p.getpNum() %></td>
+			<td class="point_content"><%= p.getpContent() %></td>
+			<td><%= p.getpDate() %></td>
+			<td><%= p.getUserId() %></td>
+			<td><%= p.getPoint() %></td>
+		</tr>	
 			<%} %>
-		 <%} %>	 
-			</table>
-			<!-- 페이징 처리 시작 -->	
-	 	<div id="boardBottom">
-			<div class="pagingArea" align="center">
-				<!-- 맨 처음으로 -->
-				<button onclick="location.href='<%=request.getContextPath() %>/mypoint.mp?currentPage=1'"> << </button>
-				<!-- 이전 페이지로(<) -->
-				<%if(currentPage <=1) {%>
-				<button disabled> < </button>	
-				<%} else{%>
-				<button onclick="location.href='<%=request.getContextPath() %>/mypoint.mp?currentPage=<%=currentPage-1 %>'"> < </button>
-				<%} %>
-				
-				<!-- 10개의 페이지 목록 -->
-				<%for(int p = startPage; p<=endPage; p++){ %>
-					<% if(p == currentPage){ %>
-						<button disabled><%=p %></button>
-					<%} else {%>	
-						<button onclick="location.href='<%=request.getContextPath() %>/mypoint.mp?currentPage=<%=p %>'"><%=p %></button>
-					<%} %>
-					<%} %>
-					
-				<!-- 다음 페이지로(>) -->
-				<%if(currentPage >= maxPage){ %>
-				<button disabled> > </button>
-				<%}else{ %>
-				<button onclick="location.href='<%=request.getContextPath()%>/mypoint.mp?currentPage=<%=currentPage+1%>'"> > </button>
-				<%} %>
-			
-				<!-- 맨 끝으로(>>) -->
-				<button onclick="location.href='<%=request.getContextPath()%>mypoint.mp?currentPage=<%=maxPage%>'"> >> </button>
-			</div>
-			
-		</div> 
-		
+		<%} %>			
+	</table>
 	
+	<div class="pointSum">포인트 이력
+		<input type="text" value=<%=loginUser.getPoint() %> >	
+		
 	</div>
+	
+</div>
+
+<%-- <script>
+	$(function () {
+	var sum = 0;
+<%for(Point p : pointlist){ %>
+	console.log(<%=p.getPoint() %>);
+	sum = sum + <%=p.getPoint() %>
+<%} %>
+	$(".abc").val(sum);
+});
+</script> --%>
 
 </body>
 </html>
