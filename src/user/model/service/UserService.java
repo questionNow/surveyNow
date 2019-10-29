@@ -48,6 +48,7 @@ public class UserService {
 		int result = uDao.registerUser(conn, userInfo);
 
 		if (result > 0) {
+			// 가입시 감사 포인트 추가
 			int result2 = uDao.registerPoint(conn, userInfo);
 			if (userInfo.getRecommendId().length() >4) {
 				// 추천인 등록한 가입자 포인트 추가

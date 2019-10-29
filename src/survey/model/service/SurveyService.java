@@ -104,7 +104,7 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		ArrayList<Survey> sList = sDao.selectSurveys(conn, userId);
-		ArrayList<Survey> stList = sDao.checkSurveys(conn, sList, userId);
+		ArrayList<Survey> stList = sDao.checkSurveys2(conn, sList, userId);
 		System.out.println(stList);
 		close(conn);
 		return stList;
@@ -134,10 +134,11 @@ public class SurveyService {
 		return dsList;
 	}
 
-	public int recordAnswer(String userId, int sNum, int[] qNum, int[] aNum, String[] aContent) {
+	public int recordAnswer(String userId, int sNum, int sPoint, int[] qNum, int[] aNum, String[] aContent) {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		int[] result = sDao.recordAnswer(conn, userId, sNum, qNum, aNum, aContent);
+		sDao.updateSurveyCount(conn, userId);	
 		int[] countResult = new int[result.length];
 		int cResult = 0;
 		int countSurvey = sDao.addSurveyCount(conn, sNum);
@@ -192,12 +193,14 @@ public class SurveyService {
 		Connection conn = getConnection();
 		SurveyDao sDao = new SurveyDao();
 		Survey s = sDao.selectSurvey(conn, sNum);
-		SurveyTarget st = null;
+		ArrayList<SurveyTarget> stList = null;
 		ArrayList<Question> qList = sDao.selectQuestion(conn, s);
 		ArrayList<DoSurvey> dsList = new ArrayList<DoSurvey>();
 		if(s.getsTarget() != null) {
-			st = sDao.selectSurveyTarget(conn, s);
-			dsList = sDao.modifySurveyTarget(conn, s, qList, st);
+			stList = sDao.selectSurveyTarget(conn, s);
+			if(stList != null) {
+				dsList = sDao.modifySurveyTarget(conn, s, qList, stList);
+			}
 		}else {
 			dsList = sDao.modifySurvey(conn, s, qList);
 		}

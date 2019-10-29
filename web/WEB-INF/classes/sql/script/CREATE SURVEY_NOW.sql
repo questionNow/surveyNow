@@ -321,4 +321,6 @@ VALUES('문화생활','문화생활');
 INSERT INTO SURVEY_TYPE
 VALUES('애견','애견');
 
+INSERT INTO user_info(userid, userpwd, username) VALUES('admin', '1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==', '관리자');
+
 COMMIT;

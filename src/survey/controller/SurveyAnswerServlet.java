@@ -30,6 +30,7 @@ public class SurveyAnswerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String[] qName = request.getParameterValues("answerQnum");
+		int sPoint = Integer.valueOf(request.getParameter("sPoint"));
 		int[] qNum = new int[qName.length];
 		String answer[] = new String[qName.length];
 		int[] aNum = new int[qName.length];
@@ -50,7 +51,7 @@ public class SurveyAnswerServlet extends HttpServlet {
 		}
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		String userId = request.getParameter("userId");
-		int result = new SurveyService().recordAnswer(userId, sNum, qNum, aNum, aContent);
+		int result = new SurveyService().recordAnswer(userId, sNum, sPoint, qNum, aNum, aContent);
 		if(result >0) {
 			response.sendRedirect("surveyListView.sv?userId="+userId+"&sNum=?"+sNum);
 		}

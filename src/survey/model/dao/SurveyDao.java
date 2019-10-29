@@ -1,5 +1,7 @@
 package survey.model.dao;
 
+import static common.JDBCTemplate.*;
+
 import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import oracle.net.aso.s;
-
-import static common.JDBCTemplate.*;
 
 import survey.model.vo.Answer;
 import survey.model.vo.DoSurvey;
@@ -20,7 +17,6 @@ import survey.model.vo.SortByType;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
 import survey.model.vo.userType;
-import user.model.vo.UserInfo;
 
 public class SurveyDao {
 
@@ -249,7 +245,7 @@ public class SurveyDao {
 		int aResult = 0;
 		try {
 			for (int i = 0; i < qNum.length; i++) {
-				
+
 				pstmt = conn.prepareStatement(
 						"INSERT INTO QUESTION VALUES(SEQ_QUESTION.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
 				pstmt.setString(1, qType[i]);
@@ -757,36 +753,40 @@ public class SurveyDao {
 		return dsList;
 	}
 
-	public SurveyTarget selectSurveyTarget(Connection conn, Survey s) {
+	public ArrayList<SurveyTarget> selectSurveyTarget(Connection conn, Survey s) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String[] targetType = s.getsTarget().split(",");
-		ArrayList<String[]> targetDetail = null;
-		SurveyTarget st = new SurveyTarget();
-		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEY_TARGET WHERE SNUM = ?");
-			pstmt.setInt(1, s.getsNum());
-			rs = pstmt.executeQuery();
-			targetDetail = new ArrayList<String[]>();
-			int svNum = 0;
-			while (rs.next()) {
-				svNum = rs.getInt("svnum");
-				String[] targetD = rs.getString("targetdetail").split(",");
-				targetDetail.add(targetD);
+		if (s.getsTarget() != null) {
+			String[] targetType = s.getsTarget().split(",");
+			ArrayList<String[]> targetDetail = null;
+			SurveyTarget st = new SurveyTarget();
+			ArrayList<SurveyTarget> stList = new ArrayList<SurveyTarget>();
+			try {
+				pstmt = conn.prepareStatement("SELECT * FROM SURVEY_TARGET WHERE SNUM = ?");
+				pstmt.setInt(1, s.getsNum());
+				rs = pstmt.executeQuery();
+				targetDetail = new ArrayList<String[]>();
+				int svNum = 0;
+				while (rs.next()) {
+					svNum = rs.getInt("svnum");
+					String[] targetD = rs.getString("targetdetail").split(",");
+					targetDetail.add(targetD);
+					stList.add(new SurveyTarget(svNum, s.getsNum(), targetType, targetDetail));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rs);
 			}
-			st = new SurveyTarget(svNum, s.getsNum(), targetType, targetDetail);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-			close(rs);
+			return stList;
 		}
-		return st;
+		return null;
 	}
 
 	public ArrayList<DoSurvey> modifySurveyTarget(Connection conn, Survey s, ArrayList<Question> qList,
-			SurveyTarget st) {
+			ArrayList<SurveyTarget> stList) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
@@ -807,7 +807,7 @@ public class SurveyDao {
 					aCount = rs.getInt("answercount");
 					aList.add(a);
 				}
-				DoSurvey ds = new DoSurvey(s, q, aList, aCount, st);
+				DoSurvey ds = new DoSurvey(s, q, aList, aCount, stList.get(i));
 				dsList.add(ds);
 
 			} catch (SQLException e) {
@@ -906,29 +906,79 @@ public class SurveyDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Survey> stList = new ArrayList<Survey>();
-		
+
 		System.out.println(sList);
 		try {
 			for (int i = 0; i < sList.size(); i++) {
-				String[] targetNames = sList.get(i).getsTarget().split(",");
-				if(sList.get(i).getsTarget() != null) {
+				if (sList.get(i).getsTarget() == null) {
 					stList.add(sList.get(i));
 					continue;
-				}else {
+				} else {
+					String[] targetNames = sList.get(i).getsTarget().split(",");
 					for (int j = 0; j < sList.get(i).getsTarget().split(",").length; j++) {
-						
+						String query = "SELECT " + sList.get(i).getsTarget().split(",")[j]
+								+ " FROM USER_INFO WHERE USERID =" + userId.toLowerCase();
 						String targetName = targetNames[j];
-						pstmt = conn.prepareStatement("SELECT ? FROM USERINFO WHERE USERID = ?");
-						pstmt.setString(1, targetName);
-						pstmt.setString(2, userId);
+						pstmt = conn.prepareStatement("SELECT " + sList.get(i).getsTarget().split(",")[j]
+								+ " FROM USER_INFO WHERE USERID = ? ");
+						pstmt.setString(1, userId);
 						rs = pstmt.executeQuery();
-						
-						while(rs.next()) {
-							if((sList.get(i).getsTarget()).contains(rs.getString(targetName))){
+
+						while (rs.next()) {
+							if ((sList.get(i).getsTarget()).contains(rs.getString(targetName))) {
 								stList.add(sList.get(i));
-							}	
+							}
 						}
 					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return stList;
+	}
+
+	public ArrayList<Survey> checkSurveys2(Connection conn, ArrayList<Survey> sList, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<Survey> stList = new ArrayList<Survey>();
+
+		try {
+			for (int i = 0; i < sList.size(); i++) {
+				boolean check = false;
+				ArrayList<SurveyTarget> sTarget = new SurveyDao().selectSurveyTarget(conn, sList.get(i));
+				if (sTarget != null) {
+					for (int k = 0; k < sTarget.size(); k++) {
+						if (sList.get(i).getsTarget() == null) {
+							System.out.println("Null일 경우");
+							stList.add(sList.get(i));
+						} else {
+							String[] targetNames = sList.get(i).getsTarget().split(",");
+							for (int j = 0; j < sTarget.get(k).getTargetDetail().size(); j++) {
+								String userDetail = "";
+								pstmt = conn.prepareStatement("SELECT " + sTarget.get(k).getTargetType()[j]
+										+ " FROM USER_INFO WHERE USERID = ? ");
+								pstmt.setString(1, userId);
+								rs = pstmt.executeQuery();
+								while (rs.next()) {
+									userDetail = rs.getString(targetNames[j]);
+									System.out.println("유저 디테일 : " + userDetail);
+								}
+								for (int n = 0; n < sTarget.get(k).getTargetDetail().get(j).length; n++) {
+									System.out.println("디테일 값 : " + sTarget.get(k).getTargetDetail().get(j)[n]);
+									if (sTarget.get(k).getTargetDetail().get(j)[n].equals(userDetail)) {
+										check = true;
+									}
+								}
+								System.out.println(check);
+							}
+						}
+					}
+				}
+				if (check == true) {
+					System.out.println("survey 넘버 : " + sList.get(i).getsNum());
+					stList.add(sList.get(i));
 				}
 			}
 		} catch (SQLException e) {
@@ -941,17 +991,17 @@ public class SurveyDao {
 	public ArrayList<SortByType> sortByType(Connection conn, int qNum, String aContent) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		String[] userTypes = userType.userTypes();
 		HashMap<String, String[]> typeList = userType.checkSurveys();
 		ArrayList<SortByType> sbtList = new ArrayList<SortByType>();
-		
+
 		try {
 			for (int i = 0; i < userTypes.length; i++) {
 				String[] typeDetail = new String[typeList.get(userTypes[i]).length];
 				int[] typeDetailCount = new int[typeList.get(userTypes[i]).length];
-				for (int j = 0; j < typeList.get(userTypes[i]).length ; j++) {
-					
+				for (int j = 0; j < typeList.get(userTypes[i]).length; j++) {
+
 					String[] arr = typeList.get(userTypes[i]);
 					pstmt = conn.prepareStatement("SELECT COUNT(?) FROM CHATLIST WHERE QNUM = ? AND RTEXT = ?");
 					pstmt.setString(1, arr[j]);
@@ -973,8 +1023,21 @@ public class SurveyDao {
 		} finally {
 			close(pstmt);
 			close(rs);
-		}	
+		}
 		return sbtList;
+	}
+
+	public void updateSurveyCount(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("UPDATE USER_INFO SET SURVEYCOUNT = SURVEYCOUNT + 1 WHERE USERID = ?");
+			pstmt.setString(1, userId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }
