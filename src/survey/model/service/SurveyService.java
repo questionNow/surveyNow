@@ -1,19 +1,19 @@
 package survey.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.commit;
+import static common.JDBCTemplate.getConnection;
+import static common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import survey.model.dao.SurveyDao;
-import survey.model.vo.Answer;
 import survey.model.vo.DoSurvey;
 import survey.model.vo.Question;
 import survey.model.vo.SortByType;
 import survey.model.vo.Survey;
 import survey.model.vo.SurveyTarget;
-import user.model.vo.UserInfo;
 
 public class SurveyService {
 
@@ -249,4 +249,191 @@ public class SurveyService {
 		return sbtList;
 	}
 
+	public ArrayList<Survey> selectWaitingSurvey(String userId) {
+		Connection conn = getConnection();
+
+		ArrayList<Survey> sList = new SurveyDao().selectWaitingSurvey(conn, userId);
+
+		close(conn);
+		return sList;
+	}
+	
+	// 전페 설문 조회
+		public ArrayList<Survey> getAllList() {
+			Connection conn = getConnection();
+			ArrayList<Survey> list = new SurveyDao().allSurvey(conn);
+
+
+			close(conn);
+			return list;
+		}
+
+		// 완료된 설문 조회
+		public ArrayList<Survey> getCompList() {
+			Connection conn = getConnection();
+			ArrayList<Survey> list = new SurveyDao().compSurvey(conn);
+
+			close(conn);
+			return list;
+		}
+
+		// 결제 설문 조회
+		public ArrayList<Survey> getHoldList() {
+			Connection conn = getConnection();
+			ArrayList<Survey> list = new SurveyDao().getHoldList(conn);
+
+			close(conn);
+			return list;
+		}
+
+		// 진행 설문 조회
+		public ArrayList<Survey> getProcList() {
+			Connection conn = getConnection();
+
+			ArrayList<Survey> list = new SurveyDao().getProcList(conn);
+
+			close(conn);
+			return list;
+		}
+
+		public int[] getGenderStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int MaleStats = new SurveyDao().getMaleStats(conn, value, qnum);
+			int FemaleStats = new SurveyDao().getFemaleStats(conn, value, qnum);
+			
+			int[] stats = {MaleStats , FemaleStats};
+			//System.out.println(stats);
+			close(conn);
+			return stats;
+		}
+
+		public int[] getFinalEduStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int ElementStats = new SurveyDao().getElementStats(conn, value, qnum);
+			int MiddleStats = new SurveyDao().getMiddelStats(conn, value, qnum);
+			int HighStats = new SurveyDao().getHighStats(conn, value, qnum);
+			int CollegeStats = new SurveyDao().getCollegeStats(conn, value, qnum);
+			int UniversityStats = new SurveyDao().getUniversityStats(conn, value, qnum);
+			int MasterStats = new SurveyDao().getMasterStats(conn, value, qnum);
+			int DoctorStats = new SurveyDao().getDoctorMasterStats(conn, value, qnum);
+			
+			
+			int[] stats = {ElementStats, MiddleStats, HighStats, CollegeStats, UniversityStats, MasterStats, DoctorStats};
+			close(conn);
+			
+			return stats;
+		}
+		
+
+
+		public int[] getJobStats(String value, int qnum) {
+			
+			Connection conn = getConnection();
+			
+			int UnemployedStats = new SurveyDao().getUnemployedStats(conn, value, qnum);
+			int StudentStats = new SurveyDao().getStudentStats(conn, value, qnum);
+			int SelfStats = new SurveyDao().getSelfStats(conn, value, qnum);
+			int OfficeStats = new SurveyDao().getOfficeStats(conn, value, qnum);
+			int ServiceStats = new SurveyDao().getServiceStats(conn, value, qnum);
+			int TechnicalStats = new SurveyDao().getTechnicalStats(conn, value, qnum);
+			int ArtStats = new SurveyDao().getArtStats(conn, value, qnum);
+			int ManagementStats = new SurveyDao().getManagementStats(conn, value, qnum);
+			int LiveStockStats = new SurveyDao().getLiveStockStats(conn, value, qnum);
+			int EctStats = new SurveyDao().getEctStats(conn, value, qnum);
+
+			int [] stats = {UnemployedStats,StudentStats,SelfStats, OfficeStats, ServiceStats, TechnicalStats, ArtStats, ManagementStats, LiveStockStats, EctStats};
+			close(conn);
+			return stats;
+		}
+
+		public int[] getIncomeStats(String value, int qnum) {
+			Connection conn = getConnection();
+			
+			int twoHlessStats = new SurveyDao().getTwoHlessStats(conn, value, qnum);
+			int fourHlessStats = new SurveyDao().getFourHlessStats(conn,value, qnum);
+			int sixHlessStats = new SurveyDao().getSixHlessStats(conn,value, qnum);
+			int sixHmoreStats = new SurveyDao().getSixHmoreStats(conn, value, qnum);
+			
+			int[] stats = {twoHlessStats, fourHlessStats, sixHlessStats, sixHmoreStats};
+			close(conn);
+			
+			return stats;
+		}
+
+		public int[] getLivingTypeStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int monthlyStats = new SurveyDao().getMonthlyStats(conn, value, qnum);
+			int charterStats = new SurveyDao().getCharterStats(conn, value, qnum);
+			int onesStats = new SurveyDao().getOnesStats(conn, value, qnum);
+			int LivingEctStats = new SurveyDao().getLivingEctStats(conn, value, qnum);
+			
+			int[] stats = {monthlyStats, charterStats, onesStats, LivingEctStats};
+			close(conn);
+
+			return stats;
+		}
+
+		public int[] getHouseTypeStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int singleHsStats = new SurveyDao().getSingleHsStats(conn, value, qnum);
+			int multiHsStats = new SurveyDao().getMultiHsStats(conn, value, qnum);
+			int apartmentStats = new SurveyDao().getApartmentStats(conn, value, qnum);
+			int houseEctStats = new SurveyDao().getHouseEctStats(conn, value, qnum);
+			
+			int[] stats = {singleHsStats, multiHsStats,apartmentStats, houseEctStats};
+			close(conn);
+
+			return stats;
+		}
+
+		public int[] getReligionStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int noneReliStats = new SurveyDao().getNoneReliStats(conn, value, qnum);
+			int ChristianStats = new SurveyDao().getChristianStats(conn, value, qnum);
+			int BuddhismStats = new SurveyDao().getBuddhismStats(conn, value, qnum);
+			int CatholicStats = new SurveyDao().getCatholicStats(conn, value, qnum);
+			int ReliEctStats = new SurveyDao().getReliEctStats(conn, value, qnum);
+			
+			int[] stats = {noneReliStats,ChristianStats ,BuddhismStats,CatholicStats,ReliEctStats};
+			close(conn);
+			System.out.println(stats[0] +"," + stats[1]+"," + stats[2]+"," + stats[3]);
+			return stats;
+		}
+
+		public int[] getMaritalStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int SingleStats = new SurveyDao().getSingleStats(conn, value, qnum);
+			int MarriedStats = new SurveyDao().getMarriedStats(conn, value, qnum);
+			
+			int[] stats = {SingleStats, MarriedStats};
+			close(conn);
+			return stats;
+		}
+
+		public int[] getLivingWithStats(String value, int qnum) {
+			Connection conn = getConnection();
+			int zeroStats = new SurveyDao().getZeroStats(conn, value, qnum);
+			int oneStats = new SurveyDao().getOneStats(conn, value, qnum);
+			int twoStats = new SurveyDao().getTwoStats(conn, value, qnum);
+			int threeStats = new SurveyDao().getThreeStats(conn, value, qnum);
+			int fourStats = new SurveyDao().getFourStats(conn, value, qnum);
+			int fiveStats = new SurveyDao().getFiveStats(conn, value, qnum);
+			int sixMStats = new SurveyDao().getSixMStats(conn, value, qnum);
+			
+			int[] stats = {zeroStats, oneStats, twoStats, threeStats, fourStats, fiveStats, sixMStats};
+			close(conn);
+			return stats;
+		}
+
+		public int[] getArmyStats(String value, int qnum) {
+		Connection conn = getConnection();
+		int militaryPen = new SurveyDao().getMilitaryPen(conn, value, qnum);
+		int mifill = new SurveyDao().getMifill(conn,value, qnum);
+		int exemption = new SurveyDao().getExemption(conn, value, qnum);
+		
+		int[] stats = {militaryPen, mifill, exemption};
+		close(conn);
+		return stats;
+		}
+	
 }

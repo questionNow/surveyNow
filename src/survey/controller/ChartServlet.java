@@ -34,7 +34,7 @@ public class ChartServlet extends HttpServlet {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
 		ArrayList<DoSurvey> dsList = new SurveyService().chartSurvey2(sNum);
 		request.setAttribute("dsList", dsList);
-		request.getRequestDispatcher("views/survey/Chart2.jsp").forward(request, response);;
+		request.getRequestDispatcher("views/survey/ChartView.jsp").forward(request, response);;
 	}
 
 	/**

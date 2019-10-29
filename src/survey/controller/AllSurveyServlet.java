@@ -11,21 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
-import survey.model.vo.Answer;
-import survey.model.vo.DoSurvey;
 import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class CompleteDetailServlet
+ * Servlet implementation class AllSruvey
  */
-@WebServlet("/detail.cp")
-public class CompleteDetailServlet extends HttpServlet {
+@WebServlet("/all.sv")
+public class AllSurveyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CompleteDetailServlet() {
+    public AllSurveyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +32,17 @@ public class CompleteDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<Survey> list = new SurveyService().getAllList();
+		//System.out.println("서블릿" + list);
+		RequestDispatcher view = null;
 		
-		int snum = Integer.valueOf(request.getParameter("snum"));
-		ArrayList<DoSurvey> dsList = new SurveyService().chartSurvey2(snum);
-		RequestDispatcher view = null; 
+		if(list != null) {
+			view = request.getRequestDispatcher("views/admin/allSurveyView.jsp");
+			request.setAttribute("list", list);
+		}else {
+			System.out.println("실패햇구나");
+		}
 		
-		view = request.getRequestDispatcher("views/admin/comDetailView.jsp");
-		request.setAttribute("dsList", dsList);
 		view.forward(request, response);
 	}
 

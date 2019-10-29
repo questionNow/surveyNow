@@ -211,10 +211,10 @@ input[type = button]{
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '농/어/축산업' name = job value = '농/어/축산업'><label for = '농/어/축산업'>농/어/축산업</label>"
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '기타' name = job value = '기타'><label for = '기타'>기타</label></div>");
 									} else if($(".target<%= i %> option:selected").val()== "income"){
-										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '200만원 이하' name = income value = '200만원 이하'><label for = '200만원 이하'>200만원 이하</label>"
-																+"&nbsp;&nbsp;<input type ='checkbox' id = '400만원 이하' name = income value = '400만원 이하'><label for = '400만원 이하'>400만원 이하</label>"
-																+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 이하' name = income value = '600만원 이하'><label for = '600만원 이하'>600만원 이하</label>"
-																+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 초과' name = income value = '600만원 초과'><label for = '600만원 초과'>600만원 초과</label></div>");
+										$("#target"+num).append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '200만원 이하' name = income value = '200만원 이하'><label for = '200만원 이하'>200만원 이하</label>"
+												+"&nbsp;&nbsp;<input type ='checkbox' id = '200만원~400만원' name = income value = '200만원~400만원'><label for = '200만원~400만원'>200만원~400만원</label>"
+												+"&nbsp;&nbsp;<input type ='checkbox' id = '400만원~600만원' name = income value = '400만원~600만원'><label for = '400만원~600만원'>400만원~600만원</label>"
+												+"&nbsp;&nbsp;<input type ='checkbox' id = '600만원 이상' name = income value = '600만원 이상'><label for = '600만원 이상'>600만원 이상</label></div>");
 									} else if($(".target<%= i %> option:selected").val()== "livingType"){
 										 $("#target<%= i %>").append("<div>&nbsp;&nbsp;<input type ='checkbox' id = '월세' name = livingType value = '월세'><label for = '월세'>월세</label>"
 																+"&nbsp;&nbsp;<input type ='checkbox' id = '전세' name = livingType value = '전세'><label for = '전세'>전세</label>"

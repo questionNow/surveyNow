@@ -84,7 +84,7 @@ body {
 								<td><%=s.getsEndDate() %></td>
 								<td><%=s.getaCount() %></td>
 								<td><%=s.getsCount() %></td>
-								<td>차트 사진</td>
+								<td id = chart>차트 사진</td>
 						<%} %>
 						<%} %>
 					
@@ -95,18 +95,15 @@ body {
 
 
 	<script type="text/javascript">
-		$(function(){
-			$("#surveyListTable td").mouseenter(function(){
-				$(this).parent().css({"background":"orangered","cursor":"pointer"})
-			}).mouseout(function(){
-				$(this).parent().css({"background":"#F8EFE6"});
-			}).click(function(){
-				var sNum = $(this).parent().children("input").val();
-				location.href="<%=request.getContextPath()%>/surveyDetailView.sv="+sNum;
-			
-				
-			});
-		});
+	$("tr > #chart").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("분석 페이지로 넘어가시겠습니까?");
+		if(bool){
+			location.href = "<%= request.getContextPath()%>/chart.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}		
+	});
 	</script>
 
 </body>

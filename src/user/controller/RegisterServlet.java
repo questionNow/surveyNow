@@ -61,7 +61,7 @@ public class RegisterServlet extends HttpServlet {
             if (i == interestArr.length - 1) {
                interest += interestArr[i];
             } else {
-               interest += interestArr[i] + " ,"; 
+               interest += interestArr[i] + ", "; 
             }
          }
       }

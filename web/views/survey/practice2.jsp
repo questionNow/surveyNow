@@ -51,7 +51,7 @@
  		function drawChart<%=i%>() {
 	 		
  <%-- ** 데이터를 담을때 <% %> 이걸로 i 돌때마다 새로 받을 수 있게 수정 --%>
- 			 var data<%=i%> = new google.visualization.DataTable();
+ 	var data<%=i%> = new google.visualization.DataTable();
 			 data<%=i%>.addColumn('string', 'aContent');
 			 data<%=i%>.addColumn('number', 'Counts');
 			 data<%=i%>.addRows([

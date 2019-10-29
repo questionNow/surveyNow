@@ -201,7 +201,7 @@ body {
 }
 #nav {
 	background-color: #f6fdff;
-	height : 100%;
+	height : auto;
 }
 #title {
 	background-color: #FACEAB;
@@ -997,6 +997,7 @@ body {
 								설문</li>
 							<li id="asd1" class="lowMenu" onclick="purchaseSurvey();">설문
 								결제하기</li>
+							<li id="asd1" class="lowMenu" onclick="waitingSurvey();">결제 완료 / 배포 대기 설문</li>
 						</ul>
 
 
@@ -1206,21 +1207,7 @@ body {
     </script>
 
 	<!--STR  메뉴상단 고정  script ----------------------------------------------------------------------->
-	<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script>
-      $( document ).ready( function() {
-        var jbOffset = $( '.jbMenu' ).offset();
-        
-        $( window ).scroll( function() {
-          if ( $( document ).scrollTop() > jbOffset.top ) {
-            $( '.jbMenu' ).addClass( 'jbFixed' );
-          }
-          else {
-            $( '.jbMenu' ).removeClass( 'jbFixed' );
-          }
-        });
-      } );
-    </script>
+	
 	<!--END  메뉴상단 고정  script ----------------------------------------------------------------------->
 
 	<!--STR 화면 onclick 이벤트 ------------------------------------------------------------------------>
@@ -1276,6 +1263,9 @@ body {
     	}
     	function doSurvey(){
     		location.href = "<%=request.getContextPath()%>/surveyListView.sv?userId=<%=loginUser.getUserId()%>";
+    	}
+    	function waitingSurvey(){
+    		location.href = "<%=request.getContextPath()%>/surveyWaitingView.sv?userId=<%=loginUser.getUserId()%>";
     	}
     </script>
 

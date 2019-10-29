@@ -134,9 +134,8 @@ a.btn-layerClose:hover {
 	<div class="row">
 
 		<div class="right">
-			<p id = titleSurvey>작성된 설문함</p>
-			<p id = secondSurvey>내가 작성한 설문들을 한눈에 확인 해보세요</p>
-			<p id = secondSurvey>클릭하여 설문을 수정 해보세요 :)</p> <br>
+			<p id = titleSurvey>결제 완료 / 배포 대기 설문함</p>
+			<p id = secondSurvey>배포 대기중인 설문함을 확인 해주세요</p>
 			<div id="surveyList">
 				<table id="surveyListTable" style="text-align: Center"
 					cellpadding="0" cellspacing="0">
@@ -145,7 +144,6 @@ a.btn-layerClose:hover {
 						<th width="200px">패널 수</th>
 						<th width="100px">문항 수</th>
 						<th width="150px">작성일</th>
-						<th width="100px">응답자 수</th>
 						<th width="100px">수정</th>
 						<th width="100px">삭제</th>
 					</tr>
@@ -160,7 +158,6 @@ a.btn-layerClose:hover {
 								<td><%=s.getsCount() %></td>
 								<td><%=s.getqCount() %></td>
 								<td><%=s.getsCreateDate() %></td>
-								<td><%=s.getaCount() %></td>
 								<td id = "modify">수정</td>
 								<td id = "delete">삭제</td>
 							</tr>
@@ -173,37 +170,16 @@ a.btn-layerClose:hover {
 	</div>
 
 	<script type="text/javascript">
-	$("tr > #chart").mouseenter(function(){
-		$(this).css("cursor","pointer");
-	}).click(function(){
-		var snum = $(this).parent().children("input")[0].value;
-		var bool = confirm("분석 페이지로 넘어가시겠습니까?");
-		if(bool){
-			location.href = "<%= request.getContextPath()%>/chart.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
-		}		
-	});
-	
 	$("tr > #delete").mouseenter(function(){
 		$(this).css("cursor","pointer");
 	}).click(function(){
-		
-		var snum = $(this).parent().children("input")[0].value;
-		var bool = confirm("삭제 하시겠습니까?");
-		if(bool){
-			location.href = "<%= request.getContextPath()%>/surveyDelete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
-		}
+		alert("1:1 문의로 남겨주시면 삭제 후 환불 처리 해드리겠습니다.");
 	});
 	
 	$("tr > #modify").mouseenter(function(){
 		$(this).css("cursor","pointer");
 	}).click(function(){
-		
-		var snum = $(this).parent().children("input")[0].value;
-		var bool = confirm("수정 하시겠습니까?");
-		if(bool){
-			location.href = "<%= request.getContextPath()%>/surveyModify.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
-		}
-		
+		alert("1:1 문의로 남겨주시면 환불 후 수정 하실 수 있도록 처리해드리겠습니다.");
 	});
 	</script>
 

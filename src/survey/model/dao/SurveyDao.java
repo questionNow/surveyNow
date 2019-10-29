@@ -1,8 +1,8 @@
 package survey.model.dao;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
 
-import java.beans.Statement;
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -119,7 +119,7 @@ public class SurveyDao {
 		try {
 			pstmt = conn.prepareStatement("UPDATE SURVEY SET SSTATUS = 'H' WHERE SNUM = ?");
 			pstmt.setInt(1, sNum);
-
+			System.out.println("살려낸다");
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -943,9 +943,10 @@ public class SurveyDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<Survey> stList = new ArrayList<Survey>();
-
+		System.out.println("dao = " + sList);
 		try {
 			for (int i = 0; i < sList.size(); i++) {
+				System.out.println("survey 넘버 : " + sList.get(i).getsNum());
 				boolean check = false;
 				ArrayList<SurveyTarget> sTarget = new SurveyDao().selectSurveyTarget(conn, sList.get(i));
 				if (sTarget != null) {
@@ -976,7 +977,7 @@ public class SurveyDao {
 						}
 					}
 				}
-				if (check == true) {
+				if (check) {
 					System.out.println("survey 넘버 : " + sList.get(i).getsNum());
 					stList.add(sList.get(i));
 				}
@@ -1037,7 +1038,1399 @@ public class SurveyDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	public ArrayList<Survey> selectWaitingSurvey(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> sList = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SUSERID =? AND SSTATUS ='P'");
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+			sList = new ArrayList<Survey>();
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId"));
+
+				sList.add(s);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return sList;
+	}
+
+	// 전제 설문 리스트 조회 dao
+	public ArrayList<Survey> allSurvey(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Survey> list = null;
+
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM SURVEY ORDER BY SNUM");
+
+			list = new ArrayList<Survey>();
+
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("senddt"), rs.getDate("sstartdt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qcount"), rs.getInt("scount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserid"));
+
+				list.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+
+		return list;
+	}
+
+	// 완료 설문 리스트 조회 dao
+	public ArrayList<Survey> compSurvey(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		ArrayList<Survey> list = null;
+
+		try {
+			stmt = (Statement) conn.createStatement();
+			rs = ((java.sql.Statement) stmt).executeQuery("SELECT * FROM SURVEY WHERE SSTATUS ='C'");
+
+			list = new ArrayList<Survey>();
+
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("senddt"), rs.getDate("sstartdt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qcount"), rs.getInt("scount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserid"));
+
+				list.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(stmt);
+		}
+		// System.out.println("dao에서의 list : " + list);
+		return list;
+
+	}
+
+	// 진행 중인 설문 리스트 조회 dao
+	public ArrayList<Survey> getProcList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> list = null;
+
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS='I'");
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Survey>();
+
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("senddt"), rs.getDate("sstartdt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qcount"), rs.getInt("scount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserid"));
+
+				list.add(s);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+
+	// 결제 대기 설문 리스트 조회 dao
+	public ArrayList<Survey> getHoldList(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> list = null;
+
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS='H'");
+			rs = pstmt.executeQuery();
+
+			list = new ArrayList<Survey>();
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("senddt"), rs.getDate("sstartdt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qcount"), rs.getInt("scount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserid"));
+
+				list.add(s);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return list;
+	}
+
+	public int getMaleStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		int MaleStats = 0;
+
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND GENDER='남자'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MaleStats = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return MaleStats;
+	}
+
+	public int getFemaleStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int FemaleStats = 0;
+
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND GENDER='여자'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				FemaleStats = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return FemaleStats;
+	}
+
+	public int getElementStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ElementStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='초등학교 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ElementStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ElementStats;
+	}
+
+	public int getMiddelStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MiddleStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =?	 AND RTEXT=? AND FINAL_EDUCATION='중학교 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MiddleStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return MiddleStats;
+	}
+
+	public int getHighStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int HighStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='고등학교 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				HighStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return HighStats;
+	}
+
+	public int getCollegeStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int CollegeStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='2·3년제 대학교 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				CollegeStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return CollegeStats;
+	}
+
+	public int getUniversityStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int UniversityStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='4년제 대학교 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				UniversityStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return UniversityStats;
+	}
+
+	public int getMasterStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MasterStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='석사학위 졸업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MasterStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return MasterStats;
+	}
+
+	public int getDoctorMasterStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int DoctorStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND FINAL_EDUCATION='박사학위 취득'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				DoctorStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return DoctorStats;
+
+	}
+
+	public int getUnemployedStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int UnemployedStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='무직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				UnemployedStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return UnemployedStats;
+	}
+
+	public int getStudentStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int StudentStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='학생'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				StudentStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return StudentStats;
+	}
+
+	public int getSelfStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SelfStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='자영업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SelfStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return SelfStats;
+	}
+
+	public int getOfficeStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int OfficeStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='사무직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				OfficeStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return OfficeStats;
+	}
+
+	public int getServiceStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ServiceStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='판메/서비스직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ServiceStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ServiceStats;
+	}
+
+	public int getTechnicalStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int TechnicalStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='생산/기술직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				TechnicalStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return TechnicalStats;
+	}
+
+	public int getArtStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ArtStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='전문/예술직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ArtStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ArtStats;
+	}
+
+	public int getManagementStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ManagementStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='경영/관리직'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ManagementStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return ManagementStats;
+	}
+
+	public int getLiveStockStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int LiveStockStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='농/어/축산업'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				LiveStockStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return LiveStockStats;
+	}
+
+	public int getEctStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int EctStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND JOB='기타'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				EctStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return EctStats;
+	}
+
+	public int getTwoHlessStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int TwoHlessStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND INCOME='200만원 이하'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				TwoHlessStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return TwoHlessStats;
+	}
+
+	public int getFourHlessStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int FourHlessStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND INCOME='200만원~400만원 이하'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				FourHlessStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return FourHlessStats;
+	}
+
+	public int getSixHlessStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SixHlessStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND INCOME='400~600만원 이하'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SixHlessStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return SixHlessStats;
+	}
+
+	public int getSixHmoreStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SixHmoreStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND INCOME='600만원 이상'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SixHmoreStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return SixHmoreStats;
+	}
+
+	public int getMonthlyStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MonthlyStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_TYPE='월세'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MonthlyStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return MonthlyStats;
+	}
+
+	public int getCharterStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int CharterStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_TYPE='전세'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				CharterStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return CharterStats;
+	}
+
+	public int getOnesStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int OnesStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_TYPE='자가'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				OnesStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return OnesStats;
+	}
+
+	public int getLivingEctStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int LivingEctStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_TYPE='기타'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				LivingEctStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return LivingEctStats;
+	}
+
+	public int getSingleHsStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SingleStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND HOUSE_TYPE='단독 주택'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SingleStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return SingleStats;
+	}
+
+	public int getMultiHsStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MultiStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND HOUSE_TYPE='다세대 주택'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MultiStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return MultiStats;
+	}
+
+	public int getApartmentStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ApartmentStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND HOUSE_TYPE='아파트'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ApartmentStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return ApartmentStats;
+	}
+
+	public int getHouseEctStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int HouseEctStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND HOUSE_TYPE='기타'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				HouseEctStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return HouseEctStats;
+	}
+
+	public int getNoneReliStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int NoneReliStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND RELIGION='무교'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				NoneReliStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return NoneReliStats;
+
+	}
+
+	public int getChristianStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ChristianStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND RELIGION='기독교'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ChristianStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return ChristianStats;
+	}
+
+	public int getBuddhismStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int BuddhismStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND RELIGION='불교'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				BuddhismStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return BuddhismStats;
+	}
+
+	public int getCatholicStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int CatholicStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND RELIGION='천주교'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				CatholicStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return CatholicStats;
+	}
+
+	public int getReliEctStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ReliEctStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND RELIGION='기타'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ReliEctStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return ReliEctStats;
+	}
+
+	public int getSingleStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SingleStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND MARITAL_STATUS='미혼'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SingleStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return SingleStats;
+	}
+
+	public int getMarriedStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MarriedStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND MARITAL_STATUS='기혼'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MarriedStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return MarriedStats;
+	}
+
+	public int getZeroStats(Connection conn, String value, int qnum) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ZeroStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='0명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ZeroStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return ZeroStats;
+
+	}
+
+	public int getOneStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int OneStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='1명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				OneStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return OneStats;
+	}
+
+	public int getTwoStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int TwoStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='2명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				TwoStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return TwoStats;
+	}
+
+	public int getThreeStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int ThreeStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='3명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ThreeStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return ThreeStats;
+	}
+
+	public int getFourStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int FourStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='4명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				FourStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return FourStats;
+	}
+
+	public int getFiveStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int FiveStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='5명'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				FiveStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return FiveStats;
+	}
+
+	public int getSixMStats(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int SixMStats = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND LIVING_WITH='6명 이상'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				SixMStats = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return SixMStats;
+	}
+
+	public int getMilitaryPen(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int MilitaryPen = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND ARMY_GO='군필'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				MilitaryPen = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return MilitaryPen;
+	}
+
+	public int getMifill(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int Mifill = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND ARMY_GO='미필'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Mifill = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return Mifill;
+	}
+
+	public int getExemption(Connection conn, String value, int qnum) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int Exemption = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT COUNT(*) FROM RESULT, USER_INFO WHERE RUSERID = USERID AND QNUM =? AND RTEXT=? AND ARMY_GO='면제'");
+			pstmt.setInt(1, qnum);
+			pstmt.setString(2, value);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Exemption = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return Exemption;
 	}
 
 }

@@ -169,15 +169,6 @@
 					
                     </article>
            
-                   <!-- 동영상은 나중에 필요하면 쓰기 일단 보류  
-                   <article class="column col6">
-						<h4 class="col_tit">Video</h4>
-						<p class="col_desc">필요 할라나 모르겠지만????</p>	
-						<div class="video">
-							<iframe src="https://www.youtube.com/embed/tHy498wdPaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-					</article> 
-					-->
 				
                 </section>
                

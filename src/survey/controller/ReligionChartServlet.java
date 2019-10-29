@@ -1,31 +1,27 @@
 package survey.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import survey.model.service.SurveyService;
-import survey.model.vo.Answer;
-import survey.model.vo.DoSurvey;
-import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class CompleteDetailServlet
+ * Servlet implementation class ReligionChartServlet
  */
-@WebServlet("/detail.cp")
-public class CompleteDetailServlet extends HttpServlet {
+@WebServlet("/religion.ch")
+public class ReligionChartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CompleteDetailServlet() {
+    public ReligionChartServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +30,13 @@ public class CompleteDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String value = request.getParameter("value");
+		int qnum = Integer.valueOf(request.getParameter("qnum"));
 		
-		int snum = Integer.valueOf(request.getParameter("snum"));
-		ArrayList<DoSurvey> dsList = new SurveyService().chartSurvey2(snum);
-		RequestDispatcher view = null; 
+		int[] stats =new SurveyService().getReligionStats(value,qnum);
 		
-		view = request.getRequestDispatcher("views/admin/comDetailView.jsp");
-		request.setAttribute("dsList", dsList);
-		view.forward(request, response);
+		response.setContentType("application/json;charset=utf-8");
+		new Gson().toJson(stats, response.getWriter());
 	}
 
 	/**
