@@ -496,7 +496,7 @@ public class UserDao {
 			PreparedStatement pstmt = null;
 			int result2 = 0;
 			try {
-				pstmt = conn.prepareStatement("UPDATE POINT SET POINT = POINT+100, PCONTENT = '출석' WHERE USERID=?");
+				pstmt = conn.prepareStatement("UPDATE POINT SET POINT = POINT+10, PCONTENT = '출석' WHERE USERID=?");
 				pstmt.setString(1, userId);
 				result2 = pstmt.executeUpdate();
 
@@ -528,7 +528,7 @@ public class UserDao {
 		public int loginAtCheck(Connection conn, String userId) {
 			PreparedStatement pst = null;
 			ResultSet rs = null;
-
+			
 			int result = 0;
 	 
 			try {
@@ -547,6 +547,5 @@ public class UserDao {
 			}
 			return result;
 		}
-
 
 }

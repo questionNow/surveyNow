@@ -6,9 +6,8 @@
 	UserInfo loginUser = (UserInfo) session.getAttribute("loginUser");
 
 	ArrayList<Board> boardList = (ArrayList<Board>) request.getAttribute("blist");
-	
-	String attcheck = (String)request.getAttribute("attcheck"); 
-	
+
+	String attcheck = (String) request.getAttribute("attcheck");
 
 	/* 작업 */
 	/* ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("arr"); */
@@ -261,8 +260,6 @@ body {
 	width: 250px;
 }
 
-
-
 /* 컨테이너 */
 .container {
 	position: relative;
@@ -277,7 +274,7 @@ body {
 
 /*         .header {height: 327px;} */
 .header {
-	height: 327px; 
+	height: 327px;
 }
 
 .header .header_menu {
@@ -491,12 +488,10 @@ body {
 	cursor: pointer;
 }
 
- 
-
-
 .title .btn :hover {
-/* 	box-shadow: 0 0 0 3px rgba(75, 154, 191, 0.9) inset, 0 0 0 600px
+	/* 	box-shadow: 0 0 0 3px rgba(75, 154, 191, 0.9) inset, 0 0 0 600px
 		rgba(0, 0, 0, 0.1) inset; */
+	
 }
 
 /* 컨텐츠 영역 */
@@ -801,15 +796,40 @@ body {
         .video iframe {position: absolute; width: 100%; height: 100%;} */
 
 /* 푸터 */
-		#footer {
-			border-top: 1px solid #dbdbdb;
-			background-color: #ff9e0033;
-		}
-         .footer {text-align: center; padding: 30px 50px; }
-        .footer li {position: relative; display: inline; padding: 0 7px 0 10px; white-space: nowrap;}
-        .footer li:before {content: ''; width: 1px; height: 12px; background-color: #dbdbdb; position: absolute; left: 0; top: 2px;}
-        .footer li:first-child:before {width: 0;}
-        .footer address {padding-top: 15px;} 
+#footer {
+	border-top: 1px solid #dbdbdb;
+	background-color: #ff9e0033;
+}
+
+.footer {
+	text-align: center;
+	padding: 30px 50px;
+}
+
+.footer li {
+	position: relative;
+	display: inline;
+	padding: 0 7px 0 10px;
+	white-space: nowrap;
+}
+
+.footer li:before {
+	content: '';
+	width: 1px;
+	height: 12px;
+	background-color: #dbdbdb;
+	position: absolute;
+	left: 0;
+	top: 2px;
+}
+
+.footer li:first-child:before {
+	width: 0;
+}
+
+.footer address {
+	padding-top: 15px;
+}
 
 /* 사이드 이펙트1 */
 /*         .side1 {position: relative; display: block; perspective: 600px;}
@@ -1052,7 +1072,7 @@ body {
 }
 
 .goHome {
-	display: inline-block; 
+	display: inline-block;
 	position: absolute;
 	/* right: 0; */
 	left: 0;
@@ -1069,8 +1089,8 @@ body {
 	cursor: pointer;
 }
 
-.goHome:hover { 
- 	box-shadow: 0 0 0 3px rgba(75, 154, 191, 0.9) inset, 0 0 0 600px
+.goHome:hover {
+	box-shadow: 0 0 0 3px rgba(75, 154, 191, 0.9) inset, 0 0 0 600px
 		rgba(0, 0, 0, 0.1) inset;
 }
 
@@ -1104,8 +1124,21 @@ body {
 	width: 220px;
 }
 
-.searchfield:not (:focus ){
-	width: 150px;
+.searchfield
+:not
+ 
+(
+:focus
+ 
+){
+width
+:
+ 
+150
+px
+;
+
+
 }
 
 /*====================
@@ -1227,7 +1260,6 @@ a {
 	left: 0;
 	top: 6px;
 } */
-
 .menuTest:hover {
 	background: #449ce2;
 }
@@ -1237,6 +1269,139 @@ a {
 	background: orangered;
 }
 
+/* .blinking{
+	-webkit-animation:blink 0.1s ease-in-out infinite alternate;
+    -moz-animation:blink 0.1s ease-in-out infinite alternate;
+    animation:blink 0.1s ease-in-out infinite alternate;
+}
+@-webkit-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@-moz-keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
+@keyframes blink{
+    0% {opacity:0;}
+    100% {opacity:1;}
+} */
+
+/* background-color:black;  */
+/* .rainbow {position:absolute; top:100px; width:300px;
+     text-align:center;
+  animation:myani 5s linear infinite alternate;
+  animation-play-state:running;
+
+  -webkit-animation:myani 5s linear infinite alternate;
+  -webkit-animation-play-state:running;
+  -moz-animation:myani 5s linear infinite alternate;
+  -moz-animation-play-state:running;}
+
+ @keyframes myani{
+ 
+0% {top:0px;  color:red;}
+15% {top:50px; color:orange;}
+30% {top:100px;  color:yellow; }
+45% {top:150px;  color:green; }
+60% {top:200px;  color:blue;}
+75% {top:250px;  color:navy; }
+100% {top:300px;  color:purple;}}
+
+@-webkit-keyframes myani{
+ 
+0% {top:0px;  color:red;}
+15% {top:50px; color:orange;}
+30% {top:100px;  color:yellow; }
+45% {top:150px;  color:green; }
+60% {top:200px;  color:blue;}
+75% {top:250px;  color:navy; }
+100% {top:300px;  color:purple;}}
+
+@-moz-keyframes myani{
+ 
+0% {top:0px;  color:red;}
+15% {top:50px; color:orange;}
+30% {top:100px;  color:yellow; }
+45% {top:150px;  color:green; }
+60% {top:200px;  color:blue;}
+75% {top:250px;  color:navy; }
+100% {top:300px;  color:purple;}} */
+
+
+
+#loginChack{
+cursor: pointer;
+}
+
+
+
+
+@font-face {
+  font-family: neon;
+  src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/707108/neon.ttf);
+}
+
+.container9 {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.neon {
+display: inline-block;
+  font-family: neon;
+  color: #FB4264;
+  font-size: 3vw;
+  line-height: 3vw;
+  text-shadow: 0 0 3vw #F40A35;
+}
+
+.flux {
+display: inline-block;
+  font-family: neon;
+  color: #426DFB;
+  font-size: 3vw;
+  line-height: 3vw;
+  text-shadow: 0 0 3vw #2356FF;
+}
+
+.neon {
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+}
+
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
+}
+
+.flux {
+  animation: flux 2s linear infinite;
+  -moz-animation: flux 2s linear infinite;
+  -webkit-animation: flux 2s linear infinite;
+  -o-animation: flux 2s linear infinite;
+}
+
+@keyframes flux {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 .4vw #8BFDFE, .5vw .5vw .1vw #147280;
+    color: #28D7FE;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 .2vw #082180, .5vw .5vw .1vw #0A3940;
+    color: #146C80;
+  }
+}
 
 </style>
 </head>
@@ -1256,37 +1421,41 @@ a {
 							if (loginUser != null) {
 						%>
 						<div class="userHeader">
-
-							<label style="font-size: 1.5em"><%=loginUser.getUserName()%>
-								님 환영합니다 :) </label>
-							<%-- <label><%=loginUser.getUserName() %> 하이? </label>   --%>
-							<a id="myPage"
-								onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
-							<a id="logoutBtn" onclick="logout()">로그아웃</a>
-							<%if(attcheck == "Y") {%>
-							<button id="loginChack" type="button" style="visibility:hidden;">출석체크</button><!--   -->
+							<br>
+							<%if (attcheck == "Y") {%>
+								<label style="font-size: 1.5em"><%=loginUser.getUserName()%>님 환영합니다 :) </label>
+								<a id="myPage" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
+								<a id="logoutBtn" onclick="logout()">로그아웃</a>
+							
+ 								  <!--<div class="neon" id="loginChack" style="visibility: hidden;">출석 </div>
+								  <div class="flux" id="loginChack" style="visibility: hidden;">체크 </div> -->
 							<%} else {%>
-							<button id="loginChack" type="button">출석체크</button>
-							<%} %>
+								<label style="font-size: 1.5em"><%=loginUser.getUserName()%>님 환영합니다 :) </label>
+								<a id="myPage" onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
+								<a id="logoutBtn" onclick="logout()">로그아웃</a>
+								
+								  <div class="neon" id="loginChack">출석 </div>
+								  <div class="flux" id="loginChack">체크 </div>
+							<%}%>							
+							
 						</div>
 						<%
-							} else { 
+							} else {
 						%>
 						<%-- 							  	<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" onsubmit="return validate()" method="post">                       --%>
 						<!-- <div class="userHeader"> -->
 						<label> 로그인 이름 </label> <a id="myPage"
 							onclick="location.href='/surveyNow/mypage.me?userId=<%=loginUser.getUserId()%>'">정보수정</a>
 						<a id="logoutBtn" onclick="logout()">로그아웃</a>
-							<%if(attcheck == "Y") {%>
-							<button id="loginChack" type="button" style="visibility:hidden;">출석체크</button><!-- style="visibility:hidden;" -->
-							<%} else {%>
-							<button id="loginChack" type="button" >출석체크</button>
-							<%} %>
-						<!-- </div> --> 
+						<%if (attcheck == "Y") {%>
+							<button id="loginChack" type="button" style="visibility: hidden;">출석체크3</button>
+						<!-- style="visibility:hidden;" -->
+						<% } else { %>
+							<button id="loginChack" type="button">출석체크4</button>
+						<%}%>
+						<!-- </div> -->
 						<!-- 								</form> -->
-						<%
-							}
-						%>
+						<%}%>
 
 						<%-- 	<%if(loginUser == null) {%>
 		<form id ="loginForm" action="<%=request.getContextPath()%>/login.me" 
@@ -1383,7 +1552,7 @@ a {
 	<!-- //nav -->
 
 	<article id="title" class="jbMenu">
-		<a href="#" ></a>
+		<a href="#"></a>
 		<div class="container">
 			<div class="title">
 
@@ -1403,9 +1572,10 @@ a {
 				<form id="loginForm" action="<%=request.getContextPath()%>/login.me"
 					onsubmit="return validate()" method="get" onsubmit="return false;">
 					<div class="btns" align="center">
-						<input type="submit" value="Home" class="goHome"> 
-						<input type="hidden" name="userId" id="userId" value="<%=loginUser.getUserId()%>"> 
-						<input type="hidden" name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>">
+						<input type="submit" value="Home" class="goHome"> <input
+							type="hidden" name="userId" id="userId"
+							value="<%=loginUser.getUserId()%>"> <input type="hidden"
+							name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>">
 					</div>
 				</form>
 
@@ -1418,12 +1588,12 @@ a {
 				<form class="searchform" onsubmit="return false;">
 					<input class="searchfield" type="text" value="Search..."
 						onfocus="if (this.value == 'Search...') {this.value = '';}"
-						onblur="if (this.value == '') {this.value = 'Search...';}" 
+						onblur="if (this.value == '') {this.value = 'Search...';}"
 						id="alpreah_input" />
 
 				</form>
 				<!-- / Search Form -->
- 
+
 				<div href="#" class="btn" onMouseOver="this.innerHTML='Click'"
 					onMouseOut="this.innerHTML='Menu'">
 					<i class="fa fa-angle-down" aria-hidden="true"></i><span>Menu</span>
@@ -1537,7 +1707,7 @@ a {
 					</div>	 --%>
 
 
-<%-- 					<div class="menu">
+					<%-- 					<div class="menu">
 						<li class="menuTest" value="3"><a>마이메뉴 <i
 								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
 						<ul class="contentsTest">
@@ -1547,28 +1717,29 @@ a {
 							<li id="asd1" class="lowMenu">설문 관리</li>
 						</ul> --%>
 
- 			<div class="menu"> 
-               <li class="menuTest" value="3"><a href="#">마이메뉴 <i class="fa fa-angle-double-right" aria-hidden="true" ></i></a></li>
-                  <ul class="contentsTest" >
-                     <li id="asd1" class="lowMenu"  onclick="location.href='/surveyNow//mypage.me?userId=<%=loginUser.getUserId()%>'">
-                                    마이 메뉴
-                     </li>
-                     <li id="asd" class="lowMenu" onclick="location.href='/surveyNow/myinfo.mi?userId=<%=loginUser.getUserId()%>'">
-                           개인정보 수정
-                     </li>
-                       
-                    <li id="asd2" class="lowMenu" onclick="location.href='/surveyNow/mypoint.mp?userId=<%=loginUser.getUserId()%>'">
-                           포인트
-                     </li>
-                        <li id="asd3" class="lowMenu" onclick="location.href='views/mypage/MyQnAboard.jsp'">
-                           1대1 문의
-                     </li>   
-                     </li>
-                        <li id="asd4" class="lowMenu" onclick="location.href='/surveyNow/userdeleteform.df?userId=<%=loginUser.getUserId()%>'">
-                           회원 탈퇴
-                     </li>   
-                        
-                  </ul>
+					<div class="menu">
+						<li class="menuTest" value="3"><a href="#">마이메뉴 <i
+								class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+						<ul class="contentsTest">
+							<li id="asd1" class="lowMenu"
+								onclick="location.href='/surveyNow//mypage.me?userId=<%=loginUser.getUserId()%>'">
+								마이 메뉴</li>
+							<li id="asd" class="lowMenu"
+								onclick="location.href='/surveyNow/myinfo.mi?userId=<%=loginUser.getUserId()%>'">
+								개인정보 수정</li>
+
+							<li id="asd2" class="lowMenu"
+								onclick="location.href='/surveyNow/mypoint.mp?userId=<%=loginUser.getUserId()%>'">
+								포인트</li>
+							<li id="asd3" class="lowMenu"
+								onclick="location.href='views/mypage/MyQnABoard.jsp'">1대1
+								문의</li>
+							</li>
+							<li id="asd4" class="lowMenu"
+								onclick="location.href='/surveyNow/userdeleteform.df?userId=<%=loginUser.getUserId()%>'">
+								회원 탈퇴</li>
+
+						</ul>
 
 
 
@@ -1632,7 +1803,7 @@ a {
 				</article>
 				<!-- //col1 -->
 
-<%-- 				<article class="column col2">
+				<%-- 				<article class="column col2">
 
 					<div class="notice1">
 						<h4 class="col_tit">공지사항</h4>
@@ -1713,7 +1884,7 @@ a {
 					<br>
 					<!-- <p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p> -->
 					<!-- blog -->
-<!-- 					<div class="blog1">
+					<!-- 					<div class="blog1">
 						<h5 class="ir_su">Image1</h5>
 						<figure>
 							<img src="image/blog4_@1.jpg" class="img-normal"
@@ -1725,54 +1896,49 @@ a {
 					</div> -->
 					<!--//blog -->
 					<!-- blog2 -->
-<!-- 					<div class="blog2 mt15">
+					<!-- 					<div class="blog2 mt15">
 						<div class="img-retina">
 							<h5>Image2</h5>
 						</div>
 						<p>위의 이미지에 대한 주석 들어가면됨2
 					</div> -->
-					
-<!-- 작업중 사이트 이동되게 하면됨  -->
+
+					<!-- 작업중 사이트 이동되게 하면됨  -->
 
 					<!--//blog2 -->
 
 					<div class="pull-left hidden-xs">
 						<!-- 연계 사이트 목록 연결 -->
-						<a href="http://www.panelnow.co.kr" target="_blank">
-							<img src="image/panelNow.png" alt="이미지3">
-						</a>
-						<br>
+						<a href="http://www.panelnow.co.kr" target="_blank"> <img
+							src="image/panelNow.png" alt="이미지3">
+						</a> <br>
 						<p class="col_desc"></p>
 						<a href="https://kr.ipanelonline.com/panel/index" target="_blank">
 							<img src="image/iPanelonline.PNG" alt="이미지3">
-						</a>
-						<br>
+						</a> <br>
 						<p class="col_desc"></p>
-						<a href="http://embrain.com" target="_blank">
-							<img src="image/embrain.PNG" alt="이미지3">
-						</a>	
-						<br>
+						<a href="http://embrain.com" target="_blank"> <img
+							src="image/embrain.PNG" alt="이미지3">
+						</a> <br>
 						<p class="col_desc"></p>
-						<a href="https://www.nownsurvey.com" target="_blank">
-							<img src="image/nowNsurbey.PNG" alt="이미지3">
-						</a>
-						<br>
+						<a href="https://www.nownsurvey.com" target="_blank"> <img
+							src="image/nowNsurbey.PNG" alt="이미지3">
+						</a> <br>
 						<p class="col_desc"></p>
-						<a href="https://renewal.smartpanel.kr" target="_blank">
-							<img src="image/smartpanel.PNG" alt="이미지3">
-						</a>
-						<br>
+						<a href="https://renewal.smartpanel.kr" target="_blank"> <img
+							src="image/smartpanel.PNG" alt="이미지3">
+						</a> <br>
 						<p class="col_desc"></p>
-						<a href="https://wizpanel.co.kr" target="_blank">
-							<img src="image/WizPanel.PNG" alt="이미지3">
+						<a href="https://wizpanel.co.kr" target="_blank"> <img
+							src="image/WizPanel.PNG" alt="이미지3">
 						</a>
-						
-						
-										
+
+
+
 					</div>
-					
-					
-					
+
+
+
 				</article>
 				<!-- //col3 -->
 			</section>
@@ -1912,7 +2078,7 @@ a {
 	</section>
 	<!-- //contents --> </main>
 
-<!--       <footer id="footer">
+	<!--       <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="footer">
@@ -1934,8 +2100,8 @@ a {
             </div>
         </div>
     </footer> -->
-    
-    
+
+
 	<!-- //footer -->
 
 	<!-- JavaScript Libraries -->
@@ -2169,12 +2335,15 @@ a {
                } 
   
            });
+           
+   
+           
        });
 
     </script>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).keydown(function(e) {
     key = (e) ? e.keyCode : event.keyCode;
 //alert(key);
@@ -2203,8 +2372,6 @@ $(document).keydown(function(e) {
     }
 });
 
-
-
 </script>
 
 
@@ -2225,7 +2392,7 @@ $(document).keydown(function(e) {
 
 
 
-<%-- 	<script>
+	<%-- 	<script>
 	$(function(){
 		$("#listArea td").mouseenter(function(){
 			$(this).parent().css({"background":"orangered","cursor":"pointer"});
@@ -2240,7 +2407,7 @@ $(document).keydown(function(e) {
 	});
 	</script> --%>
 
-<%-- 	<script>
+	<%-- 	<script>
 	$(function(){
 		$("#listArea td").mouseenter(function(){
 		}).click(function(){

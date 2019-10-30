@@ -23,20 +23,23 @@ public class UserService {
 	}
 	
 	//SDB 출석체크 (출석체크 하루 한번만)  
-	public int loginAtCheck(String userId) {
-		Connection conn = getConnection();
-		int result = new UserDao().loginAtCheck(conn, userId);
+		public int loginAtCheck(String userId) {
+			Connection conn = getConnection();
+			int result = new UserDao().loginAtCheck(conn, userId);
+			
+			close(conn);
+			return result;
+		}
 		
-		close(conn);
-		return result;
-	}
-	
-	//SDB 출석체크
+		//SDB 출석체크
 		public int attendanceCheck(String userId) {
 			Connection conn = getConnection();
 			int result = new UserDao().attendanceCheck(conn,userId);//USER_INFO
+			System.out.println("att1 : " +result);
 			int result2 = new UserDao().attendanceCheck2(conn,userId);//POINT
+			System.out.println("att2 : " +result2);
 			int result3 = new UserDao().attendanceCheck3(conn,userId);//ATTENDANCE
+			System.out.println("att3 : " +result3);
 			
 			if(result > 0 ) {
 				commit(conn);

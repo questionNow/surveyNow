@@ -45,7 +45,7 @@ public class AttendanceCheck extends HttpServlet {
 		 int result2 = new UserService().attendanceCheck(userId);
 		 RequestDispatcher view = null;
 		 
-		 System.out.println("춣석체크 result : " + result2);
+System.out.println("춣석체크 result : " + result2);
 
 		 if(result2 > 0) {	//성공일 경우
 // 메인화면 공지사항 / 설문 ---------------------------------------------------------------------------------------------
