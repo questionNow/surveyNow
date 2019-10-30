@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
-import survey.model.vo.DoSurvey;
+import survey.model.vo.Survey;
 
 /**
- * Servlet implementation class ModifySurveyServlet
+ * Servlet implementation class AdminDeleteView
  */
-@WebServlet("/Admin_surveyModify.sv")
-public class Admin_ModifySurveyServlet extends HttpServlet {
+@WebServlet("/adminDelete.sv")
+public class AdminDeleteView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Admin_ModifySurveyServlet() {
+    public AdminDeleteView() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,11 +31,11 @@ public class Admin_ModifySurveyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int sNum = Integer.valueOf(request.getParameter("sNum"));
-		ArrayList<DoSurvey> dsList = new SurveyService().adminModifySurvey(sNum);
-		request.setAttribute("dsList", dsList);
-		request.getRequestDispatcher("views/admin/admin_ModifySurvey.jsp").forward(request, response);
+
+		ArrayList<Survey> sList = new SurveyService().adminSelectDeletedSurvey();
 		
+		request.setAttribute("list", sList);
+		request.getRequestDispatcher("views/admin/delSurveyView.jsp").forward(request, response);
 	}
 
 	/**

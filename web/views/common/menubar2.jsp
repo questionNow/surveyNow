@@ -1570,14 +1570,16 @@ display: inline-block;
 					<i class="fa fa-angle-down" aria-hidden="true"></i><span>Home</span></div> -->
 
 				<form id="loginForm" action="<%=request.getContextPath()%>/login.me"
-					onsubmit="return validate()" method="get" onsubmit="return false;">
-					<div class="btns" align="center">
-						<input type="submit" value="Home" class="goHome"> <input
-							type="hidden" name="userId" id="userId"
-							value="<%=loginUser.getUserId()%>"> <input type="hidden"
-							name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>">
-					</div>
-				</form>
+      onsubmit="return validate()" method="get" onsubmit="return false;">
+      <div class="btns" align="center">
+         <input type="submit" value="Home" class="goHome"> 
+         <input type="hidden" name="userId" id="userId" value="<%=loginUser.getUserId()%>">
+         <input type="hidden" name="userPwd" id="userPwd" value="<%=loginUser.getUserPwd()%>">
+         
+         <input type="hidden" name="userPwdType" id="userPwdType" value="<%="userPwdType"%>">
+         <input type="hidden" name="userPwdV" id="userPwdV" value="<%=loginUser.getPwdVisible()%>"> 
+      </div>
+   </form>
 
 
 				<!-- <h2>"설문 NOW"</h2> -->

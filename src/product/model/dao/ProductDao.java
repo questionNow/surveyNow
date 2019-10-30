@@ -1,6 +1,7 @@
 package product.model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import board.model.vo.Board;
+import point.model.vo.Point;
 import product.model.vo.BuyProduct;
 import product.model.vo.Product;
 import product.model.vo.ProductPhoto;
@@ -20,7 +22,7 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "INSERT INTO product VALUES(SEQ_product.nextval, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO product VALUES(SEQ_product.nextval, ?, ?, ?, ?)";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -28,7 +30,6 @@ public class ProductDao {
 			pstmt.setString(2, p.getProName());
 			pstmt.setInt(3, p.getpPrice());
 			pstmt.setString(4, p.getProText());
-			pstmt.setInt(5, p.getProCount());
 
 			result = pstmt.executeUpdate();
 			
@@ -70,42 +71,12 @@ public class ProductDao {
 			return 0;
 	}
 
-//	public int insertProImg(Connection conn, ArrayList<ProductPhoto> fileList) {
-//		PreparedStatement pstmt = null;
-//		int result = 0;
-//		
-//		String query = "INSERT INTO productphoto VALUES(SEQ_productphoto.nextval, seq_product.currval, ?, ?, ?)";
-//		
-//		try {
-//			for(int i=0; i<fileList.size();i++) {
-//				ProductPhoto pp = fileList.get(i);
-//				
-//				pstmt=conn.prepareStatement(query);
-//				pstmt.setString(1, pp.getPhotoName());
-//				pstmt.setString(2, pp.getPhotoChangeName());
-//				pstmt.setString(3, pp.getPhotoPath());
-//				
-//				result += pstmt.executeUpdate();
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally {
-//			close(pstmt);
-//		}
-//		
-//		// fileList가 가진 파일 갯수만큼의 행이 모두 insert가 되었다면
-//		if(result == fileList.size())
-//			return result;
-//		else
-//			return 0;
-//	}
-
-	public ArrayList selectProductList(Connection conn) {
+	public ArrayList selectProductList1(Connection conn) {
 		Statement stmt = null;
 		ResultSet rs = null;
 		
 		ArrayList list = null;
-		String query = "SELECT * FROM product";
+		String query = "SELECT * FROM product WHERE categoryid = 'p01'";
 	
 		try {
 			stmt = conn.createStatement();
@@ -117,8 +88,7 @@ public class ProductDao {
 						 			 rs.getString("categoryid"),
 						 			 rs.getString("proname"),
 						 			 rs.getInt("pprice"),
-						 			 rs.getString("protext"),
-						 			 rs.getInt("procount")));
+						 			 rs.getString("protext")));
 			}
 			
 		} catch (SQLException e) {
@@ -130,6 +100,188 @@ public class ProductDao {
 
 		return list;
 	}
+	
+	public ArrayList selectProductList2(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p02'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
+	public ArrayList selectProductList3(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p03'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
+	
+	public ArrayList selectProductList4(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p04'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
+	public ArrayList selectProductList5(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p05'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
+	public ArrayList selectProductList6(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p06'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
+	public ArrayList selectProductList7(Connection conn) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		ArrayList list = null;
+		String query = "SELECT * FROM product WHERE categoryid = 'p07'";
+	
+		try {
+			stmt = conn.createStatement();
+			rs= stmt.executeQuery(query);
+			list = new ArrayList();
+			
+			while(rs.next()) {
+				list.add(new Product(rs.getInt("pronum"),
+						 			 rs.getString("categoryid"),
+						 			 rs.getString("proname"),
+						 			 rs.getInt("pprice"),
+						 			 rs.getString("protext")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+
+		return list;
+	}
+	
 
 	public ArrayList selectPhotoList(Connection conn) {
 		Statement stmt = null;
@@ -189,7 +341,7 @@ public class ProductDao {
 		
 		ArrayList<BuyProduct>list = null;
 		
-		String query = "SELECT ROWNUM, bnum, pronum, buyid, bcount, totalprice, bdate FROM buyproduct WHERE ROWNUM BETWEEN ? AND ? ORDER BY 1 DESC";
+		String query = "SELECT ROWNUM, bnum, pronum, userid, price, buydate FROM productbuy WHERE ROWNUM BETWEEN ? AND ? ORDER BY 1 DESC";
 		
 		int startRow = (currentPage-1)*limit +1;	
 		int endRow = startRow + limit -1;
@@ -203,14 +355,12 @@ public class ProductDao {
 			rs=pstmt.executeQuery();
 			
 			list = new ArrayList<BuyProduct>();
-			
 			while(rs.next()) {
 				BuyProduct b = new BuyProduct(rs.getInt("bnum"),
 											  rs.getInt("pronum"),
-											  rs.getString("buyid"),
-											  rs.getInt("bcount"),
-											  rs.getInt("totalprice"),
-											  rs.getDate("bdate"));
+											  rs.getString("userid"),
+											  rs.getInt("price"),
+											  rs.getDate("buydate"));
 				
 				list.add(b);
 			}
@@ -242,8 +392,7 @@ public class ProductDao {
 							    rs.getString("categoryid"),
 							    rs.getString("proname"),
 							    rs.getInt("pprice"),
-							    rs.getString("protext"),
-							    rs.getInt("procount"));
+							    rs.getString("protext"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -322,7 +471,7 @@ public class ProductDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = "UPDATE product SET categoryid = ?, proname = ?, pprice = ?, protext = ?, procount = ? WHERE pronum = ?";
+		String query = "UPDATE product SET categoryid = ?, proname = ?, pprice = ?, protext = ? WHERE pronum = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -330,7 +479,6 @@ public class ProductDao {
 			pstmt.setString(2, p.getProName());
 			pstmt.setInt(3, p.getpPrice());
 			pstmt.setString(4, p.getProText());
-			pstmt.setInt(5, p.getProCount());
 			pstmt.setInt(6, p.getProNum());
 			
 			result = pstmt.executeUpdate();
@@ -389,6 +537,132 @@ public class ProductDao {
 			close(stmt);
 		}
 		
+		return result;
+	}
+	
+	public int selectPoint(int pronum) {
+		Connection conn = getConnection();
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT pprice FROM product WHERE pronum = "+pronum;
+		
+		int point = 0;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			if(rs.next()) {
+				point = rs.getInt("pprice");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rs);
+		}
+		
+		close(conn);
+		
+		return point;
+	}
+
+	public int buyProduct(Connection conn, BuyProduct bp) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO productbuy VALUES(seq_buyproduct.nextval, ?, ?, ?, SYSDATE)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, bp.getPronum());
+			pstmt.setString(2, bp.getUserid());
+			pstmt.setInt(3, bp.getPrice());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertPoint(Connection conn, BuyProduct bp) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "INSERT INTO point VALUES(seq_point.nextval, ?, ?, SYSDATE, ?)";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, bp.getUserid());
+			pstmt.setInt(2, bp.getPrice());
+			pstmt.setString(3, "상품구매");
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int selectPoint(String userId) {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "SELECT point FROM user_info WHERE userid=?";
+		
+		int num = 0;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				num = rs.getInt("point");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		
+		close(conn);
+		
+		return num;
+	}
+	
+	public int minusPointUser(Connection conn, BuyProduct bp) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE user_info SET point = ? WHERE userid = ?";
+		
+		String userId = bp.getUserid();
+		int point = bp.getPrice();
+		int num = selectPoint(userId);
+		System.out.println((-point) - (-num));
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, (-point) - (-num));
+			pstmt.setString(2, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 }

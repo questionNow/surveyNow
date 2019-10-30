@@ -370,8 +370,8 @@ input[type = text], input[type = password], select{
          <select id = income name = income>
             <option value = ""> 월 평균 개인 소득을 선택하세요 </option>
             <option value = "200만원 이하"> 200만원 이하 </option>
-            <option value = "400만원 이하"> 400만원 이하 </option>
-            <option value = "600만원 이하"> 600만원 이하 </option>
+            <option value = "200만원~400만원"> 200만원~400만원 </option>
+            <option value = "400만원~600만원"> 400만원~600만원 </option>
             <option value = "600만원 이상"> 600만원 이상 </option>
          </select>
       </div> <br>
@@ -595,8 +595,8 @@ input[type = text], input[type = password], select{
                $("#pw2").val("");
                $("#pw2").focus();
             
-            		}
-            	}
+                  }
+               }
             });
             }
          });
@@ -618,6 +618,8 @@ input[type = text], input[type = password], select{
                $("#resultId").html("아이디는 4글자 이상입니다.").css("color", "red");
                $("#id").val("");
                $("#id").focus();
+            } else {
+               $("#resultId").html("");
             }
          });
       });
@@ -788,11 +790,11 @@ input[type = text], input[type = password], select{
       }   // <----------------------------여기까지 패널 등록 빈칸 검사 끝
    
      function nextStep(){
-    	  $(".title1").hide(); 
-    	  $(".title2").show(); 
-    	  $("#extraAddress").removeAttr("disabled");
-    	  $("#postCode").removeAttr("disabled");
-    	  $("#address1").removeAttr("disabled");
+         $(".title1").hide(); 
+         $(".title2").show(); 
+         $("#extraAddress").removeAttr("disabled");
+         $("#postCode").removeAttr("disabled");
+         $("#address1").removeAttr("disabled");
       }
          
       // 여기서부터 ->

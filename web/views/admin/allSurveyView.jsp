@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="survey.model.vo.Survey, java.util.ArrayList"%>
     
 <%
-	ArrayList<Survey> list = (ArrayList<Survey>) request.getAttribute("list");
+	ArrayList<Survey> list = (ArrayList<Survey>) request.getAttribute("sList");
 
 %>
 <!DOCTYPE html>
@@ -39,7 +39,7 @@
 </style>
 </head>
 <body>
-	<%@include file="admin_menubar.jsp"%>
+	<%@ include file="../common/adminMain.jsp"%>
 	
 
 	<div class = "outer">
@@ -94,10 +94,11 @@
 		$(this).css("cursor","pointer");
 	}).click(function(){
 		
-		var snum = $(this).parent().children("input")[0].value;
+		var snum = $(this).parent().children().eq(0)[0].innerHTML;
+		console.log(snum);
 		var bool = confirm("삭제 하시겠습니까?");
 		if(bool){
-			location.href = "<%= request.getContextPath()%>/surveyDelete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+			location.href = "<%= request.getContextPath()%>/Admin_Delete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
 		}
 	});
 	

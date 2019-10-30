@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import = "user.model.vo.*,survey.model.vo.*, java.util.ArrayList"%>
     
 <%
-	ArrayList<Survey> rlist = (ArrayList<Survey>)request.getAttribute("rlist"); 
+   ArrayList<Survey> sList = (ArrayList<Survey>)request.getAttribute("sList"); 
 %> 
     
 <!DOCTYPE html>
@@ -66,7 +66,7 @@
         #nav {background-color: #f6fdff;}
         #title {background-color: #eaf7fd;}
         #contents .container {border-right: 1px solid #dbdbdb; border-left: 1px solid #dbdbdb; 
-        						z-index:1;}
+                          z-index:1;}
         #cont_left {float: left; width: 250px;}
         #cont_center {
             overflow: hidden; 
@@ -257,7 +257,7 @@
         .notice1 h5 {font-size: 14px; color: #2f7fa6; padding-bottom: 5px;}
         .notice1 li {position: relative; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 8px;}
         .notice1 li:before {
-	        content: ''; width: 3px; height: 3px; 
+           content: ''; width: 3px; height: 3px; 
             border-radius: 50%;
             background: #449ce2; 
             position: absolute; left: 0; top: 6px;
@@ -478,13 +478,13 @@
         .side3 {position: relative; overflow: hidden; background: #000;}
         .side3 figcaption {
             position: absolute;
-	        top: 50%; left: 50%;
+           top: 50%; left: 50%;
             color: #fff;
             text-align: center;
             opacity: 0;
             text-transform: uppercase;
             transition: all 0.3s ease;
-	        transform: translate(350%, -50%) rotate(180deg);
+           transform: translate(350%, -50%) rotate(180deg);
         }
         .side3 figcaption:after {
             content: '';
@@ -507,23 +507,23 @@
             .container {width: 100%;}
             .row {padding: 0 15px;}
             #cont_center {min-height: 1350px;}
-	        #contents .container {border: 0;}
+           #contents .container {border: 0;}
             
             .title .btn {right: 15px;}
             .square a {width: 24%}
-	        .square a:nth-child(5n) {display: none;}
+           .square a:nth-child(5n) {display: none;}
         }
         
         /* 화면 너비 0~1024px */
         @media (max-width: 1024px){
             .square a {width: 32.33333%}
-	        .square a:nth-child(5) {display: block;}
+           .square a:nth-child(5) {display: block;}
         }
         
         /* 화면 너비 0~960px */
         @media (max-width: 960px){
             #cont_right {position: static; width: 100%; border-top: 1px solid #dbdbdb;}
-	        #cont_center {margin-right: 0; border-right: 0;}
+           #cont_center {margin-right: 0; border-right: 0;}
             
             .nav > div {float: none; width: 100%;}
             .nav > div:last-child {width: 100%;}
@@ -540,14 +540,14 @@
         /* 화면 너비 0~768px */
         @media (max-width: 768px){
             #cont_left {float: none; width: 100%;}
-	        #cont_center {border-left: 0;}
+           #cont_center {border-left: 0;}
         }
         
         /* 화면 너비 0~600px */
         @media (max-width: 600px){
             .header {height: auto;}
             .nav > div li {width: 50%;}
-	        .nav > div:last-child li {width: 50%;}
+           .nav > div:last-child li {width: 50%;}
             
             .header .header_tit {display: none;}
             .header .header_icon {display: none;}
@@ -562,7 +562,7 @@
             .column.col1 .menu li a {color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.7);}
             .column.col1 .menu li a:hover {box-shadow: none; background: rgba(36,130,174,0.3);}
             .column.col2 {background: #fff;}
-	        .column.col4 {border-top: 1px solid #dbdbdb;}
+           .column.col4 {border-top: 1px solid #dbdbdb;}
             
             #cont_right .column {width:50%;}
             #cont_right .column.col8 {border-right: 0;}
@@ -573,7 +573,7 @@
             .slider figcaption span {font-size: 14px;}
             
             .square a {width: 49%}
-	        .square a:nth-child(5) {display: none;}
+           .square a:nth-child(5) {display: none;}
         }
         
         /* 화면 너비 0~480px */
@@ -584,12 +584,12 @@
         /* 화면 너비 0~320px */
         @media (max-width: 320px){
             #cont_right .column {width:100%;}
-	        #cont_right .column.col7 {border-right: 0; border-bottom: 1px solid #dbdbdb;}
+           #cont_right .column.col7 {border-right: 0; border-bottom: 1px solid #dbdbdb;}
             .square a {width: 100%; margin-left:0; margin-right: 0;}
         }
         
         /* .test{
-        	z-index:1;
+           z-index:1;
         } */
         
         
@@ -675,124 +675,122 @@
 <!--         <section id="contents" class="test"> -->
             <div class="container">
  <!--            
-				<h2 class="ir_su">반응형 사이트 컨텐츠</h2>
+            <h2 class="ir_su">반응형 사이트 컨텐츠</h2>
                 <section id="cont_left">
                     <h3 class="ir_su">메뉴 및 게시판 컨텐츠 영역</h3>
                     <article class="column col1">
                         <h4 class="col_tit">Menu</h4>
-						<p class="col_desc">Box-shadow를 이용한 마우스 오버 효과 메뉴입니다.</p>
-						메뉴
-						<div class="menu">
-							<ul>
-								<li><a href="#">Cafe <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-								<li><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-								<li><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-								<li><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-								<li><a href="#">CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-								<li><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
-							</ul>
-						</div>
-						//메뉴
+                  <p class="col_desc">Box-shadow를 이용한 마우스 오버 효과 메뉴입니다.</p>
+                  메뉴
+                  <div class="menu">
+                     <ul>
+                        <li><a href="#">Cafe <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#">Tutorial <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#">WebSite <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#">Reference <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#">CSS3 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                        <li><a href="#">HTML5 <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></li>
+                     </ul>
+                  </div>
+                  //메뉴
                     </article>
                     //col1
                     
                     <article class="column col2">
-						<h4 class="col_tit">Notice</h4>
-						<p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p>
-						게시판
-						<div class="notice1">
-							<h5>Notice1</h5>
-							<ul>
-								<li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-							</ul>
-							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-						</div>
-						//게시판
-						게시판2
-						<div class="notice2 mt15">
-							<h5>Notice2</h5>
-							<ul>
-								<li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-								<li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
-							</ul>
-							<a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-						</div>
-						//게시판2
-					</article>
-					//col2
+                  <h4 class="col_tit">Notice</h4>
+                  <p class="col_desc">게시판 영역의 한줄 효과와 두줄 효과 게시판입니다.</p>
+                  게시판
+                  <div class="notice1">
+                     <h5>Notice1</h5>
+                     <ul>
+                        <li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                     </ul>
+                     <a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                  </div>
+                  //게시판
+                  게시판2
+                  <div class="notice2 mt15">
+                     <h5>Notice2</h5>
+                     <ul>
+                        <li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                        <li><a href="#">이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 두줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다. 이 줄은 한줄 효과입니다.</a></li>
+                     </ul>
+                     <a href="#" class="more" title="더 보기">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                  </div>
+                  //게시판2
+               </article>
+               //col2
                     
                     <article class="column col3">
-						<h4 class="col_tit">Blog</h4>
-						<p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p>
-						blog
-						<div class="blog1">
-							<h5 class="ir_su">Image1</h5>
-							<figure>
+                  <h4 class="col_tit">Blog</h4>
+                  <p class="col_desc">해상도에 따라 이미지를 다르게 표현하는 방법입니다.</p>
+                  blog
+                  <div class="blog1">
+                     <h5 class="ir_su">Image1</h5>
+                     <figure>
                                 <img src="../../image/blog4_@1.jpg" class="img-normal" alt="normal image">
                                 <img src="../../image/blog4_@2.jpg" class="img-retina" alt="retina image">
                                 <figcaption>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</figcaption>
-							</figure>
-						</div>
-						//blog
-						blog2
-						<div class="blog2 mt15">
-							<div class="img-retina">
-							    <h5>Image2</h5>
-							</div>
+                     </figure>
+                  </div>
+                  //blog
+                  blog2
+                  <div class="blog2 mt15">
+                     <div class="img-retina">
+                         <h5>Image2</h5>
+                     </div>
                             <p>반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다. 반응형 웹 사이트 이미지 글입니다.</p>
-						</div>
-						//blog2
-					</article>
-					//col3
+                  </div>
+                  //blog2
+               </article>
+               //col3
                 </section>
                 //cont_left
                  -->
                 <section id="cont_center">
                 <article class="column col4">
                 <div class="notice1">
-					<h4 class="col_tit">참여 가능한 설문</h4>
-					<a href="#" class="more" title="더 보기"
-					onclick="location.href='/surveyNow/surveyListView.sv?userId=<%=loginUser.getUserId()%>'">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+               <h4 class="col_tit">참여 가능한 설문</h4>
+               <a class="more" title="더 보기" onclick="location.href='/surveyNow/surveyListView.sv?userId=<%=loginUser.getUserId()%>'">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
 
-				</div>
-					<!-- <p class="col_desc">조건에 맞는 설문으로 이동</p> -->
+            </div>
+               <!-- <p class="col_desc">조건에 맞는 설문으로 이동</p> -->
 <!-- 작업중  -->
-					<div id="replySelectArea">
-						<table id="replySelectTable" border="1" align="center" ><!-- cellpadding="0" cellspacing="0" -->
-						<tr>
-							<th width="150px">제목</th>
-							<th width="50px">패널 수</th>
-							<th width="50px">문항 수</th>
-							<th width="80px">작성일</th>
-							<th width="80px">응답자 수</th>
-							<th width="150px">분석</th>
-	<!-- 						<th width="50px">삭제</th> -->
-						</tr>
-							<%if(rlist.isEmpty()) {%>
-								<tr><td colspan="3">관련된 설문이 없습니다.</td></tr>
-							<%}else{ %> 
-								<%for(int i=0;i<rlist.size();i++){ %>
-									<tr>
-										<input type = "hidden" value = "<%= rlist.get(i).getsNum() %>">
-										<td width="100px"><%=rlist.get(i).getsTitle() %></td>
-										<td width="100px"><%=rlist.get(i).getsCount() %></td>
-										<td width="100px"><%=rlist.get(i).getqCount() %></td>
-										<td width="100px"><%=rlist.get(i).getsCreateDate() %></td>
-										<td width="100px"><%=rlist.get(i).getaCount() %></td>
-										<%-- <td width="100px"><%=rlist.get(i).getSenddt() %></td> --%>
-										<td>차트 사진</td>
+               <div id="replySelectArea">
+                  <table id="replySelectTable" border="1" align="center" ><!-- cellpadding="0" cellspacing="0" -->
+                  <tr>
+                     <th width="150px">제목</th>
+                     <th width="50px">패널 수</th>
+                     <th width="50px">문항 수</th>
+                     <th width="80px">작성일</th>
+                     <th width="80px">응답자 수</th>
+                     <th width="150px">분석</th>
+   <!--                   <th width="50px">삭제</th> -->
+                  </tr>
+                     <%if(sList.isEmpty()) {%>
+                        <tr><td colspan="3">관련된 설문이 없습니다.</td></tr>
+                     <%}else{ %> 
+                        <%for(int i=0;i<sList.size();i++){ %>
+                           <tr>
+                              <input type = "hidden" value = "<%= sList.get(i).getsNum() %>">
+                              <td width="100px"><%=sList.get(i).getsTitle() %></td>
+                              <td width="100px"><%=sList.get(i).getsCount() %></td>
+                              <td width="100px"><%=sList.get(i).getqCount() %></td>
+                              <td width="100px"><%=sList.get(i).getsCreateDate() %></td>
+                              <td width="100px"><%=sList.get(i).getaCount() %></td>
+                              <td>차트 사진</td>
 
-									</tr>
-								<%} %>
-							<%} %>
-						</table>
-					</div>	
-				</article>
+                           </tr>
+                        <%} %>
+                     <%} %>
+                  </table>
+               </div>   
+            </article>
                 
                 
                 
@@ -804,75 +802,75 @@
 <!--                     <h3 class="ir_su">반응형 사이트 가운데 컨텐츠</h3>
                     <article class="column col4">
                         <h4 class="col_tit">Slick Slider</h4>
-						<p class="col_desc">slick.js를 이용한 이미지 슬라이드 효과입니다.</p>
-						이미지 슬라이드
-						<div class="slider">
-							<div>
+                  <p class="col_desc">slick.js를 이용한 이미지 슬라이드 효과입니다.</p>
+                  이미지 슬라이드
+                  <div class="slider">
+                     <div>
                                 <figure>
                                     <img src="../../image/slider001.jpg" alt="이미지1">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
-				            </div>
-							<div>
+                        </div>
+                     <div>
                                 <figure>
                                     <img src="../../image/slider001.jpg" alt="이미지2">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
-				            </div>
-				            <div>
+                        </div>
+                        <div>
                                 <figure>
                                     <img src="../../image/slider001.jpg" alt="이미지3">
                                     <figcaption><em>Responsive Site</em><span>슬라이드 플러그인을 이용한 반응형 이미지 슬라이드 입니다.</span></figcaption>
                                 </figure>
-				            </div>
-						</div>
-						//이미지 슬라이드
+                        </div>
+                  </div>
+                  //이미지 슬라이드
                     </article>
                     //col4 -->
                   
                     <article class="column col5">
-						<div class="notice1">
-							<h4 class="col_tit">공지사항</h4>
-							<a href="#" class="more" title="더 보기">More <i
-								class="fa fa-plus-circle" aria-hidden="true"></i></a>
-						</div>  
-							<!-- 작업 -->
-							<div class="tableArea">
-								<table align="center" id="listArea" border="1" align="center">
-									<tr>
-										<th width="40px" type="hidden">카테고리</th>
-										<th width="60px">글제목</th>
-										<th width="60px">작성자</th>
-										<th width="60px">조회수</th>
-									</tr>
-									<%
-										if (boardList.isEmpty()) {
-									%>
-									<tr>
-										<td colspan="6">공지사항이 없습니다.</td>
-									</tr>
-									<% } else { %>
-										<%	for (Board b : boardList) { %>
-										<tr>
-											<input type="hidden" value="<%=b.getbNum()%>">
-											<%-- <input type="hidden" value="<%=b.getbType()%>"> --%>
-											<td width="70px"><%=b.getbType()%></td>
-											<td width="100%"><%=b.getbTitle()%></td>
-											<td><%=b.getbWName()%></td>
-											<td><%=b.getbCount()%></td>
-											<input type="hidden" value="<%=b.getbCreateDt()%>">
-		
-											<%-- 													<td><%=b.getbNum() %></td>
-															<td><%=b.getbType() %></td>
-															<td><%=b.getbTitle() %></td>
-															<td><%=b.getbWName() %></td>
-															<td><%=b.getbCount() %></td>
-															<td><%=b.getbCreateDt()%></td>  --%>
-										</tr>
-										<% } %>
-									<% } %>
-								</table>
-							</div>
+                  <div class="notice1">
+                     <h4 class="col_tit">공지사항</h4>
+                     <a href="#" class="more" title="더 보기">More <i
+                        class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                  </div>  
+                     <!-- 작업 -->
+                     <div class="tableArea">
+                        <table align="center" id="listArea" border="1" align="center">
+                           <tr>
+                              <th width="40px" type="hidden">카테고리</th>
+                              <th width="60px">글제목</th>
+                              <th width="60px">작성자</th>
+                              <th width="60px">조회수</th>
+                           </tr>
+                           <%
+                              if (boardList.isEmpty()) {
+                           %>
+                           <tr>
+                              <td colspan="6">공지사항이 없습니다.</td>
+                           </tr>
+                           <% } else { %>
+                              <%   for (Board b : boardList) { %>
+                              <tr>
+                                 <input type="hidden" value="<%=b.getbNum()%>">
+                                 <%-- <input type="hidden" value="<%=b.getbType()%>"> --%>
+                                 <td width="70px"><%=b.getbType()%></td>
+                                 <td width="100%"><%=b.getbTitle()%></td>
+                                 <td><%=b.getbWName()%></td>
+                                 <td><%=b.getbCount()%></td>
+                                 <input type="hidden" value="<%=b.getbCreateDt()%>">
+      
+                                 <%--                                        <td><%=b.getbNum() %></td>
+                                             <td><%=b.getbType() %></td>
+                                             <td><%=b.getbTitle() %></td>
+                                             <td><%=b.getbWName() %></td>
+                                             <td><%=b.getbCount() %></td>
+                                             <td><%=b.getbCreateDt()%></td>  --%>
+                              </tr>
+                              <% } %>
+                           <% } %>
+                        </table>
+                     </div>
                   
                     
                     
@@ -907,42 +905,42 @@
                     
                     
 <!--                         <h4 class="col_tit">이미지 클릭</h4>
-						<p class="col_desc">관련 설문 카테고리로 이동 ?<br>
-						현재 관련된 설문만 볼수 있게 했는데... <br>
-						이부분을 살려서 이용하려면. <br>
-						타입이 같지 않아도 카테고리 관련 설문들을 볼수있어야한다.<br>
-						설문 중에 예외적으로 타입이 같지는 않지만 그냥 관심만? 있다면 할수있는 설문을 만들까?
-						</p>
-						lightbox
-						<div class="lightbox square clearfix">
-							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>애견</em></a>
-							<a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>자연보호</em></a>
-							<a href="image/light03_s.jpg"><img src="image/light03.jpg" alt="이미지"><em>정치</em></a>
-							<a href="image/light04_s.jpg"><img src="image/light04.jpg" alt="이미지"><em>도서</em></a>
-							<a href="image/light05_s.jpg"><img src="image/light05.jpg" alt="이미지"><em>우주</em></a>
-							<a href="image/light06_s.jpg"><img src="image/light06.jpg" alt="이미지"><em>부동산</em></a>
-							<a href="image/light07_s.jpg"><img src="image/light07.jpg" alt="이미지"><em>육아</em></a>
-							<a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>연금</em></a>
-							<a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>자기개발</em></a>
-							<a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>영화</em></a>
-						</div> -->
-						<!--//lightbox -->
+                  <p class="col_desc">관련 설문 카테고리로 이동 ?<br>
+                  현재 관련된 설문만 볼수 있게 했는데... <br>
+                  이부분을 살려서 이용하려면. <br>
+                  타입이 같지 않아도 카테고리 관련 설문들을 볼수있어야한다.<br>
+                  설문 중에 예외적으로 타입이 같지는 않지만 그냥 관심만? 있다면 할수있는 설문을 만들까?
+                  </p>
+                  lightbox
+                  <div class="lightbox square clearfix">
+                     <a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>애견</em></a>
+                     <a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>자연보호</em></a>
+                     <a href="image/light03_s.jpg"><img src="image/light03.jpg" alt="이미지"><em>정치</em></a>
+                     <a href="image/light04_s.jpg"><img src="image/light04.jpg" alt="이미지"><em>도서</em></a>
+                     <a href="image/light05_s.jpg"><img src="image/light05.jpg" alt="이미지"><em>우주</em></a>
+                     <a href="image/light06_s.jpg"><img src="image/light06.jpg" alt="이미지"><em>부동산</em></a>
+                     <a href="image/light07_s.jpg"><img src="image/light07.jpg" alt="이미지"><em>육아</em></a>
+                     <a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>연금</em></a>
+                     <a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>자기개발</em></a>
+                     <a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>영화</em></a>
+                  </div> -->
+                  <!--//lightbox -->
                     </article>
                     <!-- //col5 -->
                     
 <!--                     <article class="column col6">
-						<h4 class="col_tit">Video</h4>
-						<p class="col_desc">필요 할라나 모르겠지만????</p>
-						video
-						<video autoplay="autoplay" controls="controls" loop="loop">
-							<source src="img/video.mp4" type="video/mp4">
-						</video>
-						<div class="video">
-							<iframe src="https://www.youtube.com/embed/tHy498wdPaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-						</div>
-						//video
-					</article> -->
-					<!-- //col6 -->
+                  <h4 class="col_tit">Video</h4>
+                  <p class="col_desc">필요 할라나 모르겠지만????</p>
+                  video
+                  <video autoplay="autoplay" controls="controls" loop="loop">
+                     <source src="img/video.mp4" type="video/mp4">
+                  </video>
+                  <div class="video">
+                     <iframe src="https://www.youtube.com/embed/tHy498wdPaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                  </div>
+                  //video
+               </article> -->
+               <!-- //col6 -->
                 </section>
                 
                 
@@ -953,9 +951,9 @@
 <!--                     <h3 class="ir_su">반응형 사이트 오른쪽 컨텐츠</h3>
                     <article class="column col7">
                         <h4 class="col_tit">Effect1</h4>
-						<p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
-						side1
-						<div class="side1">
+                  <p class="col_desc">CSS3의 transform을 이용한 마우스 오버효과입니다.</p>
+                  side1
+                  <div class="side1">
                             <figure class="front">
                                 <img src="../../image/side1.jpg" alt="이미지2">
                             </figure>
@@ -969,24 +967,19 @@
                     
                     <article class="column col8">
                         <h4 class="col_tit" style="text-align: center">설문 NOW</h4>
-						<p class="col_desc"></p>
-						<!-- side2 -->
-						<div class="side2">
+                  <p class="col_desc"></p>
+                  <!-- side2 -->
+                  <div class="side2">
                             <figure class="front">
                                 <img src="image/hoversuimg1.jpg" alt="이미지2">
-                                <figcaption>
-                                    <h3>Hover Effect</h3>
-                                </figcaption>
+                                
                             </figure >
                             <figure class="back">
                                 <img src="image/semiLogo.png" alt="이미지2">
-                                <figcaption>
-                                    <h3>Hover Effect</h3>
-                                </figcaption>
                             </figure>
                         </div>
-						
-<!-- 						<div class="side2">
+                  
+<!--                   <div class="side2">
                             <figure class="front">
                                 <img src="image/side2.jpg" alt="이미지2">
                                 <figcaption>
@@ -1010,46 +1003,46 @@
                     <article class="column col9">
                     <h3 class="col_tit" style="text-align: center">< S반 여신 ></h3> 
                     <p class="col_desc"></p>
-                   	<div class="side2">
-	                    <figure class="front">
-	                        <img src="image/PNH.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)">
-	                    </figure>
-	                    <figure class="back">
-	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
-	                         <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg); margin-top : 30px; ">
-	                    </figure>
+                      <div class="side2">
+                       <figure class="front">
+                           <img src="image/PNH.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)">
+                       </figure>
+                       <figure class="back">
+                           <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+                            <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg); margin-top : 30px; ">
+                       </figure>
                         </div>
                     <p class="col_desc"></p>
                     <h3 class="col_tit" style="text-align: center">< 영욱이와 아이들 ></h3>
                     <p class="col_desc"></p>
-                  	<div class="side2">
-	                    <figure class="front">
-	                        <img src="image/semiPhoto3.jpg" alt="이미지3">
-	                    </figure>
-	                    <figure class="back">
-	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
-	                         <img src="image/semiPhoto4.jpg" alt="이미지3">
-	                    </figure>
+                     <div class="side2">
+                       <figure class="front">
+                           <img src="image/semiPhoto3.jpg" alt="이미지3">
+                       </figure>
+                       <figure class="back">
+                           <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+                            <img src="image/semiPhoto4.jpg" alt="이미지3">
+                       </figure>
                         </div>
                         
-                  	<div class="side2">
-	                    <figure class="front">
-	                        <img src="image/semiPhoto1.jpg" alt="이미지3">
-	                    </figure>
-	                    <figure class="back">
-	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
-	                         <img src="image/semiPhoto2.jpg" alt="이미지3">
-	                    </figure>
+                     <div class="side2">
+                       <figure class="front">
+                           <img src="image/semiPhoto1.jpg" alt="이미지3">
+                       </figure>
+                       <figure class="back">
+                           <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+                            <img src="image/semiPhoto2.jpg" alt="이미지3">
+                       </figure>
                         </div>
 
-                  	<div class="side2">
-	                    <figure class="front">
-	                        <img src="image/semiPhoto5.jpg" alt="이미지3" >
-	                    </figure>
-	                    <figure class="back">
-	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
-	                         <img src="image/semiPhoto6.jpg" alt="이미지3">
-	                    </figure>
+                     <div class="side2">
+                       <figure class="front">
+                           <img src="image/semiPhoto5.jpg" alt="이미지3" >
+                       </figure>
+                       <figure class="back">
+                           <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+                            <img src="image/semiPhoto6.jpg" alt="이미지3">
+                       </figure>
                         </div>
 
                         
@@ -1059,7 +1052,7 @@
                 </section>
                 <!-- //cont_right -->
             </div>
-        <!-- </section> --> 	
+        <!-- </section> -->    
         <!-- //contents -->
     </main>
 
@@ -1089,53 +1082,40 @@
         </div>
     </footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<script type="text/javascript">
-		$(function(){
+   <script type="text/javascript">
+      $(function(){
  
-/*ajax 처리후 "클릭 이벤트"도 날아가서 변경  */
-			$("#replySelectTable td").mouseenter(function(){
-				$(this).parent().css({"background":"orangered","cursor":"pointer"});
-			}).mouseout(function(){ 
-				$(this).parent().css({"background":"white"}); 
-			}).click(function(){
-				var sNum = $(this).parent().children("input").val();
-				var userId = "<%=loginUser.getUserId()%>";
-				location.href = "<%=request.getContextPath()%>/surveyListView.sv?userId=<%=loginUser.getUserId()%>";
-		        <%-- location.href="<%=request.getContextPath()%>/surveyHoldList.sv?userId=" + userId+"&sNum="+sNum; --%>				
-			}); 
-		});
-		
-		
-		$(function(){
-			$("#listArea td").mouseenter(function(){
-				$(this).parent().css({"background":"orangered","cursor":"pointer"});
-			}).mouseout(function(){ 
-				$(this).parent().css({"background":"white"}); 
-			}).click(function(){
-				var bnum=$(this).parent().children("input").val();
-				
-				location.href="<%=request.getContextPath()%>/detail.bo?bnum=" + bnum;			
+         $("#replySelectTable td").mouseenter(function(){
+            $(this).parent().css({"background":"orangered","cursor":"pointer"});
+         }).mouseout(function(){ 
+            $(this).parent().css({"background":"white"}); 
+         }).click(function(){
+            var sNum = $(this).parent().children("input").val();
+            var userId = "<%=loginUser.getUserId()%>";
+            if(sNum != null){
+            	location.href = "<%=request.getContextPath()%>/doSurveyDetailView.sv?"+sNum;
+            }else
+            	alert("참여 가능한 설문이 없습니다!");
+                  
+         }); 
+      });
+      
+      
+      $(function(){
+         $("#listArea td").mouseenter(function(){
+            $(this).parent().css({"background":"orangered","cursor":"pointer"});
+         }).mouseout(function(){ 
+            $(this).parent().css({"background":"white"}); 
+         }).click(function(){
+            var bnum=$(this).parent().children("input").val();
+            var userId = "<%=loginUser.getUserId()%>";
+            var userTy = "<%=loginUser.getUserType()%>";
+            
+            location.href="<%=request.getContextPath()%>/detail.bo?bnum=" + bnum+"&userId="+userId+"&userTy="+userTy;
 
-			});
-		});
-		
+         });
+      });
+      
    </script>
 
 

@@ -7,70 +7,60 @@ public class BuyProduct implements Serializable {
 
 	private static final long serialVersionUID = -6131855561432833932L;
 
-	private int bNum;
-	private int proNum;
-	private String buyId;
-	private int bCount;
-	private int totalPrice;
-	private Date bDate;
+	private int bnum;
+	private int pronum;
+	private String userid;
+	private int price;
+	private Date buyDate;
 
 	public BuyProduct() {}
 
-	public BuyProduct(int bNum, int proNum, String buyId, int bCount, int totalPrice, Date bDate) {
-		this.bNum = bNum;
-		this.proNum = proNum;
-		this.buyId = buyId;
-		this.bCount = bCount;
-		this.totalPrice = totalPrice;
-		this.bDate = bDate;
+	public BuyProduct(int bnum, int pronum, String userid, int price, Date buyDate) {
+		this.bnum = bnum;
+		this.pronum = pronum;
+		this.userid = userid;
+		this.price = price;
+		this.buyDate = buyDate;
 	}
 
-	public int getbNum() {
-		return bNum;
+	public int getBnum() {
+		return bnum;
 	}
 
-	public void setbNum(int bNum) {
-		this.bNum = bNum;
+	public void setBnum(int bnum) {
+		this.bnum = bnum;
 	}
 
-	public int getProNum() {
-		return proNum;
+	public int getPronum() {
+		return pronum;
 	}
 
-	public void setProNum(int proNum) {
-		this.proNum = proNum;
+	public void setPronum(int pronum) {
+		this.pronum = pronum;
 	}
 
-	public String getBuyId() {
-		return buyId;
+	public String getUserid() {
+		return userid;
 	}
 
-	public void setBuyId(String buyId) {
-		this.buyId = buyId;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 
-	public int getbCount() {
-		return bCount;
+	public int getPrice() {
+		return price;
 	}
 
-	public void setbCount(int bCount) {
-		this.bCount = bCount;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
-	public int getTotalPrice() {
-		return totalPrice;
+	public Date getBuyDate() {
+		return buyDate;
 	}
 
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	public Date getbDate() {
-		return bDate;
-	}
-
-	public void setbDate(Date bDate) {
-		this.bDate = bDate;
+	public void setBuyDate(Date buyDate) {
+		this.buyDate = buyDate;
 	}
 
 	public static long getSerialversionuid() {
@@ -79,8 +69,8 @@ public class BuyProduct implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BuyProduct [bNum=" + bNum + ", proNum=" + proNum + ", buyId=" + buyId + ", bCount=" + bCount
-				+ ", totalPrice=" + totalPrice + ", bDate=" + bDate + "]";
+		return "BuyProduct [bnum=" + bnum + ", pronum=" + pronum + ", userid=" + userid + ", price=" + price
+				+ ", buyDate=" + buyDate + "]";
 	}
 
 }

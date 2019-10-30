@@ -21,7 +21,7 @@ import user.model.vo.UserInfo;
 /**
  * Servlet implementation class InsertBoardServlet
  */
-@WebServlet("/insert.bo")
+@WebServlet("/myinsert.ms")
 public class InsertMyQnAServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

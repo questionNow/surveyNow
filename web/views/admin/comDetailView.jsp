@@ -24,7 +24,7 @@ padding-left : 200px;
   </style>
   </head>
   <body >
-		<%@include file="admin_menubar.jsp"%>
+		<%@ include file="../common/adminMain.jsp"%>
   <p align="center" style="font-family: 'Jua', sans-serif; font-size : 90px;"><%=dsList.get(0).getS().getsNum()%> . <%=dsList.get(0).getS().getsTitle() %></p>
   <h2 align = "right" style="font-family: 'Jua', sans-serif; font-size : 50px; padding-right:100px;">설문 기간 : <%=dsList.get(0).getS().getsStartDate()%> ~ <%=dsList.get(0).getS().getsEndDate() %></h2>
   <br><br>

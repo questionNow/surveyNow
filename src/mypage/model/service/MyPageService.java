@@ -85,7 +85,7 @@ public class MyPageService {
 		Connection conn = getConnection();
 		
 		int result = new MyPageDao().insertMyQnA(conn, qna);
-		
+		System.out.println("result22222sssss" + result);
 		if(result > 0) {
 			commit(conn);
 		}else {
@@ -129,14 +129,14 @@ Connection conn = getConnection();
 		
 		if(result > 0) {
 			
-System.out.println("result222222 : " + result);			
+	
 			
 			commit(conn);
 			
-System.out.println("userId : " + userId);	
+
 			
  	at = new MyPageDao().calendarSelect(conn, userId);
- 		System.out.println("at1111 : " + at);			 
+ 			 
 	 
 		}else {
 			rollback(conn);
@@ -153,11 +153,6 @@ System.out.println("userId : " + userId);
 		close(conn);
 		
 		return result;
-	}
-
-	public UserInfo MyQnASearch(String userId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

@@ -236,7 +236,7 @@ input[type = button]{
 		function setTarget(){
 			if($(".target").length >0){
 				alert("설문 대상 설정은 1가지만 해주세요. \n참여 가능 패널이 너무 적어 원하는 결과를 못 얻으실 수 있습니다.");
-				return false();
+				return false;
 			}else{
 				if($(".target").length == 1 && $(".target")[0].value =="-------" ){
 					alert("대상 타입을 선택해주세요.");

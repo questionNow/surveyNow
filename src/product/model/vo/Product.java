@@ -11,17 +11,15 @@ public class Product implements Serializable {
 	private String proName;
 	private int pPrice;
 	private String proText;
-	private int proCount;
 
 	public Product() {}
 
-	public Product(int proNum, String categorId, String proName, int pPrice, String proText, int proCount) {
+	public Product(int proNum, String categorId, String proName, int pPrice, String proText) {
 		this.proNum = proNum;
 		this.categorId = categorId;
 		this.proName = proName;
 		this.pPrice = pPrice;
 		this.proText = proText;
-		this.proCount = proCount;
 	}
 
 	public int getProNum() {
@@ -64,14 +62,6 @@ public class Product implements Serializable {
 		this.proText = proText;
 	}
 
-	public int getProCount() {
-		return proCount;
-	}
-
-	public void setProCount(int proCount) {
-		this.proCount = proCount;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -79,6 +69,6 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "Product [proNum=" + proNum + ", categorId=" + categorId + ", proName=" + proName + ", pPrice=" + pPrice
-				+ ", proText=" + proText + ", proCount=" + proCount + "]";
+				+ ", proText=" + proText + "]";
 	}
 }

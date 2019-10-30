@@ -373,26 +373,32 @@ display : block;
 	<script type="text/javascript">
 	tnum = 0;
 		function setTarget(){
-			if($(".target").length == 1 && $(".target")[0].value =="-------" ){
-				alert("대상 타입을 선택해주세요.");
-				$(".target")[0].focus();
-				return false;
-			}else{
-				$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
-															 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
-															 +"<option>-------</option>"
-															 +"<option value = finalEducation>최종학력</option>"
-															 +"<option value = job>직업</option>"
-															 +"<option value = income>소득</option>"
-															 +"<option value = livingType>주거형태</option>"
-															 +"<option value = houseType>주택유형</option>"
-															 +"<option value = religion>종교</option>"
-															 +"<option value = maritalStatus>혼인</option>"
-															 +"<option value = livingWith>동거가족</option>"
-															 +"<option value = armyGo>병역</option>"
-															 +"</select><label style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
-				tnum++;
-			
+			function setTarget(){
+				if($(".target").length >0){
+					alert("설문 대상 설정은 1가지만 해주세요. \n참여 가능 패널이 너무 적어 원하는 결과를 못 얻으실 수 있습니다.");
+					return false;
+				}
+				if($(".target").length == 1 && $(".target")[0].value =="-------" ){
+					alert("대상 타입을 선택해주세요.");
+					$(".target")[0].focus();
+					return false;
+				}else{
+					$("#targetDiv").css("display","block").append("<div id = 'target"+tnum+"'><input type = hidden name = tnums value = "+tnum+">"
+																 +"<select class = 'target"+tnum+" target' name = targetType onchange = 'checkTarget("+tnum+");'>"
+																 +"<option>-------</option>"
+																 +"<option value = finalEducation>최종학력</option>"
+																 +"<option value = job>직업</option>"
+																 +"<option value = income>소득</option>"
+																 +"<option value = livingType>주거형태</option>"
+																 +"<option value = houseType>주택유형</option>"
+																 +"<option value = religion>종교</option>"
+																 +"<option value = maritalStatus>혼인</option>"
+																 +"<option value = livingWith>동거가족</option>"
+																 +"<option value = armyGo>병역</option>"
+																 +"</select><label style = 'float:right' onclick = 'removeTarget("+tnum+");'>지우기</label></div>");
+					tnum++;
+				
+				}
 			}
 		}
 		function deleteTarget(){

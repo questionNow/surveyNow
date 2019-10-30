@@ -24,25 +24,23 @@ public class AllSurveyServlet extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
     public AllSurveyServlet() {
-        super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Survey> list = new SurveyService().getAllList();
-		//System.out.println("서블릿" + list);
+		ArrayList<Survey> sList = new SurveyService().adminSelectSurveys();
 		RequestDispatcher view = null;
+		String userId = request.getParameter("userId");
 		
-		if(list != null) {
+		
+		
+		
+		if(sList != null) {
 			view = request.getRequestDispatcher("views/admin/allSurveyView.jsp");
-			request.setAttribute("list", list);
-		}else {
-			System.out.println("실패햇구나");
-		}
-		
+			request.setAttribute("sList", sList);
+		}		
 		view.forward(request, response);
 	}
 

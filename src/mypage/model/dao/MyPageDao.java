@@ -106,8 +106,8 @@ public class MyPageDao {
 		
 		ArrayList<Point> pointlist =null;
 		
-		/* String query ="SELECT * FROM POINTTEST WHERE USERID=?"; */
-		String query ="SELECT * FROM POINT WHERE USERID=?";
+		/* String query ="SELECT * FROM POINTTEST WHERE USERID=?"; */ 
+		 String query ="SELECT * FROM POINT WHERE USERID=?"; 
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, userId);
@@ -263,8 +263,8 @@ public class MyPageDao {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query ="INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL, ?, ?, ?, ?, DEFAULT,DEFAULT,SYSDATE, DEFAULT)";
-			
+		String query ="INSERT INTO QNA VALUES(SEQ_QNA.NEXTVAL, ?, ?, ?, ?, DEFAULT,'N',SYSDATE, DEFAULT)";
+	
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, 	qna.getUserId());
@@ -277,8 +277,10 @@ public class MyPageDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
+
 		}
-				
 		
 		
 		return result;

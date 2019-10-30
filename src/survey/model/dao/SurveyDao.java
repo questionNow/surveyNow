@@ -1074,7 +1074,7 @@ public class SurveyDao {
 
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM SURVEY ORDER BY SNUM");
+			rs = stmt.executeQuery("SELECT * FROM SURVEY WHERE SSTATUS ='H' ORDER BY SNUM");
 
 			list = new ArrayList<Survey>();
 
@@ -1167,7 +1167,7 @@ public class SurveyDao {
 		ArrayList<Survey> list = null;
 
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS='H'");
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS='P'");
 			rs = pstmt.executeQuery();
 
 			list = new ArrayList<Survey>();
@@ -2573,6 +2573,102 @@ public class SurveyDao {
 		}
 
 		return dsList;
+	}
+
+	public ArrayList<Survey> adminFinishedSurvey(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> sList = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS ='C'");
+
+			rs = pstmt.executeQuery();
+			sList = new ArrayList<Survey>();
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId"));
+
+				sList.add(s);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return sList;
+	}
+
+	public ArrayList<Survey> adminSelectDeletedSurvey(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> sList = null;
+		try {
+			pstmt = conn.prepareStatement("SELECT * FROM SURVEY WHERE SSTATUS ='D'");
+
+			rs = pstmt.executeQuery();
+			sList = new ArrayList<Survey>();
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId"));
+
+				sList.add(s);
+			}
+			;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+
+		return sList;
+	}
+
+	public int adminPowerDeleteSurvey(Connection conn, int sNum) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+
+		try {
+			pstmt = conn.prepareStatement("DELETE FROM SURVEY WHERE SNUM =?");
+			pstmt.setInt(1, sNum);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public ArrayList<Survey> adminSelectSurveys(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<Survey> sList = null;
+		try {
+			pstmt = conn.prepareStatement(
+					"SELECT * FROM SURVEY WHERE SSTATUS = 'H'");
+			sList = new ArrayList<Survey>();
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Survey s = new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId"));
+				sList.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sList;
 	}
 
 

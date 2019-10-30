@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-	<%@ include file="../common/adminMain.jsp"%>
+<%@ include file="../common/admin_menubar.jsp"  %>
 	<div id="content" align="center">
 		메인 테스트
 	</div>

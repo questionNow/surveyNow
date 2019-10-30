@@ -17,14 +17,14 @@ import board.model.vo.PageInfo;
 /**
  * Servlet implementation class BoardListServlet
  */
-@WebServlet("/lists.bo")
-public class BoardListServlet extends HttpServlet {
+@WebServlet("/lists2.bo")
+public class BoardListServlet2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardListServlet() {
+    public BoardListServlet2() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -75,7 +75,8 @@ public class BoardListServlet extends HttpServlet {
 			request.setAttribute("nlist", nlist);
 			request.setAttribute("elist", elist);	
 			request.setAttribute("pi", pi);
-			request.setAttribute("loginType", loginType);	
+			request.setAttribute("loginType", loginType);
+			System.out.println("보더 리스트 서블릿 : " + loginType);			
 			view = request.getRequestDispatcher("views/board/boardListView.jsp");
 			
 		}else {

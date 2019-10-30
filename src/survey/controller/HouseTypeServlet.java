@@ -31,8 +31,9 @@ public class HouseTypeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String value = request.getParameter("value");
+		System.out.println(value);
 		int qnum = Integer.valueOf(request.getParameter("qnum"));
-		
+		System.out.println(qnum);
 		int[] stats =new SurveyService().getHouseTypeStats(value,qnum);
 		
 		response.setContentType("application/json;charset=utf-8");

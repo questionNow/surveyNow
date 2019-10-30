@@ -1,31 +1,19 @@
 package qna.model.service;
 
-import static common.JDBCTemplate.*;
+import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-
-import board.model.dao.BoardDao;
-import board.model.vo.Board;
 import qna.model.dao.QnADao;
 import qna.model.vo.QnA;
 
 public class QnAService {
-	
-	public int getListCount(String tableName) {
-		Connection conn = getConnection();
-		
-		int listCount = new QnADao().getListCount(conn, tableName);
-		
-		close(conn);
-		
-		return listCount;
-	}
 
-	public ArrayList<QnA> selectList(int currentPage, int limit) {
+
+	public ArrayList<QnA> selectList(String userId) {
 		Connection conn = getConnection();
-		
-		ArrayList<QnA> list = new QnADao().selectList(conn, currentPage, limit);
+		ArrayList<QnA> list = new QnADao().selectList(conn, userId);
 		
 		close(conn);
 		
@@ -52,4 +40,8 @@ public class QnAService {
 		
 		return result;
 	}
+ 
+
+
+
 }

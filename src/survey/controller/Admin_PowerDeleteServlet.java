@@ -1,8 +1,6 @@
 package survey.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import survey.model.service.SurveyService;
-import survey.model.vo.DoSurvey;
 
 /**
- * Servlet implementation class ModifySurveyServlet
+ * Servlet implementation class PowerDeleteServlet
  */
-@WebServlet("/Admin_surveyModify.sv")
-public class Admin_ModifySurveyServlet extends HttpServlet {
+@WebServlet("/Admin_PowerDelete.sv")
+public class Admin_PowerDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Admin_ModifySurveyServlet() {
+    public Admin_PowerDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +29,10 @@ public class Admin_ModifySurveyServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int sNum = Integer.valueOf(request.getParameter("sNum"));
-		ArrayList<DoSurvey> dsList = new SurveyService().adminModifySurvey(sNum);
-		request.setAttribute("dsList", dsList);
-		request.getRequestDispatcher("views/admin/admin_ModifySurvey.jsp").forward(request, response);
-		
+		int result = new SurveyService().adminPowerDeleteSurvey(sNum);
+		if (result >0) {
+			response.sendRedirect("adminDelete.sv");
+		}
 	}
 
 	/**

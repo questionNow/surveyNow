@@ -18,7 +18,7 @@ import product.model.service.ProductService;
 /**
  * Servlet implementation class ProductListServlet
  */
-@WebServlet(name = "list.pro", urlPatterns = { "/list.pro" })
+@WebServlet("/list.pro")
 public class ProductListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,15 +37,29 @@ public class ProductListServlet extends HttpServlet {
 		ProductService pService = new ProductService();
 
 		//1. 우선 사진 게시판 리스트 정보를 불러오자
-		ArrayList prolist = pService.selectList(1);
+		ArrayList prolist1 = pService.selectList1(1);
+		ArrayList prolist2 = pService.selectList2(1);
+		ArrayList prolist3 = pService.selectList3(1);
+		ArrayList prolist4 = pService.selectList4(1);
+		ArrayList prolist5 = pService.selectList5(1);
+		ArrayList prolist6 = pService.selectList6(1);
+		ArrayList prolist7 = pService.selectList7(1);
+		
 		
 		//2. 사진 리스트도 불러오자
-		ArrayList photolist = pService.selectList(2);
+		ArrayList photolist = pService.selectList1(2);
 		
-		if(prolist != null && photolist != null) {
-			request.setAttribute("prolist", prolist);
+		if(prolist1 != null && prolist2 != null && prolist3 != null && prolist4 != null && prolist5 != null && prolist6 != null && prolist7 != null 
+				&& photolist != null) {
+			request.setAttribute("prolist1", prolist1);
+			request.setAttribute("prolist2", prolist2);
+			request.setAttribute("prolist3", prolist3);
+			request.setAttribute("prolist4", prolist4);
+			request.setAttribute("prolist5", prolist5);
+			request.setAttribute("prolist6", prolist6);
+			request.setAttribute("prolist7", prolist7);
 			request.setAttribute("photolist", photolist);
-			request.getRequestDispatcher("views/product/productListView.jsp").forward(request, response);
+			request.getRequestDispatcher("views/product/userProductListView.jsp").forward(request, response);
 		}else {
 			request.setAttribute("msg","사진 게시판 조회 실패!!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

@@ -109,7 +109,7 @@ public class SurveyUpdateServlet extends HttpServlet {
 
 		int result1 = new SurveyService().makeSurvey(s, st, qNum, qType, qTitle, answer);
 		
-		response.sendRedirect("surveyHoldList.sv?userId=" + userId);
+		response.sendRedirect("AdminHold.sv");
 
 	}
 

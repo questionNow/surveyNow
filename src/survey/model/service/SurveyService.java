@@ -376,6 +376,7 @@ public class SurveyService {
 		public int[] getHouseTypeStats(String value, int qnum) {
 			Connection conn = getConnection();
 			int singleHsStats = new SurveyDao().getSingleHsStats(conn, value, qnum);
+			System.out.println(singleHsStats);
 			int multiHsStats = new SurveyDao().getMultiHsStats(conn, value, qnum);
 			int apartmentStats = new SurveyDao().getApartmentStats(conn, value, qnum);
 			int houseEctStats = new SurveyDao().getHouseEctStats(conn, value, qnum);
@@ -455,6 +456,78 @@ public class SurveyService {
 			close(conn);
 			
 			return dsList;
+		}
+
+		public int adminMakeSurvey(Survey s, SurveyTarget st, String[] qNum, String[] qType, String[] qTitle,
+				ArrayList<String[]> answer) {
+				Connection conn = getConnection();
+				SurveyDao sDao = new SurveyDao();
+				int result = sDao.adminMakeSurvey(conn, s);
+				if (result > 0) {
+					if (st != null) {
+						int result1 = sDao.adminMakeSurveyTarget(conn, st);
+					}
+					int result2 = sDao.adminMakeQuestion(conn, qNum, qType, qTitle, answer);
+					if (result2 > 0) {
+						
+					}
+					commit(conn);
+				}
+				
+				close(conn);
+				return result;
+			}
+
+		public ArrayList<Survey> adminFinishedSurvey(String userId) {
+			Connection conn = getConnection();
+
+			ArrayList<Survey> sList = new SurveyDao().adminFinishedSurvey(conn);
+
+			close(conn);
+			return sList;
+		}
+
+		public int adminDeleteSurvey(int sNum) {
+			Connection conn = getConnection();
+
+			int result = new SurveyDao().deleteSurvey(conn, sNum);
+			if (result > 0) {
+				commit(conn);
+			} else
+				rollback(conn);
+
+			close(conn);
+			return result;
+		}
+
+		public ArrayList<Survey> adminSelectDeletedSurvey() {
+			Connection conn = getConnection();
+
+			ArrayList<Survey> sList = new SurveyDao().adminSelectDeletedSurvey(conn);
+
+			close(conn);
+			return sList;
+		}
+
+		public int adminPowerDeleteSurvey(int sNum) {
+			Connection conn = getConnection();
+
+			int result = new SurveyDao().adminPowerDeleteSurvey(conn, sNum);
+			if (result > 0) {
+				commit(conn);
+			} else
+				rollback(conn);
+
+			close(conn);
+			return result;
+		}
+		public ArrayList<Survey> adminSelectSurveys() {
+			Connection conn = getConnection();
+			SurveyDao sDao = new SurveyDao();
+			ArrayList<Survey> sList = sDao.adminSelectSurveys(conn);
+			System.out.println(sList);
+			close(conn);
+			return sList;
 		}
 
 }

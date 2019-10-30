@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import board.model.dao.BoardDao;
 import board.model.vo.Board;
+import point.model.dao.PointDao;
+import point.model.vo.Point;
 import product.model.dao.ProductDao;
 import product.model.vo.BuyProduct;
 import product.model.vo.Product;
@@ -45,14 +47,116 @@ public class ProductService {
 		return listCount;
 	}
 
-	public ArrayList selectList(int flag) {
+	public ArrayList selectList1(int flag) {
 		Connection conn = getConnection();
 		ArrayList list = null;
 		
 		ProductDao pDao = new ProductDao();
 		
 		if(flag == 1) {
-			list = pDao.selectProductList(conn);
+			list = pDao.selectProductList1(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList2(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList2(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList3(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList3(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList4(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList4(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList5(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList5(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList6(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList6(conn);
+		}else {
+			list = pDao.selectPhotoList(conn);
+		}
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList selectList7(int flag) {
+		Connection conn = getConnection();
+		ArrayList list = null;
+		
+		ProductDao pDao = new ProductDao();
+		
+		if(flag == 1) {
+			list = pDao.selectProductList7(conn);
 		}else {
 			list = pDao.selectPhotoList(conn);
 		}
@@ -118,9 +222,30 @@ public class ProductService {
 		int r3 = 0;
 		int result = 0;
 		
-			r1 = new ProductDao().updateProduct(conn, p);
-			r2 = new ProductDao().deleteProImg(conn, p);
-			r3 = new ProductDao().updateProductImg(conn, fileList, p);
+		ProductDao dao = new ProductDao();
+		r1 = dao.updateProduct(conn, p);
+		r2 = dao.deleteProImg(conn, p);
+		r3 = dao.updateProductImg(conn, fileList, p);
+		
+		if(r1 > 0 && r2 > 0 && r3 > 0) {
+			commit(conn);
+			result = 1;
+		} else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int buyProduct(BuyProduct bp) {
+		Connection conn = getConnection();
+		int result = 0;
+		
+		ProductDao dao = new ProductDao();
+		int r1 = dao.buyProduct(conn, bp);
+		int r2 = dao.minusPointUser(conn, bp);
+		int r3 = dao.insertPoint(conn, bp);
 		
 		if(r1 > 0 && r2 > 0 && r3 > 0) {
 			commit(conn);

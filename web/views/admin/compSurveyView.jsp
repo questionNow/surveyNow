@@ -39,7 +39,7 @@
 </style>
 </head>
 <body>
-	<%@include file="admin_menubar.jsp"%>
+	<%@ include file="../common/adminMain.jsp"%>
 	
 	<div class = "outer">
 	
