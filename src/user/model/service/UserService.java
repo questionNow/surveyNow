@@ -11,7 +11,7 @@ import user.model.vo.surveyList;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import user.model.vo.surveyList;
+import survey.model.vo.Survey;
 
   
 public class UserService { 
@@ -23,7 +23,41 @@ public class UserService {
 	
 	public UserService() {}
 	
-	 
+	//SDB 출석체크 (출석체크 하루 한번만)  
+	public int loginAtCheck(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDao().loginAtCheck(conn, userId);
+		
+		close(conn);
+		return result;
+	}
+	
+	//SDB 출석체크
+	public int attendanceCheck(String userId) {
+		Connection conn = getConnection();
+		int result = new UserDao().attendanceCheck(conn,userId);//USER_INFO
+		int result2 = new UserDao().attendanceCheck2(conn,userId);//POINT
+		int result3 = new UserDao().attendanceCheck3(conn,userId);//ATTENDANCE
+		
+		if(result > 0 ) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		if(result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		if(result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result3;
+	}
 	
 	//SDB 로그인 
 	public UserInfo loginUser(UserInfo user) {
@@ -61,6 +95,8 @@ public class UserService {
 		return result;
 	}
 
+	
+	
 	public int idCheck(String userId) {
 		Connection conn = getConnection();
 		int result = new UserDao().idCheck(conn, userId);
@@ -71,15 +107,22 @@ public class UserService {
 
 
 
-	public ArrayList<surveyList> selectSurveyList(String userId) {
+	public ArrayList<Survey> selectSurveyList(String userId) {
 		// SELECT 는 처음에 Connection conn = getConnection(); 생성함 
 		Connection conn = getConnection();
 		
-		ArrayList<surveyList> rlist = new UserDao().selectReplyList(conn,userId);
+		ArrayList<Survey> rlist = new UserDao().selectReplyList(conn,userId);
 		
 		close(conn);
 		
 		return rlist;
+	}
+
+
+
+	public static int userType(String userId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

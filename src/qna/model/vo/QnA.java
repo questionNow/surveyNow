@@ -2,7 +2,7 @@ package qna.model.vo;
 
 import java.io.Serializable;
 
-public class Qna implements Serializable{
+public class QnA implements Serializable{
 
 	/**
 	 * 
@@ -15,10 +15,10 @@ public class Qna implements Serializable{
 	private String qnaContent;
 	private String qnaType;
 	private String aContent;
-	public Qna() {
+	public QnA() {
 	
 	}
-	public Qna(int qnaNum, String userId, String qnaTitle, String qnaContent, String qnaType, String aContent) {
+	public QnA(int qnaNum, String userId, String qnaTitle, String qnaContent, String qnaType, String aContent) {
 		super();
 		this.qnaNum = qnaNum;
 		this.userId = userId;
@@ -68,7 +68,7 @@ public class Qna implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Qna [qnaNum=" + qnaNum + ", userId=" + userId + ", qnaTitle=" + qnaTitle + ", qnaContent=" + qnaContent
+		return "QnA [qnaNum=" + qnaNum + ", userId=" + userId + ", qnaTitle=" + qnaTitle + ", qnaContent=" + qnaContent
 				+ ", qnaType=" + qnaType + ", aContent=" + aContent + "]";
 	}
 	

@@ -1,11 +1,16 @@
 package survey.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import survey.model.service.SurveyService;
+import survey.model.vo.Survey;
 
 /**
  * Servlet implementation class SurveyMakeServlet
@@ -13,31 +18,61 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/surveyMake.sv")
 public class SurveyMakeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SurveyMakeServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String sNum = request.getParameter("sNum"); 
-		String sTitle = request.getParameter("sTitle");
-		
-		System.out.println(sNum);
-		System.out.println(sTitle);
-		
+	public SurveyMakeServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String bool = request.getParameter("bool");
+
+		String sTitle = request.getParameter("sTitle");
+		String[] sInterest = request.getParameterValues("sInterest");
+		String userId = request.getParameter("userId");
+		int sPoint = Integer.valueOf(request.getParameter("sPoint"));
+		int sCount = Integer.valueOf(request.getParameter("sCount"));
+		String[] qNum = request.getParameterValues("Qnum");
+		String[] qType = request.getParameterValues("Qtype");
+		String[] qTitle = request.getParameterValues("Qtitle");
+		String interest = "";
+		for (int i = 0; i < sInterest.length; i++) {
+			interest += sInterest[i];
+		}
+		Survey s = new Survey();
+		s.setsUserId(userId);
+		s.setsTitle(sTitle);
+		s.setsTarget(interest);
+		s.setsPoint(sPoint);
+		s.setsCount(sCount);
+		s.setqCount(qNum.length);
+		ArrayList<String[]> answer = new ArrayList();
+		for (String Q : qNum) {
+			String[] ans = request.getParameterValues(Q);
+			answer.add(ans);
+		}
+		int result = new SurveyService().makeSurvey(s, qNum, qType, qTitle, answer);
+
+		request.setAttribute("msg", "설문 등록 완료!");
+		request.getRequestDispatcher("views/survey/surveySuccess.jsp").forward(request, response);
+		;
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

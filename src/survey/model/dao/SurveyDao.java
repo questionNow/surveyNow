@@ -150,7 +150,7 @@ public class SurveyDao {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println(result);
+		System.out.println("result : " + result);
 		return result;
 	}	
 	

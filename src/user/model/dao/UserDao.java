@@ -17,7 +17,7 @@ import java.sql.Connection;
 import static common.JDBCTemplate.*;
 
 import user.model.vo.UserInfo;
-import user.model.vo.surveyList;
+import survey.model.vo.Survey;
 
 public class UserDao {
 	private Properties prop = new Properties(); 
@@ -198,11 +198,11 @@ public class UserDao {
 	}
 
 // 메인화면에 설문가능한 List 출력
-	public ArrayList<surveyList> selectReplyList(Connection conn, String userId) {
+	public ArrayList<Survey> selectReplyList(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		ArrayList<surveyList> rlist = null;
+		ArrayList<Survey> rlist = null;
 		
 		String query = prop.getProperty("selectReplyList");	// board-query.properties에 만들자
 		
@@ -218,21 +218,13 @@ public class UserDao {
 			
 			rs=pstmt.executeQuery();
 			
-			rlist = new ArrayList<surveyList>();
+			rlist = new ArrayList<Survey>();
 			
 			while(rs.next()) {
-				rlist.add(new surveyList(rs.getInt("SNUM"),
-									rs.getString("STYPE"),
-									rs.getString("STITLE"),
-									rs.getDate("SSTARTDT"),
-									rs.getDate("SENDDT"),
-									rs.getInt("SCOUNT"),
-									rs.getInt("SPOINT"),
-									rs.getInt("ACOUNT"),
-									rs.getString("SSTATUS"),
-									rs.getString("STARGET"),
-									rs.getDate("SCREATEDT"),
-									rs.getString("SUSERID")		
+				rlist.add(new Survey(rs.getInt("snum"), rs.getString("stype"), rs.getString("stitle"),
+						rs.getDate("sstartdt"), rs.getDate("senddt"), rs.getInt("scount"), rs.getInt("spoint"),
+						rs.getInt("qCount"), rs.getInt("acount"), rs.getString("sstatus"), rs.getString("starget"),
+						rs.getDate("screatedt"), rs.getString("suserId")	
 						
 						));
 			}
@@ -247,5 +239,78 @@ public class UserDao {
 		
 		return rlist;
 	}
+	//출석체크 USER_INFO
+	public int attendanceCheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement("UPDATE USER_INFO SET POINT = POINT+10 WHERE USERID=?");
+			pstmt.setString(1, userId);
+			result = pstmt.executeUpdate();
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	//출석체크 POINT
+	public int attendanceCheck2(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result2 = 0;
+		try {
+			pstmt = conn.prepareStatement("UPDATE POINT SET POINT = POINT+10, PCONTENT = '출석' WHERE USERID=?");
+			pstmt.setString(1, userId);
+			result2 = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result2;
+	}
+	//출석체크 ATTENDANCE
+	public int attendanceCheck3(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result2 = 0;
+		try {
+			pstmt = conn.prepareStatement("UPDATE ATTENDANCE SET ATTPOINT=ATTPOINT+10, ATTCOUNT=ATTCOUNT+1, ATTDATE = SYSDATE WHERE USERID = ?");
+			pstmt.setString(1, userId);
+			result2 = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result2;
+	}	
+	
+	// 오늘 출석했는지 체크
+	public int loginAtCheck(Connection conn, String userId) {
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+
+		int result = 0;
+ 
+		try {
+			pst = conn.prepareStatement("SELECT * FROM ATTENDANCE WHERE USERID=? and TO_CHAR(ATTDATE,'YYYYMMDD')=TO_CHAR(SYSDATE,'YYYYMMDD')");
+			pst.setString(1, userId);
+			rs = pst.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pst);
+		}
+		return result;
+	}
+	
+	
 }

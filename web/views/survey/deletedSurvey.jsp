@@ -174,7 +174,7 @@ body {
 				location.href = "<%=request.getContextPath()%>/surveyRevive.sv?userId=" + userId + "&sNum=" + sNum;
 				}
 			});
-		
+		 
 		
 		$("#surveyListTable2 td").click(function(){
 			ud = "ud";

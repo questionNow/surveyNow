@@ -55,7 +55,7 @@ body {
 </style>
 </head>
 <body>
-	<%@ include file = "../common/menubarUser.jsp" %>
+	<%@ include file="../common/menubar2.jsp" %>
 
 <h2>설문!!!</h2>
 <p>설문을 작성하고 배포 해보세요 :)</p>

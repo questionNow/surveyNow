@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import = "user.model.vo.*, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import = "user.model.vo.*,survey.model.vo.*, java.util.ArrayList"%>
     
 <%
-	ArrayList<surveyList> rlist = (ArrayList<surveyList>)request.getAttribute("rlist"); 
+	ArrayList<Survey> rlist = (ArrayList<Survey>)request.getAttribute("rlist"); 
 %> 
     
 <!DOCTYPE html>
@@ -219,7 +219,7 @@
         
         /* 컨텐츠 영역 */
         .column {padding: 15px; border-bottom: 1px solid #dbdbdb;}
-        .column .col_tit {font-size: 20px; color: #2f7fa6; padding-bottom: 5px;}
+        .column .col_tit {font-size: 20px; color: #F46105; padding-bottom: 5px;}
         .column .col_desc {
             border-bottom: 1px dashed #dbdbdb; 
             padding-bottom: 15px; margin-bottom: 15px;  
@@ -592,6 +592,76 @@
         	z-index:1;
         } */
         
+        
+        
+        
+        
+        
+
+    #replySelectTable {
+      border-collapse: collapse;
+      border-top: 3px solid #F46105;
+    }  
+    #replySelectTable th {
+      color: #F46105;
+      background: #FACEAB;
+      text-align: center;
+    }
+    #replySelectTable th, #replySelectTable td {
+      padding: 10px;
+      border: 1px solid #F46105;
+    }
+    #replySelectTable th:first-child, #replySelectTable td:first-child {
+      border-left: 0;
+      border: 1px solid #F46105;
+    }
+    #replySelectTable th:last-child, #replySelectTable td:last-child {
+      border-right: 0;
+      border: 1px solid #F46105;
+    }
+    #replySelectTable tr td:first-child{
+      text-align: center;
+    }        
+        
+
+    #listArea {
+      border-collapse: collapse;
+      border-top: 3px solid #F46105;
+    }  
+    #listArea th {
+      color: #F46105;
+      background: #FACEAB;
+      text-align: center;
+    }
+    #listArea th, #listArea td {
+      padding: 10px;
+      border: 1px solid #F46105;
+    }
+    #listArea th:first-child, #listArea td:first-child {
+      border-left: 0;
+      border: 1px solid #F46105;
+    }
+    #listArea th:last-child, #listArea td:last-child {
+      border-right: 0;
+      border: 1px solid #F46105;
+    }
+    #listArea tr td:first-child{
+      text-align: center;
+    }           
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     </style>
 
 </head>
@@ -684,22 +754,38 @@
                  -->
                 <section id="cont_center">
                 <article class="column col4">
-					<h4 class="col_tit">해당 리스트 클릭 (설문 페이지 완성되면 작업해야될거같다.)</h4>
-					<p class="col_desc">조건에 맞는 설문으로 이동</p>
+                <div class="notice1">
+					<h4 class="col_tit">참여 가능한 설문</h4>
+					<a href="#" class="more" title="더 보기"
+					onclick="location.href='/surveyNow/surveyListView.sv?userId=<%=loginUser.getUserId()%>'">More <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+
+				</div>
+					<!-- <p class="col_desc">조건에 맞는 설문으로 이동</p> -->
 <!-- 작업중  -->
 					<div id="replySelectArea">
-						<table id="replySelectTable" border="1" align="center">
+						<table id="replySelectTable" border="1" align="center" ><!-- cellpadding="0" cellspacing="0" -->
+						<tr>
+							<th width="150px">제목</th>
+							<th width="50px">패널 수</th>
+							<th width="50px">문항 수</th>
+							<th width="80px">작성일</th>
+							<th width="80px">응답자 수</th>
+							<th width="150px">분석</th>
+	<!-- 						<th width="50px">삭제</th> -->
+						</tr>
 							<%if(rlist.isEmpty()) {%>
 								<tr><td colspan="3">관련된 설문이 없습니다.</td></tr>
 							<%}else{ %> 
 								<%for(int i=0;i<rlist.size();i++){ %>
 									<tr>
-										<td width="100px"><%=rlist.get(i).getSnum() %></td>
-										<td width="100px"><%=rlist.get(i).getStype() %></td>
-										<td width="100px"><%=rlist.get(i).getStitle() %></td>
-										<td width="100px"><%=rlist.get(i).getSstartdt() %></td>
-										<td width="100px"><%=rlist.get(i).getSenddt() %></td>
-										<td width="100px"><%=rlist.get(i).getScount() %></td>
+										<input type = "hidden" value = "<%= rlist.get(i).getsNum() %>">
+										<td width="100px"><%=rlist.get(i).getsTitle() %></td>
+										<td width="100px"><%=rlist.get(i).getsCount() %></td>
+										<td width="100px"><%=rlist.get(i).getqCount() %></td>
+										<td width="100px"><%=rlist.get(i).getsCreateDate() %></td>
+										<td width="100px"><%=rlist.get(i).getaCount() %></td>
+										<%-- <td width="100px"><%=rlist.get(i).getSenddt() %></td> --%>
+										<td>차트 사진</td>
 
 									</tr>
 								<%} %>
@@ -743,11 +829,91 @@
 						//이미지 슬라이드
                     </article>
                     //col4 -->
-                    
+                  
                     <article class="column col5">
-                        <h4 class="col_tit">이미지 클릭</h4>
-						<p class="col_desc">관련 설문으로 이동</p>
-						<!-- lightbox -->
+						<div class="notice1">
+							<h4 class="col_tit">공지사항</h4>
+							<a href="#" class="more" title="더 보기">More <i
+								class="fa fa-plus-circle" aria-hidden="true"></i></a>
+						</div>  
+							<!-- 작업 -->
+							<div class="tableArea">
+								<table align="center" id="listArea" border="1" align="center">
+									<tr>
+										<th width="40px" type="hidden">카테고리</th>
+										<th width="60px">글제목</th>
+										<th width="60px">작성자</th>
+										<th width="60px">조회수</th>
+									</tr>
+									<%
+										if (boardList.isEmpty()) {
+									%>
+									<tr>
+										<td colspan="6">공지사항이 없습니다.</td>
+									</tr>
+									<% } else { %>
+										<%	for (Board b : boardList) { %>
+										<tr>
+											<input type="hidden" value="<%=b.getbNum()%>">
+											<%-- <input type="hidden" value="<%=b.getbType()%>"> --%>
+											<td width="70px"><%=b.getbType()%></td>
+											<td width="100%"><%=b.getbTitle()%></td>
+											<td><%=b.getbWName()%></td>
+											<td><%=b.getbCount()%></td>
+											<input type="hidden" value="<%=b.getbCreateDt()%>">
+		
+											<%-- 													<td><%=b.getbNum() %></td>
+															<td><%=b.getbType() %></td>
+															<td><%=b.getbTitle() %></td>
+															<td><%=b.getbWName() %></td>
+															<td><%=b.getbCount() %></td>
+															<td><%=b.getbCreateDt()%></td>  --%>
+										</tr>
+										<% } %>
+									<% } %>
+								</table>
+							</div>
+                  
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+<!--                         <h4 class="col_tit">이미지 클릭</h4>
+						<p class="col_desc">관련 설문 카테고리로 이동 ?<br>
+						현재 관련된 설문만 볼수 있게 했는데... <br>
+						이부분을 살려서 이용하려면. <br>
+						타입이 같지 않아도 카테고리 관련 설문들을 볼수있어야한다.<br>
+						설문 중에 예외적으로 타입이 같지는 않지만 그냥 관심만? 있다면 할수있는 설문을 만들까?
+						</p>
+						lightbox
 						<div class="lightbox square clearfix">
 							<a href="image/light01_s.jpg"><img src="image/light01_s.jpg" alt="이미지"><em>애견</em></a>
 							<a href="image/light02_s.jpg"><img src="image/light02.jpg" alt="이미지"><em>자연보호</em></a>
@@ -759,25 +925,28 @@
 							<a href="image/light08_s.jpg"><img src="image/light08.jpg" alt="이미지"><em>연금</em></a>
 							<a href="image/light09_s.jpg"><img src="image/light09.jpg" alt="이미지"><em>자기개발</em></a>
 							<a href="image/light10_s.jpg"><img src="image/light10.jpg" alt="이미지"><em>영화</em></a>
-						</div>
+						</div> -->
 						<!--//lightbox -->
                     </article>
                     <!-- //col5 -->
                     
-                    <article class="column col6">
+<!--                     <article class="column col6">
 						<h4 class="col_tit">Video</h4>
 						<p class="col_desc">필요 할라나 모르겠지만????</p>
-						<!-- video -->
-						<!-- <video autoplay="autoplay" controls="controls" loop="loop">
+						video
+						<video autoplay="autoplay" controls="controls" loop="loop">
 							<source src="img/video.mp4" type="video/mp4">
-						</video> -->
+						</video>
 						<div class="video">
 							<iframe src="https://www.youtube.com/embed/tHy498wdPaA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
-						<!--//video -->
-					</article>
+						//video
+					</article> -->
 					<!-- //col6 -->
                 </section>
+                
+                
+                
                 <!-- //cont_center -->
                 <section id="cont_right" >
                 
@@ -799,10 +968,25 @@
                     <!-- //col7 -->
                     
                     <article class="column col8">
-                        <h4 class="col_tit">우와~~ 머지가 머지?</h4>
-						<p class="col_desc">마우스 올리면 신기방기됨</p>
+                        <h4 class="col_tit" style="text-align: center">설문 NOW</h4>
+						<p class="col_desc"></p>
 						<!-- side2 -->
 						<div class="side2">
+                            <figure class="front">
+                                <img src="image/hoversuimg1.jpg" alt="이미지2">
+                                <figcaption>
+                                    <h3>Hover Effect</h3>
+                                </figcaption>
+                            </figure >
+                            <figure class="back">
+                                <img src="image/semiLogo.png" alt="이미지2">
+                                <figcaption>
+                                    <h3>Hover Effect</h3>
+                                </figcaption>
+                            </figure>
+                        </div>
+						
+<!-- 						<div class="side2">
                             <figure class="front">
                                 <img src="image/side2.jpg" alt="이미지2">
                                 <figcaption>
@@ -815,24 +999,61 @@
                                     <h3>Hover Effect</h3>
                                 </figcaption>
                             </figure>
-                        </div>
+                        </div> -->
+                        
+                        
+                        
                         <!-- side2//-->
                     </article>
                     <!-- //col8 -->
                     
                     <article class="column col9">
-                        <h4 class="col_tit">들락 날락 함</h4>
-						<p class="col_desc">마우스 올리면 신기방기됨</p>
-						<!-- side3 -->
-						<div class="side3">
-                            <figure>
-                                <img src="image/side3.jpg" alt="이미지3">
-                                <figcaption>
-                                    <h3>Hover<em>Effect</em></h3>
-                                </figcaption>
-                            </figure>
+                    <h3 class="col_tit" style="text-align: center">< S반 여신 ></h3> 
+                    <p class="col_desc"></p>
+                   	<div class="side2">
+	                    <figure class="front">
+	                        <img src="image/PNH.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)">
+	                    </figure>
+	                    <figure class="back">
+	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+	                         <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg); margin-top : 30px; ">
+	                    </figure>
                         </div>
-                        <!-- side3//-->
+                    <p class="col_desc"></p>
+                    <h3 class="col_tit" style="text-align: center">< 영욱이와 아이들 ></h3>
+                    <p class="col_desc"></p>
+                  	<div class="side2">
+	                    <figure class="front">
+	                        <img src="image/semiPhoto3.jpg" alt="이미지3">
+	                    </figure>
+	                    <figure class="back">
+	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+	                         <img src="image/semiPhoto4.jpg" alt="이미지3">
+	                    </figure>
+                        </div>
+                        
+                  	<div class="side2">
+	                    <figure class="front">
+	                        <img src="image/semiPhoto1.jpg" alt="이미지3">
+	                    </figure>
+	                    <figure class="back">
+	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+	                         <img src="image/semiPhoto2.jpg" alt="이미지3">
+	                    </figure>
+                        </div>
+
+                  	<div class="side2">
+	                    <figure class="front">
+	                        <img src="image/semiPhoto5.jpg" alt="이미지3" >
+	                    </figure>
+	                    <figure class="back">
+	                        <!-- <img src="image/KHJ.jpg" alt="이미지3" style="-webkit-transform: rotate(90deg)"> -->
+	                         <img src="image/semiPhoto6.jpg" alt="이미지3">
+	                    </figure>
+                        </div>
+
+                        
+                        
                     </article>
                     <!-- //col9 -->
                 </section>
@@ -843,11 +1064,65 @@
     </main>
 
 
-    <!-- JavaScript Libraries -->
-<!--     <script src="../js/jquery.min_1.12.4.js"></script>
-    <script src="../js/modernizr-custom.js"></script>
-    <script src="js/slick.min.js"></script>
-    <script src="js/lightgallery.min.js"></script> -->
+
+
+<footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer">
+                    <ul>
+                        <li><a href="#">사이트 도움말</a></li>
+                        <li><a href="#">사이트 이용약관</a></li>
+                        <li><a href="#">사이트 운영원칙</a></li>
+                        <li><a href="#"><strong>개인정보취급방침</strong></a></li>
+                        <li><a href="#">책임의 한계와 법적고지</a></li>
+                        <li><a href="#">게시중단요청서비스</a></li>
+                        <li><a href="#">고객센터</a></li>
+                    </ul>
+                    <address>
+                        Copyright &copy;
+                        <a href="http://webstoryboy.co.kr"><strong>webstoryboy</strong></a>
+                        All Rights Reserved.
+                    </address>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+	<script type="text/javascript">
+		$(function(){
+ 
+/*ajax 처리후 "클릭 이벤트"도 날아가서 변경  */
+			$("#replySelectTable td").mouseenter(function(){
+				$(this).parent().css({"background":"orangered","cursor":"pointer"});
+			}).mouseout(function(){ 
+				$(this).parent().css({"background":"white"}); 
+			}).click(function(){
+				var sNum = $(this).parent().children("input").val();
+				var userId = "<%=loginUser.getUserId()%>";
+				location.href = "<%=request.getContextPath()%>/surveyListView.sv?userId=<%=loginUser.getUserId()%>";
+		        <%-- location.href="<%=request.getContextPath()%>/surveyHoldList.sv?userId=" + userId+"&sNum="+sNum; --%>				
+			}); 
+		});
+		
+		
+		$(function(){
+			$("#listArea td").mouseenter(function(){
+				$(this).parent().css({"background":"orangered","cursor":"pointer"});
+			}).mouseout(function(){ 
+				$(this).parent().css({"background":"white"}); 
+			}).click(function(){
+				var bnum=$(this).parent().children("input").val();
+				var userId = "<%=loginUser.getUserId()%>";
+				var userTy = "<%=loginUser.getUserType()%>";
+				
+				location.href="<%=request.getContextPath()%>/detail.bo?bnum=" + bnum+"&userId="+userId+"&userTy="+userTy;
+
+			});
+		});
+		
+   </script>
+
 
 </body>
 </html>
