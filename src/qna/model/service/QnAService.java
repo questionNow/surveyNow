@@ -40,15 +40,8 @@ public class QnAService {
 		
 		return result;
 	}
+ 
 
 
 
-	public ArrayList<QnA> MyQnASearch( int qnaNum, String qnaType, String qnaTitle) {
-		Connection conn = getConnection();
-		ArrayList<QnA> list = new QnADao().MyQnASearch(conn, qnaNum, qnaType, qnaTitle);
-		
-		close(conn);
-		
-		return list;
-	}
 }

@@ -72,7 +72,7 @@
 				<td><%=s.getsEndDate() %></td>
 				<td><%=s.getsType() %></td>
 				<!-- db수정 후 참여패널수로 수정? -->
-				<td><%=s.getsCount() %> / <%=s.getsCount() %></td>
+				<td><%=s.getaCount() %> / <%=s.getsCount() %></td>
 			</tr>	
 			<%
 			}

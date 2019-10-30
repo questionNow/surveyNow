@@ -16,11 +16,11 @@ public class QnADao {
 		ArrayList<QnA>list = null;
 		
 		
-		  /* String query ="SELECT ROWNUM, QNANUM, USERID, QNATITLE, QNACONTENT, t.TYPENAME QNATYPE, ACONTENT, DECODE(ANSWERYN, 'N', '미등록', 'Y', '등록') ANSWERYN, QNADT, ADMINID FROM QNA q "
-		  + "INNER JOIN QNATYPE t ON q.QNATYPE = t.QNATYPE WHERE USERID=? ORDER BY 1 DESC"; */
+		   String query ="SELECT QNANUM, USERID, QNATITLE, QNACONTENT, t.TYPENAME QNATYPE, ACONTENT, DECODE(ANSWERYN, 'N', '미등록', 'Y', '등록') ANSWERYN, QNADT, ADMINID FROM QNA q "
+		  + "INNER JOIN QNATYPE t ON q.QNATYPE = t.QNATYPE WHERE USERID=? ORDER BY 1 DESC";
 		 
 		
-		String query = "SELECT * FROM QNA WHERE USERID=? ORDER BY 1 DESC";
+	/*	String query = "SELECT * FROM QNA WHERE USERID=? ORDER BY 1 DESC";*/
 		
 		try {
 			pstmt = conn.prepareStatement(query);
@@ -163,55 +163,6 @@ public class QnADao {
 		}
 		
 		return result;
-	}
-
-
-	public ArrayList<QnA> MyQnASearch(Connection conn, int qnaNum, String qnaType, String qnaTitle) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		ArrayList<QnA>list = null;
-		
-		
-		  /* String query ="SELECT ROWNUM, QNANUM, USERID, QNATITLE, QNACONTENT, t.TYPENAME QNATYPE, ACONTENT, DECODE(ANSWERYN, 'N', '미등록', 'Y', '등록') ANSWERYN, QNADT, ADMINID FROM QNA q "
-		  + "INNER JOIN QNATYPE t ON q.QNATYPE = t.QNATYPE WHERE USERID=? ORDER BY 1 DESC"; */
-		 
-		
-		String query = "SELECT * FROM QNA WHERE (QNANUM LIKE '%'|| ? ||'%' QNATYPE LIKE '%'|| ? ||'%' QNATITLE LIKE '%'|| ? ||'%')";
-		
-		
-		try {
-			pstmt = conn.prepareStatement(query);
-		
-			pstmt.setInt(1, qnaNum);
-			pstmt.setString(2, qnaType);
-			pstmt.setString(3, qnaTitle);
-			rs=pstmt.executeQuery();
-			
-			list = new ArrayList<QnA>();
-			
-			while(rs.next()) {
-				QnA b = new QnA(rs.getInt("qnanum"),
-								rs.getString("qnatitle"),
-								rs.getString("qnacontent"),
-								rs.getString("qnatype"),
-								rs.getString("acontent"),
-								rs.getString("answeryn"),
-								rs.getString("adminid"),
-								rs.getDate("qnadt"),
-								rs.getString("userid"));
-				
-				list.add(b);
-				
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rs);
-			close(pstmt);
-		}
-		return list;
 	}
 
 }

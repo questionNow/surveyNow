@@ -29,7 +29,6 @@
         
         IMP.request_pay({
             pg : 'kakaopay',
-            pay_method : 'card',
             merchant_uid : 'merchant_' + new Date().getTime(),
             name : 'SurveyNow 설문 결제',
             amount : <%=totalPrice%>,
@@ -71,7 +70,7 @@
                 msg = '결제에 실패하였습니다.';
                 msg += '에러내용 : ' + rsp.error_msg;
                 //실패시 이동할 페이지
-                location.href="<%=request.getContextPath()%>/surveyPurchaeList.sv?sNums=<%=sNums%>&userId=<%=userInfo.getUserId()%>";
+                location.href="<%=request.getContextPath()%>/surveyPurchaseList.sv?sNums=<%=sNums%>&userId=<%=userInfo.getUserId()%>";
                 alert(msg);
             }
         });

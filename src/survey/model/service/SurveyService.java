@@ -435,5 +435,26 @@ public class SurveyService {
 		close(conn);
 		return stats;
 		}
-	
+
+		public ArrayList<DoSurvey> adminModifySurvey(int sNum) {
+			Connection conn = getConnection();
+			SurveyDao sDao = new SurveyDao();
+			Survey s = sDao.selectSurvey(conn, sNum);
+			ArrayList<SurveyTarget> stList = null;
+			ArrayList<Question> qList = sDao.selectQuestion(conn, s);
+			ArrayList<DoSurvey> dsList = new ArrayList<DoSurvey>();
+			if(s.getsTarget() != null) {
+				stList = sDao.selectSurveyTarget(conn, s);
+				if(stList != null) {
+					dsList = sDao.adminModifySurveyTarget(conn, s, qList, stList);
+				}
+			}else {
+				dsList = sDao.adminModifySurvey(conn, s, qList);
+			}
+			
+			close(conn);
+			
+			return dsList;
+		}
+
 }

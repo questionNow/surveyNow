@@ -144,12 +144,11 @@ a.btn-layerClose:hover {
 						<th width="200px">패널 수</th>
 						<th width="100px">문항 수</th>
 						<th width="150px">작성일</th>
-						<th width="100px">수정</th>
-						<th width="100px">삭제</th>
+						<th width="100px">환불</th>
 					</tr>
 					<% if(sList.isEmpty()){ %>
 					<tr>
-						<td colspan=7>작성한 설문이 없습니다.</td>
+						<td colspan=6>작성한 설문이 없습니다.</td>
 						<% } else {%>
 						<% for(Survey s : sList){ %>
 							<tr>
@@ -158,8 +157,7 @@ a.btn-layerClose:hover {
 								<td><%=s.getsCount() %></td>
 								<td><%=s.getqCount() %></td>
 								<td><%=s.getsCreateDate() %></td>
-								<td id = "modify">수정</td>
-								<td id = "delete">삭제</td>
+								<td id = "refund">환불</td>
 							</tr>
 						<%} %>
 						<%} %>
@@ -170,18 +168,15 @@ a.btn-layerClose:hover {
 	</div>
 
 	<script type="text/javascript">
-	$("tr > #delete").mouseenter(function(){
+
+	$("tr > #refund").mouseenter(function(){
 		$(this).css("cursor","pointer");
 	}).click(function(){
-		alert("1:1 문의로 남겨주시면 삭제 후 환불 처리 해드리겠습니다.");
+		alert("1:1문의로 환불 요청 해주시면\n요청 시점 기준으로 +1 영업일 내에 처리 해드리겠습니다.");
+		
 	});
 	
-	$("tr > #modify").mouseenter(function(){
-		$(this).css("cursor","pointer");
-	}).click(function(){
-		alert("1:1 문의로 남겨주시면 환불 후 수정 하실 수 있도록 처리해드리겠습니다.");
-	});
 	</script>
-
+  
 </body>
 </html>

@@ -382,20 +382,18 @@ public class SurveyDao {
 	public int makeSurveyTarget(Connection conn, SurveyTarget st) {
 		PreparedStatement pstmt = null;
 		int stResult = 0;
-
-		for (int i = 0; i < st.getTargetType().length; i++) {
 			String targetDetail = "";
-			for (int j = 0; j < st.getTargetDetail().get(i).length; j++) {
-				if (j == st.getTargetDetail().get(i).length - 1) {
-					targetDetail += st.getTargetDetail().get(i)[j];
+			for (int j = 0; j < st.getTargetDetail().get(0).length; j++) {
+				if (j == st.getTargetDetail().get(0).length - 1) {
+					targetDetail += st.getTargetDetail().get(0)[j];
 				} else {
-					targetDetail += st.getTargetDetail().get(i)[j] + ",";
+					targetDetail += st.getTargetDetail().get(0)[j] + ",";
 				}
 			}
 			try {
 				pstmt = conn.prepareStatement(
 						"INSERT INTO SURVEY_TARGET VALUES(SEQ_SURVEY_TARGET.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
-				pstmt.setString(1, st.getTargetType()[i]);
+				pstmt.setString(1, st.getTargetType()[0]);
 				pstmt.setString(2, targetDetail);
 
 				stResult = pstmt.executeUpdate();
@@ -404,7 +402,6 @@ public class SurveyDao {
 			} finally {
 				close(pstmt);
 			}
-		}
 		return stResult;
 	}
 
@@ -792,8 +789,8 @@ public class SurveyDao {
 
 		ArrayList<DoSurvey> dsList = new ArrayList();
 
-		for (int i = 0; i < qList.size(); i++) {
 			try {
+				for (int i = 0; i < qList.size(); i++) {
 				pstmt = conn.prepareStatement("SELECT * FROM ANSWER WHERE QNUM = ?");
 				pstmt.setInt(1, qList.get(i).getqNum());
 				rs = pstmt.executeQuery();
@@ -807,14 +804,12 @@ public class SurveyDao {
 					aCount = rs.getInt("answercount");
 					aList.add(a);
 				}
-				DoSurvey ds = new DoSurvey(s, q, aList, aCount, stList.get(i));
+				DoSurvey ds = new DoSurvey(s, q, aList, aCount, stList.get(0));
 				dsList.add(ds);
-
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-
-		}
 
 		return dsList;
 	}
@@ -2432,5 +2427,153 @@ public class SurveyDao {
 
 		return Exemption;
 	}
+
+	public int adminMakeSurvey(Connection conn, Survey s) {
+		PreparedStatement pstmt = null;
+		int sResult = 0;
+		try {
+			pstmt = conn.prepareStatement(
+					"INSERT INTO SURVEY VALUES(SEQ_SURVEY.NEXTVAL, ?, ?, SYSDATE, NULL, ?, ?, ?, 0, 'H', ?, SYSDATE, ?, NULL)");
+			pstmt.setString(1, s.getsType());
+			pstmt.setString(2, s.getsTitle());
+			pstmt.setInt(3, s.getsCount());
+			pstmt.setInt(4, s.getsPoint());
+			pstmt.setInt(5, s.getqCount());
+			pstmt.setString(6, s.getsTarget());
+			pstmt.setString(7, s.getsUserId());
+			sResult = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return sResult;
+	}
+
+	public int adminMakeSurveyTarget(Connection conn, SurveyTarget st) {
+		PreparedStatement pstmt = null;
+		int stResult = 0;
+
+		for (int i = 0; i < st.getTargetType().length; i++) {
+			String targetDetail = "";
+			for (int j = 0; j < st.getTargetDetail().get(i).length; j++) {
+				if (j == st.getTargetDetail().get(i).length - 1) {
+					targetDetail += st.getTargetDetail().get(i)[j];
+				} else {
+					targetDetail += st.getTargetDetail().get(i)[j] + ",";
+				}
+			}
+			try {
+				pstmt = conn.prepareStatement(
+						"INSERT INTO SURVEY_TARGET VALUES(SEQ_SURVEY_TARGET.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
+				pstmt.setString(1, st.getTargetType()[i]);
+				pstmt.setString(2, targetDetail);
+
+				stResult = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+		}
+		return stResult;
+	}
+
+	public int adminMakeQuestion(Connection conn, String[] qNum, String[] qType, String[] qTitle,
+			ArrayList<String[]> answer) {
+		PreparedStatement pstmt = null;
+		int qResult = 0;
+		int aResult = 0;
+		try {
+			for (int i = 0; i < qNum.length; i++) {
+
+				pstmt = conn.prepareStatement(
+						"INSERT INTO QUESTION VALUES(SEQ_QUESTION.NEXTVAL, SEQ_SURVEY.CURRVAL, ?, ?)");
+				pstmt.setString(1, qType[i]);
+				pstmt.setString(2, qTitle[i]);
+				qResult = pstmt.executeUpdate();
+				String[] ans = new String[answer.get(i).length];
+				ans = answer.get(i);
+
+				for (int j = 0; j < ans.length; j++) {
+					pstmt = conn.prepareStatement(
+							"INSERT INTO ANSWER VALUES(SEQ_ANSWER.NEXTVAL, SEQ_QUESTION.CURRVAL, ?, DEFAULT)");
+					pstmt.setString(1, ans[j]);
+					aResult = pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return qResult;
+	}
+
+	public ArrayList<DoSurvey> adminModifySurveyTarget(Connection conn, Survey s, ArrayList<Question> qList,
+			ArrayList<SurveyTarget> stList) {
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			ArrayList<DoSurvey> dsList = new ArrayList();
+
+				try {
+					for (int i = 0; i < qList.size(); i++) {
+					pstmt = conn.prepareStatement("SELECT * FROM ANSWER WHERE QNUM = ?");
+					pstmt.setInt(1, qList.get(i).getqNum());
+					rs = pstmt.executeQuery();
+					ArrayList<Answer> aList = new ArrayList<Answer>();
+					Question q = new Question(qList.get(i).getqNum(), qList.get(i).getsNum(), qList.get(i).getqType(),
+							qList.get(i).getqTitle());
+					int aCount = 0;
+					while (rs.next()) {
+						Answer a = new Answer(rs.getInt("anum"), rs.getInt("qnum"), rs.getString("acontent"),
+								rs.getInt("answercount"));
+						aCount = rs.getInt("answercount");
+						aList.add(a);
+					}
+					DoSurvey ds = new DoSurvey(s, q, aList, aCount, stList.get(0));
+					dsList.add(ds);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+			return dsList;
+		}
+
+	public ArrayList<DoSurvey> adminModifySurvey(Connection conn, Survey s, ArrayList<Question> qList) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		ArrayList<DoSurvey> dsList = new ArrayList();
+
+		for (int i = 0; i < qList.size(); i++) {
+			try {
+				pstmt = conn.prepareStatement("SELECT * FROM ANSWER WHERE QNUM = ?");
+				pstmt.setInt(1, qList.get(i).getqNum());
+				rs = pstmt.executeQuery();
+				ArrayList<Answer> aList = new ArrayList<Answer>();
+				Question q = new Question(qList.get(i).getqNum(), qList.get(i).getsNum(), qList.get(i).getqType(),
+						qList.get(i).getqTitle());
+				int aCount = 0;
+				while (rs.next()) {
+					Answer a = new Answer(rs.getInt("anum"), rs.getInt("qnum"), rs.getString("acontent"),
+							rs.getInt("answercount"));
+					aCount = rs.getInt("answercount");
+					aList.add(a);
+				}
+				DoSurvey ds = new DoSurvey(s, q, aList, aCount);
+				dsList.add(ds);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return dsList;
+	}
+
 
 }

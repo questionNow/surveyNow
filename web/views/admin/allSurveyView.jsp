@@ -25,7 +25,7 @@
 
 	}
 	.tableArea{
-		width:650px;
+		width:800x;
 		height:350px;
 		margin-left:auto;
 		margin-right:auto;
@@ -52,27 +52,31 @@
 				<th width ="100px">번호</th>
 				<th width = "300px">제목</th>
 			<!-- 	<th width = "100px">문항수</th> -->
-				<th width = "100px">작성일</th>
+				<th width = "300px">작성일</th>
 				<th width = "100px">카테고리</th>
 				<th width = "100px">패널수</th>
+				<th width = "100px">삭제</th>
+				<th width = "100px">수정</th>
 			</tr>
 		
 			<%
 				if(list.isEmpty())	{
 			%>
 			<tr>
-				<td colspan="6">조회된 설문이 없습니다</td>
+				<td colspan="8">조회된 설문이 없습니다</td>
 			</tr> 
 			<%	}else{	%>
 			<%
 				for (Survey s : list){
 			%>
-			<tr>
+			<tr> 
 				<td><%=s.getsNum()%></td>
 				<td><%=s.getsTitle() %></td>
 				<td><%=s.getsStartDate() %></td>
 				<td><%=s.getsType() %></td>
 				<td><%=s.getsCount() %></td>
+				<td id = delete>X</td>
+				<td id = modify>수정</td>
 			</tr>	
 			<%
 			}
@@ -81,35 +85,34 @@
 			} 
 			%> 
 		</table>
-		</div>
+	</div>
 
 	
 	</div>	
-	<script>
+	<script>	
+	$("tr > #delete").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		
+		var snum = $(this).parent().children("input")[0].value;
+		var bool = confirm("삭제 하시겠습니까?");
+		if(bool){
+			location.href = "<%= request.getContextPath()%>/surveyDelete.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}
+	});
 	
-	function allSurvey(){
-		location.href = "<%=request.getContextPath()%>/all.sv";	
-		/* SurveyAdViewServlet ㄱㄱ */
-	}
-
-	
-	function completeSurvey(){
-		location.href = "<%=request.getContextPath()%>/complete.sv";	
-		/* CompleteSurveyServlet ㄱㄱ*/ 
-	}
-	
-	function holdSurvey(){
-		location.href = "<%=request.getContextPath()%>/hold.sv";
-		/*PaySurveyServlet ㄱㄱ*/
-	}
-	
-	function proceedSurvey(){
-		location.href = "<%=request.getContextPath()%>/proceed.sv";		
-		/* ProceedSurveyServlet ㄱㄱ */
-	}
-	
-
-
+	$("tr > #modify").mouseenter(function(){
+		$(this).css("cursor","pointer");
+	}).click(function(){
+		
+		var snum = $(this).parent().children().eq(0)[0].innerHTML;
+		console.log(snum);
+		var bool = confirm("수정 하시겠습니까?");
+		if(bool){
+			location.href = "<%= request.getContextPath()%>/Admin_surveyModify.sv?sNum="+snum+"&userId=<%= loginUser.getUserId()%>";
+		}
+		
+	});
 	</script>
 </body>
 

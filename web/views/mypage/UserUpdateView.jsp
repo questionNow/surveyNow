@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="user.model.vo.UserInfo" %>
+<%@ page session="true" language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="user.model.vo.UserInfo, nl.captcha.Captcha" %>
 
 
  <%
@@ -70,7 +70,8 @@
 	response.setHeader("Pragma", "no-cache");
 	response.setHeader("Cache-Control", "no-cache");
 	response.setDateHeader("Expires",0); 	
-	
+	Captcha captcha = (Captcha) session.getAttribute(Captcha.NAME);
+	String answer = request.getParameter("answer");
 %>    
 <%-- 호출 되는지 테스트~~ 
 <% Member m = new Member();
@@ -99,18 +100,19 @@ m.setUserId("id호출합니다");%>
    * {box-sizing:border-box; font-size:15px; }
    h1 {text-align:center;}
    /* 개인정보 수정 화면 */
-   #userUpdateArea {width:800px; height:2000px;   margin-left:600px; margin-top:20px; }
+   #userUpdateArea {width:900px; height:1200px;   margin-left:700px; margin-top:20px;  background:#F8EFE6; }
    #userUpdateArea div {height:60px; padding:18px; }
-   .div-top {width:800px; background:#fff; border-bottom:1px solid #ccc; text-align:left; font-weight:bold;}
-   .div-lavel {width:200px; background:#fff; float:left; border-bottom:1px dotted #ccc; text-align:center; font-weight:bold;}
-   .div-type {width:600px; background:#fff; float:left; border-bottom:1px dotted #ccc; text-align:left; }
+   .div-top {width:900px;  border-bottom:1px solid #ccc; text-align:left; font-weight:bold;}
+   .div-lavel {width:250px;  float:left; border-bottom:1px dotted #ccc; text-align:center; font-weight:bold;}
+   .div-type {width:650px; float:left; border-bottom:1px dotted #ccc; text-align:left; }
    
    .twoline{width:200px;}
-   .passcheck1{width:150px;}
-   .passcheck2{width:250px;}
+   .passcheck1{width:200px;}
+   .passcheck2{width:300px;}
    
-  /*  .interest label {margin-left:20px;}  */
-   #userUpdateArea div:nth-child(38){height:100px; background:red;}
+   
+  /*  .interest label {margin-left:20px;}  
+    #userUpdateArea div:nth-child(38){height:100px; background:red;}  */
 
    hr {margin:0;}
    
@@ -122,8 +124,10 @@ m.setUserId("id호출합니다");%>
 	#seAddress{background:#E98235; border:none; color:white;}
 	#seAddress:hover{background:#E96F18;}
 	
-   #resultPw{font-size:12px;}
+   #resultPw1, resultPw2{font-size:12px;}
    
+   
+   #catpchaDiv{width:230px; height:300px; margin-top:700px; }
  
 </style>
 
@@ -134,32 +138,35 @@ m.setUserId("id호출합니다");%>
 <body>
 	
 		<%@ include file="../common/menubar2.jsp" %>
+		
 <div id="userUpdateArea">
 
- 	<form id="updateForm" action="<%=request.getContextPath() %>/infochange.ic" method="post">
+ 	<form id="updateForm" method="post">
    <div class="div-top"><i class="fas fa-user"></i> 개인정보입력</div>
 	
 	<hr width = "100%" height = "10%" color = "#E98235">
 	
  	<div class="div-lavel">아이디</div>
    	<div class="div-type">
-    <input type=text id=id name="userId"  value=<%=userId %> readonly>   
+    <input type=text id=id name="userId" style="background:#ebebeb" value=<%=userId %> readonly>   
    </div>
 
    <div class="div-lavel">이름</div>
    <div class="div-type">
-   <input type="text" name="userName" value=<%=userName %> readonly>
+   <input type="text" name="userName" style="background:#ebebeb" value=<%=userName %> readonly>
    </div>
 
-   <div class="div-lavel twoline" style="height:108px;">비밀번호</div>
-   <div class="div-type twoline" style="height:108px;">
-           <input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 style = "ime-mode:inactive" required> 
+   <div class="div-lavel twoline" style="height:115px; padding-left:70px"><label for = pw1> 비밀번호 </label></div>
+   <div class="div-type twoline" style="height:115px; padding-left:70px">
+   <input type = password id = pw1 name = userPwd placeholder = "비밀번호를 입력하세요" maxlength = 20 style = "ime-mode:inactive" required> 
+   <label id = resultPw></label>
    </div>
-  	<div class="div-lavel passcheck1" style="height:108px;">비밀번호 확인</div>
-	 <div class="div-type passcheck2" style="height:108px;">
-		<input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20 style = "ime-mode:inactive; width:170px;" required>
-		<br>
-		 <label id = resultPw> </label>
+   
+  	<div class="div-lavel passcheck1" style="height:115px; padding-left:80px"><label for = pw1> 비밀번호 확인 </label></div>
+	 <div class="div-type passcheck2" style="height:115px; ">
+	<input type = password id = pw2 name = userPwd2 placeholder = "비밀번호를 일치시켜주세요" maxlength = 20 style = "ime-mode:inactive; width:170px;" required>
+	<br>
+		<label id = resultPw2></label>
 	</div>
 
 	
@@ -197,12 +204,12 @@ m.setUserId("id호출합니다");%>
 
    <div id="postdiv1" class="div-lavel" style="height:120px;">주소</div>
    <div id="postdiv2" class="div-type" style="height:120px;">
-  <input type = text id = postCode name = postCode  placeholder = "우편번호" value="<%=address[0]%>"  >
+  <input type = text id = postCode name = postCode style="background:#ebebeb"  placeholder = "우편번호" value="<%=address[0]%>"  readonly >
          <input type = text id = address1 name = address1  placeholder = "도로명 주소" value="<%=address[1]%>" style="width:275px"> 
          <input type = button id = seAddress value = 주소검색 onclick = "searchAddress()"> <br><br>
          <span id= guide style = "color:#999; display:none"> </span>
          <input type = text id = detailAddress name = address2 placeholder = "상세 주소를 입력하세요" value="<%=address[3]%>" style="width:280px" >
-         <input type = text id = extraAddress name = extraAddress placeholder = "참고주소" value="<%=address[2]%>" style="width:150px" >
+         <input type = text id = extraAddress name = extraAddress style="background:#ebebeb" placeholder = "참고주소" value="<%=address[2]%>" style="width:150px" readonly>
    </div>
 
     <div class="div-lavel">최종학력</div>
@@ -296,8 +303,8 @@ m.setUserId("id호출합니다");%>
          </select>
     </div>
     
-     <div class="div-lavel">동거가족</div>
-   <div class="div-type">
+     <div class="div-lavel">군대</div>
+     <div class="div-type twoline" style="width:650px">
      <select id = soldier name = armyGo value=<%=armyGo %>>
             <option value = "미필"> 미필 </option>
             <option value = "군필"> 군필 </option>
@@ -305,8 +312,8 @@ m.setUserId("id호출합니다");%>
          </select>
     </div>
     
-     <div class="div-lavel" id="interestId" style="height:200px">관심분야</div>
-   <div class="div-type interestdiv">
+     <div class="div-lavel" id="interestId" style="height:130px; width:200px;">관심분야</div>
+   			<div class="div-type twoline" style="height:130px; width:700px; padding-left:189px;">
    			<input type = checkbox id = sports name = interest value = 스포츠 <%=checkedInterest[0] %>>
          	<label for = sports style = "letter-spacing:6.7px"> 스포츠 </label>
          	
@@ -357,60 +364,103 @@ m.setUserId("id호출합니다");%>
          	<label for = pet> 애완동물 </label>
         	 
     </div>
+    
 
+    
+		</form>
+		
+		 <div id="catpchaDiv">
     <div id="catpcha"></div>
 	<div id="audiocatpch"></div>
-	
+	<div id="catbutton" style="width:300px; height:100px; margin-left:200px;">
 	<input id="reLoad" type="button" value="새로고침" />
 	<input id="soundOn" type="button" value="음성듣기" />
 	<input id="soundOnKor" type="button" value="한글음성" />
 	
 	<input type="text" id="answer" name="answer" value="" />
-	<input type="button" id="frmSubmit" value="확인" />
+<!-- 	<input type="button" id="frmSubmit" value="확인" /> -->
+	</div>
+	</div>
+					
+	<div id="updateBtn" style="width:100px; height:50px; margin-left:500px; maring-bottom:100px;" onclick="updateMember();"> 수정하기</div>	
+		</div>
 	
-		
-   			<div class="btns" align="center">
-				<div id="updateBtn" onclick="updateMember();">수정하기</div>
-			</div>	
-		</form>
-		
-		      </div>            
-		
+  
+  
 	 
 
 <script>
-
- // -> 여기서부터 비밀번호 유효성 검사 및 일치 확인         
- $(function(){
+$(function(){
     var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
     var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    var rand = Math.random();
     
     $("#pw1").change(function(){
        if(!checkPwd.test($("#pw1").val())){
           $("#resultPw").html("비밀번호는 8자 이상이며, 숫자/영어/특수문자를 모두 포함해야합니다.").css("color", "red");
           $("#pw1").val("");
-          $("#pw1").focus();
-       }   
+          $("#pw1").focus();   
+       } else {
+    	   $("#resultPw").html("").css("color", "navy");
+       }
     });
     
     $("#pw2").change(function(){
      if($('#pw1').val() != $(this).val()){
-       $("#resultPw").html("비밀번호가 일치하지 않습니다.").css("color", "red");
+       $("#resultPw2").html("비밀번호가 일치하지 않습니다.").css("color", "red");
        $("#pw2").val("");
        $(this).focus();
      } else {
-        $("#resultPw").html("비밀번호가 일치 합니다.").css("color", "navy");
+        $("#resultPw2").html("비밀번호가 일치 합니다.").css("color", "navy");
      }
     });
     
  });
+
  // <- 여기까지 비밀번호 유효성 검사 및 일치 확인
  
-      function updateMember(){
+    function updateMember(){
     	  var checkId = RegExp(/^[a-zA-Z0-9]{4,12}$/);
           var checkPwd = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
           var checkPhone = /^(?=.*?[0-9]).{11,}$/;
-
+          var bool = confirm("수정 하시겠습니까?"); // confirm yes/no 팝업창
+          
+      /* 	$('#updateBtn').click(function(){ */
+    	 	if ( !$('#answer').val()) {
+    			alert('자동가입방지 문구를 입력해주세요');
+    			 return false;
+    		} else {
+    			$.ajax({
+    				url: 'views/captcha/captchaSubmit.jsp',
+    				type: 'POST',
+    				dataType: 'text',
+    				data: 'answer=' + $('#answer').val(),
+    				async: false,		
+    				success: function(resp) {
+    					alert(resp);
+    					 $('#reLoad').click();
+    					 $('#answer').val(''); 
+    				}
+    			});
+    		}  
+    	
+    		
+    	/* });   */
+          
+        /*    if($("#answer").val() == "" && "".equals($("#answer").val())){
+        	  if (!captcha.isCorrect($("#answer").val())) {
+        	alert("자동가입방지란을 입력해주세요");
+        	 $("#answer").focus();
+        	  }
+             return false; 
+           } */
+         /*  if ($("#answer").val() != ($("#answer").val())) {
+             alert("자동가입방지 문구를 제대로 입력해주세요");
+             $("#answer").val("");
+             $("#answer").focus();
+             return false; 
+          }  */
+          
          if($("#pw1").val() == ""){
             alert("비밀번호를 입력해주세요");
             $("#pw1").focus();
@@ -485,9 +535,13 @@ m.setUserId("id호출합니다");%>
                  alert("하나이상 관심분야를 체크해 주세요");
                  return false;
              }
+            if(bool){
+            $("#updateForm").attr("action","<%=request.getContextPath() %>/infochange.ic");
             $("#updateForm").submit();
           return true; 
- }
+            }
+		 }
+	
 
 
 
@@ -562,7 +616,9 @@ function searchAddress() {
 
 }
 // 캡차 기능 시작
-var rand;
+
+/* var rand; */
+
 //캡차 오디오 요청
 function audioCaptcha(type) {
 	var kor = (type > 0) ? "lan=kor&":""; 
@@ -603,7 +659,7 @@ $(document).ready(function() {
 	$('#soundOnKor').click(function(){ audioCaptcha(1); }); //한글음성듣기 버튼에 클릭이벤트 등록
 	
 	//확인 버튼 클릭시
-	$('#frmSubmit').click(function(){
+/*   	$('#updateBtn').click(function(){
 		if ( !$('#answer').val() ) {
 			alert('이미지에 보이는 숫자 또는 스피커를 통해 들리는 숫자를 입력해 주세요.');
 		} else {
@@ -615,12 +671,16 @@ $(document).ready(function() {
 				async: false,		
 				success: function(resp) {
 					alert(resp);
-					$('#reLoad').click();
-					$('#answer').val('');
-				}
+					$('#answer').attr("readonly", true);   */
+
+					/* $('#reLoad').click();*/
+					/* $('#answer').val('');  */
+		/* },
+
 			});
-		}
-	});
+		} 
+	});   */
+	
 });
 
 </script>

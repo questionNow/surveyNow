@@ -18,11 +18,11 @@
  *{box-sizing:border-box; font-size:15px;}
  #boardArea{
       width:900px;
-      height:800px;
+      height:1000px;
       background:transparent;
       color:black;
-      margin-left:650px;
-      margin-top:70px;
+      margin-left:800px;
+      margin-top:100px;
    }
 
 
@@ -41,8 +41,8 @@
  	.point_content{text-overflow:ellipsis; overflow:hidden; white-space:nowrap; width:100px; word-wrap:normal; background:white;}
 
 	.div-top{font-size:18px; font-weight:bold; }
-	
-	.pointSum{width:900px; height:100px; background:red;}
+	.div-lavel{width:400px; height:30px; float:left; border-bottom:1px dotted #ccc; text-align:center; font-weight:bold; border:1px solid}
+	.div-type{width:500px; height:30px; float:left; border-bottom:1px dotted #ccc; text-align:right; border:1px solid}
 </style>
 
 <title>Insert title here</title>
@@ -87,12 +87,12 @@
 			<%} %>
 		<%} %>			
 	</table>
-	
-	<div class="pointSum">포인트 이력
-		<input type="text" value=<%=loginUser.getPoint() %> >	
-		
+	<br>
+	<div class="div-lavel">포인트 합계</div>
+	<div class=div-type>
+	<%=loginUser.getPoint() %>
 	</div>
-	
+		
 </div>
 
 <%-- <script>

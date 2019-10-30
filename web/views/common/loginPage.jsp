@@ -186,10 +186,9 @@ input::placeholder {
         function hide_caps_lock() {
           $("#capslock").hide();
        }
-        
         $(document).ready(function(){
-        	document.querySelector("#userId").focus();
-        })
+            document.querySelector("#userId").focus();
+         })
    </script>
 </body>
 </html>

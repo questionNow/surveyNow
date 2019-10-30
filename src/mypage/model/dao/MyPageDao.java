@@ -106,6 +106,7 @@ public class MyPageDao {
 		
 		ArrayList<Point> pointlist =null;
 		
+		/* String query ="SELECT * FROM POINTTEST WHERE USERID=?"; */
 		String query ="SELECT * FROM POINT WHERE USERID=?";
 		try {
 			pstmt = conn.prepareStatement(query);
