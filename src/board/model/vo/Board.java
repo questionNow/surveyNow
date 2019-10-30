@@ -32,6 +32,13 @@ public class Board implements Serializable {
 		this.bCount = bCount;
 	}
 
+	public Board(String bType, String bTitle, String bContent, String bWriter ) {
+		this.bType = bType;
+		this.bTitle = bTitle;
+		this.bContent = bContent;
+		this.bWriter = bWriter;
+	}
+
 	public int getbNum() {
 		return bNum;
 	}

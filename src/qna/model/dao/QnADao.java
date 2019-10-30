@@ -9,23 +9,48 @@ import qna.model.vo.QnA;
 
 public class QnADao {
 	
-	public ArrayList<QnA> selectList(Connection conn, String userId) {
+	public int getListCount(Connection conn, String tableName) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		int listCount = 0;
+		
+		String query = "SELECT COUNT(*) FROM " + tableName;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			
+			if(rs.next()) {
+				listCount=rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(stmt);
+			close(rs);
+		}
+		return listCount;
+	}
+
+	public ArrayList<QnA> selectList(Connection conn, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		ArrayList<QnA>list = null;
 		
+		String query = "SELECT ROWNUM, QNANUM, USERID, QNATITLE, QNACONTENT, t.typename qnatype, ACONTENT, DECODE(ANSWERYN, 'N', '미등록', 'Y', '등록') ANSWERYN, QNADT, ADMINID FROM QNA q " + 
+				"INNER JOIN qnaType t ON q.qnatype = t.qnatype WHERE ROWNUM BETWEEN ? AND ? ORDER BY 1 DESC";
 		
-		   String query ="SELECT QNANUM, USERID, QNATITLE, QNACONTENT, t.TYPENAME QNATYPE, ACONTENT, DECODE(ANSWERYN, 'N', '미등록', 'Y', '등록') ANSWERYN, QNADT, ADMINID FROM QNA q "
-		  + "INNER JOIN QNATYPE t ON q.QNATYPE = t.QNATYPE WHERE USERID=? ORDER BY 1 DESC";
-		 
-		
-	/*	String query = "SELECT * FROM QNA WHERE USERID=? ORDER BY 1 DESC";*/
+		int startRow = (currentPage-1)*limit +1;	
+		int endRow = startRow + limit -1;
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			
-			pstmt.setString(1, userId);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rs=pstmt.executeQuery();
 			
@@ -33,17 +58,16 @@ public class QnADao {
 			
 			while(rs.next()) {
 				QnA b = new QnA(rs.getInt("qnanum"),
+								rs.getString("userid"),
 								rs.getString("qnatitle"),
 								rs.getString("qnacontent"),
 								rs.getString("qnatype"),
 								rs.getString("acontent"),
 								rs.getString("answeryn"),
 								rs.getString("adminid"),
-								rs.getDate("qnadt"),
-								rs.getString("userid"));
+								rs.getDate("qnadt"));
 				
 				list.add(b);
-				
 			}
 			
 		} catch (SQLException e) {
@@ -52,11 +76,9 @@ public class QnADao {
 			close(rs);
 			close(pstmt);
 		}
-		System.out.println("list44 : " + list);
+
 		return list;
 	}
-	
-	
 	
 	public int insertAnswer(Connection conn, String answer) {
 		Statement stmt = null;

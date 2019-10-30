@@ -18,39 +18,6 @@ public class QnA implements Serializable {
 	private String adminId;
 	
 	public QnA() {}
-	
-	
-	
-	
-	public QnA(int qnaNum, String userId, String qnaTitle, String qnaConent, String qnaType, String aContent) {
-		super();
-		this.qnaNum = qnaNum;
-		this.userId = userId;
-		this.qnaTitle = qnaTitle;
-		this.qnaConent = qnaConent;
-		this.qnaType = qnaType;
-		this.aContent = aContent;
-	}
-
-
-
-
-	public QnA(int qnaNum, String qnaTitle, String qnaConent, String qnaType, String aContent,
-			String answerYN, String adminId, Date qnaDate, String userId) {
-		super();
-		this.qnaNum = qnaNum;
-		this.qnaTitle = qnaTitle;
-		this.qnaConent = qnaConent;
-		this.qnaType = qnaType;
-		this.aContent = aContent;
-		this.answerYN = answerYN;
-		this.adminId = adminId;
-		this.qnaDate = qnaDate;
-		this.userId = userId;
-	}
-
-
-
 
 	public QnA(int qnaNum, String userId, String qnaTitle, String qnaConent, String qnaType, String aContent, String answerYN, String adminId, Date qnaDate) {
 		this.qnaNum = qnaNum;

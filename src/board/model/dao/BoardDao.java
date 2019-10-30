@@ -3,12 +3,9 @@ package board.model.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.sun.prism.Presentable;
-
 import static common.JDBCTemplate.*;
 import board.model.vo.Board;
 import board.model.vo.Reply;
-/*import user.model.vo.WarnUser;*/
 
 public class BoardDao {
 	// 게시판 작성 시 사용자 이름 가져오는 메소드 
@@ -67,14 +64,60 @@ public class BoardDao {
 	}
 	
 	// 게시판 리스트 조회
-	public ArrayList<Board> selectList(Connection conn, int currentPage, int limit) {
+	public ArrayList<Board> selectNoticeList(Connection conn, int currentPage, int limit) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		ArrayList<Board>list = null;
 		
-		String query = "SELECT ROWNUM, bnum, bwriter, bwname, btitle, bcontent, bcreatedt, DECODE(btype, 'n', '공지사항', 'e', '이벤트') btype, bstatus, bcount FROM board "
-				+ "WHERE ROWNUM BETWEEN ? AND ? AND bstatus = 'N' ORDER BY 1 DESC";
+		String query = "SELECT ROWNUM, bnum, bwriter, bwname, btitle, bcontent, bcreatedt, DECODE(btype, 'n', '공지사항', 'e', '이벤트') btype, bstatus, bcount FROM board " + 
+				"WHERE ROWNUM BETWEEN ? AND ? AND bstatus = 'N' AND btype = 'n' ORDER BY 1 DESC";
+		
+		int startRow = (currentPage-1)*limit +1;	
+		int endRow = startRow + limit -1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs=pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rs.next()) {
+				Board b = new Board(rs.getInt("bnum"),
+									rs.getString("bwriter"),
+									rs.getString("bwname"),
+									rs.getString("btitle"),
+									rs.getString("bcontent"),
+									rs.getDate("bcreatedt"),
+									rs.getString("btype"),
+									rs.getString("bstatus"),
+									rs.getInt("bcount"));
+				
+				list.add(b);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return list;
+	}
+	
+	public ArrayList<Board> selectEventList(Connection conn, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<Board>list = null;
+		
+		String query = "SELECT ROWNUM, bnum, bwriter, bwname, btitle, bcontent, bcreatedt, DECODE(btype, 'n', '공지사항', 'e', '이벤트') btype, bstatus, bcount FROM board " + 
+				"WHERE ROWNUM BETWEEN ? AND ? AND bstatus = 'N' AND btype = 'e' ORDER BY 1 DESC";
 		
 		int startRow = (currentPage-1)*limit +1;	
 		int endRow = startRow + limit -1;
@@ -256,30 +299,96 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public int updateBoard(Connection conn, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = "UPDATE board SET btype = ?, btitle = ?, bcontent = ? WHERE bnum = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, b.getbType());
+			pstmt.setString(2, b.getbTitle());
+			pstmt.setString(3, b.getbContent());
+			pstmt.setInt(4, b.getbNum());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
 		
 		return result;
 	}
-	
-	public int warnCount(String userId) {
-		Connection conn = getConnection();
+
+	public int deleteBoard(Connection conn, int bnum) {
 		Statement stmt = null;
-		ResultSet rs = null;
+		int result = 0;
 		
-		String query = "SELECT ROWNUM, warncount FROM warnuser WHERE ROWNUM=1 AND userid = ?";
-		
-		int cnt = 0;
+		String query = "UPDATE board SET bstatus = 'Y' WHERE bnum ="+bnum;
 		
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(query);
-			
-			if(rs.next())
-				cnt = rs.getInt("warncount");
+			result = stmt.executeUpdate(query);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(stmt);
 		}
 		
-		return cnt;
+		return result;
+	}
+
+	
+	// 게시판 리스트 조회
+	public ArrayList<Board> selectList(Connection conn, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		ArrayList<Board>list = null;
+		
+		String query = "SELECT ROWNUM, bnum, bwriter, bwname, btitle, bcontent, bcreatedt, DECODE(btype, 'n', '공지사항', 'e', '이벤트') btype, bstatus, bcount FROM board "
+				+ "WHERE ROWNUM BETWEEN ? AND ? AND bstatus = 'N' ORDER BY 1 DESC";
+		
+		int startRow = (currentPage-1)*limit +1;	
+		int endRow = startRow + limit -1;
+		
+		try {
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rs=pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rs.next()) {
+				Board b = new Board(rs.getInt("bnum"),
+									rs.getString("bwriter"),
+									rs.getString("bwname"),
+									rs.getString("btitle"),
+									rs.getString("bcontent"),
+									rs.getDate("bcreatedt"),
+									rs.getString("btype"),
+									rs.getString("bstatus"),
+									rs.getInt("bcount"));
+				
+				list.add(b);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+
+		return list;
 	}
 	
 	// 메인화면 게시판 List (조회 갯수는 15)
@@ -324,19 +433,5 @@ public class BoardDao {
 
 		return list;
 	}
-
-	/*
-	 * public int reportReply(Connection conn, WarnUser u) { PreparedStatement pstmt
-	 * = null; int result = 0; int cnt = warnCount(u.getWarnUser()); String query =
-	 * "INSERT INTO warnuser VALUES(SEQ_warnuser.NEXTVAL, ?, ?, ?, SYSDATE)"; try {
-	 * pstmt = conn.prepareStatement(query); pstmt.setString(1, u.getWarnUser());
-	 * pstmt.setString(2, u.getWarnText()); pstmt.setInt(3, cnt + 1);
-	 * 
-	 * result = pstmt.executeUpdate();
-	 * 
-	 * } catch (SQLException e) { e.printStackTrace(); } finally { close(pstmt); }
-	 * 
-	 * return result; }
-	 */
 
 }

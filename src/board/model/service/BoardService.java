@@ -9,7 +9,6 @@ import board.model.dao.BoardDao;
 import board.model.vo.Board;
 import board.model.vo.Reply;
 import user.model.vo.UserInfo;
-//import user.model.vo.WarnUser;
 
 public class BoardService {
 
@@ -30,10 +29,20 @@ public class BoardService {
 	}
 
 	// 게시판 페이지 목록 찾아오는 메소드
-	public ArrayList<Board> selectList(int currentPage, int limit) {
+	public ArrayList<Board> selectNoticeList(int currentPage, int limit, String bCategory) {
 		Connection conn = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().selectList(conn, currentPage, limit);
+		ArrayList<Board> list = new BoardDao().selectNoticeList(conn, currentPage, limit);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Board> selectEventList(int currentPage, int limit, String bCategory) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectEventList(conn, currentPage, limit);
 		
 		close(conn);
 		
@@ -95,6 +104,45 @@ public class BoardService {
 		return result;
 	}
 
+	public int updateBoard(Board b) {
+		Connection conn = getConnection();
+		int result = new BoardDao().updateBoard(conn, b);
+		
+		if(result > 0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	public int deleteBoard(int bnum) {
+		Connection conn = getConnection();
+		int result = new BoardDao().deleteBoard(conn, bnum);
+		
+		if(result > 0)
+			commit(conn);
+		else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+
+	// 게시판 페이지 목록 찾아오는 메소드
+	public ArrayList<Board> selectList(int currentPage, int limit) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectList(conn, currentPage, limit);
+		
+		close(conn);
+		
+		return list;
+	}
 	// 메인 화면의 공지사항 
 	public ArrayList<Board> mainBoardList() {
 		Connection conn = getConnection();
@@ -105,15 +153,4 @@ public class BoardService {
 		
 		return list;
 	}
-
-	/*
-	 * public int reportReply(WarnUser u) { Connection conn = getConnection(); int
-	 * result = new BoardDao().reportReply(conn, u);
-	 * 
-	 * if(result > 0) commit(conn); else rollback(conn);
-	 * 
-	 * close(conn);
-	 * 
-	 * return result; }
-	 */
 }
